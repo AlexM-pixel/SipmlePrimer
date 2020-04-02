@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">MySympleApplication</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="second_activity_label">Answer</string>
+    <string name="next">Клац!</string>
+    <string name="previous">Previous</string>
+
+    <string name="task_first_activity">введите правильный ответ</string>
+    <string name="task_second_activity">пиши сюда</string>
+    <string name="textview1">Рекорд</string>
+    <string name="znak">+</string>
+    <string name="second_value">0</string>
+    <string name="ravno">=</string>
+    <string name="first_value">1</string>
+    <string name="next_button">проверка</string>
+    <string name="result_of_answer">Не верно!</string>
+    <string name="back_button">назад</string>
+    <string name="again_button">попробовать снова</string>
+    <string name="true_answer">Правильно!</string>
+    <string name="button_next">Новое задание</string>
+    <string name="game_over">Game Over!</string>
 </resources>
