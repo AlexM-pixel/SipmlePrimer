@@ -1,21 +1,32 @@
 package com.example.mysympleapplication;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 
 public class SecondActivity extends AppCompatActivity {
-    Button button;
+    Button buttonCurrent;
+    Button buttonNextLevel;
+    public static final int KEY_NEXT = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
-        button = findViewById(R.id.tryAgain);
+        buttonCurrent = findViewById(R.id.tryAgain);
+        buttonNextLevel = findViewById(R.id.button_next_level);
         verificationResult();
     }
 
@@ -29,15 +40,24 @@ public class SecondActivity extends AppCompatActivity {
             TextView textResult = findViewById(R.id.result);
             textResult.setText(R.string.true_answer);
             textResult.setTextColor(Color.GREEN);
-            button.setText(R.string.button_next);
+            buttonCurrent.setText(R.string.button_next);
             findViewById(R.id.linearLayout).setBackgroundColor(Color.GREEN);
+            buttonNextLevel.setVisibility(View.VISIBLE);
         }
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    finish();
-                }
-            });
-
+        buttonCurrent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        buttonNextLevel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Intent intent = new Intent();
+//                intent.putExtra(KEY_NEXT, "nextLevel");
+                setResult(KEY_NEXT);
+                finish();
+            }
+        });
     }
 }
