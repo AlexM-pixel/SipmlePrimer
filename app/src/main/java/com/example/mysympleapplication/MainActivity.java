@@ -72,8 +72,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onStart() {
+        super.onStart();
         if (mTimer == null) {
             timerView.setTextColor(Color.GRAY);
             timerView.setText(String.valueOf(timerN));
@@ -81,6 +81,12 @@ public class MainActivity extends AppCompatActivity {
             mMyTimerTask = new MyTimerTask();
             mTimer.schedule(mMyTimerTask, 0, 1000);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
     }
 
     class MyTimerTask extends TimerTask {

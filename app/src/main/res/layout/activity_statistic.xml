@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Statistic">
+
+    <Button
+        android:id="@+id/first"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:onClick="choiceingFragment"
+        android:padding="20dp"
+        android:text="первый фрагмент"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/second"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:onClick="choiceingFragment"
+        android:padding="20dp"
+        android:text="посмотреть на винни пуха"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/third"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:onClick="choiceingFragment"
+        android:padding="20dp"
+        android:text="третий фрагмент"
+        android:textSize="24sp" />
+
+        <fragment
+            android:id="@+id/start_fragment"
+            android:name="com.example.mysympleapplication.fragments.Fragment1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+</LinearLayout>
