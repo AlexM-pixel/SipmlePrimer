@@ -20,34 +20,31 @@ import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button answer;
-    TextView firstValue;
-    TextView secondValue;
-    EditText userInpyt;
-    int numOne;
-    int numSecond;
-    int timerN;
-    int valuefirst;
-    int valueSecond;
-    int level = 1;
-    Context context = this;
+    private TextView firstValue;
+    private TextView secondValue;
+    private EditText userInpyt;
+    private int numOne;
+    private int numSecond;
+    private int timerN;
+    private int valuefirst;
+    private int valueSecond;
+    private int level = 1;
     private Timer mTimer;
-    private MyTimerTask mMyTimerTask;
-    TextView timerView;
-    TextView levelView;
+    private TextView timerView;
+    private TextView levelView;
+    public static final int ACTIVITY_NUMBER = 1;
     public static final String VALUE_KEY = "keyfirst";
     public static final String RESULT_KEY = "keysecond";
-    public static final String NUM_ONE = "keyOne";
-    public static final String NUM_TWO = "keyTwo";
-    public static final String TIMER_VALUE = "timerV";
-    public static final String LEVEL_VALUE = "level_key";
+    private static final String NUM_ONE = "keyOne";
+    private static final String NUM_TWO = "keyTwo";
+    private static final String TIMER_VALUE = "timerV";
+    private static final String LEVEL_VALUE = "level_key";
 
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        answer = (Button) findViewById(R.id.button);
         firstValue = (TextView) findViewById(R.id.firstValue);
         secondValue = (TextView) findViewById(R.id.secondValue);
         userInpyt = (EditText) findViewById(R.id.aswer);
@@ -78,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
             timerView.setTextColor(Color.GRAY);
             timerView.setText(String.valueOf(timerN));
             mTimer = new Timer();
-            mMyTimerTask = new MyTimerTask();
+            MyTimerTask mMyTimerTask = new MyTimerTask();
             mTimer.schedule(mMyTimerTask, 0, 1000);
         }
     }
@@ -99,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                 public void run() {
                     timerView.setText(String.valueOf(timerN));
                     if (timerN == 0) {
-                        Intent intent = new Intent(context, GameOverActivity.class);
+                        Intent intent = new Intent(MainActivity.this, GameOverActivity.class);
                         startActivity(intent);                                                  // время вышло, запуск активити
                         timerN = 10;
                         mTimer.cancel();
@@ -123,7 +120,8 @@ public class MainActivity extends AppCompatActivity {
             valuefirst = valuefirst + 3;
             valueSecond = valueSecond + 3;
             level++;
-            levelView.setText("Уровень: " + level);
+            String levelStr = "Уровень: " + level;
+            levelView.setText(levelStr);
             setMethod();
         } else if (resultCode == RESULT_OK) {              // если во втором активити ответ правильный, заполняю пример новыми числами
             userInpyt.setText("");
@@ -141,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, SecondActivity.class);
             intent.putExtra(RESULT_KEY, result);                                 // правильный результат вычисления
             intent.putExtra(VALUE_KEY, userValue);                             // значение пользователя
-            startActivityForResult(intent, 1);
+            startActivityForResult(intent, ACTIVITY_NUMBER);
         } else {
             Toast.makeText(this, "Введите ответ", Toast.LENGTH_SHORT).show();
         }

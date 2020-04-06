@@ -46,9 +46,8 @@
         android:textSize="24sp" />
 </LinearLayout>
 
-    <fragment
-        android:id="@+id/start_fragment"
-        android:name="com.example.mysympleapplication.fragments.Fragment1"
+    <FrameLayout
+        android:id="@+id/frame_for_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

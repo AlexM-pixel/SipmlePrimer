@@ -1,8 +1,6 @@
 package com.example.mysympleapplication;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,10 +9,9 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class SecondActivity extends AppCompatActivity {
-    Button buttonCurrent;
-    Button buttonNextLevel;
+    private Button buttonCurrent;
+    private Button buttonNextLevel;
     public static final int KEY_NEXT = 5;
-    Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,15 +31,13 @@ public class SecondActivity extends AppCompatActivity {
             setResult(RESULT_OK);
             TextView textResult = findViewById(R.id.result);
             textResult.setText(R.string.true_answer);
-            textResult.setTextColor(Color.GREEN);
+            textResult.setTextColor(getResources().getColor(R.color.colorGreen));
             buttonCurrent.setText(R.string.button_next);
-            findViewById(R.id.linearLayout).setBackgroundColor(Color.GREEN);
+            findViewById(R.id.linearLayout).setBackgroundColor(getResources().getColor(R.color.colorGreen));
             buttonNextLevel.setVisibility(View.VISIBLE);
             buttonNextLevel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                Intent intent = new Intent();
-//                intent.putExtra(KEY_NEXT, "nextLevel");
                     setResult(KEY_NEXT);
                     finish();
                 }
@@ -52,8 +47,8 @@ public class SecondActivity extends AppCompatActivity {
             buttonNextLevel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                 Intent intent = new Intent(context,Statistic.class);
-                 startActivity(intent);
+                    Intent intent = new Intent(SecondActivity.this, Statistic.class);
+                    startActivity(intent);
                 }
             });
 
