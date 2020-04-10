@@ -34,7 +34,7 @@ public class Statistic extends AppCompatActivity {
                 break;
         }
         FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction frTransaction = fragmentManager.beginTransaction().replace(R.id.frame_for_fragment, fragment);
+        FragmentTransaction frTransaction = fragmentManager.beginTransaction().replace(R.id.frame_for_fragment, fragment).addToBackStack(null);
         frTransaction.commit();
     }
 }
