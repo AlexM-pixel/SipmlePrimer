@@ -1,6 +1,5 @@
 package com.example.mysympleapplication.fragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -8,16 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.example.mysympleapplication.R;
-import com.example.mysympleapplication.SecondActivity;
+import com.example.mysympleapplication.DescriptionActivity;
 
 public class Fragment1 extends Fragment {
     public static final String KEY_TITLE = "Title";
@@ -36,9 +33,11 @@ public class Fragment1 extends Fragment {
             public void onClick(View v) {
                 String textTitle = button1.getText().toString();
                 if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                    sendDescription(textTitle);
+                   // sendDescription(textTitle);
+                    Fragment2 descriptionfragment = (Fragment2) getChildFragmentManager().findFragmentById(R.id.fragment_description_land); //получил ссылку на фрагмент
+                    descriptionfragment.setCity(1);
                 } else {
-                    Intent intent = new Intent(getActivity(), SecondActivity.class);
+                    Intent intent = new Intent(getActivity(), DescriptionActivity.class);
                     intent.putExtra(KEY_TITLE, textTitle);
                     startActivity(intent);
                 }
@@ -49,9 +48,9 @@ public class Fragment1 extends Fragment {
             public void onClick(View v) {
                 String textTitle = button2.getText().toString();
                 if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                    sendDescription(textTitle);
+                   // sendDescription(textTitle);
                 } else {
-                    Intent intent = new Intent(getActivity(), SecondActivity.class);
+                    Intent intent = new Intent(getActivity(), DescriptionActivity.class);
                     intent.putExtra(KEY_TITLE, textTitle);
                     startActivity(intent);
                 }
@@ -61,11 +60,9 @@ public class Fragment1 extends Fragment {
         return view;
     }
 
-    private void sendDescription(String text) {
-        FragmentManager fm =getFragmentManager();
-        assert fm != null;
-        if (fm.findFragmentByTag("liner")==null) {
-        fm.beginTransaction().replace(R.id.second_frame,Fragment2.newInstance(text)).commit();
-        }
-    }
+//    private void sendDescription(String text) {
+//        FragmentManager fm =getFragmentManager();
+//        assert fm != null;
+//        fm.beginTransaction().replace(R.id.second_frame,Fragment2.newInstance(text),"tag").commit();
+//    }
 }

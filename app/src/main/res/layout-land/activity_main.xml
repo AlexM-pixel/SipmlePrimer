@@ -26,9 +26,14 @@
 
     <FrameLayout
         android:id="@+id/second_frame"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
+        <fragment
+            android:id="@+id/fragment_description_land"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:name="com.example.mysympleapplication.fragments.Fragment2"/>
     </FrameLayout>
 
 </LinearLayout>
