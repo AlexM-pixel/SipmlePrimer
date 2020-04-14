@@ -10,11 +10,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.mysympleapplication.Cities;
 import com.example.mysympleapplication.R;
 
 public class Fragment2 extends Fragment {
     private static final String KEY_TEXT = "text";
-    private long idCity;
+    private int idCity;
 
     @Nullable
     @Override
@@ -23,15 +24,7 @@ public class Fragment2 extends Fragment {
         return inflater.inflate(R.layout.fragment_two, container, false);
     }
 
-//    public static Fragment2 newInstance(String text) {
-//        Bundle arguments = new Bundle();
-//        arguments.putString(KEY_TEXT, text);
-//        Fragment2 fragment2 = new Fragment2();
-//        fragment2.setArguments(arguments);
-//        return fragment2;
-//    }
-
-    public void setCity(long id) {
+    public void setCity(int id) {
         this.idCity = id;
     }
 
@@ -40,8 +33,10 @@ public class Fragment2 extends Fragment {
         super.onStart();
         View view = getView();
         if (view != null) {
-            TextView tiile= view.findViewById(R.id.Title);
-
+            TextView tiile = view.findViewById(R.id.Title);
+            TextView description = view.findViewById(R.id.text_description);
+            tiile.setText( Cities.citiesList.get(idCity).getTitle());
+            description.setText( Cities.citiesList.get(idCity).getDescription());
         }
     }
 }

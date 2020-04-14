@@ -15,7 +15,8 @@ public class DescriptionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.second_activity);
         Fragment2 descriptionfragment = (Fragment2) getSupportFragmentManager().findFragmentById(R.id.fragment_description_portret); //получил ссылку на фрагмент
-    descriptionfragment.setCity(1);
+        int idButton_fromFragment1 = getIntent().getExtras().getInt(MainActivity.KEY_TITLE);
+        descriptionfragment.setCity(idButton_fromFragment1);
     }
 
     @Override
