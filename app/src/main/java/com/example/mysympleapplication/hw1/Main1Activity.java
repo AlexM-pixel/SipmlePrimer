@@ -1,24 +1,26 @@
-package com.example.mysympleapplication;
+package com.example.mysympleapplication.hw1;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mysympleapplication.R;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainActivity extends AppCompatActivity {
+public class Main1Activity extends AppCompatActivity {
 
     private TextView firstValue;
     private TextView secondValue;
@@ -71,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        userInpyt.requestFocus();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);    // клавиатура
         if (mTimer == null) {
             timerView.setTextColor(Color.GRAY);
             timerView.setText(String.valueOf(timerN));
@@ -84,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+
     }
 
     class MyTimerTask extends TimerTask {
@@ -96,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
                 public void run() {
                     timerView.setText(String.valueOf(timerN));
                     if (timerN == 0) {
-                        Intent intent = new Intent(MainActivity.this, GameOverActivity.class);
+                        Intent intent = new Intent(Main1Activity.this, GameOverActivity.class);
                         startActivity(intent);                                                  // время вышло, запуск активити
                         timerN = 10;
                         mTimer.cancel();
@@ -161,6 +166,11 @@ public class MainActivity extends AppCompatActivity {
         outState.putInt(TIMER_VALUE, timerN);
         outState.putInt(LEVEL_VALUE, level);
 
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.example.mysympleapplication;
+package com.example.mysympleapplication.hw1;
 
 import android.os.Bundle;
 import android.view.View;
@@ -9,9 +9,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.mysympleapplication.fragments.Fragment1;
-import com.example.mysympleapplication.fragments.Fragment2;
-import com.example.mysympleapplication.fragments.Fragment3;
+import com.example.mysympleapplication.R;
+import com.example.mysympleapplication.hw1.fragments.Fragment1;
+import com.example.mysympleapplication.hw1.fragments.Fragment2;
+import com.example.mysympleapplication.hw1.fragments.Fragment3;
 
 public class Statistic extends AppCompatActivity {
     @Override

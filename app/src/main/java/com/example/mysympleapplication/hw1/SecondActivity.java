@@ -1,4 +1,4 @@
-package com.example.mysympleapplication;
+package com.example.mysympleapplication.hw1;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.mysympleapplication.R;
 
 public class SecondActivity extends AppCompatActivity {
     private Button buttonCurrent;
@@ -25,8 +27,8 @@ public class SecondActivity extends AppCompatActivity {
 
     public void verificationResult() {
         Bundle arguments = getIntent().getExtras();
-        int userValue = arguments.getInt(MainActivity.VALUE_KEY);
-        int result = arguments.getInt(MainActivity.RESULT_KEY);
+        int userValue = arguments.getInt(Main1Activity.VALUE_KEY);
+        int result = arguments.getInt(Main1Activity.RESULT_KEY);
         if (userValue == result) {
             setResult(RESULT_OK);
             TextView textResult = findViewById(R.id.result);

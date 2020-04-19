@@ -1,4 +1,4 @@
-package com.example.mysympleapplication.fragments;
+package com.example.mysympleapplication.hw1.fragments;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
