@@ -38,4 +38,6 @@
     <string name="_71">71 %</string>
     <string name="compas">compas</string>
     <string name="_242_ratings">242 ratings</string>
+    <string name="nameUser">Name</string>
+    <string name="User_description">Description</string>
 </resources>

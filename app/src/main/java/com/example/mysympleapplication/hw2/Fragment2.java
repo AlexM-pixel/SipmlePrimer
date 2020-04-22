@@ -42,8 +42,8 @@ public class Fragment2 extends Fragment {
         if (view != null) {
             TextView tiile = view.findViewById(R.id.Title);
             TextView description = view.findViewById(R.id.text_description);
-            tiile.setText(Cities.citiesList.get(idCity).getTitle());
-            description.setText(Cities.citiesList.get(idCity).getDescription());
+            tiile.setText(City.cityList.get(idCity).getTitle());
+            description.setText(City.cityList.get(idCity).getDescription());
         }
     }
 

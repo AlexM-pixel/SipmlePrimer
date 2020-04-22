@@ -60,7 +60,6 @@
         android:text="@string/march_2017_pg_129_minutes"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/textView"
-        app:layout_constraintHorizontal_bias="0.062"
         app:layout_constraintStart_toEndOf="@+id/imageView3"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -154,7 +153,6 @@
         android:layout_marginEnd="8dp"
         android:background="#FFAAAAAA"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
@@ -195,7 +193,6 @@
         android:layout_marginTop="8dp"
         android:text="@string/_242_ratings"
         app:layout_constraintEnd_toEndOf="@+id/imageView6"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/imageView6"
         app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 

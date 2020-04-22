@@ -14,10 +14,10 @@ import android.view.View;
 
 import com.example.mysympleapplication.R;
 
-public class Main2Activity extends AppCompatActivity implements Fragment1.Listener {
-    public static final String KEY_TITLE = "id";
+public class Main2Activity extends AppCompatActivity implements Fragment1.OnButtonClickListener {
    private int idPosition;
    private View frameLayout;
+   public static final String KEY_POSITION="key";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,11 +26,10 @@ public class Main2Activity extends AppCompatActivity implements Fragment1.Listen
         frameLayout = findViewById(R.id.frame_for_fragment2);
         FragmentManager fm=getSupportFragmentManager();
         if (fm.getBackStackEntryCount()>0 && frameLayout==null) {          //если наклацал фрагментов в бэкстек и телефон повернул обратно в портретный
-            idPosition = savedInstanceState.getInt("1");
+            idPosition = savedInstanceState.getInt(KEY_POSITION);
             Intent intent = new Intent(this, DescriptionActivity.class);
-            intent.putExtra(KEY_TITLE, idPosition);
+            intent.putExtra(KEY_POSITION, idPosition);
             startActivity(intent);
-
         }
     }
 
@@ -49,7 +48,7 @@ public class Main2Activity extends AppCompatActivity implements Fragment1.Listen
 
         } else {
             Intent intent = new Intent(this, DescriptionActivity.class);
-            intent.putExtra(KEY_TITLE, id);
+            intent.putExtra(KEY_POSITION, id);
             startActivity(intent);
         }
     }
@@ -57,6 +56,6 @@ public class Main2Activity extends AppCompatActivity implements Fragment1.Listen
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt("1", idPosition);
+        outState.putInt(KEY_POSITION, idPosition);
     }
 }

@@ -1,29 +1,25 @@
 package com.example.mysympleapplication.hw2;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import com.example.mysympleapplication.R;
 
 public class Fragment1 extends Fragment {
 
-    public  interface Listener {
+    public  interface OnButtonClickListener {
         void idButton(int id);
     }
 
-    private Listener listener;
+    private OnButtonClickListener listener;
 
     @Nullable
     @Override
@@ -31,16 +27,18 @@ public class Fragment1 extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_one, container, false);
         final Button button1 = view.findViewById(R.id.buttom1);
         final Button button2 = view.findViewById(R.id.buttom2);
+        final int[] itemPosition = new int[]{0,1};
+
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.idButton(0);
+                listener.idButton(itemPosition[0]);
             }
         });
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.idButton(1);
+                listener.idButton(itemPosition[1]);
             }
         });
 
@@ -50,6 +48,6 @@ public class Fragment1 extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        this.listener = (Listener) context;
+        this.listener = (OnButtonClickListener) context;
     }
 }
