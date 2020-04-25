@@ -53,7 +53,6 @@ public class SecondActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             });
-
         }
         buttonCurrent.setOnClickListener(new View.OnClickListener() {
             @Override

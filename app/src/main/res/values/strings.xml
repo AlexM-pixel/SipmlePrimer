@@ -40,4 +40,7 @@
     <string name="_242_ratings">242 ratings</string>
     <string name="nameUser">Name</string>
     <string name="User_description">Description</string>
+    <string name="input_values">input values</string>
+    <string name="date">date</string>
+    <string name="value">value</string>
 </resources>

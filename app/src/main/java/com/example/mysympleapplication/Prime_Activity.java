@@ -11,6 +11,7 @@ import com.example.mysympleapplication.hw1.Main1Activity;
 import com.example.mysympleapplication.hw2.Main2Activity;
 import com.example.mysympleapplication.hw3.Main3Activity;
 import com.example.mysympleapplication.hw4.Main4Activity;
+import com.example.mysympleapplication.hw5.Main5Activity;
 
 public class Prime_Activity extends AppCompatActivity {
     Intent intent;
@@ -22,6 +23,7 @@ public class Prime_Activity extends AppCompatActivity {
         Button homeWork2 = findViewById(R.id.button2HW);
         Button homeWork3 = findViewById(R.id.button3HW);
         Button homeWork4= findViewById(R.id.button4HW);
+        Button homeWork5= findViewById(R.id.button5HW);
         homeWork1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,6 +49,13 @@ public class Prime_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 intent = new Intent(Prime_Activity.this, Main4Activity.class);
+                startActivity(intent);
+            }
+        });
+        homeWork5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(Prime_Activity.this, Main5Activity.class);
                 startActivity(intent);
             }
         });

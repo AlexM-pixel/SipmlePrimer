@@ -1,11 +1,19 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/colorAccent</item>
+        <item name="colorPrimaryDark">#0097A7</item>
+        <item name="colorAccent">#03DAC5</item>
+    </style>
+    <style name="MyButtons"
+        parent="AppTheme">
+        <item name="colorButtonNormal">#03DAC5</item>
+        <item name="colorAccent">#03DAC5</item>
+        <item name="android:elevation">8dp</item>
+        <item name="android:buttonCornerRadius" tools:targetApi="p">50dp</item>
+        <item name="android:textColor">@android:color/white</item>
     </style>
 
 </resources>
