@@ -33,15 +33,14 @@ public class Main2Activity extends AppCompatActivity implements Fragment1.OnButt
         }
     }
 
-  //  @SuppressLint("WrongConstant")
     @Override
     public void idButton(int id) {
         frameLayout = findViewById(R.id.frame_for_fragment2);                   // при наличии второго фрагмениа в макете
         if (frameLayout != null) {
             idPosition = id;
-            Fragment2 fragment2 = new Fragment2();
+            Fragment2 fragment2 = Fragment2.newInstance(id);
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            fragment2.setCity(id);
+           // fragment2.setCity(id);
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
             ft.replace(R.id.frame_for_fragment2, fragment2);
             ft.addToBackStack(null).commit();

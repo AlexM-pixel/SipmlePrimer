@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,20 +20,16 @@ public class Fragment2 extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (savedInstanceState != null) {
-            idCity = savedInstanceState.getInt(ID_BUTTON);
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            idCity = bundle.getInt(ID_BUTTON);
         }
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         return inflater.inflate(R.layout.fragment_two, container, false);
-    }
-
-    void setCity(int id) {
-        this.idCity = id;
     }
 
     @Override
@@ -47,8 +44,15 @@ public class Fragment2 extends Fragment {
         }
     }
 
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putInt(ID_BUTTON, idCity);
+    void setCity(int id) {
+        this.idCity = id;
+    }
+
+    static Fragment2 newInstance(int setId) {
+        Bundle arguments = new Bundle();
+        arguments.putInt(ID_BUTTON, setId);
+        Fragment2 fragment2 = new Fragment2();
+        fragment2.setArguments(arguments);
+        return fragment2;
     }
 }

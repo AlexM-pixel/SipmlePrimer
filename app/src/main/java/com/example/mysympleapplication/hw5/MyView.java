@@ -37,46 +37,6 @@ public class MyView extends View implements SetValues {
         background = new Paint(Paint.ANTI_ALIAS_FLAG);
         background.setColor(ContextCompat.getColor(context, R.color.colorGrafik_fon));
     }
-
-    private int checkSize(int contentSize, int measureSpec) {
-        final int mode = MeasureSpec.getMode(measureSpec);
-        final int specSize = MeasureSpec.getSize(measureSpec);
-        switch (mode) {
-            case MeasureSpec.EXACTLY:
-                return specSize;
-            case MeasureSpec.AT_MOST:
-                if (contentSize < specSize) {
-                    return contentSize;
-                } else {
-                    return specSize;
-                }
-            case MeasureSpec.UNSPECIFIED:
-            default:
-                return contentSize;
-        }
-    }
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        //    final Paint.FontMetrics fontMetrics = numberPaint.getFontMetrics();
-
-        // Measure maximum possible width of text.
-        //  final float maxTextWidth = numberPaint.measureText(MAX_COUNT_STRING);
-        // Estimate maximum possible height of text.
-        //   final float maxTextHeight = fontMetrics.bottom - fontMetrics.top;
-
-        // Add padding to maximum width calculation.
-        final int desiredWidth = Math.round(getPaddingLeft() + getPaddingRight());
-
-        // Add padding to maximum height calculation.
-        final int desiredHeight = Math.round(getPaddingTop() + getPaddingBottom());
-
-        final int measuredWidth = checkSize(desiredWidth, widthMeasureSpec);               //   тут пробую размеры прикинуть
-        final int measuredHeight = checkSize(desiredHeight, heightMeasureSpec);
-
-        setMeasuredDimension(measuredWidth, measuredHeight);     //засетил
-    }
-
     protected void onDraw(Canvas canvas) {
         final float canvasWidth = getWidth();
         final float canvasHeight = getHeight();
