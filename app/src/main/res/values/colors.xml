@@ -4,4 +4,6 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="colorGreen">#AFB42B</color>
+    <color name="colorGrafik_fon">#900097A7</color>
+    <color name="colorGrafik_line">#F8FAFA</color>
 </resources>

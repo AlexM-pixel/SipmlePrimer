@@ -24,4 +24,23 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="first_hw">1-я домашка</string>
+    <string name="second_hw">дамашка на фрагменты</string>
+    <string name="layouts_hw">3-я Layouts</string>
+    <string name="description">Description</string>
+    <string name="title">Title</string>
+    <string name="java_and_the_beast">Java and the  Beast</string>
+    <string name="march_2017_pg_129_minutes">March 2017 PG 129 minutes</string>
+    <string name="button_left">RENT FROM R29</string>
+    <string name="button_right">BUI FROM R121</string>
+    <string name="text_Description">So how do we do that? How do we render this authenticity on the page? How can we create fantastic, real characters again and again and again?</string>
+    <string name="cruuise">cruuise</string>
+    <string name="_71">71 %</string>
+    <string name="compas">compas</string>
+    <string name="_242_ratings">242 ratings</string>
+    <string name="nameUser">Name</string>
+    <string name="User_description">Description</string>
+    <string name="input_values">input values</string>
+    <string name="date">date</string>
+    <string name="value">value</string>
 </resources>

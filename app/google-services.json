@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "870043899859",
+    "firebase_url": "https://my-home-work-bcced.firebaseio.com",
+    "project_id": "my-home-work-bcced",
+    "storage_bucket": "my-home-work-bcced.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:870043899859:android:41107392bde3a932034126",
+        "android_client_info": {
+          "package_name": "com.example.mysympleapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "870043899859-4j89jeikeqe34c1035qplqv5red1upgl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhMNne1z5h8d14MkCcEMjJYN5rGgMTM70"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "870043899859-4j89jeikeqe34c1035qplqv5red1upgl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
