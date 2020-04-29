@@ -43,4 +43,8 @@
     <string name="input_values">input values</string>
     <string name="date">date</string>
     <string name="value">value</string>
+    <string name="_4_recyclerview">4-я (recyclerView)</string>
+    <string name="customview">5-я CustomView</string>
+    <string name="notifications">6-я notifications</string>
+    <string name="chat_activity">Chat Activity</string>
 </resources>
