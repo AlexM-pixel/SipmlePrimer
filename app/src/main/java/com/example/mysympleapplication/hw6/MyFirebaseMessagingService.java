@@ -1,12 +1,16 @@
 package com.example.mysympleapplication.hw6;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,37 +21,34 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
-    private static final String TAG = "FirebaseService";
+    public static final String SET_NOTIFICATION = "FirebaseNotification";
+    private static final String TAG = "FirebaseTAG";
+
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
-        sendMyNotification(remoteMessage.getNotification().getBody());
+        String notificationMessage = remoteMessage.getNotification().getBody();
+        redirectToChatActivity(notificationMessage);
     }
 
     @Override
     public void onNewToken(String token) {
         super.onNewToken(token);
-        Log.d(TAG, "NEW_TOKEN: " + token);
+        Log.d(TAG, "NEW_TOKEN: " + token);      // отсюда токен брал для отправки именно моему телефону
     }
 
+    private void redirectToChatActivity(String notificationn) {
+        if (Main6Activity.isMainActivityRun) {
+            Intent intent = new Intent(this, ChatActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra(SET_NOTIFICATION, notificationn);
+            startActivity(intent);
+        }
+        if (ChatActivity.isChatActivityRun) {
+            Intent intent = new Intent(this, ChatActivity.class);
+            intent.putExtra(SET_NOTIFICATION, notificationn);
+            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+        }
 
-    private void sendMyNotification(String message) {
-
-        //On click of notification it redirect to this Activity
-        Intent intent = new Intent(this, Main6Activity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
-        Uri soundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("My Firebase Push notification")
-                .setContentText(message)
-                .setAutoCancel(true)
-                .setSound(soundUri)
-                .setContentIntent(pendingIntent);
-
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        notificationManager.notify(0, notificationBuilder.build());
     }
-    }
+}

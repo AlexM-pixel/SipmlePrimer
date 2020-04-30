@@ -3,6 +3,8 @@ package com.example.mysympleapplication.hw6;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,12 +22,14 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 public class Main6Activity extends AppCompatActivity {
-Button buttonToChat;
+
+    public static boolean isMainActivityRun;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main6);
-        buttonToChat = findViewById(R.id.buttonToChat);
+        Button buttonToChat = findViewById(R.id.buttonToChat);
         buttonToChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -36,4 +40,15 @@ Button buttonToChat;
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isMainActivityRun = true;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        isMainActivityRun = false;
+    }
 }

@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".hw6.ChatActivity">
 <TextView
+    android:id="@+id/textView_forChat"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:hint="Some Text"

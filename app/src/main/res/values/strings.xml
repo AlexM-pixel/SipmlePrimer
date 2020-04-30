@@ -47,4 +47,5 @@
     <string name="customview">5-я CustomView</string>
     <string name="notifications">6-я notifications</string>
     <string name="chat_activity">Chat Activity</string>
+    <string name="msg_token_fmt">FCM Token: %s</string>
 </resources>
