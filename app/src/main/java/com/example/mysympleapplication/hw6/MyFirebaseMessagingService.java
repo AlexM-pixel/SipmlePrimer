@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.example.mysympleapplication.R;
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -23,6 +24,7 @@ import com.google.firebase.messaging.RemoteMessage;
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public static final String SET_NOTIFICATION = "FirebaseNotification";
     private static final String TAG = "FirebaseTAG";
+    public static final String INTENT_SEND_MESSAGE = "INTENT_SEND_MESSAGE";
 
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
@@ -44,10 +46,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             startActivity(intent);
         }
         if (ChatActivity.isChatActivityRun) {
-            Intent intent = new Intent(this, ChatActivity.class);
-            intent.putExtra(SET_NOTIFICATION, notificationn);
-            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            startActivity(intent);
+            Intent intent = new Intent();
+            intent.setAction(INTENT_SEND_MESSAGE);
+            intent.putExtra(SET_NOTIFICATION,notificationn);
+            LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
         }
 
     }
