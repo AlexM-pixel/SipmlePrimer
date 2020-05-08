@@ -12,6 +12,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".hw6.ChatActivity"
+            android:launchMode="singleTop"
             android:parentActivityName=".hw6.Main6Activity" />
         <activity android:name=".hw6.Main6Activity" />
         <activity android:name=".hw5.Main5Activity" />

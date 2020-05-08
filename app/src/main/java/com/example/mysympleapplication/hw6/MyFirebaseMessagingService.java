@@ -24,12 +24,11 @@ import com.google.firebase.messaging.RemoteMessage;
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public static final String SET_NOTIFICATION = "FirebaseNotification";
     private static final String TAG = "FirebaseTAG";
-    public static final String INTENT_SEND_MESSAGE = "INTENT_SEND_MESSAGE";
 
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         String notificationMessage = remoteMessage.getNotification().getBody();
-        redirectToChatActivity(notificationMessage);
+        setIntentSendMessage(notificationMessage);
     }
 
     @Override
@@ -38,19 +37,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Log.d(TAG, "NEW_TOKEN: " + token);      // отсюда токен брал для отправки именно моему телефону
     }
 
-    private void redirectToChatActivity(String notificationn) {
-        if (Main6Activity.isMainActivityRun) {
-            Intent intent = new Intent(this, ChatActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.putExtra(SET_NOTIFICATION, notificationn);
-            startActivity(intent);
-        }
-        if (ChatActivity.isChatActivityRun) {
-            Intent intent = new Intent();
-            intent.setAction(INTENT_SEND_MESSAGE);
-            intent.putExtra(SET_NOTIFICATION,notificationn);
-            LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
-        }
-
+    private  void setIntentSendMessage(String notification) {
+        Intent intent = new Intent(this, ChatActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra(SET_NOTIFICATION, notification);
+        startActivity(intent);
     }
 }
