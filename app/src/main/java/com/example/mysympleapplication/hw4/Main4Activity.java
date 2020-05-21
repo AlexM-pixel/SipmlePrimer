@@ -25,7 +25,7 @@ public class Main4Activity extends AppCompatActivity {
     DatabaseReference myRef;
     public static ArrayList<User> userArrayList;
     UsersAdapter adapter;
-    public static final String POSITION= "idposition";
+    public static final String POSITION = "idposition";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +38,7 @@ public class Main4Activity extends AppCompatActivity {
             database.setPersistenceEnabled(true);
         }
         myRef = database.getReference("HW-4").child("user");
-          usersDataInput();                                       // заполнил мой userArrayList данными из firebase
+        usersDataInput();                                       // заполнил мой userArrayList данными из firebase
         adapter = new UsersAdapter(userArrayList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -46,8 +46,8 @@ public class Main4Activity extends AppCompatActivity {
         adapter.setUserListener(new UsersAdapter.UsersListener() {
             @Override
             public void onUserClickListener(int position) {
-                Intent intent = new Intent(Main4Activity.this,ProfilActivity.class);
-                intent.putExtra(POSITION,position);
+                Intent intent = new Intent(Main4Activity.this, ProfilActivity.class);
+                intent.putExtra(POSITION, position);
                 startActivity(intent);
             }
         });
