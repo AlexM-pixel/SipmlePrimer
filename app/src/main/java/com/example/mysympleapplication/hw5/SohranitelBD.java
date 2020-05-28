@@ -23,7 +23,8 @@ public class SohranitelBD extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table " + TABLE_VALUES + "(" + KEY_ID
-                + " integer primary key," + KEY_VALUEY + " float," + KEY_VALUEX + " float" + ")");
+                + " integer primary key,"
+                + KEY_VALUEY + " float," + KEY_VALUEX + " float" + ")");
     }
 
     @Override

@@ -23,8 +23,6 @@ import com.google.firebase.messaging.RemoteMessage;
 
 public class Main6Activity extends AppCompatActivity {
 
-    public static boolean isMainActivityRun;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,18 +35,6 @@ public class Main6Activity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        isMainActivityRun = true;
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        isMainActivityRun = false;
-    }
 }

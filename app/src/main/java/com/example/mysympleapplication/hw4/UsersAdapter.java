@@ -47,6 +47,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
         Drawable drawable = ContextCompat.getDrawable(holder.cardView.getContext(), arrayListUsers.get(position).getIdFoto());
         holder.imageView.setImageDrawable(drawable);
         holder.imageView.setContentDescription(arrayListUsers.get(position).getName());
+
         holder.nameView.setText(arrayListUsers.get(position).getName());
         holder.callView.setText(arrayListUsers.get(position).getCallAgo());
         holder.cardView.setOnClickListener(new View.OnClickListener() {

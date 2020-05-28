@@ -13,8 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
-
 import com.example.mysympleapplication.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -92,7 +90,7 @@ public class Main5Activity extends AppCompatActivity implements OnClickListener 
                         ContentValues contentValues = new ContentValues();
                         float valueX = Float.parseFloat(userInputX.getText().toString());
                         float valueY = Float.parseFloat(userInputY.getText().toString());
-                        contentValues.put(SohranitelBD.KEY_VALUEY, valueX);
+                        contentValues.put(SohranitelBD.KEY_VALUEY, valueX);                            //записывает
                         contentValues.put(SohranitelBD.KEY_VALUEX, valueY);
                         database.insert(SohranitelBD.TABLE_VALUES, null, contentValues);
                         setValues.setArray(grafik());
@@ -112,7 +110,7 @@ public class Main5Activity extends AppCompatActivity implements OnClickListener 
 
     }
 
-    public ArrayList<Float> grafik() {
+    public ArrayList<Float> grafik() {                                                                 //читает
         arrayListGrafic = new ArrayList<>();
         SohranitelBD sohranitel = new SohranitelBD(this);
         database = sohranitel.getWritableDatabase();
