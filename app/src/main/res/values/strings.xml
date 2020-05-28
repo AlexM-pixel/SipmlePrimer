@@ -48,4 +48,7 @@
     <string name="notifications">6-я notifications</string>
     <string name="chat_activity">Chat Activity</string>
     <string name="msg_token_fmt">FCM Token: %s</string>
+    <string name="threads">threads</string>
+    <string name="count">Ожидание запроса</string>
+    <string name="insert_file">insert name file</string>
 </resources>
