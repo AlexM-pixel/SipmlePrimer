@@ -48,7 +48,13 @@
     <string name="notifications">6-я notifications</string>
     <string name="chat_activity">Chat Activity</string>
     <string name="msg_token_fmt">FCM Token: %s</string>
-    <string name="threads">threads</string>
+    <string name="threads">7-я threads</string>
     <string name="count">Ожидание запроса</string>
     <string name="insert_file">insert name file</string>
+    <string name="inner_timer">inner timer</string>
+    <string name="photoredactor">PhotoRedactor</string>
+    <string name="saerchfiles">saerchFiles</string>
+    <string name="mirror">Сяк</string>
+    <string name="horizontal">так</string>
+    <string name="image_chose">выбрать изображение</string>
 </resources>

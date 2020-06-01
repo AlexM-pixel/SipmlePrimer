@@ -14,6 +14,7 @@ import com.example.mysympleapplication.hw4.Main4Activity;
 import com.example.mysympleapplication.hw5.Main5Activity;
 import com.example.mysympleapplication.hw6.Main6Activity;
 import com.example.mysympleapplication.hw7.Main7Activity;
+import com.example.mysympleapplication.hw7.SearcFilesActivity;
 
 public class Prime_Activity extends AppCompatActivity {
     Intent intent;
