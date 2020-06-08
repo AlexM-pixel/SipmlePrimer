@@ -1,10 +1,9 @@
 package com.example.mysympleapplication.hw7;
 
-import androidx.annotation.RequiresApi;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -15,18 +14,18 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
-import android.os.Looper;
+import android.os.Message;
+import android.os.Messenger;
+import android.os.RemoteException;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.example.mysympleapplication.R;
 
@@ -37,10 +36,8 @@ import java.io.InputStream;
 import static java.lang.StrictMath.round;
 
 public class PhotoRedactorActivity extends AppCompatActivity {
-    PhotoService photoService;
-    boolean bound = false;
     ServiceConnection sConn;
-    BlankFragment fragment;
+    private boolean bound;
     private ImageView imageView;
     private final int Pick_image = 1;
     Bitmap bitmapImage;
@@ -49,13 +46,9 @@ public class PhotoRedactorActivity extends AppCompatActivity {
     PhotoChangerReceiver receiver;
     UpdatetReceiver updatetReceiver;
     public static final String BITMAP_IMAGE = "image";
+    final Messenger messenger = new Messenger(new IncomingHandler());
+    Messenger toServiceMessenger;
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Intent intent = new Intent(this, PhotoService.class);
-        bindService(intent, sConn, Context.BIND_AUTO_CREATE);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,15 +64,22 @@ public class PhotoRedactorActivity extends AppCompatActivity {
         sConn = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
-                Log.d("LOG_TAG", "MainActivity onServiceConnected");
-                PhotoService.MyBinder binder = (PhotoService.MyBinder) service;
-                photoService = binder.getService();
+                Log.d("1000", "MainActivity onServiceConnected");
                 bound = true;
+                toServiceMessenger = new Messenger(service);
+                Message msg = Message.obtain(null, PhotoService.SET_COUNT);
+                msg.replyTo = messenger;
+                msg.arg1 = 0; //наш счетчик
+                try {
+                    toServiceMessenger.send(msg);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
             public void onServiceDisconnected(ComponentName name) {
-                Log.d("LOG_TAG", "MainActivity onServiceDisconnected");
+                Log.d("1000", " onServiceDisconnected");
                 bound = false;
             }
         };
@@ -112,20 +112,18 @@ public class PhotoRedactorActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
-        if (requestCode == Pick_image) {
-            if (resultCode == RESULT_OK) {
-                try {
-                    //Получаем URI изображения, преобразуем его в Bitmap
-                    //объект и отображаем в элементе ImageView нашего интерфейса:
-                    final Uri imageUri = imageReturnedIntent.getData();
-                    if (imageUri != null) {
-                        final InputStream imageStream = getContentResolver().openInputStream(imageUri);
-                        bitmapImage = BitmapFactory.decodeStream(imageStream);
-                        imageView.setImageBitmap(bitmapImage);
-                    }
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
+        if (requestCode == Pick_image && resultCode == RESULT_OK) {
+            try {
+                //Получаем URI изображения, преобразуем его в Bitmap
+                //объект и отображаем в элементе ImageView нашего интерфейса:
+                final Uri imageUri = imageReturnedIntent.getData();
+                if (imageUri != null) {
+                    final InputStream imageStream = getContentResolver().openInputStream(imageUri);
+                    bitmapImage = BitmapFactory.decodeStream(imageStream);
+                    imageView.setImageBitmap(bitmapImage);
                 }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
             }
         }
     }
@@ -144,52 +142,39 @@ public class PhotoRedactorActivity extends AppCompatActivity {
         progressBar.setMax(newBitmap.getHeight());
         progressBar.setVisibility(ProgressBar.VISIBLE);
         startService(intent);
-        Log.d("handle", newBitmap.getHeight() + "method_mirrorsEffect()");
+        Log.d("1000", newBitmap.getHeight() + "method_mirrorsEffect()");
     }
 
     public void makeHorizontalChange() {
         newBitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-        if (bound) {
-//             fragment = new BlankFragment();
-//            getSupportFragmentManager()
-//                    .beginTransaction()
-//                    .add(fragment, "fragment_blank")
-//                    .commit();
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        newBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        Intent intent = new Intent(this, PhotoService.class);
+        intent.putExtra(BITMAP_IMAGE, byteArray);
+        bindService(intent, sConn, Context.BIND_AUTO_CREATE);
+        Log.d("1000", "method_Horizontal()");
 
-            progressBar.setProgress(0);
-            progressBar.setMax(newBitmap.getWidth() * 2);
-            progressBar.setVisibility(ProgressBar.VISIBLE);
-            photoService.horizontal(newBitmap);
-        }
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+
+        progressBar.setProgress(0);
+        progressBar.setMax(newBitmap.getWidth() * 2);
+        progressBar.setVisibility(ProgressBar.VISIBLE);
     }
 
     class PhotoChangerReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            int progress = intent.getIntExtra("progress", 0);
-            progressBar.setProgress(progress);
             byte[] byteArray = intent.getByteArrayExtra(PhotoIntentService.CHANGED_IMAGE);
             Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);        // получил из интента
             imageView.setImageBitmap(bmp);
             progressBar.setVisibility(ProgressBar.INVISIBLE);
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-//            if (fragment != null) {
-//                getSupportFragmentManager()
-//                        .beginTransaction()
-//                        .remove(fragment)
-//                        .commit();
- //           }
-        }
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (bound) {
-            unbindService(sConn);
-            bound = false;
+            if (bound) {
+                unbindService(sConn);
+                bound = false;
+            }
         }
     }
 
@@ -199,12 +184,24 @@ public class PhotoRedactorActivity extends AppCompatActivity {
         unregisterReceiver(receiver);
         unregisterReceiver(updatetReceiver);
     }
+
     public class UpdatetReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
             int progress = intent.getIntExtra(PhotoIntentService.VALUE_UPDATE, 0);
             progressBar.setProgress(progress);
+        }
+    }
+
+    private class IncomingHandler extends Handler {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            if (msg.what == PhotoService.SET_COUNT) {
+                int progress = msg.arg1;
+                progressBar.setProgress(progress);
+            }
+            Log.d("1000", "UpdateHandler" + msg.arg1);
         }
     }
 }

@@ -13,11 +13,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <service android:name=".hw7.PhotoService"/>
+
+        <service android:name=".hw7.SearchService" />
+        <service android:name=".hw7.PhotoService" />
         <service android:name=".hw7.PhotoIntentService" />
+
         <activity android:name=".hw7.PhotoRedactorActivity" />
         <activity android:name=".hw7.Main7Activity" />
-        <activity android:name=".hw7.SearcFilesActivity" />
+        <activity
+            android:name=".hw7.SearcFilesActivity"
+            android:launchMode="singleTop" />
         <activity
             android:name=".hw6.ChatActivity"
             android:launchMode="singleTop"

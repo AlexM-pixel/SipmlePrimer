@@ -57,4 +57,5 @@
     <string name="mirror">Сяк</string>
     <string name="horizontal">так</string>
     <string name="image_chose">выбрать изображение</string>
+    <string name="start_search">Start search</string>
 </resources>

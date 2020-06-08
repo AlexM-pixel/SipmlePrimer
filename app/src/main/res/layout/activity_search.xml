@@ -23,9 +23,18 @@
         android:layout_height="wrap_content"
         android:text="@string/count"
         android:textSize="26sp"
+        app:layout_constraintBottom_toTopOf="@id/button_start_search"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchFile" />
+
+    <Button
+        android:id="@+id/button_start_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/start_search"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchFile"
-        app:layout_constraintVertical_bias="0.2" />
+        app:layout_constraintTop_toBottomOf="@+id/count_files" />
 </androidx.constraintlayout.widget.ConstraintLayout>
