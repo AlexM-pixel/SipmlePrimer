@@ -43,6 +43,7 @@ public class Main8Activity extends AppCompatActivity {
     SampleWeather spain;
     SampleWeather minsk;
     LocationManager locationManager;
+    LocationListener locationListener;
     Location myLocation;
     WeatherService weatherService;
     WeatherSpainReceiver weatherSpainReceiver;
@@ -62,7 +63,7 @@ public class Main8Activity extends AppCompatActivity {
         weatherService = MyRetrofit.getInstance().create(WeatherService.class);
         textView_Minsk = findViewById(R.id.textView_Minsk);
         textView_Ispan = findViewById(R.id.textView_Ispan);
-        buttonSv= findViewById(R.id.button_svalivator);
+        buttonSv = findViewById(R.id.button_svalivator);
         Button button_UpdateWeather = findViewById(R.id.button_UpdateWither);
         button_UpdateWeather.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,50 +103,42 @@ public class Main8Activity extends AppCompatActivity {
                 //  String lon = "27.525773";
             }
         });
+
     }
-
-    private LocationListener locationListener = new LocationListener() {
-        @Override
-        public void onLocationChanged(Location location) {
-            myLocation = location;
-            Log.d("!!!", "onLocationChanged");
-
-        }
-
-        @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) {
-
-        }
-
-        @Override
-        public void onProviderEnabled(String provider) {
-            if (ActivityCompat.checkSelfPermission(Main8Activity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                    && ActivityCompat.checkSelfPermission(Main8Activity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                return;
-            }
-            myLocation = locationManager.getLastKnownLocation(provider);
-        }
-
-        @Override
-        public void onProviderDisabled(String provider) {
-
-        }
-    };
 
     @Override
     protected void onStart() {
         super.onStart();
         weatherSpainReceiver = new WeatherSpainReceiver();
         registerReceiver(weatherSpainReceiver, new IntentFilter(GeoService.SEND_RESPONSE_BODY));
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {      //  надо удалить этот метод
-            return;
-        }
-        Log.d("!!!", "onStart");
-        locationManager.requestLocationUpdates(
-                LocationManager.GPS_PROVIDER,
-                0, 10, locationListener);
+        locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                myLocation = location;
+                Log.d("!!!", "onLocationChanged");
+                Toast.makeText(Main8Activity.this, "onLocationChanged", Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+                if (ActivityCompat.checkSelfPermission(Main8Activity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                        && ActivityCompat.checkSelfPermission(Main8Activity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    return;
+                }
+                myLocation = locationManager.getLastKnownLocation(provider);
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+
+            }
+        };
     }
 
     @Override
@@ -165,7 +158,6 @@ public class Main8Activity extends AppCompatActivity {
                 // permission granted
                 Log.d("!!!", "onRequestPermissionResult");
                 Toast.makeText(this, "thank you", Toast.LENGTH_SHORT).show();
-                getWeather(String.valueOf(myLocation.getLatitude()), String.valueOf(myLocation.getLongitude()));
             } else {
                 // permission denied
             }
@@ -179,7 +171,7 @@ public class Main8Activity extends AppCompatActivity {
             public void onResponse(Call<SampleWeather> call, Response<SampleWeather> response) {
                 minsk = response.body();
                 if (minsk != null) {
-                    minskGet=true;
+                    minskGet = true;
                     Log.d("!!!", response.code() + " ," + response.message() + " ," + minsk.nowTime);
                 } else {
                     Toast.makeText(Main8Activity.this, response.code() + " !!!", Toast.LENGTH_SHORT).show();
@@ -224,19 +216,17 @@ public class Main8Activity extends AppCompatActivity {
         }
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"DefaultLocale", "SetTextI18n"})
     private void comparisonTemp() {
-
         if (minskGet) {
-            textView_Minsk.setText("в " + addressList.get(0).getCountryName() + " "+ addressList.get(0).getAdminArea() + " city "+ minsk.fact.temp +" градусов");
-            textView_Ispan.setText("а в Испании сейчас: " + spain.fact.temp + " градусов");
+            textView_Minsk.setText("в " + addressList.get(0).getCountryName() + " " + addressList.get(0).getAdminArea() + " " + minsk.fact.temp + " градусов");
+            textView_Ispan.setText(String.format("а в Испании сейчас: %d градусов", spain.fact.temp));
             if (spain.fact.temp < 32 && minsk.fact.temp < 20) {
                 buttonSv.setVisibility(View.VISIBLE);
                 buttonSv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                         startingSvalivator();
-
+                        startingSvalivator();
                     }
                 });
             }
