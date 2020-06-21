@@ -15,9 +15,11 @@ import com.example.mysympleapplication.hw5.Main5Activity;
 import com.example.mysympleapplication.hw6.Main6Activity;
 import com.example.mysympleapplication.hw7.Main7Activity;
 import com.example.mysympleapplication.hw7.SearcFilesActivity;
+import com.example.mysympleapplication.hw8.Main8Activity;
 
 public class Prime_Activity extends AppCompatActivity {
     Intent intent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,10 +27,11 @@ public class Prime_Activity extends AppCompatActivity {
         Button homeWork1 = findViewById(R.id.button1HW);
         Button homeWork2 = findViewById(R.id.button2HW);
         Button homeWork3 = findViewById(R.id.button3HW);
-        Button homeWork4= findViewById(R.id.button4HW);
-        Button homeWork5= findViewById(R.id.button5HW);
-        Button homeWork6= findViewById(R.id.button6HW);
-        Button homeWork7= findViewById(R.id.button7HW);
+        Button homeWork4 = findViewById(R.id.button4HW);
+        Button homeWork5 = findViewById(R.id.button5HW);
+        Button homeWork6 = findViewById(R.id.button6HW);
+        Button homeWork7 = findViewById(R.id.button7HW);
+        Button homework8 = findViewById(R.id.button8HW);
         homeWork1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,14 +70,21 @@ public class Prime_Activity extends AppCompatActivity {
         homeWork6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 intent = new Intent(Prime_Activity.this, Main6Activity.class);
+                intent = new Intent(Prime_Activity.this, Main6Activity.class);
                 startActivity(intent);
             }
         });
         homeWork7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 intent = new Intent(Prime_Activity.this, Main7Activity.class);
+                intent = new Intent(Prime_Activity.this, Main7Activity.class);
+                startActivity(intent);
+            }
+        });
+        homework8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(Prime_Activity.this, Main8Activity.class);
                 startActivity(intent);
             }
         });

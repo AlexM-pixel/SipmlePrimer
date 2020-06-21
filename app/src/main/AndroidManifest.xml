@@ -5,6 +5,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -17,7 +20,9 @@
         <service android:name=".hw7.SearchService" />
         <service android:name=".hw7.PhotoService" />
         <service android:name=".hw7.PhotoIntentService" />
+        <service android:name=".hw8.GeoService"/>
 
+        <activity android:name=".hw8.Main8Activity"/>
         <activity android:name=".hw7.PhotoRedactorActivity" />
         <activity android:name=".hw7.Main7Activity" />
         <activity
