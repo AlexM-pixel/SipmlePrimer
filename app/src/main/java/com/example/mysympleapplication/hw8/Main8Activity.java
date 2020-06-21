@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -25,31 +26,32 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mysympleapplication.R;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class Main8Activity extends AppCompatActivity {
     TextView textView_Minsk;
     TextView textView_Ispan;
     SampleWeather spain;
-    SampleWeather forecasts;
+    SampleWeather minsk;
     LocationManager locationManager;
     Location myLocation;
     WeatherService weatherService;
     WeatherSpainReceiver weatherSpainReceiver;
+    List<Address> addressList;
+    Button buttonSv;
     public static final int RUN_PERMISSION_REQUEST = 125;
-    public static final String LOCATION_LAT = "lat";
-    public static final String LOCATION_LON = "lon";
+    public static final String LOCATION_LAT = "lat_location";
+    public static final String LOCATION_LON = "lon_location";
+    boolean minskGet;
 
 
     @Override
@@ -57,14 +59,10 @@ public class Main8Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main8);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        Gson gson = new GsonBuilder().create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .baseUrl("https://api.weather.yandex.ru")
-                .build();
-        weatherService = retrofit.create(WeatherService.class);
+        weatherService = MyRetrofit.getInstance().create(WeatherService.class);
         textView_Minsk = findViewById(R.id.textView_Minsk);
         textView_Ispan = findViewById(R.id.textView_Ispan);
+        buttonSv= findViewById(R.id.button_svalivator);
         Button button_UpdateWeather = findViewById(R.id.button_UpdateWither);
         button_UpdateWeather.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,9 +76,27 @@ public class Main8Activity extends AppCompatActivity {
                 }
                 myLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                 if (myLocation != null) {
-                    String lat = String.valueOf(myLocation.getLatitude());
-                    String lon = String.valueOf(myLocation.getLongitude());
+                    final String lat = String.valueOf(myLocation.getLatitude());
+                    final String lon = String.valueOf(myLocation.getLongitude());
                     getWeather(lat, lon);
+                    ExecutorService service = Executors.newFixedThreadPool(1);
+                    service.submit(new Runnable() {
+                        @Override
+                        public void run() {
+                            Geocoder geocoder = new Geocoder(Main8Activity.this);
+                            try {
+                                Log.d("!!!", "geocoder_RUN");
+                                addressList = geocoder.getFromLocation(Double.parseDouble(lat), Double.parseDouble(lon), 1);
+                                Toast.makeText(Main8Activity.this, addressList.get(0).getCountryName() + " ," + addressList.get(0).getLocality() + " , " + addressList.get(0).getAdminArea(), Toast.LENGTH_SHORT).show();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                    Intent intentSpain = new Intent(Main8Activity.this, GeoService.class);
+                    intentSpain.putExtra(LOCATION_LAT, "41.23");
+                    intentSpain.putExtra(LOCATION_LON, "2.10");
+                    startService(intentSpain);
                 }
                 //   String lat = "53.89079";
                 //  String lon = "27.525773";
@@ -157,27 +173,14 @@ public class Main8Activity extends AppCompatActivity {
     }
 
     public void getWeather(String lat, String lon) {
-        Geocoder geocoder = new Geocoder(this);
-        try {
-            List<Address> s = geocoder.getFromLocation(Double.parseDouble(lat), Double.parseDouble(lon), 1);        // добавить в сервис
-            Toast.makeText(this, s.get(0).getCountryName() + " ," + s.get(0).getLocality() + " , " + s.get(0).getAdminArea(), Toast.LENGTH_SHORT).show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Intent intent = new Intent(Main8Activity.this, GeoService.class);
-        intent.putExtra(LOCATION_LAT, "41.23");
-        intent.putExtra(LOCATION_LON, "2.10");
-        startService(intent);
-
         Call<SampleWeather> call = weatherService.getWheatherNow(lat, lon);
         call.enqueue(new Callback<SampleWeather>() {
             @Override
             public void onResponse(Call<SampleWeather> call, Response<SampleWeather> response) {
-                forecasts = response.body();
-                if (forecasts != null) {
-                    textView_Minsk.setText(String.valueOf(forecasts.fact.temp));
-                    textView_Ispan.setText(forecasts.fact.condition);
-                    Log.d("!!!", response.code() + " ," + response.message() + " ," + forecasts.nowTime);
+                minsk = response.body();
+                if (minsk != null) {
+                    minskGet=true;
+                    Log.d("!!!", response.code() + " ," + response.message() + " ," + minsk.nowTime);
                 } else {
                     Toast.makeText(Main8Activity.this, response.code() + " !!!", Toast.LENGTH_SHORT).show();
                     textView_Minsk.setText("fail!");
@@ -214,17 +217,29 @@ public class Main8Activity extends AppCompatActivity {
     }
 
     class WeatherSpainReceiver extends BroadcastReceiver {
-
         @Override
         public void onReceive(Context context, Intent intent) {
-            spain = intent.getParcelableExtra(GeoService.SPAIN_OBJECT);
+            spain = (SampleWeather) intent.getSerializableExtra(GeoService.SPAIN_OBJECT);
             comparisonTemp();
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private void comparisonTemp() {
-        if (spain.fact.temp < 32 && forecasts.fact.temp < 20) {
-            startingSvalivator();
+
+        if (minskGet) {
+            textView_Minsk.setText("в " + addressList.get(0).getCountryName() + " "+ addressList.get(0).getAdminArea() + " city "+ minsk.fact.temp +" градусов");
+            textView_Ispan.setText("а в Испании сейчас: " + spain.fact.temp + " градусов");
+            if (spain.fact.temp < 32 && minsk.fact.temp < 20) {
+                buttonSv.setVisibility(View.VISIBLE);
+                buttonSv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                         startingSvalivator();
+
+                    }
+                });
+            }
         }
     }
 }

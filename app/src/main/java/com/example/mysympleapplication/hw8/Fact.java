@@ -2,7 +2,9 @@ package com.example.mysympleapplication.hw8;
 
 import com.google.gson.annotations.SerializedName;
 
-class Fact {
+import java.io.Serializable;
+
+class Fact implements Serializable {
     @SerializedName("temp")
     int temp;
     @SerializedName("feels_like")
