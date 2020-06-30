@@ -4,25 +4,30 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
     <application
+        android:name=".hw9.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".hw9.Main9Activity" />
 
         <service android:name=".hw7.SearchService" />
         <service android:name=".hw7.PhotoService" />
         <service android:name=".hw7.PhotoIntentService" />
-        <service android:name=".hw8.GeoService"/>
+        <service android:name=".hw8.GeoService" />
 
-        <activity android:name=".hw8.Main8Activity"/>
+        <activity android:name=".hw8.Main8Activity" />
         <activity android:name=".hw7.PhotoRedactorActivity" />
         <activity android:name=".hw7.Main7Activity" />
         <activity
@@ -66,6 +71,18 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+        <service android:name=".hw9.NotificationSmsService" />
+
+        <receiver
+            android:name=".hw9.SmsReciever"
+            android:exported="true"
+            android:permission="android.permission.BROADCAST_SMS">
+            <intent-filter
+                android:priority="99">
+                <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED_ACTION"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
