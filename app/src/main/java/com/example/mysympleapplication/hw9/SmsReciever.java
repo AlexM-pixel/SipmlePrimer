@@ -14,7 +14,6 @@ import android.util.Log;
 
 import static android.content.Context.MODE_PRIVATE;
 import static android.content.Context.NOTIFICATION_SERVICE;
-import static com.example.mysympleapplication.hw9.Main9Activity.APP_PREFERENCES;
 
 public class SmsReciever extends BroadcastReceiver {
     public static final String ACTION_SMS_INTENT = "android.provider.Telephony.SMS_RECEIVED";
@@ -23,7 +22,7 @@ public class SmsReciever extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        //   SmsMessage[] smsMessage = Telephony.Sms.Intents.getMessagesFromIntent(intent);
+           SmsMessage[] smsMessage = Telephony.Sms.Intents.getMessagesFromIntent(intent);
         //    if (Build.VERSION.SDK_INT >= 23) {
         String action = intent.getAction();
         if (action.equals(ACTION_SMS_INTENT)) {
@@ -52,11 +51,12 @@ public class SmsReciever extends BroadcastReceiver {
                 String value = extras.getString(NotificationSmsService.EXTRA_SPENDS_ID);
                 int id_Notification = extras.getInt(NotificationSmsService.NOTIFICATION_ID);
                 Log.e("AScs", "SmsReceiver , " + " , " + value + " , " + id_Notification);
-                SharedPreferences mSettings = context.getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE);
-                mSettings.edit()
-                        .putString(Main9Activity.PREFERENCES_VALUE, value)
-                        .putString(Main9Activity.PREFERENCES_FROM, from)
-                        .apply();
+//                SharedPreferences mSettings = context.getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE);
+//                mSettings.edit()
+//                        .putString(Main9Activity.PREFERENCES_VALUE, value)
+//                        .putString(Main9Activity.PREFERENCES_FROM, from)
+//                        .apply();
+
                 deleteNotification(id_Notification, context);
             }
         }

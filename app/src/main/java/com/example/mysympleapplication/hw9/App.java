@@ -8,18 +8,18 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 
-import static com.example.mysympleapplication.hw9.Main9Activity.APP_PREFERENCES;
 
 
 public class App extends Application {
     public static final String CHANNEL_1 = "channel_ID_1";
     public static final String CHANNEL_2 = "channel_ID_2";
+    public static Context context = null;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        context = getApplicationContext();
         createNotificationChannels();
-        SharedPreferences mSettings = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE);
     }
 
     private void createNotificationChannels() {

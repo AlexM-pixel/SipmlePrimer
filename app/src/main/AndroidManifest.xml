@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
-    <uses-permission android:name="android.permission.READ_SMS"/>
+    <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
@@ -20,6 +20,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".hw9.DetailActivity"></activity>
+        <activity android:name=".hw9.DetailMonthActivity" />
         <activity android:name=".hw9.Main9Activity" />
 
         <service android:name=".hw7.SearchService" />
@@ -77,10 +79,9 @@
             android:name=".hw9.SmsReciever"
             android:exported="true"
             android:permission="android.permission.BROADCAST_SMS">
-            <intent-filter
-                android:priority="99">
-                <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
-                <action android:name="android.provider.Telephony.SMS_RECEIVED_ACTION"/>
+            <intent-filter android:priority="99">
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+                <action android:name="android.provider.Telephony.SMS_RECEIVED_ACTION" />
             </intent-filter>
         </receiver>
     </application>
