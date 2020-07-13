@@ -24,10 +24,9 @@ public class DetailMonthAdapter extends RecyclerView.Adapter<DetailMonthAdapter.
     public DetailMonthAdapter(List<CalendarSpends> list) {
         this.calendarSpendsList = list;
     }
-    
 
     interface DetailMonthListener {
-        void onDetailSpendClickListener(String date);
+        void onDetailSpendClickListener(String date,String name);
     }
 
     void setListenerDetail(DetailMonthListener listenerDetail) {
@@ -54,7 +53,7 @@ public class DetailMonthAdapter extends RecyclerView.Adapter<DetailMonthAdapter.
             @Override
             public void onClick(View v) {
                 if (listenerDetail != null) {
-                    listenerDetail.onDetailSpendClickListener(calendarSpendsList.get(position).getDate());
+                    listenerDetail.onDetailSpendClickListener(calendarSpendsList.get(position).getDate(),calendarSpendsList.get(position).getSpendName());
                 }
             }
         });

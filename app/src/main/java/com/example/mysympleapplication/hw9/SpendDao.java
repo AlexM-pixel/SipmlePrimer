@@ -11,8 +11,8 @@ public interface SpendDao {
     @Insert
     void insert(Spend spend);
 
-    @Query("SELECT * FROM spends WHERE strftime(\"%m-%Y\", date)=strftime(\"%m-%Y\",:choiceDate)")
-    List<Spend> getAll(String choiceDate);
+    @Query("SELECT value as totalValue, date, spendName FROM spends WHERE strftime(\"%m-%Y\", date)=strftime(\"%m-%Y\",:choiceDate) AND spendName= :name")
+    List<CalendarSpends> getAll(String choiceDate, String name);
 
     @Query("SELECT SUM(value) as value_spends,strftime(\"%m-%Y\", date) as dateM FROM spends GROUP BY strftime(\"%m-%Y\", date)")
     List<SumSpendsOfMonth> getSumMonth();
