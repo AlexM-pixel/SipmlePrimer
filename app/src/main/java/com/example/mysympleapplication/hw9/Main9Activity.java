@@ -21,9 +21,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.mysympleapplication.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Main9Activity extends AppCompatActivity {
     private static final int PERMISSION_REQUEST_SMS = 99;
@@ -40,10 +43,19 @@ public class Main9Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main9);
+        FloatingActionButton floatingActionButton = findViewById(R.id.floatingActionButton);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialog();
+            }
+        });
         sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE);
         checkAdressat = sPref.getBoolean(PREFERENCES_CHECK, false);
         if (!checkAdressat) {
             showDialog();
+        }else {
+            floatingActionButton.setVisibility(View.VISIBLE);
         }
         RecyclerView recyclerView = findViewById(R.id.recycler_for_mounth_spends);
         cardViewArrayList = new ArrayList<>();
@@ -69,17 +81,6 @@ public class Main9Activity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
     public boolean isSmsPermissionGranted() {
         return ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED;
@@ -101,10 +102,12 @@ public class Main9Activity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String adressat = textAdressat.getText().toString();
-
+                Set<String> stringSet = sPref.getStringSet(PREFERENCES_FROM,new HashSet<String>());
                 if (!adressat.isEmpty()) {
+                    stringSet.add(adressat);
                     sPref.edit()
-                            .putString(PREFERENCES_FROM, adressat )           // добавить в сервис getPreference  для получения адрессата а лучше сохранять массив
+                            .putStringSet(PREFERENCES_FROM,stringSet)
+                            //.putString(PREFERENCES_FROM, adressat)           // добавить в сервис getPreference  для получения адрессата а лучше сохранять массив
                             .putBoolean(PREFERENCES_CHECK, true)
                             .apply();
                     Toast.makeText(Main9Activity.this, "Молодец молодец!", Toast.LENGTH_SHORT).show();

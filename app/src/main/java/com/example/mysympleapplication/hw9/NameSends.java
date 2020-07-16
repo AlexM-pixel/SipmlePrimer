@@ -16,6 +16,16 @@ public enum NameSends {
     HOUSETELEPHONE(R.drawable.icon_houstelephone_48, "SERVICE/TELEFON","дом. телефон"),
     ELECTROENERGIA(R.drawable.icon_flash_48, "SERVICE/ELEKTROENERGIJA","Электроэнергия"),
     APTEKA(R.drawable.icon_apteka_48, "/APTEKA","Аптека"),
+    ZAPRAVKA(R.drawable.icon_azs_48, "AZS","Заправка"),
+    SMS_OPOVESHENIE(R.drawable.icon_sms_48, "SMS OPOVESCHENIE","Смс-оповещение"),
+    WILDBERRIES(R.drawable.icon_wildberris_48, "WILDBERRIES","Wildberries"),
+    KONKI_POKATUSHKI(R.drawable.icon_konki_48, "SDYUSHOR PO FIG. KATANIYU","Массовые\n катания "),
+    BASMA(R.drawable.icon_basma_48, "'BASMA'","BASMA \n парикмахерская"),
+    KINOTEATR(R.drawable.icon_kino_48, "KINOTEATR","Кинотеатр"),
+    RUBLEVSRKY(R.drawable.icon_shop_48, "RUBLEVSKIY","Рублевский"),
+    OSTIN(R.drawable.icon_ostin_48, "OSTIN","OSTIN \n магазин"),
+    MILE(R.drawable.icon_mile_48, "MILE","MILE \n стройМагаз"),
+    BIGZZ(R.drawable.icon_shop_48, "HYPERMARKET BIGZZ","BIGZZ \n магазин"),
     KOMMUNALNIEPLATEGHI(R.drawable.icon_kommunalnie_48, "KOMMUNALNIE PLATEGHI","Коммунальные \n платежи");
     private int image;
     private String nameSpand;
