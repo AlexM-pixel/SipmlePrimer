@@ -103,10 +103,11 @@ public class Main9Activity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 String adressat = textAdressat.getText().toString();
                 Set<String> stringSet = sPref.getStringSet(PREFERENCES_FROM,new HashSet<String>());
+                Set<String> setCurrent = new HashSet<>(stringSet);
                 if (!adressat.isEmpty()) {
-                    stringSet.add(adressat);
+                    setCurrent.add(adressat);
                     sPref.edit()
-                            .putStringSet(PREFERENCES_FROM,stringSet)
+                            .putStringSet(PREFERENCES_FROM,setCurrent)
                             //.putString(PREFERENCES_FROM, adressat)           // добавить в сервис getPreference  для получения адрессата а лучше сохранять массив
                             .putBoolean(PREFERENCES_CHECK, true)
                             .apply();

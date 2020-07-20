@@ -11,13 +11,13 @@ public interface SpendDao {
     @Insert
     void insert(Spend spend);
 
-    @Query("SELECT value as totalValue, date, spendName FROM spends WHERE strftime(\"%m-%Y\", date)=strftime(\"%m-%Y\",:choiceDate) AND spendName= :name")
+    @Query("SELECT value as totalValue, date, spendName FROM spends WHERE strftime(\"%m-%Y\", date)=strftime(\"%m-%Y\",:choiceDate) AND spendName= :name ORDER BY date DESC")
     List<CalendarSpends> getAll(String choiceDate, String name);
 
     @Query("SELECT SUM(value) as value_spends,strftime(\"%m-%Y\", date) as dateM FROM spends GROUP BY strftime(\"%m-%Y\", date)")
     List<SumSpendsOfMonth> getSumMonth();
 
-    @Query("SELECT SUM(value) as totalValue, date, spendName FROM spends WHERE strftime(\"%m-%Y\", date)=strftime( :choiceDate) GROUP BY spendName")
+    @Query("SELECT SUM(value) as totalValue, date, spendName FROM spends WHERE strftime(\"%m-%Y\", date)=strftime( :choiceDate) GROUP BY spendName ORDER BY date DESC")
     List<CalendarSpends> getMonthSpends(String choiceDate);
 
 }
