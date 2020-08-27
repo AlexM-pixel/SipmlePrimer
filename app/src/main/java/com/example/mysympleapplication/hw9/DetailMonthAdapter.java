@@ -20,17 +20,26 @@ import java.util.List;
 public class DetailMonthAdapter extends RecyclerView.Adapter<DetailMonthAdapter.DetailHolder> {
     private List<CalendarSpends> calendarSpendsList;
     private DetailMonthListener listenerDetail;
+    private DeleteSpendListener delListener;
 
     public DetailMonthAdapter(List<CalendarSpends> list) {
         this.calendarSpendsList = list;
     }
 
+    interface DeleteSpendListener {
+        void onDeleteClickListener(String id,int position);
+    }
+
     interface DetailMonthListener {
-        void onDetailSpendClickListener(String date,String name);
+        void onDetailSpendClickListener(String date, String name);
     }
 
     void setListenerDetail(DetailMonthListener listenerDetail) {
         this.listenerDetail = listenerDetail;
+    }
+
+    void setDelListener(DeleteSpendListener delListener) {
+        this.delListener = delListener;
     }
 
     @NonNull
@@ -53,11 +62,19 @@ public class DetailMonthAdapter extends RecyclerView.Adapter<DetailMonthAdapter.
             @Override
             public void onClick(View v) {
                 if (listenerDetail != null) {
-                    listenerDetail.onDetailSpendClickListener(calendarSpendsList.get(position).getDate(),calendarSpendsList.get(position).getSpendName());
+                    listenerDetail.onDetailSpendClickListener(calendarSpendsList.get(position).getDate(), calendarSpendsList.get(position).getSpendName());
                 }
             }
         });
-
+        holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (delListener != null) {
+                    delListener.onDeleteClickListener(calendarSpendsList.get(position).getId(),position);
+                }
+                return true;
+            }
+        });
     }
 
     @Override

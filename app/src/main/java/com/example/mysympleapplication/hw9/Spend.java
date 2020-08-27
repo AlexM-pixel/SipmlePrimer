@@ -13,6 +13,7 @@ public class Spend {
     private String date;
 
     public Spend(Long id, String spendName, String value, String date) {
+        this.id=id;
         this.spendName = spendName;
         this.value = value;
         this.date = date;

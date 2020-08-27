@@ -15,14 +15,24 @@
     <application
         android:name=".hw9.App"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_cat"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher_cat_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".hw9.DetailActivity"></activity>
+        <activity android:name=".hw9.DetailActivity"/>
         <activity android:name=".hw9.DetailMonthActivity" />
-        <activity android:name=".hw9.Main9Activity" />
+        <activity android:name=".hw9.Main9Activity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+
+        </activity>
 
         <service android:name=".hw7.SearchService" />
         <service android:name=".hw7.PhotoService" />
@@ -55,14 +65,8 @@
         <activity android:name=".hw1.GameOverActivity" />
         <activity android:name=".hw1.SecondActivity" />
         <activity
-            android:name=".Prime_Activity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:name=".Prime_Activity">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".hw4.ProfilActivity" />
 

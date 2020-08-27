@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MySympleApplication</string>
+    <string name="app_name">бубкины расходы</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="second_activity_label">Answer</string>
@@ -40,7 +40,7 @@
     <string name="_242_ratings">242 ratings</string>
     <string name="nameUser">Name</string>
     <string name="User_description">Description</string>
-    <string name="input_values">input values</string>
+    <string name="input_values">редактировать:</string>
     <string name="date">date</string>
     <string name="value">value</string>
     <string name="_4_recyclerview">4-я (recyclerView)</string>

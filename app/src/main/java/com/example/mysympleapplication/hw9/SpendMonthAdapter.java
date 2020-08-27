@@ -1,13 +1,16 @@
 package com.example.mysympleapplication.hw9;
 
 import android.annotation.SuppressLint;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mysympleapplication.R;
@@ -21,11 +24,12 @@ public class SpendMonthAdapter extends RecyclerView.Adapter<SpendMonthAdapter.Mo
     public SpendMonthAdapter(List<SumSpendsOfMonth> cardViewList) {
         this.cardViewList = cardViewList;
     }
+
     interface SpendMonthListener {
         void onSpendMonthClickListener(String date);
     }
 
-     void setSpendMonthListener(SpendMonthListener spendlistener) {
+    void setSpendMonthListener(SpendMonthListener spendlistener) {
         this.listener = spendlistener;
     }
 
@@ -39,8 +43,13 @@ public class SpendMonthAdapter extends RecyclerView.Adapter<SpendMonthAdapter.Mo
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull MonthSpendsHolder holder, final int position) {
-        holder.valueMonthSpends.setText(" --  " + cardViewList.get(position).getValue_spends() + " BYN ");
+        holder.valueMonthSpends.setText( cardViewList.get(position).getValue_spends() + " BYN ");
         holder.date.setText(cardViewList.get(position).getDateM());
+        Months month = Months.getMonth(cardViewList.get(position).getDateM());
+        int image=month.getImageMonth();
+        Drawable drawable = ContextCompat.getDrawable(holder.cardView.getContext(), image);
+        holder.imageView.setImageDrawable(drawable);
+        holder.nameSpends.setText(month.getNameMonth());
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,12 +70,17 @@ public class SpendMonthAdapter extends RecyclerView.Adapter<SpendMonthAdapter.Mo
         private CardView cardView;
         private TextView valueMonthSpends;
         private TextView date;
+        private ImageView imageView;
+        private TextView nameSpends;
 
         MonthSpendsHolder(@NonNull CardView cardV) {
             super(cardV);
             cardView = cardV;
             valueMonthSpends = cardView.findViewById(R.id.value_month_spends);
             date = cardView.findViewById(R.id.date);
+            imageView = cardView.findViewById(R.id.imageSpend);
+            nameSpends = cardView.findViewById(R.id.name_for_spend);
+
         }
     }
 }

@@ -97,9 +97,11 @@ public class NotificationSmsService extends IntentService {
                             .setSmallIcon(R.drawable.ic_money_24dp)
                             .setContentTitle("Сохранить платеж ?")
                             .setContentText(body)
-                            //   .setCategory(Notification.CATEGORY_MESSAGE)
+                               .setCategory(Notification.CATEGORY_MESSAGE)
                             .addAction(action)
                             .setColor(Color.GREEN)
+                            .setStyle(new NotificationCompat.BigTextStyle()
+                                    .bigText(body))
                             .setGroup(group)
                             .build();
                     Notification notificationSumm = new NotificationCompat.Builder(this, App.CHANNEL_1)

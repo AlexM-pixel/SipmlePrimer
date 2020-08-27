@@ -26,7 +26,9 @@ public enum NameSends {
     OSTIN(R.drawable.icon_ostin_48, "OSTIN","OSTIN \n магазин"),
     MILE(R.drawable.icon_mile_48, "MILE","MILE \n стройМагаз"),
     BIGZZ(R.drawable.icon_shop_48, "HYPERMARKET BIGZZ","BIGZZ \n магазин"),
-    KOMMUNALNIEPLATEGHI(R.drawable.icon_kommunalnie_48, "KOMMUNALNIE PLATEGHI","Коммунальные \n платежи");
+    KOMMUNALNIEPLATEGHI(R.drawable.icon_kommunalnie_48, "KOMMUNALNIE PLATEGHI","Коммунальные \n платежи"),
+    OZZ(R.drawable.icon_atrbook, "PRINOSIM RADOST","OZ"),
+    SPORTMASTER(R.drawable.sport, "SPORTMASTER","Спорт Мастер");
     private int image;
     private String nameSpand;
     private String russianName;

@@ -72,7 +72,7 @@ public class SmsReciever extends BroadcastReceiver {
                 Notification repliedNotification =
                         new NotificationCompat.Builder(context, App.CHANNEL_1)
                                 .setSmallIcon(R.mipmap.ic_launcher)
-                                .setContentText("Saved")
+                                .setContentText("Платеж сохранен")
                                 .build();
                 NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
                 notificationManager.notify(id_Notification, repliedNotification);
