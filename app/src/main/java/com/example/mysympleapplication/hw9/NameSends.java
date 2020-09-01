@@ -20,7 +20,7 @@ public enum NameSends {
     SMS_OPOVESHENIE(R.drawable.icon_sms_48, "SMS OPOVESCHENIE","Смс-оповещение"),
     WILDBERRIES(R.drawable.icon_wildberris_48, "WILDBERRIES","Wildberries"),
     KONKI_POKATUSHKI(R.drawable.icon_konki_48, "SDYUSHOR PO FIG. KATANIYU","Массовые\n катания "),
-    BASMA(R.drawable.icon_basma_48, "'BASMA'","BASMA \n парикмахерская"),
+    BASMA(R.drawable.icon_basma_48, "BASMA","BASMA"),
     KINOTEATR(R.drawable.icon_kino_48, "KINOTEATR","Кинотеатр"),
     RUBLEVSRKY(R.drawable.icon_shop_48, "RUBLEVSKIY","Рублевский"),
     OSTIN(R.drawable.icon_ostin_48, "OSTIN","OSTIN \n магазин"),
