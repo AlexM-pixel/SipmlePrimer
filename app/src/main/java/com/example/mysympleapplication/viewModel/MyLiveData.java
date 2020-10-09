@@ -11,21 +11,18 @@ import android.util.Log;
 import android.util.Pair;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Transformations;
 
 import com.example.mysympleapplication.model.MyRetrofit;
-import com.example.mysympleapplication.model.SampleWeather;
+import com.example.mysympleapplication.model.dataWeather.SampleWeather;
 import com.example.mysympleapplication.model.WeatherService;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MyLiveData extends LiveData<Integer> {
+public class MyLiveData extends MediatorLiveData<Pair<SampleWeather, SampleWeather>> {
     LocationManager locationManager;
     LocationListener locationListener;
     Context context;
@@ -55,23 +52,15 @@ public class MyLiveData extends LiveData<Integer> {
                 getOtherWeather(SPAIN_LAT, SPAIN_LON);    // и параллельно запускаю метод получения погоды в другой стране
             }
         }
-        if (current_weather.getValue() != null && spain_weather.getValue() != null) {
-            MediatorLiveData<Pair<SampleWeather, SampleWeather>> pairMediatorLiveData = new MediatorLiveData<>();
-            pairMediatorLiveData.addSource(current_weather, currentValue -> pairMediatorLiveData.setValue(Pair.create(currentValue, spain_weather.getValue())));
-            pairMediatorLiveData.addSource(spain_weather, spainValue -> pairMediatorLiveData.setValue(Pair.create(current_weather.getValue(), spainValue)));
-            Transformations.switchMap(pairMediatorLiveData, temp -> getTemp(temp.first.fact.temp, temp.second.fact.temp));
-        }
-    }
+        addSource(current_weather, curWeather-> {
+                Log.e("AScs","current weather onChanged " + curWeather.getFact().getTemp());
+                setValue(Pair.create(curWeather, spain_weather.getValue()));
+        });
+        addSource(spain_weather, spainWeather -> {
+            Log.e("AScs","spain weather onChanged " + spainWeather.getFact().getTemp());
+            setValue(Pair.create(current_weather.getValue(), spainWeather));
+        });
 
-    private LiveData<Integer> getTemp(int currentTemp, int spainTemp) {
-        LiveData<Integer> liveData = new LiveData<Integer>() {
-            @Override
-            protected void setValue(Integer value) {
-                super.setValue(Math.max(currentTemp, spainTemp));
-            }
-        };
-
-        return liveData;
     }
 
 
@@ -84,8 +73,12 @@ public class MyLiveData extends LiveData<Integer> {
             @Override
             public void onResponse(Call<SampleWeather> call, Response<SampleWeather> response) {
                 SampleWeather weather = response.body();
-                current_weather.setValue(weather);
-                Log.e("AScs", "onFailure ," + weather.fact.temp);
+                if (weather != null) {
+                    current_weather.setValue(weather);
+                    Log.e("AScs", response.message());
+                } else {
+                    Log.e("AScs", "current_weather = null" + response.toString());
+                }
             }
 
             @Override
@@ -93,7 +86,6 @@ public class MyLiveData extends LiveData<Integer> {
                 Log.e("!!!", "onFailure ," + t.getMessage());
             }
         });
-
     }
 
     private void getOtherWeather(String lat, String lon) {      // получаю погоду в Испании и заношу значение во вторую лайвдату

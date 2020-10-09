@@ -1,4 +1,4 @@
-package com.example.mysympleapplication.model;
+package com.example.mysympleapplication.model.dataWeather;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -6,9 +6,9 @@ import java.io.Serializable;
 
 public class Forecasts implements Serializable {
     @SerializedName("date")
-    String date;
+    private String date;
     @SerializedName("temp_min")
-    int tempMin;
+    private int tempMin;
     @SerializedName("temp_max")
-    int tempMax;
+    private int tempMax;
 }
