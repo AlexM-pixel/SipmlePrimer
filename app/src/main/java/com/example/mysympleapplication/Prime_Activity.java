@@ -14,8 +14,8 @@ import com.example.mysympleapplication.hw4.Main4Activity;
 import com.example.mysympleapplication.hw5.Main5Activity;
 import com.example.mysympleapplication.hw6.Main6Activity;
 import com.example.mysympleapplication.hw7.Main7Activity;
-import com.example.mysympleapplication.hw7.SearcFilesActivity;
 import com.example.mysympleapplication.hw8.Main8Activity;
+import com.example.mysympleapplication.hw9.Main9Activity;
 
 public class Prime_Activity extends AppCompatActivity {
     Intent intent;
@@ -32,6 +32,7 @@ public class Prime_Activity extends AppCompatActivity {
         Button homeWork6 = findViewById(R.id.button6HW);
         Button homeWork7 = findViewById(R.id.button7HW);
         Button homework8 = findViewById(R.id.button8HW);
+        Button homework9 = findViewById(R.id.button9HW);
         homeWork1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,6 +86,13 @@ public class Prime_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 intent = new Intent(Prime_Activity.this, Main8Activity.class);
+                startActivity(intent);
+            }
+        });
+        homework9.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(Prime_Activity.this, Main9Activity.class);
                 startActivity(intent);
             }
         });
