@@ -88,4 +88,35 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/button5HW"
         app:layout_constraintTop_toBottomOf="@+id/divider2" />
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="?android:attr/listDivider"
+        android:foreground="@color/colorGreen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button5HW" />
+    <Button
+        android:id="@+id/button7HW"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="@string/threads"
+        app:layout_constraintEnd_toStartOf="@id/button8HW"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider3" />
+    <Button
+        android:id="@+id/button8HW"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:paddingStart="18dp"
+        android:paddingEnd="18dp"
+        android:text="@string/weather_button_string"
+        app:layout_constraintTop_toBottomOf="@id/divider3"
+        app:layout_constraintStart_toEndOf="@id/button7HW"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,29 +1,15 @@
 package com.example.mysympleapplication.hw6;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.example.mysympleapplication.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
-import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.firebase.messaging.FirebaseMessagingService;
-import com.google.firebase.messaging.RemoteMessage;
 
 public class Main6Activity extends AppCompatActivity {
-
-    public static boolean isMainActivityRun;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,17 +24,5 @@ public class Main6Activity extends AppCompatActivity {
             }
         });
 
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        isMainActivityRun = true;
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        isMainActivityRun = false;
     }
 }
