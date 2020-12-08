@@ -15,10 +15,14 @@ import androidx.core.app.NotificationManagerCompat;
 import androidx.core.app.RemoteInput;
 
 import com.example.mysympleapplication.R;
+import com.example.mysympleapplication.hw9.model.Balance;
+import com.example.mysympleapplication.hw9.model.Postuplenie;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -35,6 +39,8 @@ public class NotificationSmsService extends IntentService {
     public static final String EXTRA_TEXT_REPLY = "key_text_reply";
     private static int NOTIFY_ID_GROUP = 2125;
     private static final String GROUP_ID_SAVE_SPENDS = "unknownSpend_Group";
+    private List<String> wordsListPost = Arrays.asList("Ostatok", "OST");
+
 
     public NotificationSmsService() {
         super("SMS_Notification");
@@ -44,6 +50,9 @@ public class NotificationSmsService extends IntentService {
     protected void onHandleIntent(@Nullable Intent intent) {
         if (intent != null) {
             String body_sms = intent.getStringExtra(SmsReciever.SMS_BODY);
+            if (body_sms != null) {
+                body_sms = body_sms.toLowerCase();
+            }
             String adressat_sms = intent.getStringExtra(SmsReciever.SMS_ADDRESSAT);
             if (adressat_sms == null) {
                 String spendNameNew = intent.getStringExtra(SmsReciever.NAME_UNKNOWN_PAY);
@@ -60,10 +69,14 @@ public class NotificationSmsService extends IntentService {
         Set<String> bankSet = mSettings.getStringSet(PREFERENCES_FROM, null);
         if (bankSet != null) {
             for (String stringSet : bankSet) {
-                if (addressat.equals(stringSet)) {
+                if (addressat.equals(stringSet)) {                                                   // add toLowerCase
+                    if (body.contains("popolnenie") || body.contains("postuplenie")) {
+                        insertNewPostuplenie(body);
+                        return;
+                    }
                     NameSends[] nameSends = NameSends.values();
                     for (int i = 0; i < nameSends.length; i++) {
-                        if (body.contains(nameSends[i].getNameSpand())) {
+                        if (body.contains(nameSends[i].getNameSpand().toLowerCase() )) {
                             getValueFromSms(nameSends[i].getRussianName(), body);
                             Log.e("AScs", nameSends[i].getNameSpand() + " , " + nameSends[i].getRussianName() + " , find");
                             return;
@@ -97,7 +110,7 @@ public class NotificationSmsService extends IntentService {
                             .setSmallIcon(R.drawable.ic_money_24dp)
                             .setContentTitle("Сохранить платеж ?")
                             .setContentText(body)
-                               .setCategory(Notification.CATEGORY_MESSAGE)
+                            .setCategory(Notification.CATEGORY_MESSAGE)
                             .addAction(action)
                             .setColor(Color.GREEN)
                             .setStyle(new NotificationCompat.BigTextStyle()
@@ -127,17 +140,72 @@ public class NotificationSmsService extends IntentService {
     private void getValueFromSms(String spendName, String message) {
         String date = "";
         String value = "";
-        Pattern patternValue = Pattern.compile("([Summa]+)(.*)([BYN])");
+        Pattern patternValue = Pattern.compile("(summa+)(.*)([byn])");
         Matcher matcherValue = patternValue.matcher(message);
         if (matcherValue.find()) {
             value = matcherValue.group();
         }
-        value = value.substring(6, value.indexOf("BYN"));
+        value = value.substring(6, value.indexOf("byn"));
         Date getdate = new Date();
         SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         date = newDateFormat.format(getdate);
         Spend spend = new Spend(null, spendName, value, date);
         MyAppDataBase.getInstance().spendDao().insert(spend);
         Log.e("AScs", "getValueFromSms" + " ," + spend.getValue() + " , " + spend.getSpendName() + " , " + spend.getDate());
+
+        for (int i = 0; i < wordsListPost.size(); i++) {
+            String word = "\\b" + wordsListPost.get(i).toLowerCase() + "\\b";
+            Pattern patternString = Pattern.compile(word);
+            Matcher matcherMss = patternString.matcher(message);
+            if (matcherMss.find()) {
+                checkBalance(wordsListPost.get(i).toLowerCase(), message);
+            }
+        }
     }
+
+    private void insertNewPostuplenie(String body) {
+        String value = "";
+        Pattern patternValue = Pattern.compile("(summa+)(.*)([byn])");    // сумма поступления
+        Matcher matcherValue = patternValue.matcher(body);
+        if (matcherValue.find()) {
+            value = matcherValue.group();
+        }
+        value = value.substring(6, value.indexOf("byn"));
+        Date getdate = new Date();
+        SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String date = newDateFormat.format(getdate);
+        //  date="2020-12-12";
+        Postuplenie postuplenie = new Postuplenie(null, value, date);
+        MyAppDataBase.getInstance().postuplenieDao().insert(postuplenie);
+
+        for (int i = 0; i < wordsListPost.size(); i++) {
+            String word = "\\b" + wordsListPost.get(i).toLowerCase() + "\\b";
+            Pattern patternString = Pattern.compile(word);
+            Matcher matcherMss = patternString.matcher(body);
+            if (matcherMss.find()) {
+                checkBalance(wordsListPost.get(i).toLowerCase(), body);
+            }
+        }
+    }
+
+    private void checkBalance(String body, String message) {
+        String ostatok = "0";
+        Pattern pattern = Pattern.compile("(OST+)(.*)([BYN])");
+        switch (body) {
+            case "ost":
+                pattern = Pattern.compile("(ost+)(.*)([byn])");
+                break;
+            case "ostatok":
+                pattern = Pattern.compile("(ostatok+)(.*)([byn])");
+                break;
+        }
+        Matcher matcherValue = pattern.matcher(message);
+        if (matcherValue.find()) {
+            ostatok = matcherValue.group();
+            ostatok = ostatok.replaceAll("[^0-9.]", "");
+        }
+        Balance balance = new Balance(0L, ostatok);
+        MyAppDataBase.getInstance().balanceDao().insertB(balance);
+    }
+
 }

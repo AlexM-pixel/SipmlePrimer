@@ -2,7 +2,7 @@ package com.example.mysympleapplication.hw9;
 
 import androidx.room.ColumnInfo;
 
-class CalendarSpends {
+public class CalendarSpends {
     @ColumnInfo(name = "id")
     private String id;
 @ColumnInfo(name = "totalValue")

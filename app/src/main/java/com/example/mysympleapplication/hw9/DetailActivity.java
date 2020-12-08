@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +17,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -22,7 +25,9 @@ import android.widget.Toast;
 
 import com.example.mysympleapplication.R;
 import com.example.mysympleapplication.hw5.Main5Activity;
+import com.example.mysympleapplication.hw9.viewModel.MyViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DetailActivity extends AppCompatActivity {
@@ -46,11 +51,21 @@ public class DetailActivity extends AppCompatActivity {
         Log.e("AScs", "onCreate() " + arguments.getString(DetailMonthActivity.DATE));
         colorRed = new ColorDrawable(Color.parseColor("#ff0000"));
         colorBlue = new ColorDrawable(Color.parseColor("#6200EE"));
+        spendList = new ArrayList<>();
+        MyViewModel myViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(MyViewModel.class);
         if (arguments != null) {
             date = arguments.getString(DetailMonthActivity.DATE);
             name = arguments.getString(DetailMonthActivity.NAME_SPEND);
-            spendList = MyAppDataBase.getInstance().spendDao().getAll(date, name);
+            myViewModel.detailData.setValue(Pair.create(date, name));
+            //  spendList = MyAppDataBase.getInstance().spendDao().getAll(date, name);
         }
+        myViewModel.detailCalendarSpends.observe(this, new Observer<List<CalendarSpends>>() {
+            @Override
+            public void onChanged(List<CalendarSpends> calendarSpends) {
+                spendList=calendarSpends;
+                adapter.setDetailMonthList(calendarSpends);
+            }
+        });
         RecyclerView recyclerView = findViewById(R.id.recycler_for_detail_spends);
         adapter = new DetailMonthAdapter(spendList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -62,7 +77,6 @@ public class DetailActivity extends AppCompatActivity {
                 makeDialogToDelete(id, position);
             }
         });
-
 
         final ItemTouchHelper touchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
@@ -153,11 +167,11 @@ public class DetailActivity extends AppCompatActivity {
                 .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Spend mySpend = new Spend(Long.parseLong(id),userInputName.getText().toString(),userInputValue.getText().toString(),spend.getDate());
+                        Spend mySpend = new Spend(Long.parseLong(id), userInputName.getText().toString(), userInputValue.getText().toString(), spend.getDate());
                         MyAppDataBase.getInstance().spendDao().update(mySpend);
                         spend.setSpendName(userInputName.getText().toString());
                         spend.setTotalValue(userInputValue.getText().toString());
-                        spendList.set(position,spend);
+                        spendList.set(position, spend);
                         adapter.notifyDataSetChanged();
                     }
                 })

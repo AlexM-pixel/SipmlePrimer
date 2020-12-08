@@ -6,9 +6,13 @@ import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {Spend.class}, version = 1)
+import com.example.mysympleapplication.hw9.model.Balance;
+import com.example.mysympleapplication.hw9.model.Postuplenie;
+
+@Database(entities = {Spend.class, Postuplenie.class, Balance.class}, version = 3)
 public abstract class MyAppDataBase extends RoomDatabase {
 
     private static MyAppDataBase INSTANCE;
@@ -17,24 +21,48 @@ public abstract class MyAppDataBase extends RoomDatabase {
     public static MyAppDataBase getInstance() {
         if (INSTANCE == null) {
             synchronized (MyAppDataBase.class) {
-              //  if (INSTANCE == null) {
-                    INSTANCE = Room.databaseBuilder(App.context.getApplicationContext(),
-                            MyAppDataBase.class, DB_NAME)
-                            .addCallback(new RoomDatabase.Callback() {
-                                @Override
-                                public void onCreate(@NonNull SupportSQLiteDatabase db) {
-                                    super.onCreate(db);
-                                    Log.d("MedicalDatabase", "populating with data...");
-                                  //  new UserDbAsync(INSTANCE).execute();
-                                }
-                            })
-                                  .allowMainThreadQueries()
-                            .build();
-                }
-          //  }
+                //  if (INSTANCE == null) {
+                INSTANCE = Room.databaseBuilder(App.context.getApplicationContext(),
+                        MyAppDataBase.class, DB_NAME)
+                        .addCallback(new RoomDatabase.Callback() {
+                            @Override
+                            public void onCreate(@NonNull SupportSQLiteDatabase db) {
+                                super.onCreate(db);
+                                //  new UserDbAsync(INSTANCE).execute();
+                            }
+                        })
+                        .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
+                        .allowMainThreadQueries()
+                        .build();
+            }
+            //  }
         }
         return INSTANCE;
     }
+
+    public abstract PostuplenieDao postuplenieDao();
+
     public abstract SpendDao spendDao();
 
+    public abstract BalanceDao balanceDao();
+
+    private static Migration MIGRATION_2_3 = new Migration(2, 3) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("CREATE TABLE balance" +
+                    " (" +
+                    "id INTEGER PRIMARY KEY ," +
+                    "balance TEXT" + ")");
+        }
+    };
+    private static Migration MIGRATION_1_2 = new Migration(1, 2) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("CREATE TABLE postuplenie" +
+                    " (" +
+                    "id INTEGER PRIMARY KEY ," +
+                    "value TEXT ," +
+                    "date TEXT"+")");
+        }
+    };
 }

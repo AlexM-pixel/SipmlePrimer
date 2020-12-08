@@ -25,9 +25,13 @@ public enum NameSends {
     RUBLEVSRKY(R.drawable.icon_shop_48, "RUBLEVSKIY","Рублевский"),
     OSTIN(R.drawable.icon_ostin_48, "OSTIN","OSTIN \n магазин"),
     MILE(R.drawable.icon_mile_48, "MILE","MILE \n стройМагаз"),
+    MATERIK(R.drawable.icon_mile_48, "MATERIK","MATERIK \n стройМагаз"),
     BIGZZ(R.drawable.icon_shop_48, "HYPERMARKET BIGZZ","BIGZZ \n магазин"),
     KOMMUNALNIEPLATEGHI(R.drawable.icon_kommunalnie_48, "KOMMUNALNIE PLATEGHI","Коммунальные \n платежи"),
     OZZ(R.drawable.icon_atrbook, "PRINOSIM RADOST","OZ"),
+    BUSLIK(R.drawable.icons_buslik, "BUSLIK","Буслик"),
+    FUNTASTIK(R.drawable.icons_lego, "FUNTASTIK","FUNTASTIK \n магазин"),
+    APTEK(R.drawable.icon_apteka_48, " BELFARMATSIYA APTEK","Аптека"),
     SPORTMASTER(R.drawable.sport, "SPORTMASTER","Спорт Мастер");
     private int image;
     private String nameSpand;

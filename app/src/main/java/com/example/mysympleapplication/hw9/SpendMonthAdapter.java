@@ -65,6 +65,11 @@ public class SpendMonthAdapter extends RecyclerView.Adapter<SpendMonthAdapter.Mo
     public int getItemCount() {
         return cardViewList.size();
     }
+    public void setCardViewList(List<SumSpendsOfMonth> list) {
+        cardViewList.clear();
+        cardViewList=list;
+        notifyDataSetChanged();
+    }
 
     static class MonthSpendsHolder extends RecyclerView.ViewHolder {
         private CardView cardView;

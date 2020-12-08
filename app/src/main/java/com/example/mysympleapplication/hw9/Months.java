@@ -16,7 +16,7 @@ public enum Months {
     SEPTEMBER(R.drawable.icon_september_48,"09","Сентябрь"),
     OCTOBER(R.drawable.icon_october_48,"10","Октябрь"),
     NOVEMBER(R.drawable.icon_november_48,"11","Ноябрь"),
-    DECEMBER(R.drawable.icon_dec_48,"12","Январь"),
+    DECEMBER(R.drawable.icon_dec_48,"12","Декабрь"),
     UNKNOWN_MONTH(R.drawable.ic_delete_forever_black_24dp,"--//--","дата отсутствует!");
     private int imageMonth;
     private String dateMonth;

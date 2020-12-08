@@ -25,6 +25,16 @@ public class DetailMonthAdapter extends RecyclerView.Adapter<DetailMonthAdapter.
     public DetailMonthAdapter(List<CalendarSpends> list) {
         this.calendarSpendsList = list;
     }
+    public DetailMonthAdapter(){
+
+    }
+
+
+    public void setDetailMonthList(List<CalendarSpends> list) {
+      //  calendarSpendsList.clear();
+        calendarSpendsList=list;
+        notifyDataSetChanged();
+    }
 
     interface DeleteSpendListener {
         void onDeleteClickListener(String id,int position);
