@@ -8,10 +8,18 @@ import androidx.room.Update;
 
 import java.util.List;
 
+import retrofit2.http.GET;
+
 @Dao
 public interface SpendDao {
     @Insert
     void insert(Spend spend);
+
+    @Insert
+    void inserAll(List<Spend> spendList);
+
+    @Query("SELECT * FROM spends")
+    List<Spend> getAllSpends();
 
     @Update
     void update(Spend spend);
@@ -26,6 +34,6 @@ public interface SpendDao {
     LiveData<List<SumSpendsOfMonth>> getSumMonth();
 
     @Query("SELECT SUM(value) as totalValue, date, spendName FROM spends WHERE strftime(\"%m-%Y\", date)=strftime( :choiceDate) GROUP BY spendName ORDER BY date DESC")
-   LiveData< List<CalendarSpends>> getMonthSpends(String choiceDate);
+    LiveData<List<CalendarSpends>> getMonthSpends(String choiceDate);
 
 }

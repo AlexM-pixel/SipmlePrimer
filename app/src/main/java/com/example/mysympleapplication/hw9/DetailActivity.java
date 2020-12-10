@@ -4,13 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -21,14 +21,18 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.mysympleapplication.R;
-import com.example.mysympleapplication.hw5.Main5Activity;
+import com.example.mysympleapplication.hw9.view.auth.EmailPasswordActivity;
 import com.example.mysympleapplication.hw9.viewModel.MyViewModel;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.mysympleapplication.hw9.Main9Activity.APP_PREFERENCES;
 
 public class DetailActivity extends AppCompatActivity {
     private List<CalendarSpends> spendList;
@@ -39,12 +43,13 @@ public class DetailActivity extends AppCompatActivity {
     Drawable editIcon;
     ColorDrawable colorRed;
     ColorDrawable colorBlue;
+    FirebaseFirestore firestore;
+    CollectionReference fireRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-
         Bundle arguments = getIntent().getExtras();
         deleteIcon = ContextCompat.getDrawable(this, R.drawable.delete_forever_black_24dp);
         editIcon = ContextCompat.getDrawable(this, R.drawable.edit_24);
@@ -59,12 +64,9 @@ public class DetailActivity extends AppCompatActivity {
             myViewModel.detailData.setValue(Pair.create(date, name));
             //  spendList = MyAppDataBase.getInstance().spendDao().getAll(date, name);
         }
-        myViewModel.detailCalendarSpends.observe(this, new Observer<List<CalendarSpends>>() {
-            @Override
-            public void onChanged(List<CalendarSpends> calendarSpends) {
-                spendList=calendarSpends;
-                adapter.setDetailMonthList(calendarSpends);
-            }
+        myViewModel.detailCalendarSpends.observe(this, calendarSpends -> {
+            spendList = calendarSpends;
+            adapter.setDetailMonthList(calendarSpends);
         });
         RecyclerView recyclerView = findViewById(R.id.recycler_for_detail_spends);
         adapter = new DetailMonthAdapter(spendList);
@@ -126,6 +128,14 @@ public class DetailActivity extends AppCompatActivity {
             }
         });
         touchHelper.attachToRecyclerView(recyclerView);
+        //[Start create firestore objects]
+        SharedPreferences sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE);
+        String emailCurrentUser = sPref.getString(EmailPasswordActivity.EMAIL_USER, "empty");
+        firestore = FirebaseFirestore.getInstance();
+        fireRef = firestore.collection(emailCurrentUser)
+                .document("spends")
+                .collection("spends");
+        // [End Firestore object create]
     }
 
 
@@ -137,6 +147,7 @@ public class DetailActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         MyAppDataBase.getInstance().spendDao().delete(id);
+                        delSpendFirestore(id);
                         spendList.remove(position);
                         adapter.notifyItemRemoved(position);
                     }
@@ -169,6 +180,7 @@ public class DetailActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         Spend mySpend = new Spend(Long.parseLong(id), userInputName.getText().toString(), userInputValue.getText().toString(), spend.getDate());
                         MyAppDataBase.getInstance().spendDao().update(mySpend);
+                        updateSpendToFireStore(mySpend);
                         spend.setSpendName(userInputName.getText().toString());
                         spend.setTotalValue(userInputValue.getText().toString());
                         spendList.set(position, spend);
@@ -184,6 +196,29 @@ public class DetailActivity extends AppCompatActivity {
                 });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    private void delSpendFirestore(String id) {
+        fireRef.document(id)
+                .delete()
+                .addOnSuccessListener(v -> {
+                    Log.e(EmailPasswordActivity.TAG, "document delete");
+                }).addOnFailureListener(f -> {
+            Log.e(EmailPasswordActivity.TAG, "delete Failed");
+        });
+
+
+    }
+
+    private void  updateSpendToFireStore(Spend mySpend) {
+        fireRef.document(mySpend.getId().toString())
+                .set(mySpend)
+                .addOnSuccessListener(v -> {
+                    Log.e(EmailPasswordActivity.TAG, "document update");
+                })
+                .addOnFailureListener(f -> {
+                    Log.e(EmailPasswordActivity.TAG, "update Failed");
+                });
     }
 
 }

@@ -1,6 +1,7 @@
 package com.example.mysympleapplication.hw9.view.auth;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,10 +13,13 @@ import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.WorkerThread;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.mysympleapplication.R;
 import com.example.mysympleapplication.hw9.Main9Activity;
+import com.example.mysympleapplication.hw9.MyAppDataBase;
+import com.example.mysympleapplication.hw9.Spend;
 import com.example.mysympleapplication.hw9.view.iu.BaseActivity;
 import com.example.mysympleapplication.hw9.view.iu.dialogues.FragmentDialogAlert;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -23,6 +27,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class EmailPasswordActivity extends BaseActivity implements View.OnClickListener {
 
@@ -30,14 +42,17 @@ public class EmailPasswordActivity extends BaseActivity implements View.OnClickL
     public static final String TAG = "EmailPassword";
     private int count = 0;
     private FirebaseAuth mAuth;
+    FirebaseFirestore firestore;
+    CollectionReference cRef;
+    ExecutorService service;
     private FragmentManager fm;
-    private Button emailSignInButton;
-    private Button emailCreateAccountButton;
     private EditText emailText;
     private EditText passwordText;
     public static final int AUTH_REQUEST = 15;
     private FragmentDialogAlert alertDialogFragment;
     public static final String ALERT_DIALOG = "alert_dialog";
+    public static final String EMAIL_USER = "Firebase_auth_email";
+    private SharedPreferences sPref;
 
 
     @Override
@@ -48,11 +63,13 @@ public class EmailPasswordActivity extends BaseActivity implements View.OnClickL
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
         // [END initialize_auth]
+        firestore = FirebaseFirestore.getInstance();
+
         emailText = findViewById(R.id.field_email);
         passwordText = findViewById(R.id.field_password);
         //Buttons
-        emailSignInButton = findViewById(R.id.email_sign_in_button);
-        emailCreateAccountButton = findViewById(R.id.email_create_account_button);
+        Button emailSignInButton = findViewById(R.id.email_sign_in_button);
+        Button emailCreateAccountButton = findViewById(R.id.email_create_account_button);
         emailCreateAccountButton.setOnClickListener(this);
         alertDialogFragment = new FragmentDialogAlert();
         emailSignInButton.setOnClickListener(this);
@@ -83,6 +100,18 @@ public class EmailPasswordActivity extends BaseActivity implements View.OnClickL
                         Log.e(TAG, "signInWithEmail:success");
                         FirebaseUser user = mAuth.getCurrentUser();
                         updateUI(user);
+                        if (user != null) {
+                            cRef = firestore
+                                    .collection(user.getEmail())
+                                    .document("spends")
+                                    .collection("spends");
+                            // start new Thread:
+                            service = Executors.newSingleThreadExecutor();
+                            Runnable run = () -> geAllFromFireStore();
+                            service.submit(run);
+                            service.shutdown();
+                            saveEmailCurrentUser(user);
+                        }
                         count = 0;
                     } else {
                         // If sign in fails, display a message to the user.
@@ -114,7 +143,7 @@ public class EmailPasswordActivity extends BaseActivity implements View.OnClickL
                                         alertDialogFragment.setArguments(bundle);
                                         if (!alertDialogFragment.isAdded()) {
                                             alertDialogFragment.show(fm, "badly email");
-                                        }else {
+                                        } else {
                                             alertDialogFragment.dismiss();
                                             alertDialogFragment.show(fm, "badly email");
                                         }
@@ -152,6 +181,7 @@ public class EmailPasswordActivity extends BaseActivity implements View.OnClickL
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
+                            saveEmailCurrentUser(user );
                         } else {
                             Log.e(TAG, "createUserWithEmail:failure", task.getException());
                             Bundle bundle = new Bundle();
@@ -166,7 +196,7 @@ public class EmailPasswordActivity extends BaseActivity implements View.OnClickL
                                 alertDialogFragment.setArguments(bundle);
                                 alertDialogFragment.show(fm, "badly email");
                             }
-                           // updateUI(null);
+                            // updateUI(null);
                         }
                         // [START_EXCLUDE]
                         hideProgressBar();
@@ -174,6 +204,13 @@ public class EmailPasswordActivity extends BaseActivity implements View.OnClickL
                     }
                 });
         // [END create_user_with_email]
+    }
+
+    private void saveEmailCurrentUser(FirebaseUser user) {
+        sPref = getSharedPreferences(Main9Activity.APP_PREFERENCES, MODE_PRIVATE);
+        sPref.edit()
+                .putString(EMAIL_USER, user.getEmail())
+                .apply();
     }
 
     private boolean validateForm() {
@@ -207,6 +244,7 @@ public class EmailPasswordActivity extends BaseActivity implements View.OnClickL
     private void updateUI(FirebaseUser user) {
         hideProgressBar();
         if (user != null) {
+
             Intent intent = new Intent(this, Main9Activity.class);
             startActivityForResult(intent, AUTH_REQUEST);
         } else {
@@ -214,10 +252,71 @@ public class EmailPasswordActivity extends BaseActivity implements View.OnClickL
         }
     }
 
+    private void checkDbFirestore(List<Spend> spendListFirestore) {
+        List<Spend> spendListRoom = MyAppDataBase.getInstance().spendDao().getAllSpends();
+        if (spendListFirestore.size() > 0 && spendListRoom != null && spendListRoom.size() == 0) {        // если в firestore по этому аккаунту что-то есть а в room пусто добавляю все в room db
+            Log.e(TAG, spendListFirestore.size() + ":  колличество элементов в firestore");
+            saveSpendRoom(spendListFirestore);
+        }
+        if (spendListFirestore.size() == 0 && spendListRoom != null && spendListRoom.size() > 0) {
+            saveSpendFireStore(spendListRoom);
+        }
+        Log.e(TAG, spendListFirestore.size() + ":  колличество элементов в firestore");
+        Log.e(TAG, spendListRoom.size() + ":  колличество элементов в room");
+    }
+
+
+    // запихнуть все в onStart()
+
+    @WorkerThread
+    public void geAllFromFireStore() {                                                        // получаю все затраты из коллекции firestore и заношу их в список
+        List<Spend> allItems = new ArrayList<>();
+        cRef.get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            long id = document.getLong("id");
+                            String name = String.valueOf(document.get("spendName"));
+                            String value = String.valueOf(document.get("value"));
+                            String date = String.valueOf(document.get("date"));
+                            Spend spend = new Spend(id, name, value, date);
+                            Log.e(TAG, spend.getId() + " " + spend.getSpendName() + " " + spend.getValue());
+                            allItems.add(spend);
+                            Log.e(TAG, allItems.get(0).getId() + " " + allItems.size());
+                        }
+                        Log.e(TAG, Thread.currentThread().getName() + " allItemsSize= " + allItems.size());
+                    } else {
+                        Log.e(TAG, "Error getting documents.", task.getException());
+                    }
+                    if (task.isComplete()) {
+                        Log.e(TAG, Thread.currentThread().getName() + " allItemsSize= " + allItems.size());
+                        checkDbFirestore(allItems);
+
+                    }
+                });
+    }
+
+    private void saveSpendRoom(List<Spend> spendListFirestore) {
+        MyAppDataBase.getInstance().spendDao().inserAll(spendListFirestore);
+    }
+
+    private void saveSpendFireStore(List<Spend> spendsList) {
+        for (Spend spend : spendsList) {
+            cRef.document(spend.getId().toString())
+                    .set(spend)
+                    .addOnSuccessListener(v -> {
+                        Log.e(TAG, "saved spend in firestore from room");
+                    })
+                    .addOnFailureListener(f -> {
+                        Log.e(TAG, "Save Failed");
+                    });
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == AUTH_REQUEST && resultCode == RESULT_OK) {                                                // чтобы опять не заходило в это Активити если пользователь уже залогинелся
+        if (requestCode == AUTH_REQUEST && resultCode == RESULT_OK) {                                           // чтобы опять не заходило в это Активити если пользователь уже залогинелся
             finish();
         }
     }
@@ -232,11 +331,5 @@ public class EmailPasswordActivity extends BaseActivity implements View.OnClickL
                 signIn(emailText.getText().toString(), passwordText.getText().toString());
                 break;
         }
-    }
-
-    private void savingUserProfile() {
-        String email;
-        String token;
-        Log.e(TAG, "savingUserProfile");
     }
 }

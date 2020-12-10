@@ -79,22 +79,6 @@ public class Main9Activity extends AppCompatActivity {
             showDialog();
         }
 
-//        RecyclerView recyclerView = findViewById(R.id.recycler_for_mounth_spends);
-//        cardViewArrayList = new ArrayList<>();
-//        getItemForMonthSpendsSpisok();
-//        adapter = new SpendMonthAdapter(cardViewArrayList);
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-//        recyclerView.setLayoutManager(layoutManager);
-//        recyclerView.setAdapter(adapter);
-//        adapter.setSpendMonthListener(new SpendMonthAdapter.SpendMonthListener() {
-//            @Override
-//            public void onSpendMonthClickListener(String date) {
-//                Intent intent = new Intent(Main9Activity.this, DetailMonthActivity.class);
-//                intent.putExtra(DATE_MONTH, date);
-//                startActivity(intent);
-//            }
-//        });
-
         Log.e("AScs", "onCreate() ");
         if (!isSmsPermissionGranted()) {
             ActivityCompat.requestPermissions(Main9Activity.this,
@@ -102,6 +86,7 @@ public class Main9Activity extends AppCompatActivity {
         }
 
     }
+
     @Override
     public void onBackPressed() {
         setResult(RESULT_OK);

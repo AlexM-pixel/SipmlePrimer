@@ -3,12 +3,18 @@ package com.example.mysympleapplication.hw9;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.example.mysympleapplication.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BalanceFragment extends Fragment {
 
@@ -26,6 +32,7 @@ public class BalanceFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+
     public static BalanceFragment newInstance() {
         return new BalanceFragment();
 
@@ -44,6 +51,9 @@ public class BalanceFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_balance, container, false);
+        View view = inflater.inflate(R.layout.fragment_balance, container, false);
+
+
+        return view;
     }
 }

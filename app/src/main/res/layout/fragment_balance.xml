@@ -6,7 +6,34 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".hw9.BalanceFragment">
 
+    <EditText
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/value_edit"
+        app:layout_constraintBottom_toTopOf="@+id/balance_textView"
+        android:id="@+id/name_edit"
+        android:hint="name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <EditText
+        app:layout_constraintStart_toEndOf="@+id/name_edit"
+        app:layout_constraintTop_toTopOf="@+id/name_edit"
+        app:layout_constraintEnd_toStartOf="@+id/date_edit"
+        android:id="@+id/value_edit"
+        android:hint="value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <EditText
+        app:layout_constraintTop_toTopOf="@+id/name_edit"
+        app:layout_constraintStart_toEndOf="@+id/value_edit"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/date_edit"
+        android:hint="date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
     <TextView
+        android:id="@+id/balance_textView"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -15,5 +42,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/hello_balance_fragment" />
+    <Button
+        android:layout_margin="8dp"
+        android:id="@+id/button_add_toFireStore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="add spend to firestore"
+        android:background="@color/colorGrafik_line"
+        app:layout_constraintTop_toBottomOf="@+id/balance_textView"
+        app:layout_constraintStart_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

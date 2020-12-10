@@ -20,10 +20,12 @@
         android:roundIcon="@mipmap/ic_launcher_cat_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".hw9.DetailActivity"/>
+
+        <activity android:name=".hw9.DetailActivity" />
         <activity android:name=".hw9.DetailMonthActivity" />
-        <activity android:name=".hw9.Main9Activity"/>
-        <activity android:name=".hw9.view.auth.EmailPasswordActivity"
+        <activity android:name=".hw9.Main9Activity" />
+        <activity
+            android:name=".hw9.view.auth.EmailPasswordActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme">
             <intent-filter>
@@ -31,8 +33,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-
         </activity>
 
         <service android:name=".hw7.SearchService" />
@@ -65,10 +65,7 @@
         <activity android:name=".hw1.Statistic" />
         <activity android:name=".hw1.GameOverActivity" />
         <activity android:name=".hw1.SecondActivity" />
-        <activity
-            android:name=".Prime_Activity">
-
-        </activity>
+        <activity android:name=".Prime_Activity"></activity>
         <activity android:name=".hw4.ProfilActivity" />
 
         <service

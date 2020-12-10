@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
@@ -17,8 +16,10 @@ import androidx.core.app.RemoteInput;
 import com.example.mysympleapplication.R;
 import com.example.mysympleapplication.hw9.model.Balance;
 import com.example.mysympleapplication.hw9.model.Postuplenie;
+import com.example.mysympleapplication.hw9.view.auth.EmailPasswordActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -40,6 +41,7 @@ public class NotificationSmsService extends IntentService {
     private static int NOTIFY_ID_GROUP = 2125;
     private static final String GROUP_ID_SAVE_SPENDS = "unknownSpend_Group";
     private List<String> wordsListPost = Arrays.asList("Ostatok", "OST");
+    private SharedPreferences sPref;
 
 
     public NotificationSmsService() {
@@ -76,7 +78,7 @@ public class NotificationSmsService extends IntentService {
                     }
                     NameSends[] nameSends = NameSends.values();
                     for (int i = 0; i < nameSends.length; i++) {
-                        if (body.contains(nameSends[i].getNameSpand().toLowerCase() )) {
+                        if (body.contains(nameSends[i].getNameSpand().toLowerCase())) {
                             getValueFromSms(nameSends[i].getRussianName(), body);
                             Log.e("AScs", nameSends[i].getNameSpand() + " , " + nameSends[i].getRussianName() + " , find");
                             return;
@@ -140,6 +142,7 @@ public class NotificationSmsService extends IntentService {
     private void getValueFromSms(String spendName, String message) {
         String date = "";
         String value = "";
+        Long id;
         Pattern patternValue = Pattern.compile("(summa+)(.*)([byn])");
         Matcher matcherValue = patternValue.matcher(message);
         if (matcherValue.find()) {
@@ -149,8 +152,10 @@ public class NotificationSmsService extends IntentService {
         Date getdate = new Date();
         SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         date = newDateFormat.format(getdate);
-        Spend spend = new Spend(null, spendName, value, date);
+        id = getId(spendName, value, getdate);
+        Spend spend = new Spend(id, spendName, value, date);
         MyAppDataBase.getInstance().spendDao().insert(spend);
+        saveSpend(spend);
         Log.e("AScs", "getValueFromSms" + " ," + spend.getValue() + " , " + spend.getSpendName() + " , " + spend.getDate());
 
         for (int i = 0; i < wordsListPost.size(); i++) {
@@ -208,4 +213,29 @@ public class NotificationSmsService extends IntentService {
         MyAppDataBase.getInstance().balanceDao().insertB(balance);
     }
 
+    private void saveSpend(Spend spend) {
+        sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE);
+        String emailCurrentUser = sPref.getString(EmailPasswordActivity.EMAIL_USER, "empty");
+        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+        firestore.collection(emailCurrentUser)
+                .document("spends")
+                .collection("spends")
+                .document(spend.getId().toString())
+                .set(spend)
+                .addOnSuccessListener(v -> {
+                    Log.e(EmailPasswordActivity.TAG, "document saved");
+                })
+                .addOnFailureListener(f -> {
+                    Log.e(EmailPasswordActivity.TAG, "Save Failed");
+                });
+    }
+
+    private Long getId(String spendName, String value, Date date) {
+        long hash = 3L;
+        hash = 31 * hash + date.hashCode();
+        hash = 31 * hash + value.hashCode();
+        hash = 31 * hash + spendName.hashCode();
+        Log.e(EmailPasswordActivity.TAG, "Hash for date:  " + date);
+        return hash;
+    }
 }

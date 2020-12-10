@@ -3,6 +3,7 @@ package com.example.mysympleapplication.hw9;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +17,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mysympleapplication.R;
-import com.example.mysympleapplication.hw9.model.Balance;
+import com.example.mysympleapplication.hw9.view.auth.EmailPasswordActivity;
 import com.example.mysympleapplication.hw9.viewModel.MyViewModel;
 import com.example.mysympleapplication.hw9.viewModel.ViewModelBalance;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +51,9 @@ public class HomeFragment extends Fragment {
             }
         });
         final SpendMonthAdapter adapter = new SpendMonthAdapter(cardViewArrayList);
-        myViewModel.listLiveData.observe(getActivity(), sumSpendsOfMonths -> adapter.setCardViewList(sumSpendsOfMonths));
+        myViewModel.listLiveData.observe(getActivity(), sumSpendsOfMonths -> {
+            adapter.setCardViewList(sumSpendsOfMonths);
+        });
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
@@ -65,13 +69,4 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-//    @SuppressLint("SetTextI18n")
-//    private void getSummPostplenie() {
-//        String postuplen = "0";
-//        Balance myBalance=MyAppDataBase.getInstance().balanceDao().getBalance();
-//        if (myBalance != null) {
-//            postuplen = myBalance.getBalance();
-//        }
-//        balance.setText("Баланс: " + postuplen);
-//    }
 }
