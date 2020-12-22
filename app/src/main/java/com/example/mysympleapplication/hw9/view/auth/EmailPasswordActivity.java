@@ -20,6 +20,8 @@ import com.example.mysympleapplication.R;
 import com.example.mysympleapplication.hw9.Main9Activity;
 import com.example.mysympleapplication.hw9.MyAppDataBase;
 import com.example.mysympleapplication.hw9.Spend;
+import com.example.mysympleapplication.hw9.model.Balance;
+import com.example.mysympleapplication.hw9.model.Friends;
 import com.example.mysympleapplication.hw9.view.iu.BaseActivity;
 import com.example.mysympleapplication.hw9.view.iu.dialogues.FragmentDialogAlert;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,8 +30,10 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +56,6 @@ public class EmailPasswordActivity extends BaseActivity implements View.OnClickL
     private FragmentDialogAlert alertDialogFragment;
     public static final String ALERT_DIALOG = "alert_dialog";
     public static final String EMAIL_USER = "Firebase_auth_email";
-    private SharedPreferences sPref;
 
 
     @Override
@@ -64,7 +67,6 @@ public class EmailPasswordActivity extends BaseActivity implements View.OnClickL
         mAuth = FirebaseAuth.getInstance();
         // [END initialize_auth]
         firestore = FirebaseFirestore.getInstance();
-
         emailText = findViewById(R.id.field_email);
         passwordText = findViewById(R.id.field_password);
         //Buttons
@@ -99,19 +101,11 @@ public class EmailPasswordActivity extends BaseActivity implements View.OnClickL
                         // Sign in success, update UI with the signed-in user's information
                         Log.e(TAG, "signInWithEmail:success");
                         FirebaseUser user = mAuth.getCurrentUser();
-                        updateUI(user);
                         if (user != null) {
-                            cRef = firestore
-                                    .collection(user.getEmail())
-                                    .document("spends")
-                                    .collection("spends");
-                            // start new Thread:
-                            service = Executors.newSingleThreadExecutor();
-                            Runnable run = () -> geAllFromFireStore();
-                            service.submit(run);
-                            service.shutdown();
+                            startServiceCheckData(user);
                             saveEmailCurrentUser(user);
                         }
+                        updateUI(user);
                         count = 0;
                     } else {
                         // If sign in fails, display a message to the user.
@@ -164,6 +158,16 @@ public class EmailPasswordActivity extends BaseActivity implements View.OnClickL
         // [END sign_in_with_email]
     }
 
+    private void startServiceCheckData(FirebaseUser user) {
+        cRef = firestore
+                .collection(user.getEmail());
+        // start new Thread:
+        service = Executors.newSingleThreadExecutor();
+        Runnable run = () -> geAllSpendsFromFireStore();
+        service.submit(run);
+        service.shutdown();
+    }
+
 
     private void createAccount(String email, String password) {
         Log.e(TAG, "createAccount:" + email);
@@ -180,8 +184,10 @@ public class EmailPasswordActivity extends BaseActivity implements View.OnClickL
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            startServiceCheckData(user);
+                            saveEmailCurrentUser(user);
+                            createCollectionFriends(user);
                             updateUI(user);
-                            saveEmailCurrentUser(user );
                         } else {
                             Log.e(TAG, "createUserWithEmail:failure", task.getException());
                             Bundle bundle = new Bundle();
@@ -206,8 +212,18 @@ public class EmailPasswordActivity extends BaseActivity implements View.OnClickL
         // [END create_user_with_email]
     }
 
+    private void createCollectionFriends(FirebaseUser user) {
+        Friends friend = new Friends(false,"first_init");
+        firestore.collection(user.getEmail())
+                .document("fiends")
+                .collection("friends")
+                .document("first_init")
+                .set(friend);
+        Log.e("rtrtr", "set first init to friends collection");
+    }
+
     private void saveEmailCurrentUser(FirebaseUser user) {
-        sPref = getSharedPreferences(Main9Activity.APP_PREFERENCES, MODE_PRIVATE);
+        SharedPreferences sPref = getSharedPreferences(Main9Activity.APP_PREFERENCES, MODE_PRIVATE);
         sPref.edit()
                 .putString(EMAIL_USER, user.getEmail())
                 .apply();
@@ -254,24 +270,31 @@ public class EmailPasswordActivity extends BaseActivity implements View.OnClickL
 
     private void checkDbFirestore(List<Spend> spendListFirestore) {
         List<Spend> spendListRoom = MyAppDataBase.getInstance().spendDao().getAllSpends();
+        Balance balance = MyAppDataBase.getInstance().balanceDao().getBalanceSignIn();
         if (spendListFirestore.size() > 0 && spendListRoom != null && spendListRoom.size() == 0) {        // если в firestore по этому аккаунту что-то есть а в room пусто добавляю все в room db
             Log.e(TAG, spendListFirestore.size() + ":  колличество элементов в firestore");
-            saveSpendRoom(spendListFirestore);
+            savingToRoom(spendListFirestore);
         }
         if (spendListFirestore.size() == 0 && spendListRoom != null && spendListRoom.size() > 0) {
-            saveSpendFireStore(spendListRoom);
+            saveSpendFireStore(spendListRoom, balance);
+        }
+        if (spendListFirestore.size() == 0 && spendListRoom != null && spendListRoom.size() == 0) {
+            Log.e(TAG, "Здесь запустить метод создания коллекций в fireStore");                  // tuta =============================//=====================//==//==//=======
+
         }
         Log.e(TAG, spendListFirestore.size() + ":  колличество элементов в firestore");
         Log.e(TAG, spendListRoom.size() + ":  колличество элементов в room");
     }
 
 
-    // запихнуть все в onStart()
+    // запихнуть все в onCreate()
 
     @WorkerThread
-    public void geAllFromFireStore() {                                                        // получаю все затраты из коллекции firestore и заношу их в список
+    public void geAllSpendsFromFireStore() {                                                        // получаю все затраты из коллекции firestore и заношу их в список
         List<Spend> allItems = new ArrayList<>();
-        cRef.get()
+        cRef.document("spends")
+                .collection("spends")
+                .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
@@ -296,19 +319,50 @@ public class EmailPasswordActivity extends BaseActivity implements View.OnClickL
                 });
     }
 
-    private void saveSpendRoom(List<Spend> spendListFirestore) {
+    private void savingToRoom(List<Spend> spendListFirestore) {
         MyAppDataBase.getInstance().spendDao().inserAll(spendListFirestore);
+        cRef.document("balance")
+                .collection("balance")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Long id = document.getLong("id");
+                            String balance = String.valueOf(document.get("balance"));
+                            Balance balanceObj = new Balance(id, balance);
+                            Log.e(TAG, "получил значение баланса= " + balanceObj.getBalance());
+                            MyAppDataBase.getInstance().balanceDao().insertB(balanceObj);
+                        }
+                    } else {
+                        Log.e(TAG, "Error getting balance.", task.getException());
+                    }
+                });
+
     }
 
-    private void saveSpendFireStore(List<Spend> spendsList) {
+    private void saveSpendFireStore(List<Spend> spendsList, Balance balance) {
         for (Spend spend : spendsList) {
-            cRef.document(spend.getId().toString())
+            cRef.document("spends")
+                    .collection("spends")
+                    .document(spend.getId().toString())
                     .set(spend)
                     .addOnSuccessListener(v -> {
                         Log.e(TAG, "saved spend in firestore from room");
                     })
                     .addOnFailureListener(f -> {
                         Log.e(TAG, "Save Failed");
+                    });
+        }
+        if (balance != null) {
+            cRef.document("balance")
+                    .collection("balance")
+                    .document(balance.getId().toString())
+                    .set(balance)
+                    .addOnSuccessListener(b -> {
+                        Log.e(TAG, "saved balance in firestore from room");
+                    })
+                    .addOnFailureListener(f -> {
+                        Log.e(TAG, "Save balance Failed");
                     });
         }
     }

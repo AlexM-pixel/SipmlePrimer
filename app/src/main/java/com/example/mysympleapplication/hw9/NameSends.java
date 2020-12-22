@@ -32,6 +32,7 @@ public enum NameSends {
     BUSLIK(R.drawable.icons_buslik, "BUSLIK","Буслик"),
     FUNTASTIK(R.drawable.icons_lego, "FUNTASTIK","FUNTASTIK \n магазин"),
     APTEK(R.drawable.icon_apteka_48, " BELFARMATSIYA APTEK","Аптека"),
+    ELEMENT(R.drawable.element , "5 ELEMENT","5 ЭЛЕМЕНТ"),
     SPORTMASTER(R.drawable.sport, "SPORTMASTER","Спорт Мастер");
     private int image;
     private String nameSpand;

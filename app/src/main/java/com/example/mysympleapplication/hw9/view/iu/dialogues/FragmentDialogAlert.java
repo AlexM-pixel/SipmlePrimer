@@ -2,7 +2,6 @@ package com.example.mysympleapplication.hw9.view.iu.dialogues;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -24,9 +23,7 @@ public class FragmentDialogAlert extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(text)
                 .setCancelable(true)
-                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                    }
+                .setPositiveButton("ok", (dialog, id) -> {
                 });
         return builder.create();
     }

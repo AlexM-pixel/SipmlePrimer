@@ -28,7 +28,7 @@ public enum Months {
         this.nameMonth=nameMonth;
     }
 
-    static Months getMonth(String month) {
+   public static Months getMonth(String month) {
         for (Months months:Months.values()) {
             if (months.dateMonth.equals(month.substring(0,2))) {
                return months;

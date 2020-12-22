@@ -20,6 +20,9 @@
         android:roundIcon="@mipmap/ic_launcher_cat_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <service
+            android:name=".hw9.service.MyIntentService"
+            android:exported="false"></service>
 
         <activity android:name=".hw9.DetailActivity" />
         <activity android:name=".hw9.DetailMonthActivity" />
@@ -65,7 +68,7 @@
         <activity android:name=".hw1.Statistic" />
         <activity android:name=".hw1.GameOverActivity" />
         <activity android:name=".hw1.SecondActivity" />
-        <activity android:name=".Prime_Activity"></activity>
+        <activity android:name=".Prime_Activity" />
         <activity android:name=".hw4.ProfilActivity" />
 
         <service

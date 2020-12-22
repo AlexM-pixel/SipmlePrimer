@@ -27,13 +27,11 @@ public class RecoveryDialog extends DialogFragment {
     private String mail;
     String maill;
     EditText userInput;
-    FragmentManager fm;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
-        fm = getChildFragmentManager();
     }
 
     @NonNull
@@ -51,33 +49,28 @@ public class RecoveryDialog extends DialogFragment {
 
         builder.setCancelable(false);
         builder.setPositiveButton("OK",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        maill = String.valueOf(userInput.getText());
-                        mAuth.sendPasswordResetEmail(maill)
-                                .addOnSuccessListener(aVoid -> {                                      //  восстановление пароля
-                                    Log.e(EmailPasswordActivity.TAG, aVoid.toString() + "  !!!!!!");
+                (dialog, id) -> {
 
-                                }).addOnFailureListener(e -> {
+                    maill = String.valueOf(userInput.getText());
+                    mAuth.sendPasswordResetEmail(maill)
+                            .addOnSuccessListener(aVoid -> {                                      //  восстановление пароля
+                                Log.e(EmailPasswordActivity.TAG, aVoid.toString() + "  !!!!!!");
 
-                            Log.e(EmailPasswordActivity.TAG, e.toString() + "  !!!!!!");
-                            if (e.toString().contains("The email address is badly formatted")) {
+                            }).addOnFailureListener(e -> {
+
+                        Log.e(EmailPasswordActivity.TAG, e.toString() + "  !!!!!!");
+                        if (e.toString().contains("The email address is badly formatted")) {
 //                               FragmentDialogAlert alertDialogFragment = new FragmentDialogAlert();
 //                            Bundle bundle = new Bundle();
 //                                bundle.putString(EmailPasswordActivity.ALERT_DIALOG, "не корректный email !");
 //                                alertDialogFragment.onCreateDialog(bundle);
 //                                alertDialogFragment.setArguments(bundle);
 //                                alertDialogFragment.show(fm, "badly email");
-                            }
-                        });
-                    }
+                        }
+                    });
                 });
         builder.setNegativeButton("Отмена",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
+                (dialog, id) -> dialog.cancel());
         return builder.create();
     }
 }

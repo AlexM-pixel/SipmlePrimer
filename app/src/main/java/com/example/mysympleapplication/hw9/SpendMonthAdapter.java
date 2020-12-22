@@ -43,10 +43,10 @@ public class SpendMonthAdapter extends RecyclerView.Adapter<SpendMonthAdapter.Mo
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull MonthSpendsHolder holder, final int position) {
-        holder.valueMonthSpends.setText( cardViewList.get(position).getValue_spends() + " BYN ");
+        holder.valueMonthSpends.setText(cardViewList.get(position).getValue_spends() + " BYN ");
         holder.date.setText(cardViewList.get(position).getDateM());
         Months month = Months.getMonth(cardViewList.get(position).getDateM());
-        int image=month.getImageMonth();
+        int image = month.getImageMonth();
         Drawable drawable = ContextCompat.getDrawable(holder.cardView.getContext(), image);
         holder.imageView.setImageDrawable(drawable);
         holder.nameSpends.setText(month.getNameMonth());
@@ -65,9 +65,10 @@ public class SpendMonthAdapter extends RecyclerView.Adapter<SpendMonthAdapter.Mo
     public int getItemCount() {
         return cardViewList.size();
     }
+
     public void setCardViewList(List<SumSpendsOfMonth> list) {
         cardViewList.clear();
-        cardViewList=list;
+        cardViewList = list;
         notifyDataSetChanged();
     }
 

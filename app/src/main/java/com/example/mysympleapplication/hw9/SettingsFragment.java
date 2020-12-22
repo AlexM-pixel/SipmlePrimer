@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +14,17 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.mysympleapplication.R;
+import com.example.mysympleapplication.hw9.model.Friends;
+import com.example.mysympleapplication.hw9.view.auth.EmailPasswordActivity;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.content.Context.MODE_PRIVATE;
+import static com.example.mysympleapplication.hw9.Main9Activity.APP_PREFERENCES;
 
 
 public class SettingsFragment extends Fragment {
@@ -58,6 +63,7 @@ public class SettingsFragment extends Fragment {
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_settings, container, false);
         final EditText textAdressat = view.findViewById(R.id.edit_text_BankName);
+        EditText editText = view.findViewById(R.id.email_friends_id);
         Button signOut = view.findViewById(R.id.button_sign_Out);
         sPref = view.getContext().getSharedPreferences(Main9Activity.APP_PREFERENCES, MODE_PRIVATE);
         Button button = view.findViewById(R.id.button_add);
@@ -82,7 +88,20 @@ public class SettingsFragment extends Fragment {
             getActivity().setResult(RESULT_CANCELED);
             getActivity().finish();
         });
-
+        Button button_addFriends = view.findViewById(R.id.button_add_Friends);
+        button_addFriends.setOnClickListener(v -> {
+            SharedPreferences sPref = this.getActivity().getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE);        // сделать отдельный класс по преференсам
+            String email = sPref.getString(EmailPasswordActivity.EMAIL_USER, "empty");
+            String friends_email = editText.getText().toString();                                          // добавить проверку на существование такой коллекции
+            Friends friend = new Friends(false, email);
+            FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+            firestore.collection(friends_email)
+                    .document("fiends")
+                    .collection("friends")
+                    .document(email)
+                    .set(friend);
+            Log.e("rtrtr", "сработало");
+        });
         return view;
     }
 

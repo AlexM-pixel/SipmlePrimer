@@ -19,4 +19,7 @@ public interface BalanceDao {
 
     @Query("SELECT * FROM balance ")
     LiveData<Balance> getBalance();
+
+    @Query("SELECT * FROM balance ")
+    Balance getBalanceSignIn();
 }

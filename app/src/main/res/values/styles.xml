@@ -45,6 +45,12 @@
         <item name="android:gravity">center</item>
         <item name="android:textSize">36sp</item>
     </style>
+    <style name="fab_user">
+        <item name="colorAccent">@color/colorGrafik_fon</item>
+    </style>
+    <style name="fab_friend">
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
 
 
 </resources>

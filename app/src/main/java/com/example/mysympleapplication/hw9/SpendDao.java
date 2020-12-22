@@ -6,9 +6,10 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import com.example.mysympleapplication.hw9.model.FriendsSpends;
+
 import java.util.List;
 
-import retrofit2.http.GET;
 
 @Dao
 public interface SpendDao {
@@ -35,5 +36,6 @@ public interface SpendDao {
 
     @Query("SELECT SUM(value) as totalValue, date, spendName FROM spends WHERE strftime(\"%m-%Y\", date)=strftime( :choiceDate) GROUP BY spendName ORDER BY date DESC")
     LiveData<List<CalendarSpends>> getMonthSpends(String choiceDate);
+
 
 }

@@ -76,4 +76,7 @@
     <string name="emailpassword_title_text">Авторизация</string>
     <string name="signed_out">сохраняйте ваши платежи</string>
     <string name="insert_email">введите почтовый адрес для восстановления пароля</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="user_spends_textview">Ваши \nрасходы</string>
 </resources>

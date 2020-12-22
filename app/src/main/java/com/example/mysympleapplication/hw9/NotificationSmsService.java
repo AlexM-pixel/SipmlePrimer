@@ -17,7 +17,6 @@ import com.example.mysympleapplication.R;
 import com.example.mysympleapplication.hw9.model.Balance;
 import com.example.mysympleapplication.hw9.model.Postuplenie;
 import com.example.mysympleapplication.hw9.view.auth.EmailPasswordActivity;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
@@ -42,6 +41,8 @@ public class NotificationSmsService extends IntentService {
     private static final String GROUP_ID_SAVE_SPENDS = "unknownSpend_Group";
     private List<String> wordsListPost = Arrays.asList("Ostatok", "OST");
     private SharedPreferences sPref;
+    FirebaseFirestore firestore;
+    String emailCurrentUser;
 
 
     public NotificationSmsService() {
@@ -67,8 +68,8 @@ public class NotificationSmsService extends IntentService {
     }
 
     private void checkSmsContent(String addressat, String body) {
-        SharedPreferences mSettings = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE);
-        Set<String> bankSet = mSettings.getStringSet(PREFERENCES_FROM, null);
+        sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE);
+        Set<String> bankSet = sPref.getStringSet(PREFERENCES_FROM, null);
         if (bankSet != null) {
             for (String stringSet : bankSet) {
                 if (addressat.equals(stringSet)) {                                                   // add toLowerCase
@@ -140,6 +141,9 @@ public class NotificationSmsService extends IntentService {
     }
 
     private void getValueFromSms(String spendName, String message) {
+        sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE);
+        emailCurrentUser = sPref.getString(EmailPasswordActivity.EMAIL_USER, "empty");
+        firestore = FirebaseFirestore.getInstance();
         String date = "";
         String value = "";
         Long id;
@@ -153,9 +157,10 @@ public class NotificationSmsService extends IntentService {
         SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         date = newDateFormat.format(getdate);
         id = getId(spendName, value, getdate);
+       //   date="2020-07-12";
         Spend spend = new Spend(id, spendName, value, date);
         MyAppDataBase.getInstance().spendDao().insert(spend);
-        saveSpend(spend);
+        saveSpendFirestore(spend);
         Log.e("AScs", "getValueFromSms" + " ," + spend.getValue() + " , " + spend.getSpendName() + " , " + spend.getDate());
 
         for (int i = 0; i < wordsListPost.size(); i++) {
@@ -180,9 +185,10 @@ public class NotificationSmsService extends IntentService {
         SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String date = newDateFormat.format(getdate);
         //  date="2020-12-12";
-        Postuplenie postuplenie = new Postuplenie(null, value, date);
+        Long id = getId(body, value, getdate);
+        Postuplenie postuplenie = new Postuplenie(id, value, date);
         MyAppDataBase.getInstance().postuplenieDao().insert(postuplenie);
-
+        savePostuplenieFirestore(postuplenie);
         for (int i = 0; i < wordsListPost.size(); i++) {
             String word = "\\b" + wordsListPost.get(i).toLowerCase() + "\\b";
             Pattern patternString = Pattern.compile(word);
@@ -211,11 +217,12 @@ public class NotificationSmsService extends IntentService {
         }
         Balance balance = new Balance(0L, ostatok);
         MyAppDataBase.getInstance().balanceDao().insertB(balance);
+        saveBalanceFirestore(balance);
     }
 
-    private void saveSpend(Spend spend) {
+    private void saveSpendFirestore(Spend spend) {
         sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE);
-        String emailCurrentUser = sPref.getString(EmailPasswordActivity.EMAIL_USER, "empty");
+        emailCurrentUser = sPref.getString(EmailPasswordActivity.EMAIL_USER, "empty");
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
         firestore.collection(emailCurrentUser)
                 .document("spends")
@@ -227,6 +234,37 @@ public class NotificationSmsService extends IntentService {
                 })
                 .addOnFailureListener(f -> {
                     Log.e(EmailPasswordActivity.TAG, "Save Failed");
+                });
+    }
+
+    private void savePostuplenieFirestore(Postuplenie postuplenie) {
+        emailCurrentUser = sPref.getString(EmailPasswordActivity.EMAIL_USER, "empty");
+        firestore = FirebaseFirestore.getInstance();
+        firestore.collection(emailCurrentUser)
+                .document("postuplenie")
+                .collection("postuplenie")
+                .document(postuplenie.getId().toString())
+                .set(postuplenie)
+                .addOnSuccessListener(v -> {
+                    Log.e(EmailPasswordActivity.TAG, "document saved");
+                })
+                .addOnFailureListener(f -> {
+                    Log.e(EmailPasswordActivity.TAG, "Save Failed");
+                });
+    }
+
+    private void saveBalanceFirestore(Balance balance) {
+        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+        firestore.collection(emailCurrentUser)
+                .document("balance")
+                .collection("balance")
+                .document(balance.getId().toString())
+                .set(balance)
+                .addOnSuccessListener(v -> {
+                    Log.e(EmailPasswordActivity.TAG, "balance saved");
+                })
+                .addOnFailureListener(f -> {
+                    Log.e(EmailPasswordActivity.TAG, "Save Failed balance");
                 });
     }
 
