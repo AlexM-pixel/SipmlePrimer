@@ -12,12 +12,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mysympleapplication.R;
+import com.example.mysympleapplication.hw9.Months;
+import com.example.mysympleapplication.hw9.MyAppDataBase;
 import com.example.mysympleapplication.hw9.SumSpendsOfMonth;
 import com.example.mysympleapplication.hw9.view.iu.adapters.GeneralMonthAdapter;
+import com.example.mysympleapplication.hw9.viewModel.ViewModelBalance;
 import com.example.mysympleapplication.hw9.viewModel.ViewModelFriendsData;
 
 import java.util.ArrayList;
@@ -27,9 +31,17 @@ public class GeneralExpensesFragment extends Fragment {
     private List<SumSpendsOfMonth> cardViewArrayList;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private TextView bynText;
+    private TextView monthText;
+    private TextView userValue;
+    private TextView friendValue;
+    ProgressBar userBar;
+    ProgressBar friendbar;
     ViewModelFriendsData viewModelFriendsData;
+    ViewModelBalance viewModelBalance;
     private String mParam1;
     private String mParam2;
+
 
     public static GeneralExpensesFragment newInstance(String param1, String param2) {
         GeneralExpensesFragment fragment = new GeneralExpensesFragment();
@@ -53,34 +65,62 @@ public class GeneralExpensesFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         viewModelFriendsData = ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication()).create(ViewModelFriendsData.class);
-
+        viewModelBalance = ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication()).create(ViewModelBalance.class);
     }
 
-    @SuppressLint("SetTextI18n")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_general_expenses, container, false);
+        bynText = view.findViewById(R.id.text_byn);
+        monthText = view.findViewById(R.id.name_month);
+        userValue = view.findViewById(R.id.value_user_text);
+        friendValue = view.findViewById(R.id.value_friend_text);
+        friendbar = view.findViewById(R.id.background_progressbar);
+        userBar = view.findViewById(R.id.stats_progressbar);
         RecyclerView recyclerView = view.findViewById(R.id.recycler_month);
         cardViewArrayList = new ArrayList<>();
         GeneralMonthAdapter adapter = new GeneralMonthAdapter(cardViewArrayList);
         viewModelFriendsData.generalListLiveData.observe(getActivity(), input -> {
             adapter.setCardViewList(input);
+            setValues(input.get(0));
         });
-        LinearLayoutManager layoutManager= new LinearLayoutManager(getContext());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-        adapter.setGeneralSpendMonthListener(date -> {
-            Toast.makeText(getActivity().getApplicationContext(),date,Toast.LENGTH_SHORT).show();
-            //сетать тута методами из вьюМодели
+        adapter.setGeneralSpendMonthListener(input -> {
+            setValues(input);
+        });
+        viewModelFriendsData.friendSpendsFromRoom.observe(getActivity(), input -> {
+           // Log.e("AScs", "generalExpenses, list.size()= " + input.get(0).getId());
+            //  text_spend.setText(input.get(0).getSpendName() + "  " + input.get(0).getValue());
 
         });
-        TextView text_spend = view.findViewById(R.id.user_spend_text);
-        viewModelFriendsData.friendSpendsFromRoom.observe(getActivity(), input -> {
-            Log.e("AScs", "generalExpenses, list.size()= " + input.get(0).getId());
-          //  text_spend.setText(input.get(0).getSpendName() + "  " + input.get(0).getValue());
-        });
         return view;
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void setValues(SumSpendsOfMonth date) {
+        bynText.setText(date.getValue_spends() + " BYN");
+        monthText.setText(Months.getMonth(date.getDateM()).getNameMonth());
+        float friend_value = viewModelFriendsData.getFriendSumOfMonthSpends(date.getDateM()).getValue_spends();
+        friendValue.setText(String.valueOf(friend_value));
+        float user_value = viewModelBalance.getSumOfMonthSpends(date.getDateM()).getValue_spends();
+        userValue.setText(String.valueOf(user_value));
+        setPercents(user_value, friend_value);
+    }
+
+    private void setPercents(float valueUser, float valueFriend) {
+        double percent;
+        if (valueUser > valueFriend) {
+            percent = (double) valueFriend / (double) valueUser * 100;
+            userBar.setProgress(100);
+            friendbar.setProgress((int) percent/2);
+        } else {
+            percent = (double) valueUser / (double) valueFriend * 100;
+            userBar.setProgress((int) percent/2);
+            friendbar.setProgress(100);
+        }
     }
 }

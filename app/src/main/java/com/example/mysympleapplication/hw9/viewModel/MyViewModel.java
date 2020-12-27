@@ -85,8 +85,8 @@ public class MyViewModel extends ViewModel {
 
     private void loadObserveFriend(String emailUser) {
         firestore.collection(emailUser)
-                .document("Observefiends")
-                .collection("Observefiends")
+                .document("Observefriends")
+                .collection("Observefriends")
                 .addSnapshotListener(MetadataChanges.INCLUDE, (value, error) -> {
                     if (error != null) {
                         Log.e(EmailPasswordActivity.TAG, "loadObserveFriend(), listen error:", error);

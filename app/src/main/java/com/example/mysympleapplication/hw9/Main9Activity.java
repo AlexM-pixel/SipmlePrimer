@@ -66,6 +66,8 @@ public class Main9Activity extends AppCompatActivity {
         sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE);
         String email = sPref.getString(EmailPasswordActivity.EMAIL_USER, "empty");
         Log.e("AScs", "Main9Activity, email= " + email);
+//        sPref.edit() .putBoolean(Main9Activity.PREFERENCES_CHECK_FRIEND, false)
+//                .apply();
         MyViewModel myViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(MyViewModel.class);
         myViewModel.getFriendsData(email).observe(this, input -> {
             checkAddedFriend = sPref.getBoolean(PREFERENCES_CHECK_FRIEND, false);

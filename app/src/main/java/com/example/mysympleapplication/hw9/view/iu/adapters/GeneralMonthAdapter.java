@@ -25,7 +25,7 @@ public class GeneralMonthAdapter extends RecyclerView.Adapter<GeneralMonthAdapte
     }
 
     public interface GeneralSpendMonthListener {
-        void onSpendMonthClickListener(String date);
+        void onSpendMonthClickListener(SumSpendsOfMonth date);
     }
 
     public void setGeneralSpendMonthListener(GeneralSpendMonthListener spendlistener) {
@@ -45,14 +45,14 @@ public class GeneralMonthAdapter extends RecyclerView.Adapter<GeneralMonthAdapte
         holder.nameMonth.setText(month.getNameMonth());
         holder.itemView.setOnClickListener(v -> {
             if (generalListener != null) {
-                generalListener.onSpendMonthClickListener(cardViewList.get(position).getDateM());
+                generalListener.onSpendMonthClickListener(cardViewList.get(position));
             }
-            row_index=position;
+            row_index = position;
             notifyDataSetChanged();
         });
-        if (row_index==position) {
+        if (row_index == position) {
             holder.nameMonth.setTextColor(Color.BLACK);
-        }else {
+        } else {
             holder.nameMonth.setTextColor(Color.GRAY);
         }
     }

@@ -10,6 +10,7 @@ public enum NameSends {
     ZORINA(R.drawable.icon_shop_48, "ZORINA"," Зорина"),
     VITALUR(R.drawable.icon_fish_48, "VITALUR"," Виталюр"),
     INTERNET(R.drawable.icon_internet_48, "1703017277003","Интернет"),
+    INTERNET_A1(R.drawable.icon_internet_48, "ONLINE SERVICE/INTERNET","Интернет"),
     GIPPO(R.drawable.icon_shop_48, "GIPPO"," Гиппо"),
     MILA(R.drawable.icon_mila_48, "MILA"," Мила"),
     CASH(R.drawable.icon_cash_48, "Vydacha nalichnyh","Снятие \n наличных"),
@@ -33,6 +34,7 @@ public enum NameSends {
     FUNTASTIK(R.drawable.icons_lego, "FUNTASTIK","FUNTASTIK \n магазин"),
     APTEK(R.drawable.icon_apteka_48, " BELFARMATSIYA APTEK","Аптека"),
     ELEMENT(R.drawable.element , "5 ELEMENT","5 ЭЛЕМЕНТ"),
+    YANDEX(R.drawable.music , "Yandex","Yandex музыка"),
     SPORTMASTER(R.drawable.sport, "SPORTMASTER","Спорт Мастер");
     private int image;
     private String nameSpand;

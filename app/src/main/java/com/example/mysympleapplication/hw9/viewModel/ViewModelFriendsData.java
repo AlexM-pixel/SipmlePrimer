@@ -1,5 +1,6 @@
 package com.example.mysympleapplication.hw9.viewModel;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -8,23 +9,25 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.mysympleapplication.hw9.FriendsDao;
 import com.example.mysympleapplication.hw9.MyAppDataBase;
-import com.example.mysympleapplication.hw9.Spend;
 import com.example.mysympleapplication.hw9.SumSpendsOfMonth;
-import com.example.mysympleapplication.hw9.model.Friends;
 import com.example.mysympleapplication.hw9.model.FriendsSpends;
+import com.example.mysympleapplication.hw9.model.FriendsSumValue;
 import com.example.mysympleapplication.hw9.view.auth.EmailPasswordActivity;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.MetadataChanges;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ViewModelFriendsData extends ViewModel {
-    private FriendsDao friendsDao= MyAppDataBase.getInstance().friendsDao();
+    private FriendsDao friendsDao = MyAppDataBase.getInstance().friendsDao();
     private MutableLiveData<List<FriendsSpends>> liveDataFriendSpend;
-    public LiveData<List<FriendsSpends>> friendSpendsFromRoom=friendsDao.getAllFriendSpends();
-    public LiveData<List<SumSpendsOfMonth>> generalListLiveData = friendsDao.getGeneralSumMonth();
+    public LiveData<List<FriendsSpends>> friendSpendsFromRoom = friendsDao.getAllFriendSpends();
+    public LiveData<List<SumSpendsOfMonth>> generalListLiveData = friendsDao.getGeneralSumMonth();                 // общие расходы по месяцам
+    private List<FriendsSumValue> friendSumSpendsOfMonth = friendsDao.getSumMonthFriendsSpend();
 
     public LiveData<List<FriendsSpends>> getLiveDataFriendSpend(String email) {
         if (liveDataFriendSpend == null) {
@@ -44,9 +47,9 @@ public class ViewModelFriendsData extends ViewModel {
                         for (DocumentSnapshot document : value.getDocuments()) {
                             Long id = document.getLong("id");
                             String spendName = document.getString("spendName");
-                            String val=document.getString("value");
-                            String date=document.getString("date");
-                            FriendsSpends friendsSpends = new FriendsSpends(id,spendName,val,date);
+                            String val = document.getString("value");
+                            String date = document.getString("date");
+                            FriendsSpends friendsSpends = new FriendsSpends(id, spendName, val, date);
                             friendsSpendsList.add(friendsSpends);
                         }
                         liveDataFriendSpend.setValue(friendsSpendsList);
@@ -55,4 +58,20 @@ public class ViewModelFriendsData extends ViewModel {
 
         return liveDataFriendSpend;
     }
+
+    public FriendsSumValue getFriendSumOfMonthSpends(String month) {                 // получаю обьект cуммы всех расходов за месяц
+        if (friendSumSpendsOfMonth != null) {
+            for (FriendsSumValue friend : friendSumSpendsOfMonth) {
+                if (month.equals(friend.getDateM())) {
+                    Log.e("AScs", "friend: " + friend.getDateM());
+                    return friend;
+                }
+            }
+        } else {
+            Log.e("AScs", "friendSumSpendsOfMonth == null");
+            return null;
+        }
+        return new FriendsSumValue("00", 0);
+    }
+
 }

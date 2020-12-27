@@ -6,7 +6,7 @@ import androidx.room.ColumnInfo;
 public class FriendsSumValue {
     @ColumnInfo(name = "dateM")
     private String dateM;
-    @ColumnInfo(name = "value_post")
+    @ColumnInfo(name = "value_spends")
     private float value_spends;
 
     public FriendsSumValue (String dateM, float value_spends) {

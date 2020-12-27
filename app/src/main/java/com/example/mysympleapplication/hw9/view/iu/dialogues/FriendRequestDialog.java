@@ -50,7 +50,7 @@ public class FriendRequestDialog extends DialogFragment {
                             .set(friend);
                     friend.setEmail_user(myEmail);                                             // заменил на свое мыло чтобы создать у добавляющего документ с моим почтовым адресом
                     firestore.collection(email)
-                            .document("Observefiends")
+                            .document("Observefriends")
                             .collection("Observefriends")
                             .document(myEmail)
                             .set(friend);

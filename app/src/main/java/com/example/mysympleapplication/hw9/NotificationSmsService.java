@@ -23,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -39,7 +40,7 @@ public class NotificationSmsService extends IntentService {
     public static final String EXTRA_TEXT_REPLY = "key_text_reply";
     private static int NOTIFY_ID_GROUP = 2125;
     private static final String GROUP_ID_SAVE_SPENDS = "unknownSpend_Group";
-    private List<String> wordsListPost = Arrays.asList("Ostatok", "OST");
+    private List<String> wordsListPost = Arrays.asList("ostatok", "ost", "ост");
     private SharedPreferences sPref;
     FirebaseFirestore firestore;
     String emailCurrentUser;
@@ -54,7 +55,8 @@ public class NotificationSmsService extends IntentService {
         if (intent != null) {
             String body_sms = intent.getStringExtra(SmsReciever.SMS_BODY);
             if (body_sms != null) {
-                body_sms = body_sms.toLowerCase();
+                Log.e("AScs", "body_sms= " + body_sms);
+                body_sms = body_sms.toLowerCase(new Locale("ru"));
             }
             String adressat_sms = intent.getStringExtra(SmsReciever.SMS_ADDRESSAT);
             if (adressat_sms == null) {
@@ -146,29 +148,47 @@ public class NotificationSmsService extends IntentService {
         firestore = FirebaseFirestore.getInstance();
         String date = "";
         String value = "";
+        Pattern patternValue;
         Long id;
-        Pattern patternValue = Pattern.compile("(summa+)(.*)([byn])");
+        if (!message.contains("usd") && !message.contains("summa")) {
+            patternValue = Pattern.compile("(сумма+)(.*)([byn])");
+            Log.e("AScs", "(сумма+)(.*)([byn])");
+        } else if (message.contains("summa") && !message.contains("usd")) {
+            patternValue = Pattern.compile("(summa+)(.*)([byn])");
+            Log.e("AScs", "(summa+)(.*)([byn])");
+
+        } else if (message.contains("summa") && message.contains("usd")) {
+            patternValue = Pattern.compile("(summa+)(.*)([usd])");
+        } else {
+            patternValue = Pattern.compile("(сумма+)(.*)([usd])");
+            Log.e("AScs", "(сумма+)(.*)([usd])");
+        }
         Matcher matcherValue = patternValue.matcher(message);
         if (matcherValue.find()) {
             value = matcherValue.group();
         }
-        value = value.substring(6, value.indexOf("byn"));
+        Log.e("AScs", "getValueFromSms: ,spendName=  " + spendName + ",  body_sms= " + message);
+        if (!message.contains("usd")) {
+            value = value.substring(6, value.indexOf("byn"));
+        } else {
+            value = value.substring(6, value.indexOf("usd"));
+        }
         Date getdate = new Date();
         SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         date = newDateFormat.format(getdate);
         id = getId(spendName, value, getdate);
-       //   date="2020-07-12";
+        //   date="2020-07-12";
         Spend spend = new Spend(id, spendName, value, date);
         MyAppDataBase.getInstance().spendDao().insert(spend);
         saveSpendFirestore(spend);
         Log.e("AScs", "getValueFromSms" + " ," + spend.getValue() + " , " + spend.getSpendName() + " , " + spend.getDate());
 
         for (int i = 0; i < wordsListPost.size(); i++) {
-            String word = "\\b" + wordsListPost.get(i).toLowerCase() + "\\b";
+            String word = "\\b" + wordsListPost.get(i) + "\\b";
             Pattern patternString = Pattern.compile(word);
             Matcher matcherMss = patternString.matcher(message);
             if (matcherMss.find()) {
-                checkBalance(wordsListPost.get(i).toLowerCase(), message);
+                checkBalance(wordsListPost.get(i), message);
             }
         }
     }
@@ -190,11 +210,11 @@ public class NotificationSmsService extends IntentService {
         MyAppDataBase.getInstance().postuplenieDao().insert(postuplenie);
         savePostuplenieFirestore(postuplenie);
         for (int i = 0; i < wordsListPost.size(); i++) {
-            String word = "\\b" + wordsListPost.get(i).toLowerCase() + "\\b";
+            String word = "\\b" + wordsListPost.get(i) + "\\b";
             Pattern patternString = Pattern.compile(word);
             Matcher matcherMss = patternString.matcher(body);
             if (matcherMss.find()) {
-                checkBalance(wordsListPost.get(i).toLowerCase(), body);
+                checkBalance(wordsListPost.get(i), body);
             }
         }
     }
@@ -203,6 +223,9 @@ public class NotificationSmsService extends IntentService {
         String ostatok = "0";
         Pattern pattern = Pattern.compile("(OST+)(.*)([BYN])");
         switch (body) {
+            case "ост":
+                pattern = Pattern.compile("(ост+)(.*)([byn])");
+                break;
             case "ost":
                 pattern = Pattern.compile("(ost+)(.*)([byn])");
                 break;

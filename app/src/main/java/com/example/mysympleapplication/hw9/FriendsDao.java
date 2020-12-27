@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.example.mysympleapplication.hw9.model.FriendsSpends;
+import com.example.mysympleapplication.hw9.model.FriendsSumValue;
 
 import java.util.List;
 
@@ -19,11 +20,14 @@ public interface FriendsDao {
     LiveData<List<FriendsSpends>> getAllFriendSpends();
 
 
-   @Query("SELECT SUM(value) as value_spends," +
-           "   strftime('%m-%Y', date) as dateM FROM (" +
-           "   SELECT value,  date FROM spends UNION ALL" +
-           "   SELECT value,  date FROM friend_spends)" +
-           "   GROUP BY strftime('%m-%Y', date)" +
-           "   ORDER BY date DESC")
+    @Query("SELECT SUM(value) as value_spends," +
+            "   strftime('%m-%Y', date) as dateM FROM (" +
+            "   SELECT value,  date FROM spends UNION ALL" +
+            "   SELECT value,  date FROM friend_spends)" +
+            "   GROUP BY strftime('%m-%Y', date)" +
+            "   ORDER BY date DESC")
     LiveData<List<SumSpendsOfMonth>> getGeneralSumMonth();
+
+    @Query("SELECT SUM(value) as value_spends,strftime(\"%m-%Y\", date) as dateM FROM friend_spends GROUP BY strftime(\"%m-%Y\", date) ORDER BY date DESC")
+    List<FriendsSumValue> getSumMonthFriendsSpend();
 }

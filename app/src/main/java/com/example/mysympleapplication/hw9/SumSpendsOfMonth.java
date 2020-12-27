@@ -8,7 +8,7 @@ public class SumSpendsOfMonth {
     @ColumnInfo(name = "value_spends")
     private float value_spends;
 
-    SumSpendsOfMonth(String dateM, float value_spends) {
+   public SumSpendsOfMonth(String dateM, float value_spends) {
         this.dateM = dateM;
         this.value_spends = value_spends;
     }
