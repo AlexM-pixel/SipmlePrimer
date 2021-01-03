@@ -46,10 +46,10 @@
         <item name="android:textSize">36sp</item>
     </style>
     <style name="fab_user">
-        <item name="colorAccent">#FFC107</item>
+        <item name="colorAccent">#FDCC39</item>
     </style>
     <style name="fab_friend">
-        <item name="colorAccent">@color/colorGreen</item>
+        <item name="colorAccent">#F8B9BD47</item>
     </style>
 
 

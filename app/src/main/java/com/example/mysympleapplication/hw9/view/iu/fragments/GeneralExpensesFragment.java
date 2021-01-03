@@ -37,6 +37,7 @@ public class GeneralExpensesFragment extends Fragment {
     private TextView friendValue;
     ProgressBar userBar;
     ProgressBar friendbar;
+    ProgressBar innerbar;
     ViewModelFriendsData viewModelFriendsData;
     ViewModelBalance viewModelBalance;
     private String mParam1;
@@ -77,6 +78,7 @@ public class GeneralExpensesFragment extends Fragment {
         userValue = view.findViewById(R.id.value_user_text);
         friendValue = view.findViewById(R.id.value_friend_text);
         friendbar = view.findViewById(R.id.background_progressbar);
+        innerbar = view.findViewById(R.id.stats_inner);
         userBar = view.findViewById(R.id.stats_progressbar);
         RecyclerView recyclerView = view.findViewById(R.id.recycler_month);
         cardViewArrayList = new ArrayList<>();
@@ -93,7 +95,7 @@ public class GeneralExpensesFragment extends Fragment {
             setValues(input);
         });
         viewModelFriendsData.friendSpendsFromRoom.observe(getActivity(), input -> {
-           // Log.e("AScs", "generalExpenses, list.size()= " + input.get(0).getId());
+            // Log.e("AScs", "generalExpenses, list.size()= " + input.get(0).getId());
             //  text_spend.setText(input.get(0).getSpendName() + "  " + input.get(0).getValue());
 
         });
@@ -114,13 +116,15 @@ public class GeneralExpensesFragment extends Fragment {
     private void setPercents(float valueUser, float valueFriend) {
         double percent;
         if (valueUser > valueFriend) {
-            percent = (double) valueFriend / (double) valueUser * 100;
+            percent = valueFriend / (double) (valueUser + valueFriend) * 100;
             userBar.setProgress(100);
-            friendbar.setProgress((int) percent/2);
+            friendbar.setProgress((int) percent);
+            innerbar.setVisibility(View.GONE);
         } else {
-            percent = (double) valueUser / (double) valueFriend * 100;
-            userBar.setProgress((int) percent/2);
+            percent = valueUser / (double) (valueFriend + valueUser) * 100;
+            userBar.setProgress((int) percent);
             friendbar.setProgress(100);
+            innerbar.setVisibility(View.VISIBLE);
         }
     }
 }
