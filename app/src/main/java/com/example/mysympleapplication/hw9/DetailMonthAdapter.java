@@ -68,12 +68,9 @@ public class DetailMonthAdapter extends RecyclerView.Adapter<DetailMonthAdapter.
         holder.valueSpends.setText(calendarSpendsList.get(position).getTotalValue() + "  BYN");
         holder.nameSpends.setText(calendarSpendsList.get(position).getSpendName());
         holder.date.setText(calendarSpendsList.get(position).getDate());
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (listenerDetail != null) {
-                    listenerDetail.onDetailSpendClickListener(calendarSpendsList.get(position).getDate(), calendarSpendsList.get(position).getSpendName());
-                }
+        holder.cardView.setOnClickListener(v -> {
+            if (listenerDetail != null) {
+                listenerDetail.onDetailSpendClickListener(calendarSpendsList.get(position).getDate(), calendarSpendsList.get(position).getSpendName());
             }
         });
         holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {

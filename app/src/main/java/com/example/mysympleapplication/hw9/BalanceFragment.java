@@ -63,6 +63,9 @@ public class BalanceFragment extends Fragment {
                 MyAppDataBase.getInstance().friendsDao().insertAllFriendSpends(input);
                 Log.e("AScs", "balanceFragment, list.size()= " + input.get(0).getValue());
             });
+            myViewModel.getBalanceFriendLiveData(emailObserveUser).observe(this, input -> {
+                MyAppDataBase.getInstance().friendsDao().insertBF(input);
+            });
         }
         Log.e("AScs", "balanceFragment, booleanAccess= " + booleanAccess);
     }

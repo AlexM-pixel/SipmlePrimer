@@ -35,6 +35,8 @@ public enum NameSends {
     APTEK(R.drawable.icon_apteka_48, " BELFARMATSIYA APTEK","Аптека"),
     ELEMENT(R.drawable.element , "5 ELEMENT","5 ЭЛЕМЕНТ"),
     YANDEX(R.drawable.music , "Yandex","Yandex музыка"),
+    MEGATOP(R.drawable.icon_megatop , "MEGATOP","MEGATOP"),
+    KRUGHKI(R.drawable.icon_kruzok , "KRUGHKI V DETSKIH SADAH","Д/С \nКружок"),
     SPORTMASTER(R.drawable.sport, "SPORTMASTER","Спорт Мастер");
     private int image;
     private String nameSpand;

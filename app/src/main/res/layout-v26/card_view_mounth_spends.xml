@@ -19,12 +19,13 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
             android:layout_marginTop="6dp"
+            android:layout_gravity="center"
             android:layout_marginBottom="6dp" />
 
         <TextView
             android:id="@+id/name_for_spend"
             android:layout_width="100dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:gravity="center"
             android:lines="2"

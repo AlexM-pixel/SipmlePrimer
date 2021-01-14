@@ -80,6 +80,8 @@ public class GeneralExpensesFragment extends Fragment {
         friendbar = view.findViewById(R.id.background_progressbar);
         innerbar = view.findViewById(R.id.stats_inner);
         userBar = view.findViewById(R.id.stats_progressbar);
+        TextView balanceUser = view.findViewById(R.id.valueBalanceUser);
+        TextView balanceFriend = view.findViewById(R.id.valueBalanceFriend);
         RecyclerView recyclerView = view.findViewById(R.id.recycler_month);
         cardViewArrayList = new ArrayList<>();
         GeneralMonthAdapter adapter = new GeneralMonthAdapter(cardViewArrayList);
@@ -93,6 +95,12 @@ public class GeneralExpensesFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         adapter.setGeneralSpendMonthListener(input -> {
             setValues(input);
+        });
+        viewModelBalance.balanceLiveData.observe(getActivity(), input -> balanceUser.setText(input.getBalance()));
+        viewModelFriendsData.balanceFriendLiveData.observe(getActivity(), input->{
+            if (input!=null) {
+                balanceFriend.setText(input.getBalance());
+            }
         });
         viewModelFriendsData.friendSpendsFromRoom.observe(getActivity(), input -> {
             // Log.e("AScs", "generalExpenses, list.size()= " + input.get(0).getId());
@@ -111,6 +119,7 @@ public class GeneralExpensesFragment extends Fragment {
         float user_value = viewModelBalance.getSumOfMonthSpends(date.getDateM()).getValue_spends();
         userValue.setText(String.valueOf(user_value));
         setPercents(user_value, friend_value);
+
     }
 
     private void setPercents(float valueUser, float valueFriend) {
