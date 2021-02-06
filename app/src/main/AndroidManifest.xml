@@ -20,16 +20,21 @@
         android:roundIcon="@mipmap/ic_launcher_cat_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <service
-            android:name=".hw9.service.MyIntentService"
-            android:exported="false"></service>
 
-        <activity android:name=".hw9.DetailActivity" />
-        <activity android:name=".hw9.DetailMonthActivity" />
-        <activity android:name=".hw9.Main9Activity" />
+        <activity
+            android:name=".hw9.DetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".hw9.DetailMonthActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".hw9.Main9Activity"
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".hw9.view.auth.EmailPasswordActivity"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

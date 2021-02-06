@@ -1,100 +1,273 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".hw9.SettingsFragment">
+    android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/edit_text_BankName"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="18dp"
-        android:layout_marginTop="38dp"
-        android:layout_marginEnd="28dp"
-        android:hint="insert bank name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:context=".hw9.SettingsFragment">
 
-    <Button
-        android:id="@+id/button_add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:paddingStart="48dp"
-        android:paddingEnd="48dp"
-        android:text="add"
-        android:textSize="18sp"
-        android:theme="@style/MyButtons"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_text_BankName" />
+        <TextView
+            android:id="@+id/text_input_name_bank"
+            style="@style/AppTheme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#E6EFEF"
+            android:elevation="3dp"
+            android:paddingStart="18dp"
+            android:paddingTop="28dp"
+            android:paddingBottom="8dp"
+            android:text="Введите имя вашего банка"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <View
-        android:id="@+id/divider_settings"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="8dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_add" />
+        <EditText
+            android:id="@+id/edit_text_BankName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:hint="insert bank name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_input_name_bank" />
 
-    <TextView
-        android:id="@+id/textView_exitAccount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="exit account"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider_settings" />
+        <Button
+            android:id="@+id/button_add"
+            style="@style/MyButtons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:paddingStart="48dp"
+            android:paddingEnd="48dp"
+            android:text="add"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_text_BankName" />
 
-    <Button
-        android:id="@+id/button_sign_Out"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingStart="48dp"
-        android:paddingEnd="48dp"
-        android:text="@string/sign_out"
-        android:textSize="18sp"
-        android:theme="@style/MyButtons"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_exitAccount" />
+        <TextView
+            android:id="@+id/text_exit_acc"
+            style="@style/AppTheme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#E6EFEF"
+            android:elevation="3dp"
+            android:paddingStart="18dp"
+            android:paddingTop="28dp"
+            android:paddingBottom="8dp"
+            android:text="Выход из аккаунта"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button_add" />
 
-    <View
-        android:id="@+id/divider_settings2"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="8dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_sign_Out" />
+        <Button
+            android:id="@+id/button_sign_Out"
+            style="@style/MyButtons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="@string/sign_out"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_exit_acc" />
 
-    <EditText
-        android:id="@+id/email_friends_id"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="write email friends"
-        android:layout_marginStart="18dp"
-        android:layout_marginTop="18dp"
-        android:layout_marginEnd="28dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/divider_settings2" />
+        <EditText
+            android:id="@+id/email_friends_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:hint="write email friends"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_add_friend" />
 
-    <Button
-        android:id="@+id/button_add_Friends"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:text="add friend"
-        android:textSize="18sp"
-        android:theme="@style/MyButtons"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email_friends_id" />
+        <TextView
+            android:id="@+id/text_add_friend"
+            style="@style/AppTheme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#E6EFEF"
+            android:elevation="3dp"
+            android:paddingStart="18dp"
+            android:paddingTop="28dp"
+            android:paddingBottom="8dp"
+            android:text="Добавить друга для общего буджета"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button_sign_Out" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/button_add_Friends"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="add friend"
+            android:textSize="18sp"
+            android:theme="@style/MyButtons"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/email_friends_id" />
+
+        <TextView
+            android:id="@+id/text_theme_style"
+            style="@style/AppTheme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#E6EFEF"
+            android:elevation="3dp"
+            android:paddingStart="18dp"
+            android:paddingTop="28dp"
+            android:paddingBottom="8dp"
+            android:text="Цветовая схема"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button_add_Friends" />
+
+        <View
+            android:id="@+id/divider_themeStyle"
+            android:layout_width="409dp"
+            android:layout_height="1dp"
+            android:background="#A1A0A0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_theme_style" />
+
+        <RadioGroup
+            android:id="@+id/radio_group_styleTheme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider_themeStyle">
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/radio_pink"
+                style="@style/RadioButtonBase"
+                android:text="pink"
+                android:textSize="18sp" />
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/radio_orange"
+                style="@style/RadioButtonBase"
+                android:text="orange"
+                android:textSize="18sp" />
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/radio_blue"
+                style="@style/RadioButtonBase"
+                android:text="blue"
+                android:textSize="18sp" />
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/radio_def"
+                style="@style/RadioButtonBase"
+                android:text="default"
+                android:textSize="18sp" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/text_support"
+            style="@style/AppTheme"
+            android:layout_marginTop="6dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#E6EFEF"
+            android:elevation="3dp"
+            android:paddingStart="18dp"
+            android:paddingTop="28dp"
+            android:paddingBottom="8dp"
+            android:text="служба поддержки"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/radio_group_styleTheme" />
+
+        <View
+            android:id="@+id/divider_support"
+            android:layout_width="409dp"
+            android:layout_height="1dp"
+            android:background="#A1A0A0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_support" />
+
+        <Button
+            android:id="@+id/button_support"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="написать сообщение"
+            android:textSize="18sp"
+            android:theme="@style/MyButtons"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider_support" />
+
+        <TextView
+            android:id="@+id/text_push_notification"
+            style="@style/AppTheme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#E6EFEF"
+            android:elevation="3dp"
+            android:paddingStart="18dp"
+            android:paddingTop="28dp"
+            android:paddingBottom="8dp"
+            android:text="Настройки"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button_support" />
+
+        <View
+            android:id="@+id/divider_notification"
+            android:layout_width="409dp"
+            android:layout_height="1dp"
+            android:background="#A1A0A0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_push_notification" />
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switch_push"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider_notification"
+            android:textSize="18sp"
+            android:textColor="#2C3E50"
+            android:text="Пуш-уведомления"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:paddingStart="30dp"
+            android:paddingEnd="23dp"
+            />
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switch_"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/switch_push"
+            android:textSize="18sp"
+            android:textColor="#2C3E50"
+            android:text="Пуш-уведомления"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:paddingStart="30dp"
+            android:paddingEnd="23dp"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

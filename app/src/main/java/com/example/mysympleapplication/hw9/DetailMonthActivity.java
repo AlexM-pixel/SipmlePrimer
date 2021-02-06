@@ -10,13 +10,14 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.mysympleapplication.R;
+import com.example.mysympleapplication.hw9.view.iu.BaseActivity;
 import com.example.mysympleapplication.hw9.viewModel.MyViewModel;
 import com.r0adkll.slidr.Slidr;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DetailMonthActivity extends AppCompatActivity {
+public class DetailMonthActivity extends BaseActivity {
     public static final String NAME_SPEND = "nameSpend";
     private String date;
     public static final String DATE = "date_spends";

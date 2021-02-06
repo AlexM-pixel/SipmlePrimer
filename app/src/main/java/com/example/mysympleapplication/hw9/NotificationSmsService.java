@@ -40,7 +40,7 @@ public class NotificationSmsService extends IntentService {
     public static final String EXTRA_TEXT_REPLY = "key_text_reply";
     private static int NOTIFY_ID_GROUP = 2125;
     private static final String GROUP_ID_SAVE_SPENDS = "unknownSpend_Group";
-    private List<String> wordsListPost = Arrays.asList("ostatok", "ost", "ост");
+    private List<String> wordsListPost = Arrays.asList("ostatok", "ost", "ост", "dostupno");
     private SharedPreferences sPref;
     FirebaseFirestore firestore;
     String emailCurrentUser;
@@ -75,7 +75,7 @@ public class NotificationSmsService extends IntentService {
         if (bankSet != null) {
             for (String stringSet : bankSet) {
                 if (addressat.equals(stringSet)) {                                                   // add toLowerCase
-                    if (body.contains("popolnenie") || body.contains("postuplenie")) {
+                    if (body.contains("popolnenie") || body.contains("postuplenie") || body.contains("credit")) {
                         insertNewPostuplenie(body);
                         return;
                     }
@@ -150,27 +150,34 @@ public class NotificationSmsService extends IntentService {
         String value = "";
         Pattern patternValue;
         Long id;
-        if (!message.contains("usd") && !message.contains("summa")) {
+        if (!message.contains("usd") && !message.contains("summa") && !message.contains("retail")) {
             patternValue = Pattern.compile("(сумма+)(.*)([byn])");
-            Log.e("AScs", "(сумма+)(.*)([byn])");
+            Log.e("qwe", "(сумма+)(.*)([byn])");
         } else if (message.contains("summa") && !message.contains("usd")) {
             patternValue = Pattern.compile("(summa+)(.*)([byn])");
-            Log.e("AScs", "(summa+)(.*)([byn])");
+            Log.e("qwe", "(summa+)(.*)([byn])");
+        }else if (message.contains("retail") && !message.contains("usd")) {
+            patternValue = Pattern.compile("(retail -+)(.*)([byn])");
+            Log.e("qwe", "(retail+)(.*)([byn])");
 
         } else if (message.contains("summa") && message.contains("usd")) {
             patternValue = Pattern.compile("(summa+)(.*)([usd])");
         } else {
             patternValue = Pattern.compile("(сумма+)(.*)([usd])");
-            Log.e("AScs", "(сумма+)(.*)([usd])");
+            Log.e("qwe", "(сумма+)(.*)([usd])");
         }
         Matcher matcherValue = patternValue.matcher(message);
         if (matcherValue.find()) {
             value = matcherValue.group();
         }
-        Log.e("AScs", "getValueFromSms: ,spendName=  " + spendName + ",  body_sms= " + message);
-        if (!message.contains("usd")) {
+        Log.e("qwe", "getValueFromSms: ,spendName=  " + spendName + ",  body_sms= " + message);
+        if (!message.contains("usd") && !message.contains("retail")) {
             value = value.substring(6, value.indexOf("byn"));
-        } else {
+        }else if(message.contains("retail") && !message.contains("usd")) {
+            value = value.substring(8, value.indexOf("byn"));
+            Log.e("qwe", value);
+        }
+        else {
             value = value.substring(6, value.indexOf("usd"));
         }
         Date getdate = new Date();
@@ -181,7 +188,7 @@ public class NotificationSmsService extends IntentService {
         Spend spend = new Spend(id, spendName, value, date);
         MyAppDataBase.getInstance().spendDao().insert(spend);
         saveSpendFirestore(spend);
-        Log.e("AScs", "getValueFromSms" + " ," + spend.getValue() + " , " + spend.getSpendName() + " , " + spend.getDate());
+        Log.e("qwe", "getValueFromSms" + " ," + spend.getValue() + " , " + spend.getSpendName() + " , " + spend.getDate());
 
         for (int i = 0; i < wordsListPost.size(); i++) {
             String word = "\\b" + wordsListPost.get(i) + "\\b";
@@ -196,6 +203,10 @@ public class NotificationSmsService extends IntentService {
     private void insertNewPostuplenie(String body) {
         String value = "";
         Pattern patternValue = Pattern.compile("(summa+)(.*)([byn])");    // сумма поступления
+        if (body.contains("credit")) {
+            patternValue = Pattern.compile("(credit+)(.*)([byn])");
+            Log.e("AScs", "(сумма+)(.*)([byn])");
+        }
         Matcher matcherValue = patternValue.matcher(body);
         if (matcherValue.find()) {
             value = matcherValue.group();
@@ -231,6 +242,9 @@ public class NotificationSmsService extends IntentService {
                 break;
             case "ostatok":
                 pattern = Pattern.compile("(ostatok+)(.*)([byn])");
+                break;
+            case "dostupno":
+                pattern = Pattern.compile("(dostupno+)(.*)([byn])");
                 break;
         }
         Matcher matcherValue = pattern.matcher(message);

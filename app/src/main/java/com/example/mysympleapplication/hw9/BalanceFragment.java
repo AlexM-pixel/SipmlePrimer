@@ -16,7 +16,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.mysympleapplication.R;
-import com.example.mysympleapplication.hw9.service.MyIntentService;
 import com.example.mysympleapplication.hw9.view.iu.ZoomOutPageTransformer;
 import com.example.mysympleapplication.hw9.view.iu.adapters.ViewPagerFragmentAdapter;
 import com.example.mysympleapplication.hw9.viewModel.MyViewModel;

@@ -1,18 +1,63 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorAccent</item>
         <item name="colorPrimaryDark">#0097A7</item>
         <item name="colorAccent">#03DAC5</item>
-        <item name="android:textColorPrimary">#0097A7</item>
+        <item name="colorSurface">#ffffff</item>
+        <item name="splashGradient">@drawable/login_bg_def</item>
+        <item name="toggle_text_byn">@color/colorPaletteDef</item>
+        <item name="toggle_button">@drawable/toggle_button_def</item>
+<!--        <item name="android:colorBackground">#FCE3F6F8</item>-->
 
     </style>
-    <style name="MyButtons"
-        parent="AppTheme">
-        <item name="colorButtonNormal">#03DAC5</item>
-        <item name="colorAccent">#03DAC5</item>
+
+    <style name="AppThemePink" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">#E91E63</item>
+        <item name="colorPrimaryDark">#B3194D</item>
+        <item name="colorAccent">#FD6B9D</item>                        // text color and other
+        <item name="splashGradient">@drawable/login_bg_pink</item>
+        <item name="toggle_button">@drawable/toggle_button_pink</item>
+        <item name="toggle_text_byn">@color/splashStart.pink</item>
+<!--        <item name="android:colorBackground">#F6E2EC</item>-->
+        <item name="colorSurface">#F3F3F1</item>
+
+
+
+    </style>
+
+    <style name="AppThemeOrange" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">#FF9800</item>
+        <item name="colorPrimaryDark">#FF5722</item>
+        <item name="colorAccent">#FFFF5722</item>               // text color and other
+        <item name="colorSurface">#F3F3F1</item>         // background for bottom navigation
+        <item name="toggle_text_byn">@color/colorPaletteOrange</item>
+        <item name="splashGradient">@drawable/login_bg_orange</item>
+<!--        <item name="android:colorBackground">#FAEEDD</item>-->
+        <item name="toggle_button">@drawable/toggle_button_orange</item>
+
+
+    </style>
+    <style name="AppThemeBlue" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">#03A9F4</item>
+        <item name="colorPrimaryDark">#065593</item>
+        <item name="colorAccent">#03A9F4</item>                   // text color and other
+        <item name="colorSurface">#F3F3F1</item>         // background for bottom navigation
+        <item name="toggle_text_byn">@color/colorPaletteBlue</item>
+<!--        <item name="android:colorBackground">#CEEFFD</item>-->
+        <item name="splashGradient">@drawable/login_bg_blue</item>
+        <item name="toggle_button">@drawable/toggle_button_blue</item>
+
+    </style>
+
+    <style name="MyButtons">
+        <item name="colorButtonNormal">@color/colorPaletteBlue</item>
+        <item name="colorAccent">@color/colorGrafik_fon</item>
         <item name="android:elevation">8dp</item>
         <item name="android:buttonCornerRadius" tools:targetApi="p">10dp</item>
         <item name="android:textColor">@android:color/white</item>
@@ -24,6 +69,7 @@
         <item name="android:layout_marginLeft">4dp</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
+
     <style name="ThemeOverlay.MyTextDetail" parent="AppTheme">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -34,6 +80,7 @@
         <item name="android:scrollbars">vertical</item>
         <item name="android:textSize">16sp</item>
     </style>
+
     <style name="ThemeOverlay.FirebaseIcon" parent="AppTheme">
         <item name="android:layout_marginTop">@dimen/icon_top_margin</item>
         <item name="android:layout_marginBottom">@dimen/icon_bottom_margin</item>
@@ -45,11 +92,25 @@
         <item name="android:gravity">center</item>
         <item name="android:textSize">36sp</item>
     </style>
+
     <style name="fab_user">
         <item name="colorAccent">#FDCC39</item>
     </style>
+
     <style name="fab_friend">
         <item name="colorAccent">#F8B9BD47</item>
+    </style>
+
+    <style name="RadioButtonBase">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:button">@android:color/transparent</item>
+        <item name="android:textColor">@color/black_white_color_selector</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">?attr/toggle_button</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:padding">2dp</item>
     </style>
 
 

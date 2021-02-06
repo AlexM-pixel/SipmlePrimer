@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.example.mysympleapplication.R;
 import com.example.mysympleapplication.hw9.model.Friends;
 import com.example.mysympleapplication.hw9.view.auth.EmailPasswordActivity;
+import com.example.mysympleapplication.hw9.view.iu.BaseActivity;
 import com.example.mysympleapplication.hw9.view.iu.dialogues.FriendRequestDialog;
 import com.example.mysympleapplication.hw9.view.iu.dialogues.RecoveryDialog;
 import com.example.mysympleapplication.hw9.viewModel.MyViewModel;
@@ -35,7 +36,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Main9Activity extends AppCompatActivity {
+public class Main9Activity extends BaseActivity {
     private static final int PERMISSION_REQUEST_SMS = 99;
     public static final String DATE_MONTH = "choice_date";
     public static final String APP_PREFERENCES = "sPref";

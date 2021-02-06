@@ -4,13 +4,15 @@ import com.example.mysympleapplication.R;
 
 public enum NameSends {
     SOSEDY(R.drawable.icon_shop_48, "SOSEDI"," Соседи"),
-    ZOOBAZAR(R.drawable.icon_zoo_48, "ZOOBAZAR"," Зообазар"),
+    ZOOBAZAR(R.drawable.icon_zoo_48, "ZOOBAZAR","Зообазар"),
     TELEPHONE(R.drawable.icon_mobile_48, "PO N TELEFONA:","моб. телефон"),
     EUROOPT(R.drawable.icon_shop_48, "EVROOPT"," Евроопт"),
     ZORINA(R.drawable.icon_shop_48, "ZORINA"," Зорина"),
     VITALUR(R.drawable.icon_fish_48, "VITALUR"," Виталюр"),
+    SANTA(R.drawable.icon_santa, "SANTA"," SANTA"),
     INTERNET(R.drawable.icon_internet_48, "1703017277003","Интернет"),
     INTERNET_A1(R.drawable.icon_internet_48, "ONLINE SERVICE/INTERNET","Интернет"),
+    INTERNET_M(R.drawable.icon_internet_48, "ERIP TELECOM SERV","Интернет"),
     GIPPO(R.drawable.icon_shop_48, "GIPPO"," Гиппо"),
     MILA(R.drawable.icon_mila_48, "MILA"," Мила"),
     CASH(R.drawable.icon_cash_48, "Vydacha nalichnyh","Снятие \n наличных"),
@@ -37,6 +39,16 @@ public enum NameSends {
     YANDEX(R.drawable.music , "Yandex","Yandex музыка"),
     MEGATOP(R.drawable.icon_megatop , "MEGATOP","MEGATOP"),
     KRUGHKI(R.drawable.icon_kruzok , "KRUGHKI V DETSKIH SADAH","Д/С \nКружок"),
+    KOPEECHKA(R.drawable.kopeechka, "KOPEECHKA","Копеечка"),
+    KOMMUNALNIEPLATEGHI_M(R.drawable.icon_kommunalnie_48, "ERIP UTILITIES I-BANK","Коммунальные \n платежи"),
+    PRIVATIZACIA(R.drawable.house, "ERIP GOVERNMENT PAY","Приватизация"),
+    TRI_TSENY(R.drawable.triceni, "TRI TSENY","Три цены"),
+    MIR_KOSMETIKI(R.drawable.belita, "MIR KOSMETIKI","Белита"),
+    NA_NEMIGE(R.drawable.icon_shop_48, "NA NEMIGE","На Немиге"),
+    OSTROV_CHIST(R.drawable.ostrov, "OSTROV CHIST","Остров Чистоты"),
+    GASTRONOM_SUPERPROD(R.drawable.icon_shop_48, "GASTRONOM SUPERPROD","Магазин Суперпрод"),
+    SLADKIY_DOMIK(R.drawable.sladkiy, "SLADKIY DOMIK","Сладкий домик"),
+    SMS_INFORM(R.drawable.icon_sms_48, "SMS-INFORM","Смс-оповещение"),
     SPORTMASTER(R.drawable.sport, "SPORTMASTER","Спорт Мастер");
     private int image;
     private String nameSpand;

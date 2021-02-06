@@ -65,7 +65,7 @@ public class DetailMonthAdapter extends RecyclerView.Adapter<DetailMonthAdapter.
         int image = NameSends.getImageForItem(calendarSpendsList.get(position).getSpendName());
         Drawable drawable = ContextCompat.getDrawable(holder.cardView.getContext(), image);
         holder.imageView.setImageDrawable(drawable);
-        holder.valueSpends.setText(calendarSpendsList.get(position).getTotalValue() + "  BYN");
+        holder.valueSpends.setText(calendarSpendsList.get(position).getTotalValue() + "\nBYN");
         holder.nameSpends.setText(calendarSpendsList.get(position).getSpendName());
         holder.date.setText(calendarSpendsList.get(position).getDate());
         holder.cardView.setOnClickListener(v -> {

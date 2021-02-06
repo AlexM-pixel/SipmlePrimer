@@ -6,4 +6,15 @@
     <color name="colorGreen">#AFB42B</color>
     <color name="colorGrafik_fon">#900097A7</color>
     <color name="colorGrafik_line">#F8FAFA</color>
+    <color name="colorFabUser">#FDCC39</color>
+    <color name="colorFabFriend">#F8B9BD47</color>
+
+    <color name="colorPalette3">#2C3E50</color>
+    <color name="colorPalette1">#FFFFFF</color>
+    <color name="splashStart.pink">#FA7DB4</color>
+    <color name="splashEnd.pink">#FE3998</color>
+    <color name="colorPaletteBlue">#03A9F4</color>
+    <color name="colorPaletteOrange">#FF9800</color>
+    <color name="colorPaletteDef">#00BCD4</color>
+
 </resources>

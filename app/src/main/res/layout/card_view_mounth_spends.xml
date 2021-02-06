@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="8dp">
+    app:cardCornerRadius="6dp"
+    app:cardElevation="6dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,34 +15,41 @@
 
         <ImageView
             android:id="@+id/imageSpend"
-            android:layout_marginTop="6dp"
-            android:layout_marginBottom="6dp"
-            android:layout_marginStart="6dp"
-            android:layout_gravity="center"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp" />
+
         <TextView
             android:id="@+id/name_for_spend"
-            android:layout_width="108dp"
+            android:layout_width="78dp"
             android:layout_height="wrap_content"
-            android:lines="2"
-            android:layout_margin="8dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="6dp"
+            android:layout_gravity="center_vertical"
             android:gravity="center"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
+
         <TextView
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_margin="6dp"
+            android:layout_gravity="center_vertical"
             android:gravity="center"
             android:textSize="18sp" />
+
         <TextView
             android:id="@+id/value_month_spends"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:textColor="#00BCD4"
-            android:layout_margin="8dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="8dp"
             android:gravity="center"
+            android:lines="2"
+            android:textColor="?attr/toggle_text_byn"
             android:textSize="18sp" />
 
 

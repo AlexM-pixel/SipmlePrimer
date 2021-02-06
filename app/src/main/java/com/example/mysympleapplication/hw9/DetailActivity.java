@@ -24,6 +24,7 @@ import android.widget.EditText;
 
 import com.example.mysympleapplication.R;
 import com.example.mysympleapplication.hw9.view.auth.EmailPasswordActivity;
+import com.example.mysympleapplication.hw9.view.iu.BaseActivity;
 import com.example.mysympleapplication.hw9.viewModel.MyViewModel;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -34,7 +35,7 @@ import java.util.List;
 
 import static com.example.mysympleapplication.hw9.Main9Activity.APP_PREFERENCES;
 
-public class DetailActivity extends AppCompatActivity {
+public class DetailActivity  extends BaseActivity {
     private List<CalendarSpends> spendList;
     DetailMonthAdapter adapter;
     String date;
