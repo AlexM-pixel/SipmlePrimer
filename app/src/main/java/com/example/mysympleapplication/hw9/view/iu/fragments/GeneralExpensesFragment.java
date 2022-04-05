@@ -54,8 +54,7 @@ public class GeneralExpensesFragment extends Fragment {
     }
 
     public static GeneralExpensesFragment newInstance() {
-        GeneralExpensesFragment fragment = new GeneralExpensesFragment();
-        return fragment;
+        return new GeneralExpensesFragment();
     }
 
     @Override
@@ -85,7 +84,7 @@ public class GeneralExpensesFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.recycler_month);
         cardViewArrayList = new ArrayList<>();
         GeneralMonthAdapter adapter = new GeneralMonthAdapter(cardViewArrayList);
-        viewModelFriendsData.generalListLiveData.observe(getActivity(), input -> {
+        viewModelFriendsData.generalListLiveData.observe(requireActivity(), input -> {
             adapter.setCardViewList(input);
             setValues(input.get(0));
         });

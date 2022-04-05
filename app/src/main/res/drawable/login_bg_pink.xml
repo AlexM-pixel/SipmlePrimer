@@ -6,8 +6,8 @@
         android:startColor="@color/splashStart.pink"
         android:endColor="@color/colorPalette1"
         android:centerX="0.5"
-        android:centerY="0.3"
-        android:gradientRadius="200dp"
+        android:centerY="0.4"
+        android:gradientRadius="400dp"
         
         />
 </shape>

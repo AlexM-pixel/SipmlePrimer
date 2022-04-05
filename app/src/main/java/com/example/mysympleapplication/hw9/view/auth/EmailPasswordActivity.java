@@ -1,5 +1,7 @@
 package com.example.mysympleapplication.hw9.view.auth;
 
+import android.annotation.SuppressLint;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -10,11 +12,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
-import androidx.fragment.app.FragmentManager;
 
 import com.example.mysympleapplication.R;
 import com.example.mysympleapplication.hw9.Main9Activity;
@@ -62,7 +64,7 @@ public class EmailPasswordActivity extends BaseActivity implements View.OnClickL
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_emailpassword);
-        fm = getSupportFragmentManager();
+        fm = getFragmentManager();
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
         // [END initialize_auth]
@@ -131,26 +133,7 @@ public class EmailPasswordActivity extends BaseActivity implements View.OnClickL
                         }
                         count++;
                         if (count == 3) {                                                        //если пароль или почта введены не правильно 3 раза подряд
-                            mAuth.sendPasswordResetEmail(email)
-                                    .addOnSuccessListener(aVoid -> {                                      //  восстановление пароля
-                                        bundle.putString(EmailPasswordActivity.ALERT_DIALOG, "На вашу почту отправлено письмо для восстановления пароля");   // cюда добавил диалог о отправке на почту
-                                        alertDialogFragment.setArguments(bundle);
-                                        if (!alertDialogFragment.isAdded()) {
-                                            alertDialogFragment.show(fm, "badly email");
-                                        } else {
-                                            alertDialogFragment.dismiss();
-                                            alertDialogFragment.show(fm, "badly email");
-                                        }
-                                    }).addOnFailureListener(e -> {
-
-                                Log.e(EmailPasswordActivity.TAG, e.toString() + "  !!!!!!");
-                                if (e.toString().contains("The email address is badly formatted")) {
-                                    bundle.putString(EmailPasswordActivity.ALERT_DIALOG, "не корректный email !");
-                                    alertDialogFragment.setArguments(bundle);
-                                    alertDialogFragment.show(fm, "badly email");
-                                }
-                            });
-                            count = 0;
+                            resetPasswordUser(bundle, email);
                         }
                     }
                     hideProgressBar();
@@ -158,12 +141,48 @@ public class EmailPasswordActivity extends BaseActivity implements View.OnClickL
         // [END sign_in_with_email]
     }
 
+    private void resetPasswordUser(Bundle bundle, String email) {
+        mAuth.sendPasswordResetEmail(email)
+                .addOnSuccessListener(aVoid -> {                                      //  восстановление пароля
+                    bundle.putString(EmailPasswordActivity.ALERT_DIALOG, "На вашу почту отправлено письмо для восстановления пароля");   // cюда добавил диалог о отправке на почту
+                    alertDialogFragment.setArguments(bundle);
+                    if (!alertDialogFragment.isAdded()) {
+                        alertDialogFragment.show(fm, "badly email");
+                    } else {
+                        alertDialogFragment.dismiss();
+                        alertDialogFragment.show(fm, "badly email");
+                    }
+                }).addOnFailureListener(e -> {
+
+            Log.e(EmailPasswordActivity.TAG, e.toString() + "  !!!!!!");
+            if (e.toString().contains("The email address is badly formatted")) {
+                bundle.putString(EmailPasswordActivity.ALERT_DIALOG, "не корректный email !");
+                alertDialogFragment.setArguments(bundle);
+                alertDialogFragment.show(fm, "badly email");
+            }
+        });
+        count = 0;
+    }
+
+    private void resetPasswordUser(String email) {
+        mAuth.sendPasswordResetEmail(email)
+                .addOnSuccessListener(aVoid -> {                                      //  восстановление пароля
+                    Toast.makeText(this, "ok", Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "email===" + email);
+                }).addOnFailureListener(e -> {
+
+            Log.e(EmailPasswordActivity.TAG, e.toString() + "  !!!!!!");
+
+        });
+        count = 0;
+    }
+
     private void startServiceCheckData(FirebaseUser user) {
         cRef = firestore
                 .collection(user.getEmail());
         // start new Thread:
         service = Executors.newSingleThreadExecutor();
-        Runnable run = () -> geAllSpendsFromFireStore();
+        Runnable run = this::geAllSpendsFromFireStore;
         service.submit(run);
         service.shutdown();
     }
@@ -213,7 +232,7 @@ public class EmailPasswordActivity extends BaseActivity implements View.OnClickL
     }
 
     private void createCollectionFriends(FirebaseUser user) {
-        Friends friend = new Friends(false,"first_init");
+        Friends friend = new Friends(false, "first_init");
         firestore.collection(user.getEmail())
                 .document("fiends")
                 .collection("friends")
@@ -375,6 +394,7 @@ public class EmailPasswordActivity extends BaseActivity implements View.OnClickL
         }
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -382,7 +402,9 @@ public class EmailPasswordActivity extends BaseActivity implements View.OnClickL
                 createAccount(emailText.getText().toString(), passwordText.getText().toString());
                 break;
             case R.id.email_sign_in_button:
-                signIn(emailText.getText().toString(), passwordText.getText().toString());
+                String email = emailText.getText().toString();
+                signIn(email, passwordText.getText().toString());
+              //  resetPasswordUser(email);
                 break;
         }
     }

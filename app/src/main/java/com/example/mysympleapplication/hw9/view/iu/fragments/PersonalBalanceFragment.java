@@ -28,6 +28,7 @@ public class PersonalBalanceFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+
     public static PersonalBalanceFragment newInstance() {
         return new PersonalBalanceFragment();
     }
@@ -45,8 +46,8 @@ public class PersonalBalanceFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_personal_balance, container, false);
-        TextView d= view.findViewById(R.id.personal);
-        if (mParam1!=null) d.setText(mParam1);
+        TextView d = view.findViewById(R.id.personal);
+        if (mParam1 != null) d.setText(mParam1);
         return view;
     }
 }

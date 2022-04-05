@@ -2,11 +2,11 @@ package com.example.mysympleapplication.hw9.view.iu.dialogues;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.DialogFragment;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 
 import com.example.mysympleapplication.hw9.view.auth.EmailPasswordActivity;
 
