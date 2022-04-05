@@ -3,7 +3,35 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Xiaomi/AndroidStudioProjects/MySympleApplication/app/src/main/res/layout-land/activity_second.xml" value="0.1597972972972973" />
+        <entry key="..\:/Users/Xiaomi/AndroidStudioProjects/MySympleApplication/app/src/main/res/layout-land/activity_statistic.xml" value="0.1597972972972973" />
+        <entry key="..\:/Users/Xiaomi/AndroidStudioProjects/MySympleApplication/app/src/main/res/layout/activity_game_over.xml" value="0.16486486486486487" />
+        <entry key="..\:/Users/Xiaomi/AndroidStudioProjects/MySympleApplication/app/src/main/res/layout/activity_main.xml" value="0.16486486486486487" />
+        <entry key="..\:/Users/Xiaomi/AndroidStudioProjects/MySympleApplication/app/src/main/res/layout/activity_main2.xml" value="0.16486486486486487" />
+        <entry key="..\:/Users/Xiaomi/AndroidStudioProjects/MySympleApplication/app/src/main/res/layout/activity_main3.xml" value="0.16486486486486487" />
+        <entry key="..\:/Users/Xiaomi/AndroidStudioProjects/MySympleApplication/app/src/main/res/layout/activity_main4.xml" value="0.16486486486486487" />
+        <entry key="..\:/Users/Xiaomi/AndroidStudioProjects/MySympleApplication/app/src/main/res/layout/activity_main5.xml" value="0.16486486486486487" />
+        <entry key="..\:/Users/Xiaomi/AndroidStudioProjects/MySympleApplication/app/src/main/res/layout/activity_main6.xml" value="0.16486486486486487" />
+        <entry key="..\:/Users/Xiaomi/AndroidStudioProjects/MySympleApplication/app/src/main/res/layout/activity_main7.xml" value="0.16486486486486487" />
+        <entry key="..\:/Users/Xiaomi/AndroidStudioProjects/MySympleApplication/app/src/main/res/layout/activity_main8.xml" value="0.16486486486486487" />
+        <entry key="..\:/Users/Xiaomi/AndroidStudioProjects/MySympleApplication/app/src/main/res/layout/activity_main9.xml" value="0.16486486486486487" />
+        <entry key="..\:/Users/Xiaomi/AndroidStudioProjects/MySympleApplication/app/src/main/res/layout/activity_photo_redactor.xml" value="0.16486486486486487" />
+        <entry key="..\:/Users/Xiaomi/AndroidStudioProjects/MySympleApplication/app/src/main/res/layout/activity_prime.xml" value="0.2" />
+        <entry key="..\:/Users/Xiaomi/AndroidStudioProjects/MySympleApplication/app/src/main/res/layout/activity_profil.xml" value="0.16486486486486487" />
+        <entry key="..\:/Users/Xiaomi/AndroidStudioProjects/MySympleApplication/app/src/main/res/layout/activity_search.xml" value="0.16486486486486487" />
+        <entry key="..\:/Users/Xiaomi/AndroidStudioProjects/MySympleApplication/app/src/main/res/layout/activity_second.xml" value="0.16486486486486487" />
+        <entry key="..\:/Users/Xiaomi/AndroidStudioProjects/MySympleApplication/app/src/main/res/layout/activity_statistic.xml" value="0.16486486486486487" />
+        <entry key="..\:/Users/Xiaomi/AndroidStudioProjects/MySympleApplication/app/src/main/res/layout/fragment1.xml" value="0.16486486486486487" />
+        <entry key="..\:/Users/Xiaomi/AndroidStudioProjects/MySympleApplication/app/src/main/res/layout/fragment2.xml" value="0.16486486486486487" />
+        <entry key="..\:/Users/Xiaomi/AndroidStudioProjects/MySympleApplication/app/src/main/res/layout/fragment3.xml" value="0.16486486486486487" />
+        <entry key="..\:/Users/Xiaomi/AndroidStudioProjects/MySympleApplication/app/src/main/res/layout/fragment_blank.xml" value="0.16486486486486487" />
         <entry key="..\:/Users/Xiaomi/AndroidStudioProjects/MySympleApplication/app/src/main/res/layout/fragment_general_expenses.xml" value="0.2" />
+        <entry key="..\:/Users/Xiaomi/AndroidStudioProjects/MySympleApplication/app/src/main/res/layout/fragment_home.xml" value="0.16486486486486487" />
+        <entry key="..\:/Users/Xiaomi/AndroidStudioProjects/MySympleApplication/app/src/main/res/layout/fragment_one.xml" value="0.16486486486486487" />
+        <entry key="..\:/Users/Xiaomi/AndroidStudioProjects/MySympleApplication/app/src/main/res/layout/fragment_settings.xml" value="0.16486486486486487" />
+        <entry key="..\:/Users/Xiaomi/AndroidStudioProjects/MySympleApplication/app/src/main/res/layout/fragment_two.xml" value="0.16486486486486487" />
+        <entry key="..\:/Users/Xiaomi/AndroidStudioProjects/MySympleApplication/app/src/main/res/layout/save_layout.xml" value="0.16486486486486487" />
+        <entry key="..\:/Users/Xiaomi/AndroidStudioProjects/MySympleApplication/app/src/main/res/layout/save_values.xml" value="0.16486486486486487" />
       </map>
     </option>
   </component>

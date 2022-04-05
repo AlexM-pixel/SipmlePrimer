@@ -9,8 +9,6 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
     <application
         android:name=".hw9.App"
@@ -34,7 +32,7 @@
         <activity
             android:name=".hw9.view.auth.EmailPasswordActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -43,46 +41,6 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".hw7.SearchService" />
-        <service android:name=".hw7.PhotoService" />
-        <service android:name=".hw7.PhotoIntentService" />
-        <service android:name=".hw8.GeoService" />
-
-        <activity android:name=".hw8.Main8Activity" />
-        <activity android:name=".hw7.PhotoRedactorActivity" />
-        <activity android:name=".hw7.Main7Activity" />
-        <activity
-            android:name=".hw7.SearcFilesActivity"
-            android:launchMode="singleTop" />
-        <activity
-            android:name=".hw6.ChatActivity"
-            android:launchMode="singleTop"
-            android:parentActivityName=".hw6.Main6Activity" />
-        <activity android:name=".hw6.Main6Activity" />
-        <activity android:name=".hw5.Main5Activity" />
-        <activity android:name=".hw4.Main4Activity" />
-        <activity
-            android:name=".hw3.ConstrainActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity
-            android:name=".hw3.Main3Activity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".hw2.DescriptionActivity" />
-        <activity android:name=".hw2.Main2Activity" />
-        <activity android:name=".hw1.Main1Activity" />
-        <activity android:name=".hw1.Statistic" />
-        <activity android:name=".hw1.GameOverActivity" />
-        <activity android:name=".hw1.SecondActivity" />
-        <activity android:name=".Prime_Activity" />
-        <activity android:name=".hw4.ProfilActivity" />
-
-        <service
-            android:name=".hw6.MyFirebaseMessagingService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
         <service android:name=".hw9.NotificationSmsService" />
 
         <receiver
