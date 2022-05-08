@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
@@ -9,4 +10,10 @@
     <dimen name="field_width_standard">160dp</dimen>
 
     <dimen name="button_horizontal_margin">8dp</dimen>
+
+    //-----------------NDesign-------------//
+    <dimen name="auth_btnText_size">16sp</dimen>
+    <dimen name="auth_textQuestion_size">18sp</dimen>
+    <dimen name="cardView_margin">14dp</dimen>
+
 </resources>

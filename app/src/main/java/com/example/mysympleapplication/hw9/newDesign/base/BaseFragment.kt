@@ -1,0 +1,37 @@
+package com.example.mysympleapplication.hw9.newDesign.base
+
+import android.os.Bundle
+import android.view.View
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
+import com.example.mysympleapplication.hw9.newDesign.utils.Config
+import dagger.android.support.DaggerFragment
+
+abstract class BaseFragment : DaggerFragment() {
+    protected fun showView(view: View) {
+        if (view.visibility == View.GONE) {
+            view.visibility = View.VISIBLE
+        }
+    }
+
+    protected fun hideView(view: View) {
+        if (view.visibility == View.VISIBLE) {
+            view.visibility = View.GONE
+        }
+    }
+
+    fun showMyDialog(result: String, fragmentDialog: DialogFragment) {
+        if (result!="") {
+            val bundle = Bundle()
+            bundle.putString(Config.ALERT_DIALOG_ND, result)
+                    fragmentDialog.arguments = bundle
+        }
+            requireActivity().supportFragmentManager.let {
+                it.executePendingTransactions()
+                if (!fragmentDialog.isAdded) {
+                    fragmentDialog.show(it, "dialog_list")
+                }
+            }
+
+    }
+}

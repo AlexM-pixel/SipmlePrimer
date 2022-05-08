@@ -2,24 +2,19 @@ package com.example.mysympleapplication.hw9.view.iu.dialogues;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentManager;
 
 
 import com.example.mysympleapplication.R;
 import com.example.mysympleapplication.hw9.view.auth.EmailPasswordActivity;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class RecoveryDialog extends DialogFragment {
@@ -45,7 +40,7 @@ public class RecoveryDialog extends DialogFragment {
         View dialogView = li.inflate(R.layout.dialog_email, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(dialogView);
-        userInput = dialogView.findViewById(R.id.input_text);
+        userInput = dialogView.findViewById(R.id.input_textMailByReset);
 
         builder.setCancelable(false);
         builder.setPositiveButton("OK",

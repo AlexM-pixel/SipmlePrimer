@@ -13,7 +13,6 @@
                     android:width="2dp"
                     android:color="@color/splashStart.pink"
                     />
-                <solid android:color="@android:color/white"/>
 
             </shape>
     </item>

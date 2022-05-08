@@ -15,7 +15,7 @@ public class App extends Application {
     public static final String CHANNEL_2 = "channel_ID_2";
     public static Context context = null;
 
-    @Override
+
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
