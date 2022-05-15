@@ -1,4 +1,4 @@
-package com.example.mysympleapplication.hw9.newDesign.domain.mappers
+package com.example.mysympleapplication.hw9.newDesign.data.mapper
 
 interface EntityMapper<Entity,DomainModel> {
     fun mapFromEntity(entity: Entity):DomainModel

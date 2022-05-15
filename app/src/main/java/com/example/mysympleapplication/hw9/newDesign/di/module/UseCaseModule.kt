@@ -1,6 +1,7 @@
 package com.example.mysympleapplication.hw9.newDesign.di.module
 
-import com.example.mysympleapplication.hw9.newDesign.data.repositories.expenses_repository.UserDataRepository
+import com.example.mysympleapplication.hw9.newDesign.data.repositories.db_repository.SpendsDataBaseRepository
+import com.example.mysympleapplication.hw9.newDesign.data.repositories.login_repository.UserDataRepository
 import com.example.mysympleapplication.hw9.newDesign.data.repositories.net_repository.AuthRepository
 import com.example.mysympleapplication.hw9.newDesign.domain.usecase.*
 import dagger.Module
@@ -24,5 +25,8 @@ class UseCaseModule {
 
     @Provides
     fun provideCheckDataUseCase(repo: UserDataRepository) = CheckDataFireStoreAndDbUseCase(repo)
+
+    @Provides
+    fun provideGetMonthExpensesUseCase(repo: SpendsDataBaseRepository) = GetMonthlyExpensesUseCase(repo)
 
 }

@@ -33,7 +33,7 @@ interface SpendDao {
     fun getAll(choiceDate: String?, name: String?): LiveData<List<CalendarSpendsEntity>>
 
     @Query("SELECT SUM(value) as value_spends,strftime(\"%m-%Y\", date) as dateM FROM spends GROUP BY strftime(\"%m-%Y\", date) ORDER BY date DESC")
-    fun getSumMonth(): LiveData<List<SumSpendsOfMonthEntity>>
+    fun getSumMonth(): List<SumSpendsOfMonthEntity>
 
     @Query("SELECT SUM(value) as totalValue, date, spendName FROM spends WHERE strftime(\"%m-%Y\", date)=strftime( :choiceDate) GROUP BY spendName ORDER BY date DESC")
     fun getMonthSpends(choiceDate: String?): LiveData<List<CalendarSpendsEntity>>

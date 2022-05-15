@@ -2,7 +2,7 @@ package com.example.mysympleapplication.hw9;
 
 import com.example.mysympleapplication.R;
 
-public enum NameSends {
+public enum NameSpends {
     SOSEDY(R.drawable.icon_shop_48, "SOSEDI"," Соседи"),
     ZOOBAZAR(R.drawable.icon_zoo_48, "ZOOBAZAR","Зообазар"),
     TELEPHONE(R.drawable.icon_mobile_48, "PO N TELEFONA:","моб. телефон"),
@@ -57,7 +57,7 @@ public enum NameSends {
     private String nameSpand;
     private String russianName;
 
-    NameSends(int imageR, String nameSpand,String russianS) {
+    NameSpends(int imageR, String nameSpand, String russianS) {
         this.image = imageR;
         this.nameSpand = nameSpand;
         this.russianName=russianS;
@@ -65,9 +65,9 @@ public enum NameSends {
     }
 
     static int getImageForItem(String spendsName) {
-        NameSends[] nameSends = NameSends.values();
+        NameSpends[] nameSends = NameSpends.values();
       //  NameSends nameSend = null;
-        for (NameSends spend : nameSends) {
+        for (NameSpends spend : nameSends) {
             if (spendsName.equals(spend.russianName)) {
                // nameSend = spend;
                 return spend.image;
@@ -86,7 +86,7 @@ public enum NameSends {
     }
 
     static boolean checkPay(String body) {
-        NameSends[] nameSends = NameSends.values();
+        NameSpends[] nameSends = NameSpends.values();
         for (int i = 0; i < nameSends.length; i++) {
             if (body.contains(nameSends[i].nameSpand)) {
                 return true;
@@ -96,9 +96,9 @@ public enum NameSends {
     }
 
     static String getNameSpend(String body) {
-        NameSends[] nameSends = NameSends.values();
-        NameSends nameSend = null;
-        for (NameSends spend : nameSends) {
+        NameSpends[] nameSends = NameSpends.values();
+        NameSpends nameSend = null;
+        for (NameSpends spend : nameSends) {
             if (body.contains(spend.nameSpand)) {
                 nameSend=spend;
                 break;

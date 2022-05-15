@@ -62,7 +62,7 @@ public class DetailMonthAdapter extends RecyclerView.Adapter<DetailMonthAdapter.
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull DetailHolder holder, final int position) {
-        int image = NameSends.getImageForItem(calendarSpendsList.get(position).getSpendName());
+        int image = NameSpends.getImageForItem(calendarSpendsList.get(position).getSpendName());
         Drawable drawable = ContextCompat.getDrawable(holder.cardView.getContext(), image);
         holder.imageView.setImageDrawable(drawable);
         holder.valueSpends.setText(calendarSpendsList.get(position).getTotalValue() + "\nBYN");

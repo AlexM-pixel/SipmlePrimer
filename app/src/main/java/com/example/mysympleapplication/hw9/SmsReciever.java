@@ -70,7 +70,7 @@ public class SmsReciever extends BroadcastReceiver {
                 intentUnknownPay.putExtra(SMS_BODY,value);
                 context.startService(intentUnknownPay);
 
-                Notification repliedNotification =
+                Notification repliedNotification =   //как будто не проверяя уже вывел нотификашку что платеж сохранен
                         new NotificationCompat.Builder(context, App.CHANNEL_1)
                                 .setSmallIcon(R.mipmap.ic_launcher)
                                 .setContentText("Платеж сохранен")

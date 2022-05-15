@@ -5,15 +5,27 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import android.widget.Toast
 import androidx.core.view.ViewCompat
-import androidx.navigation.fragment.findNavController
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.mysympleapplication.R
 import com.example.mysympleapplication.hw9.newDesign.base.BaseFragment
+import com.example.mysympleapplication.hw9.newDesign.di.builder.ViewModelFactory
+import com.example.mysympleapplication.hw9.newDesign.ui.adapters.SumMonthSpendsAdapter
 import com.example.mysympleapplication.hw9.newDesign.ui.adapters.ViewPagerAdapter
+import com.example.mysympleapplication.hw9.newDesign.viewmodels.HomeViewModel
+import javax.inject.Inject
 
 class HomeFragment : BaseFragment() {
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+    val viewModel: HomeViewModel by viewModels { viewModelFactory }
+    private lateinit var myAdapter: SumMonthSpendsAdapter
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -23,13 +35,34 @@ class HomeFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //set viewPager
+        initView(view)
+        setViewPager(view)
+        viewModel.getMonthlyExpenses()
+        viewModel.sumSpendsLiveData.observe(viewLifecycleOwner){
+            myAdapter.setMonthList(it)
+        }
+    }
+
+    private fun setViewPager(view: View) {
         val viewPager2 = view.findViewById<ViewPager2>(R.id.viewPager_home)
         viewPager2.adapter = ViewPagerAdapter()
         val transformerSideMargin =
             pixelToDp(activity!!, resources.getDimension(R.dimen.cardView_margin) * 2)
         viewPager2.setShowSideItems(transformerSideMargin, transformerSideMargin)
     }
+
+    private fun initView(view: View) {
+        val rv = view.findViewById<RecyclerView>(R.id.rv_home_spends)
+        myAdapter = SumMonthSpendsAdapter()
+        rv.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = myAdapter
+        }
+        myAdapter.onItemClick = { date ->
+            Toast.makeText(requireContext(), date, Toast.LENGTH_SHORT).show()
+        }
+    }
+
 
     fun ViewPager2.setShowSideItems(pageMarginPx: Int, offsetPx: Int) {
 

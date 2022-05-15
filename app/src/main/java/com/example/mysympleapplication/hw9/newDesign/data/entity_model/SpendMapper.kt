@@ -1,6 +1,6 @@
 package com.example.mysympleapplication.hw9.newDesign.data.entity_model
 
-import com.example.mysympleapplication.hw9.newDesign.domain.mappers.EntityMapper
+import com.example.mysympleapplication.hw9.newDesign.data.mapper.EntityMapper
 import com.example.mysympleapplication.hw9.newDesign.domain.model.User
 
 class SpendMapper : EntityMapper<UserEntity, User> {
