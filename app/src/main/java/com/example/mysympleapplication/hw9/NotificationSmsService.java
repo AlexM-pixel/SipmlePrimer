@@ -79,7 +79,7 @@ public class NotificationSmsService extends IntentService {
                         insertNewPostuplenie(body);
                         return;
                     }
-             тута       NameSpends[] nameSends = NameSpends.values();
+               NameSpends[] nameSends = NameSpends.values();
                     for (int i = 0; i < nameSends.length; i++) {
                         if (body.contains(nameSends[i].getNameSpand().toLowerCase())) {
                             getValueFromSms(nameSends[i].getRussianName(), body);

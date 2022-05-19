@@ -34,4 +34,8 @@ class FirestoreSource @Inject constructor(private val fr: FirebaseFirestore) {
         Log.e("login", "getBalanceFirestore: ${res?.balance}")
         return res
     }
+
+    suspend fun insertSpend(spendEntity: SpendEntity){
+
+    }
 }

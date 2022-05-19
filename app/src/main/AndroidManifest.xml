@@ -45,7 +45,7 @@
             android:label="@string/app_name"
             android:screenOrientation="fullSensor" />
 
-        <service android:name=".hw9.newDesign.background.BankSmsService" />
+        <service android:name="com.example.mysympleapplication.hw9.newDesign.domain.background.BankSmsService" />
         <service android:name=".hw9.NotificationSmsService" />
 
         <receiver

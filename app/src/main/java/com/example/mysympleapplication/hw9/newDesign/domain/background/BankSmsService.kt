@@ -1,8 +1,10 @@
-package com.example.mysympleapplication.hw9.newDesign.background
+package com.example.mysympleapplication.hw9.newDesign.domain.background
 
 import android.app.IntentService
 import android.content.Context
 import android.content.Intent
+import com.example.mysympleapplication.hw9.newDesign.domain.usecase.SaveSpendDbUseCase
+import com.example.mysympleapplication.hw9.newDesign.domain.usecase.SaveSpendFrStoreUseCase
 import com.example.mysympleapplication.hw9.newDesign.utils.Config.APP_PREFERENCES
 import com.example.mysympleapplication.hw9.newDesign.utils.Config.PREFERENCES_BANK_SET
 import dagger.android.AndroidInjection
@@ -19,7 +21,9 @@ const val NOTIFICATION_ID = "NOTIFICATION_ID"
 class BankSmsService : IntentService("BankSmsService") {
 
     @Inject
-    lateinit var saveSpendUseCase
+    private lateinit var saveSpendDbUseCase: SaveSpendDbUseCase
+    @Inject
+    private lateinit var saveSpendFrStoreUseCase: SaveSpendFrStoreUseCase
 
     override fun onCreate() {
         super.onCreate()

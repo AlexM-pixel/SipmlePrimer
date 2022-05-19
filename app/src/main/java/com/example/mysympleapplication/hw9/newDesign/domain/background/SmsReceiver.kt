@@ -1,9 +1,8 @@
-package com.example.mysympleapplication.hw9.newDesign.background
+package com.example.mysympleapplication.hw9.newDesign.domain.background
 
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
 import android.telephony.SmsMessage
 import android.util.Log
 import androidx.core.app.RemoteInput

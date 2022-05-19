@@ -15,7 +15,7 @@ import com.example.mysympleapplication.hw9.newDesign.data.entity_model.SumSpends
 @Dao
 interface SpendDao {
     @Insert
-    fun insert(spend: SpendEntity)
+  suspend fun insert(spend: SpendEntity)
 
     @Insert
    suspend fun insertAllSpends(spendList: List<SpendEntity>)

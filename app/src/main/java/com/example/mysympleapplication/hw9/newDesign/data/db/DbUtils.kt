@@ -1,23 +1,32 @@
 package com.example.mysympleapplication.hw9.newDesign.data.db
 
+import com.example.mysympleapplication.hw9.NameSpends
+import com.example.mysympleapplication.hw9.newDesign.data.db.dao.NameSpendsDao
+import com.example.mysympleapplication.hw9.newDesign.data.entity_model.NameSpendsEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 suspend fun rePopulateDb(database: AppDataBase?) {
     database?.let { db ->
         withContext(Dispatchers.IO) {
-            val movieDao: MovieDao = db.movieDao()
-            val directorDao: DirectorDao = db.directorDao()
+            val nameSpendsDao: NameSpendsDao = db.namesSpendsDao()
+            val listNames: ArrayList<NameSpendsEntity> = arrayListOf()
+            for (item in NameSpends.values()) {
+                listNames.add(
+                    NameSpendsEntity(
+                    nameSpend=item.nameSpand,
+                    ruName = item.russianName,
+                    imageUri = getImageUrl()
 
-            val directorOne = Director(fullName = "Adam McKay")
-            val directorTwo = Director(fullName = "Denis Villeneuve", age = 35)
-            val directorThree = Director(fullName = "Morten Tyldum", age = 26)
-            val movieOne = Movie(title = "The Big Short", directorId = directorDao.insert(directorOne))
-            val dIdTwo = directorDao.insert(directorTwo)
-            val movieTwo = Movie(title = "Arrival", directorId = dIdTwo)
-            val movieThree = Movie(title = "Blade Runner 2049", directorId = dIdTwo)
-            val movieFour = Movie(title = "Passengers", directorId = directorDao.insert(directorThree))
-            movieDao.insert(movieOne, movieTwo, movieThree, movieFour)
+                )
+                )
+            }
+            nameSpendsDao.insertAllNamesSpends(listNames)
         }
     }
+}
+
+fun getImageUrl(): String {
+
+return ""
 }

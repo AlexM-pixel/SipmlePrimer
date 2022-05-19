@@ -1,8 +1,10 @@
 package com.example.mysympleapplication.hw9.newDesign.di.module
 
-import com.example.mysympleapplication.hw9.newDesign.data.repositories.db_repository.SpendsDataBaseRepository
+import com.example.mysympleapplication.hw9.newDesign.data.repositories.db_repository.SpendsDbRepository
+import com.example.mysympleapplication.hw9.newDesign.data.repositories.db_repository.SumMonthlySpendsRepository
 import com.example.mysympleapplication.hw9.newDesign.data.repositories.login_repository.UserDataRepository
 import com.example.mysympleapplication.hw9.newDesign.data.repositories.net_repository.AuthRepository
+import com.example.mysympleapplication.hw9.newDesign.data.repositories.net_repository.FireStoreRepository
 import com.example.mysympleapplication.hw9.newDesign.domain.usecase.*
 import dagger.Module
 import dagger.Provides
@@ -27,6 +29,12 @@ class UseCaseModule {
     fun provideCheckDataUseCase(repo: UserDataRepository) = CheckDataFireStoreAndDbUseCase(repo)
 
     @Provides
-    fun provideGetMonthExpensesUseCase(repo: SpendsDataBaseRepository) = GetMonthlyExpensesUseCase(repo)
+    fun provideGetMonthExpensesUseCase(repo: SumMonthlySpendsRepository) = GetMonthlyExpensesUseCase(repo)
+
+    @Provides
+    fun provideSaveDBSpendUseCase(repo: SpendsDbRepository) = SaveSpendDbUseCase(repo)
+
+    @Provides
+    fun provideSaveFrStoreSpendUseCase(repo: FireStoreRepository) = SaveSpendFrStoreUseCase(repo)
 
 }
