@@ -5,8 +5,9 @@
     android:id="@+id/item_cardView_nd"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="6dp"
     app:cardCornerRadius="8dp"
-    app:cardElevation="4dp">
+    app:cardElevation="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -37,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="И"
-                android:textColor="@color/backgroundNDColor"
+                android:textColor="@color/backgroundGreenNDColor"
                 android:textSize="40sp"
                 android:textStyle="bold" />
         </FrameLayout>
@@ -72,7 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/cardView_margin"
             android:text="353.96"
-            android:textColor="@color/backgroundNDColor"
+            android:textColor="@color/backgroundGreenNDColor"
             android:textSize="@dimen/month_text_size_rv"
             app:layout_constraintBottom_toTopOf="@+id/byn_nd"
             app:layout_constraintStart_toEndOf="@+id/home_date_spends_nd"
@@ -83,7 +84,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="BYN"
-            android:textColor="@color/backgroundNDColor"
+            android:textColor="@color/backgroundGreenNDColor"
             android:textSize="@dimen/month_text_size_rv"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/home_value_spends_nd"

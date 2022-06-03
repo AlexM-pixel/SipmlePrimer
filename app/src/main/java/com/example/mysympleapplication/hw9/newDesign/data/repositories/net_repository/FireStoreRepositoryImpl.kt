@@ -9,7 +9,7 @@ class FireStoreRepositoryImpl @Inject constructor(
     private val fireStoreSource: FirestoreSource,
     private val mapper: SpendsMapper
 ) : FireStoreRepository {
-    override suspend fun saveSpendFrStore(spend: Spend) {
-        fireStoreSource.insertSpend(mapper.mapToEntity(spend))
+    override suspend fun saveSpendFrStore(spend: Spend,mail:String) {
+        fireStoreSource.insertSpend(mapper.mapToEntity(spend), mail = mail)
     }
 }

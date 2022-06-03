@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-class HomeViewModel @Inject constructor(private val useCaseGetMonthlyExpenses: GetMonthlyExpensesUseCase) :
+class HomeFragmentViewModel @Inject constructor(private val useCaseGetMonthlyExpenses: GetMonthlyExpensesUseCase) :
     ViewModel() {
     private val _stateLiveData = MutableLiveData<State>()
     val stateLiveData: LiveData<State> get() = _stateLiveData

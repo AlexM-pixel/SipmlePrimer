@@ -4,5 +4,5 @@ import com.example.mysympleapplication.hw9.Spend
 import com.example.mysympleapplication.hw9.SumSpendsOfMonth
 
 interface SumMonthlySpendsRepository {
-  fun  getSumSpendsOfMonth(): List<SumSpendsOfMonth>
+ suspend fun  getSumSpendsOfMonth(): List<SumSpendsOfMonth>
 }

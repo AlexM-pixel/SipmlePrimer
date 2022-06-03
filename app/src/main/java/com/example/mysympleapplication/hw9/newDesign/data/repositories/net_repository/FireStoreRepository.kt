@@ -3,5 +3,5 @@ package com.example.mysympleapplication.hw9.newDesign.data.repositories.net_repo
 import com.example.mysympleapplication.hw9.newDesign.domain.model.Spend
 
 interface FireStoreRepository {
-   suspend fun saveSpendFrStore(spend: Spend)
+   suspend fun saveSpendFrStore(spend: Spend,mail:String)
 }

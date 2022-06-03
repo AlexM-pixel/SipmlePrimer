@@ -142,7 +142,7 @@ public class NotificationSmsService extends IntentService {
         }
     }
 
-    private void getValueFromSms(String spendName, String message) {
+    private void getValueFromSms(String spendName, String bodySms) {
         sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE);
         emailCurrentUser = sPref.getString(EmailPasswordActivity.EMAIL_USER, "empty");
         firestore = FirebaseFirestore.getInstance();
@@ -150,30 +150,30 @@ public class NotificationSmsService extends IntentService {
         String value = "";
         Pattern patternValue;
         Long id;
-        if (!message.contains("usd") && !message.contains("summa") && !message.contains("retail")) {
+        if (!bodySms.contains("usd") && !bodySms.contains("summa") && !bodySms.contains("retail")) {
             patternValue = Pattern.compile("(сумма+)(.*)([byn])");
             Log.e("qwe", "(сумма+)(.*)([byn])");
-        } else if (message.contains("summa") && !message.contains("usd")) {
+        } else if (bodySms.contains("summa") && !bodySms.contains("usd")) {
             patternValue = Pattern.compile("(summa+)(.*)([byn])");
             Log.e("qwe", "(summa+)(.*)([byn])");
-        }else if (message.contains("retail") && !message.contains("usd")) {
+        }else if (bodySms.contains("retail") && !bodySms.contains("usd")) {
             patternValue = Pattern.compile("(retail -+)(.*)([byn])");
             Log.e("qwe", "(retail+)(.*)([byn])");
 
-        } else if (message.contains("summa") && message.contains("usd")) {
+        } else if (bodySms.contains("summa") && bodySms.contains("usd")) {
             patternValue = Pattern.compile("(summa+)(.*)([usd])");
         } else {
             patternValue = Pattern.compile("(сумма+)(.*)([usd])");
             Log.e("qwe", "(сумма+)(.*)([usd])");
         }
-        Matcher matcherValue = patternValue.matcher(message);
+        Matcher matcherValue = patternValue.matcher(bodySms);
         if (matcherValue.find()) {
             value = matcherValue.group();
         }
-        Log.e("qwe", "getValueFromSms: ,spendName=  " + spendName + ",  body_sms= " + message);
-        if (!message.contains("usd") && !message.contains("retail")) {
+        Log.e("qwe", "getValueFromSms: ,spendName=  " + spendName + ",  body_sms= " + bodySms);
+        if (!bodySms.contains("usd") && !bodySms.contains("retail")) {
             value = value.substring(6, value.indexOf("byn"));
-        }else if(message.contains("retail") && !message.contains("usd")) {
+        }else if(bodySms.contains("retail") && !bodySms.contains("usd")) {
             value = value.substring(8, value.indexOf("byn"));
             Log.e("qwe", value);
         }
@@ -193,9 +193,9 @@ public class NotificationSmsService extends IntentService {
         for (int i = 0; i < wordsListPost.size(); i++) {
             String word = "\\b" + wordsListPost.get(i) + "\\b";
             Pattern patternString = Pattern.compile(word);
-            Matcher matcherMss = patternString.matcher(message);
+            Matcher matcherMss = patternString.matcher(bodySms);
             if (matcherMss.find()) {
-                checkBalance(wordsListPost.get(i), message);
+                checkBalance(wordsListPost.get(i), bodySms);
             }
         }
     }

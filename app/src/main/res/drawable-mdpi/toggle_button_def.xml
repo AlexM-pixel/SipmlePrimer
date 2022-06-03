@@ -3,10 +3,7 @@
     <item android:state_checked="true">
             <shape android:shape="rectangle">
                 <solid android:color="@color/colorAccent"/>
-<!--                <corners-->
-<!--                    android:topRightRadius="3dp"-->
-<!--                    android:bottomRightRadius="3dp"-->
-<!--                    />-->
+               <corners android:radius="6dp"/>
             </shape>
     </item>
     <item android:state_checked="false">
@@ -14,8 +11,9 @@
                 android:shape="rectangle">
                 <stroke
                     android:width="2dp"
-                    android:color="@color/colorAccent"
+                    android:color="#BC6FCF97"
                     />
+                <corners android:radius="6dp"/>
                 <solid android:color="@android:color/white"/>
             </shape>
     </item>

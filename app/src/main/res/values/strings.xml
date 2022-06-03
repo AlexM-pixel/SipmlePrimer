@@ -71,6 +71,7 @@
     <string name="sign_in">Войти</string>
     <string name="create_account">Создать аккаунт</string>
     <string name="sign_out">выход</string>
+    <string name="send_to_support">написать сообщение</string>
     <string name="hint_email">email</string>
     <string name="hint_password">password</string>
     <string name="emailpassword_title_text">Авторизация</string>
@@ -81,4 +82,11 @@
     <string name="user_spends_textview">Мои \nрасходы</string>
     <string name="text_view_balance">Баланс:</string>
     <string name="log_in">Войти</string>
+    <string name="settings_push_notification">"Уведомления "</string>
+
+    <string name="channel_name">main_channel</string>
+    <string name="channel_description">main_channel_description</string>
+    <string name="text_write_name">пиши название платежа</string>
+    <string name="question_save_spend">Сохранить платеж ?</string>
+
 </resources>

@@ -10,6 +10,7 @@ import com.example.mysympleapplication.hw9.newDesign.domain.model.State
 import com.example.mysympleapplication.hw9.newDesign.domain.usecase.CreateNewUserFirestoreUseCase
 import com.example.mysympleapplication.hw9.newDesign.domain.usecase.CreateUserByEmailAndPasswordUseCase
 import com.example.mysympleapplication.hw9.newDesign.utils.CheckErrorAuthFirebase
+import com.example.mysympleapplication.hw9.newDesign.utils.MainPrefs
 import com.example.mysympleapplication.hw9.newDesign.utils.Result
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -33,6 +34,7 @@ class CreateUserByEmailViewModel @Inject constructor(
             when (val result = useCaseCreateByEmail(email = mail, password = pass)) {
                 is Result.Value -> {
                     createNewUserInFireStore(userName = userName, mail = mail)
+                    MainPrefs.mailUser = mail
                 }
                 is Result.Error -> {
                     _stateLiveData.value = State.ERROR
@@ -50,7 +52,7 @@ class CreateUserByEmailViewModel @Inject constructor(
                     _stateLiveData.value = State.SUCCESS
                 }
                 is Result.Error -> {
-                      //если ошибка по созданю юзера в базе, то надо удалить и  почту так как она уже создалась и заново пользователь не сможет зарегиться с этим емэйлом
+                    //если ошибка по созданю юзера в базе, то надо удалить и  почту так как она уже создалась и заново пользователь не сможет зарегиться с этим емэйлом
                     _stateLiveData.value = State.ERROR
                     _liveDataResult.value = result.error.message
                 }

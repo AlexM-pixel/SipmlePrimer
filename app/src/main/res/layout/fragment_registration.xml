@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundNDColor"
+    android:background="@color/backgroundGreenNDColor"
     tools:context=".hw9.newDesign.ui.RegistrationFragment">
 
     <View

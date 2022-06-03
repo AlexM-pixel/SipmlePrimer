@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 
 @Database(
     entities = [UserEntity::class, SpendEntity::class, PostuplenieEntity::class, BalanceEntity::class,
-        FriendsSpendsEntity::class, FriendsBalanceEntity::class, FriendsPostuplenieEntity::class],
+        FriendsSpendsEntity::class, FriendsBalanceEntity::class, FriendsPostuplenieEntity::class,NameSpendsEntity::class],
     version = 1
 )
 abstract class AppDataBase : RoomDatabase() {
@@ -41,7 +41,7 @@ abstract class AppDataBase : RoomDatabase() {
                             .addCallback(object : Callback() {
                                 override fun onCreate(db: SupportSQLiteDatabase) {
                                     super.onCreate(db)
-                                    Log.d("AppDataBase", "onCreate Db, ")
+                                    Log.e("AppDataBase", "onCreate Db, ")
                                     GlobalScope.launch(Dispatchers.IO) { rePopulateDb(INSTANCE) }
                                 }
                             }).build()

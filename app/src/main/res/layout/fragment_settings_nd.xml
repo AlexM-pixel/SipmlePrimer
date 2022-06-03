@@ -1,28 +1,403 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textHomefr"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="SettingsFragment"
-        android:textSize="26sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="150dp"
+        android:background="@drawable/background_bottom_radius_nd"
+        android:elevation="8dp">
 
-    <Button
-        android:id="@+id/btn_logOut"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="107dp"
-        android:text="logout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textHomefr" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/Title_Settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Settings"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <FrameLayout
+            android:id="@+id/settings_image_user"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/background_rv_nd"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/Title_Settings"
+            app:layout_constraintStart_toStartOf="@+id/Title_Settings"
+            app:layout_constraintTop_toBottomOf="@+id/Title_Settings">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_baseline_person_24" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/user_mail_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="sasha@mail.ru"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/settings_image_user"
+            app:layout_constraintStart_toEndOf="@+id/settings_image_user"
+            app:layout_constraintTop_toTopOf="@+id/settings_image_user" />
+
+        <View
+            android:id="@+id/cycle_one"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginBottom="26dp"
+            android:background="@drawable/cycle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/cycle_two"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            android:layout_marginBottom="26dp"
+            android:background="@drawable/cycle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/cycle_three"
+            android:layout_width="280dp"
+            android:layout_height="280dp"
+            android:layout_marginBottom="26dp"
+            android:background="@drawable/cycle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView_one"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:elevation="8dp"
+                app:cardCornerRadius="8dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/text_input_name_bank"
+                        style="@style/AppTheme"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#E6EFEF"
+                        android:elevation="6dp"
+                        android:paddingStart="18dp"
+                        android:paddingTop="28dp"
+                        android:paddingBottom="8dp"
+                        android:text="Введите имя вашего банка"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <EditText
+                        android:id="@+id/edit_text_BankNameNd"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:hint="введите имя банка отправителя смс"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/text_input_name_bank" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/button_add"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:background="@drawable/background_btn_nd"
+                        android:paddingStart="48dp"
+                        android:paddingEnd="48dp"
+                        android:text="add"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/edit_text_BankNameNd" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView_two"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:elevation="8dp"
+                app:cardCornerRadius="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/text_exit_acc"
+                        style="@style/AppTheme"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#E6EFEF"
+                        android:elevation="3dp"
+                        android:paddingStart="18dp"
+                        android:paddingTop="28dp"
+                        android:paddingBottom="8dp"
+                        android:text="Выход из аккаунта"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/button_add" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/button_sign_Out"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="8dp"
+                        android:background="@drawable/background_btn_nd"
+                        android:paddingStart="48dp"
+                        android:paddingEnd="48dp"
+                        android:text="@string/sign_out"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                       />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView_three"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:elevation="8dp"
+                app:cardCornerRadius="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/text_add_friend"
+                        style="@style/AppTheme"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#E6EFEF"
+                        android:elevation="3dp"
+                        android:paddingStart="18dp"
+                        android:paddingTop="28dp"
+                        android:paddingBottom="8dp"
+                        android:text="Добавить друга для общего буджета"
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/email_friends_nd"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:hint="write email friends" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/button_add_Friends"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="8dp"
+                        android:background="@drawable/background_btn_nd"
+                        android:paddingStart="48dp"
+                        android:paddingEnd="48dp"
+                        android:text="add friend"
+                        android:textColor="@color/white"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView_four"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:elevation="8dp"
+                app:cardCornerRadius="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/text_theme_style"
+                        style="@style/AppTheme"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#E6EFEF"
+                        android:elevation="3dp"
+                        android:paddingStart="18dp"
+                        android:paddingTop="28dp"
+                        android:paddingBottom="8dp"
+                        android:text="Цветовая схема"
+                        android:textSize="18sp" />
+
+                    <RadioGroup
+                        android:id="@+id/radio_group_styleTheme_nd"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:id="@+id/radio_pink_nd"
+                            style="@style/RadioButtonBase"
+                            android:text="pink"
+                            android:textSize="18sp" />
+
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:id="@+id/radio_orange_nd"
+                            style="@style/RadioButtonBase"
+                            android:text="orange"
+                            android:textSize="18sp" />
+
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:id="@+id/radio_blue_nd"
+                            style="@style/RadioButtonBase"
+                            android:text="blue"
+                            android:textSize="18sp" />
+
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:id="@+id/radio_def_nd"
+                            style="@style/RadioButtonBase"
+                            android:text="default"
+                            android:textSize="18sp" />
+                    </RadioGroup>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView_five"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:elevation="8dp"
+                app:cardCornerRadius="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/text_support"
+                        style="@style/AppTheme"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#E6EFEF"
+                        android:elevation="3dp"
+                        android:paddingStart="18dp"
+                        android:paddingTop="28dp"
+                        android:paddingBottom="8dp"
+                        android:text="служба поддержки"
+                        android:textSize="18sp" />
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/button_support_nd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="8dp"
+                        android:background="@drawable/background_btn_nd"
+                        android:paddingStart="48dp"
+                        android:paddingEnd="48dp"
+                        android:text="@string/send_to_support"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView_six"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:elevation="8dp"
+                app:cardCornerRadius="8dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:id="@+id/text_push_notification"
+                        style="@style/AppTheme"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#E6EFEF"
+                        android:elevation="3dp"
+                        android:paddingStart="18dp"
+                        android:paddingTop="28dp"
+                        android:paddingBottom="8dp"
+                        android:text="@string/settings_push_notification"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/button_support" />
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/switch_push"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:textColor="#2C3E50"
+                        android:text="Пуш-уведомления"
+                        android:paddingTop="16dp"
+                        android:paddingBottom="16dp"
+                        android:paddingStart="30dp"
+                        android:paddingEnd="23dp"
+                        />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

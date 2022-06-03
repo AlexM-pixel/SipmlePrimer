@@ -18,7 +18,7 @@ class SaveSpendDbUseCase @Inject constructor(private val dbRepository: SpendsDbR
                 dbRepository.saveSpend(spend = spend)
                 emit(Resource.Success(Unit))
             } catch (e: Exception) {
-                Log.e("saveSpend","save in DB: ${e.message}")
+                Log.e("SaveSpendDbUseCase","ERROR save in DB: ${e.message}")
                 emit(Resource.Error(message = e.message.toString()))
             }
         }

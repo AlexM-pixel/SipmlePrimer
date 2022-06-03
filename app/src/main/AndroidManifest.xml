@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.mysympleapplication">
+    package="com.example.mysympleapplication"
+    >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -23,6 +24,7 @@
         <activity
             android:name=".hw9.newDesign.ui.MainActivity"
             android:exported="true"
+            android:windowSoftInputMode="adjustResize"
             android:screenOrientation="fullSensor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -45,11 +47,12 @@
             android:label="@string/app_name"
             android:screenOrientation="fullSensor" />
 
-        <service android:name="com.example.mysympleapplication.hw9.newDesign.domain.background.BankSmsService" />
+        <service android:name=".hw9.newDesign.domain.background.BankSmsService" />
         <service android:name=".hw9.NotificationSmsService" />
+        <service android:name=".hw9.newDesign.domain.background.ReadsSmsService" />
 
         <receiver
-            android:name=".hw9.SmsReciever"
+            android:name=".hw9.newDesign.domain.background.SmsReceiver"
             android:exported="true"
             android:permission="android.permission.BROADCAST_SMS">
             <intent-filter android:priority="99">

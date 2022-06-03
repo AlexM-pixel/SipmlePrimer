@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.mysympleapplication.R
+import com.example.mysympleapplication.hw9.newDesign.utils.MainPrefs
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
@@ -31,7 +32,8 @@ class SplashFragment : Fragment() {
     }
 
     fun getUser(): Boolean {
-        val mAuth: FirebaseAuth = FirebaseAuth.getInstance()                  // dagger должен наверное предоставлять
+        val mAuth: FirebaseAuth =
+            FirebaseAuth.getInstance()                  // dagger должен наверное предоставлять
         val user: FirebaseUser? = mAuth.currentUser
         return user != null
     }

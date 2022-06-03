@@ -11,6 +11,7 @@ import com.example.mysympleapplication.hw9.newDesign.domain.usecase.ResetPasswUs
 import com.example.mysympleapplication.hw9.newDesign.utils.CheckErrorAuthFirebase
 import com.example.mysympleapplication.hw9.newDesign.utils.Config
 import com.example.mysympleapplication.hw9.newDesign.utils.Config.COUNT_ERRORS_PASSW
+import com.example.mysympleapplication.hw9.newDesign.utils.MainPrefs
 import kotlinx.coroutines.launch
 import com.example.mysympleapplication.hw9.newDesign.utils.Result
 import kotlinx.coroutines.Dispatchers
@@ -41,6 +42,7 @@ class LoginViewModel @Inject constructor(
             when (val result = useCaseLogin(email = mail, password = pass)) {
                 is Result.Value -> {
                     checkDataFireStoreAndDbUseCase(email = mail)
+                    MainPrefs.mailUser = mail
                     _stateLiveData.value = State.SUCCESS
                 }
                 is Result.Error -> {
@@ -58,22 +60,7 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    fun logOut() {
-        _stateLiveData.value = State.LOADING
-        Log.e("createUser", "name thread = " + Thread.currentThread().name)
-        viewModelScope.launch {
-            when (val result = useCaseLogOut()) {
-                is Result.Value -> {
-                    _stateLiveData.value = State.SUCCESS
-                    _liveDataResult.value = result.value.toString()
-                }
-                is Result.Error -> {
-                    _stateLiveData.value = State.ERROR
-                    _liveDataResult.value = result.error.message
-                }
-            }
-        }
-    }
+
 
     fun resetPasswByEmail(email: String) {
         if (TextUtils.isEmpty(email)) {

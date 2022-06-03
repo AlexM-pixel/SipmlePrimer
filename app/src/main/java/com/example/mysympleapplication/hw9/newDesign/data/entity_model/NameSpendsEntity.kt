@@ -9,10 +9,7 @@ data class NameSpendsEntity(
     val id: Long? = null,
     val nameSpend: String = "",
     val ruName: String = "",
-    val imageUri: String = ""
+    val imageName: String = ""
 ) {
-    fun getImage(name: String): String {
 
-        return imageUri
-    }
 }

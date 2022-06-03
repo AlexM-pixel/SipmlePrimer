@@ -4,6 +4,7 @@ import android.app.Application
 import com.example.mysympleapplication.hw9.App
 import com.example.mysympleapplication.hw9.newDesign.MyApp
 import com.example.mysympleapplication.hw9.newDesign.di.builder.ActivityBuilder
+import com.example.mysympleapplication.hw9.newDesign.di.builder.ServiceBuilder
 import com.example.mysympleapplication.hw9.newDesign.di.module.ContextModule
 import com.example.mysympleapplication.hw9.newDesign.di.module.FireBaseModule
 import com.example.mysympleapplication.hw9.newDesign.di.module.StorageModule
@@ -22,7 +23,8 @@ import javax.inject.Singleton
         AndroidSupportInjectionModule::class,
         ContextModule::class,
         StorageModule::class,
-        UseCaseModule::class
+        UseCaseModule::class,
+        ServiceBuilder::class
     ]
 )
 interface AppComponent : AndroidInjector<MyApp> {

@@ -1,5 +1,6 @@
 package com.example.mysympleapplication.hw9.newDesign.di.module
 
+import com.example.mysympleapplication.hw9.newDesign.utils.Config.STORAGE_IMAGE
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -15,6 +16,6 @@ class FireBaseModule {
     fun provideFireBaseFirestore() = FirebaseFirestore.getInstance()
 
     @Provides
-    fun provideFireStorage() = FirebaseStorage.getInstance()
+    fun provideFireStorageRef() = FirebaseStorage.getInstance().reference.child(STORAGE_IMAGE)
 
 }

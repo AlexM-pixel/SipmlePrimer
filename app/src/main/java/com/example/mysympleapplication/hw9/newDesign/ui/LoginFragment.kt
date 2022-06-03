@@ -22,6 +22,7 @@ import com.example.mysympleapplication.hw9.newDesign.ui.dialogues.ResetPassDialo
 import com.example.mysympleapplication.hw9.newDesign.ui.dialogues.ResultsDialogFragment
 import com.example.mysympleapplication.hw9.newDesign.utils.Config
 import com.example.mysympleapplication.hw9.newDesign.utils.Config.COUNT_ERRORS_PASSW
+import com.example.mysympleapplication.hw9.newDesign.utils.MainPrefs
 import com.example.mysympleapplication.hw9.newDesign.viewmodels.LoginViewModel
 import javax.inject.Inject
 
@@ -74,7 +75,7 @@ class LoginFragment : BaseFragment() {
         passEdit = view.findViewById(R.id.edit_passw)
         btnLogin.setOnClickListener {
             viewModel.logInByEmail(emailEdit.text.toString(), passEdit.text.toString())
-            if (viewModel.countErrors != COUNT_ERRORS_PASSW-1) {                    // если уже три раза была ошибка по неправильному паролю, то не надо выводить опять об этом сообщение
+            if (viewModel.countErrors != COUNT_ERRORS_PASSW - 1) {                    // если уже три раза была ошибка по неправильному паролю, то не надо выводить опять об этом сообщение
                 viewModel.liveDataResult.observe(viewLifecycleOwner) { msg ->
                     showMyDialog(msg, fragmentDialog)
                 }

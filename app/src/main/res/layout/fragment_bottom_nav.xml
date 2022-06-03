@@ -21,7 +21,7 @@
         app:textSize="16sp"
         app:iconSize="22dp"
         app:itemPadding="14dp"
-        app:backgroundColor="@color/backgroundNDColor"
+        app:backgroundColor="@color/backgroundGreenNDColor"
         app:menu="@menu/bottom_nav_menu" />
 
 

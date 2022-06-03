@@ -35,7 +35,13 @@ class FirestoreSource @Inject constructor(private val fr: FirebaseFirestore) {
         return res
     }
 
-    suspend fun insertSpend(spendEntity: SpendEntity){
-
+    suspend fun insertSpend(spendEntity: SpendEntity, mail: String) {
+        fr
+            .collection(mail)
+            .document("spends")
+            .collection("spends")
+            .document(spendEntity.id.toString())
+            .set(spendEntity)
+            .await()
     }
 }

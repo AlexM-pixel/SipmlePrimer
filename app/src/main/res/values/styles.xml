@@ -109,7 +109,8 @@
         <item name="android:textColor">@color/black_white_color_selector</item>
         <item name="android:gravity">center</item>
         <item name="android:background">?attr/toggle_button</item>
-        <item name="android:textAllCaps">true</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:layout_margin">6dp</item>
         <item name="android:padding">2dp</item>
     </style>
 

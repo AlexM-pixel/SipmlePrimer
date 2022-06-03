@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#A7AAAA</color>
+    <color name="colorAccent">#BC6FCF97</color>
     <color name="colorGreen">#AFB42B</color>
     <color name="colorGrafik_fon">#900097A7</color>
     <color name="colorGrafik_line">#F8FAFA</color>
@@ -18,7 +18,8 @@
     <color name="colorPaletteDef">#00BCD4</color>
 
     //----newDesign_colors//
-    <color name="backgroundNDColor">#5FB670</color>
+    <color name="backgroundGreenNDColor">#5FB670</color>
+    <color name="backgroundYellowNDColor">#ffe54a</color>
     <color name="text_colorND">#837777</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>

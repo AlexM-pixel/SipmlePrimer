@@ -2,8 +2,9 @@ package com.example.mysympleapplication.hw9.newDesign.data.mapper
 
 import com.example.mysympleapplication.hw9.newDesign.domain.model.Spend
 import com.example.mysympleapplication.hw9.newDesign.data.entity_model.SpendEntity
+import javax.inject.Inject
 
-class SpendsMapper : EntityMapper<SpendEntity, Spend> {
+class SpendsMapper @Inject constructor() : EntityMapper<SpendEntity, Spend> {
     override fun mapFromEntity(entity: SpendEntity): Spend {
         return Spend(
             id = entity.id,
@@ -20,5 +21,9 @@ class SpendsMapper : EntityMapper<SpendEntity, Spend> {
             value = domainModel.value,
             date = domainModel.date
         )
+    }
+
+    fun fromEntityList(entityList: List<SpendEntity>): List<Spend> {
+        return entityList.map { mapFromEntity(it) }
     }
 }

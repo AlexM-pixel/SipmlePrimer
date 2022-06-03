@@ -8,5 +8,4 @@ class CheckDataFireStoreAndDbUseCase @Inject constructor(private val checkDataRe
         checkDataRepo.getExpensesWhileLogin(email = email)
         checkDataRepo.getBalanceWhileLogin(email = email)
     }
-
 }
