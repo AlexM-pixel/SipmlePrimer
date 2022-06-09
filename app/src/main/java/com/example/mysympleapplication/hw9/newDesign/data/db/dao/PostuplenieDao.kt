@@ -6,6 +6,7 @@ import androidx.room.Query
 import androidx.room.Update
 import com.example.mysympleapplication.hw9.model.SumPostValue
 import com.example.mysympleapplication.hw9.newDesign.data.entity_model.PostuplenieEntity
+import com.example.mysympleapplication.hw9.newDesign.data.entity_model.SpendEntity
 
 @Dao
 interface PostuplenieDao {
@@ -14,6 +15,9 @@ interface PostuplenieDao {
 
     @Update
     fun update(postuplenie: PostuplenieEntity)
+
+    @Query("SELECT * FROM postuplenie")
+    suspend  fun getAllPostyplenie(): List<PostuplenieEntity>
 
 
     @Query("SELECT SUM(value) as value_post FROM postuplenie GROUP BY strftime(\"%m-%Y\", date) ORDER BY date DESC")

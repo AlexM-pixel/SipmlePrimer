@@ -42,7 +42,7 @@ class SmsReceiver : BroadcastReceiver() {
             val extras = intent?.extras
             if (extras != null) {
                 val results = RemoteInput.getResultsFromIntent(intent)
-                val value = extras.getString(SMS_BODY)
+                val value = extras.getString(EXTRA_BODY)
                 val nameSpendText = results.getCharSequence(NAME_UNKNOWN_PAY)
                 // val from = extras.getString(EXTRA_FROM)
                 val idNotification =

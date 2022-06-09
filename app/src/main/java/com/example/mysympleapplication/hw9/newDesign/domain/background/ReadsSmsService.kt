@@ -1,36 +1,8 @@
 package com.example.mysympleapplication.hw9.newDesign.domain.background
 
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
-import android.content.Context
 import android.content.Intent
-import android.graphics.Color
-import android.os.Build
 import android.os.IBinder
-import android.util.Log
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
-import androidx.core.app.RemoteInput
-import com.example.mysympleapplication.R
-import com.example.mysympleapplication.hw9.NotificationSmsService
-import com.example.mysympleapplication.hw9.newDesign.domain.model.NameSpend
-import com.example.mysympleapplication.hw9.newDesign.domain.model.Spend
-import com.example.mysympleapplication.hw9.newDesign.domain.usecase.GetNameSpendsListUseCase
-import com.example.mysympleapplication.hw9.newDesign.domain.usecase.SaveSpendDbUseCase
-import com.example.mysympleapplication.hw9.newDesign.domain.usecase.SaveSpendFrStoreUseCase
-import com.example.mysympleapplication.hw9.newDesign.utils.Config
-import com.example.mysympleapplication.hw9.newDesign.utils.Config.CHANNEL_ID
-import com.example.mysympleapplication.hw9.newDesign.utils.Config.GROUP_KEY_WORK_EMAIL
-import com.example.mysympleapplication.hw9.newDesign.utils.MainPrefs
-import com.example.mysympleapplication.hw9.newDesign.utils.Resource
 import dagger.android.DaggerService
-import kotlinx.coroutines.flow.onEach
-import java.text.SimpleDateFormat
-import java.util.*
-import java.util.regex.Pattern
-import javax.inject.Inject
 
 //const val ACTION_SMS_CHECK = "action_get_data_sms"
 //const val ACTION_NOTIFICATION = "action_create_notification"

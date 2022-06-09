@@ -31,7 +31,7 @@ android {
 }
 ext {
     dagger2_version = '2.41'
-    room_version = "2.4.1"
+    room_version = "2.4.2"
 }
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])

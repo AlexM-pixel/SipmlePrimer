@@ -1,16 +1,15 @@
 package com.example.mysympleapplication.hw9.newDesign.di.module
 
-import com.example.mysympleapplication.hw9.newDesign.data.mapper.SumSpendsOfMonthMapper
 import com.example.mysympleapplication.hw9.newDesign.data.db.AppDataBase
 import com.example.mysympleapplication.hw9.newDesign.data.repositories.login_repository.UserDataRepository
 import com.example.mysympleapplication.hw9.newDesign.data.repositories.login_repository.UserDataRepositoryImpl
 import com.example.mysympleapplication.hw9.newDesign.data.db.db_sours.UsersDbSours
-import com.example.mysympleapplication.hw9.newDesign.data.mapper.NameSpendsMapper
-import com.example.mysympleapplication.hw9.newDesign.data.mapper.SpendsMapper
+import com.example.mysympleapplication.hw9.newDesign.data.mapper.*
 import com.example.mysympleapplication.hw9.newDesign.data.net.FirebaseAuthUserSource
 import com.example.mysympleapplication.hw9.newDesign.data.net.FirestoreSource
 import com.example.mysympleapplication.hw9.newDesign.data.repositories.db_repository.*
 import com.example.mysympleapplication.hw9.newDesign.data.repositories.net_repository.*
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.StorageReference
 import dagger.Module
 import dagger.Provides
@@ -66,11 +65,41 @@ class RepositoryModule {
     ): NameSpendsDbRepository {
         return NameSpendsDbRepositoryImpl(db = db, mapper = mapper)
     }
+
     @Provides
     fun provideModelsSpendsDbRepository(
         db: AppDataBase,
         mapper: NameSpendsMapper
     ): ModelsSpendsDbRepository {
         return ModelsSpendsDbRepositoryImpl(db = db, mapper = mapper)
+    }
+
+    @Provides
+    fun provideBalanceDbRepository(
+        db: AppDataBase,
+        mapper: BalanceMapper
+    ): BalanceDbRepository {
+        return BalanceDbRepositoryImpl(db = db, mapper = mapper)
+    }
+
+    @Provides
+    fun provideBalanceFrRepository(
+        fr: FirebaseFirestore,
+        mapper: BalanceMapper
+    ): BalanceFrRepository {
+        return BalanceFrRepositoryImpl(fr = fr, mapper)
+    }
+
+    @Provides
+    fun providePostuplenieDbRepository(
+        db: AppDataBase,
+        mapper: PostuplenieMapper
+    ): PostuplenieDbRepository {
+        return PostuplenieDbRepositoryImpl(db = db, mapper = mapper)
+    }
+
+    @Provides
+    fun providePostuplenieFrRepository(fr: FirebaseFirestore,mapper: PostuplenieMapper): PostuplenieFrRepository {
+        return PostuplenieFrRepoImpl(fr = fr,mapper)
     }
 }

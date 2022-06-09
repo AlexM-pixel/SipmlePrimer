@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
@@ -68,7 +69,9 @@ class HomeFragment : BaseFragment() {
             adapter = myAdapter
         }
         myAdapter.onItemClick = { date ->
-            Toast.makeText(requireContext(), date, Toast.LENGTH_SHORT).show()
+            val bundle=Bundle()
+            bundle.putString(ARG_DATE,date)
+            findNavController().navigate(R.id.action_bottomNavFragment_to_spendsOfMonthFragment,bundle)
         }
     }
 

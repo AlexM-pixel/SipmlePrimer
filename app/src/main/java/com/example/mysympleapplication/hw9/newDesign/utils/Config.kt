@@ -13,6 +13,7 @@ object Config {
     const val FEEDBACK_SUBJECT = "Техподдержка расходы Android"
     const val FEEDBACK_SEND_EMAIL = "Отправить Email"
     const val CHANNEL_ID = "first_id_channel"
+    const val DEF_SPEND_NAME = "produkti"
     const val GROUP_KEY_WORK_EMAIL = "com.android.example.WORK_EMAIL"
 }
 

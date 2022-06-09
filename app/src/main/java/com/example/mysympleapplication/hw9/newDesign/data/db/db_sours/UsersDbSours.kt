@@ -4,8 +4,6 @@ import android.util.Log
 import com.example.mysympleapplication.hw9.newDesign.data.db.AppDataBase
 import com.example.mysympleapplication.hw9.newDesign.data.entity_model.BalanceEntity
 import com.example.mysympleapplication.hw9.newDesign.data.entity_model.SpendEntity
-import com.example.mysympleapplication.hw9.newDesign.utils.Result
-import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 class UsersDbSours @Inject constructor(private val db: AppDataBase) {
@@ -25,7 +23,7 @@ class UsersDbSours @Inject constructor(private val db: AppDataBase) {
     }
 
     suspend fun getBalance() =
-        db.balanceDao().getBalanceSignIn()
+        db.balanceDao().getBalance()
 
     suspend fun insertBalance(balanceUser: BalanceEntity) {
         db.balanceDao().insertBalance(balanceUser)

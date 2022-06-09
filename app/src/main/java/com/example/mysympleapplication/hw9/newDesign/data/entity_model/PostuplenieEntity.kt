@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "postuplenie")
 data class PostuplenieEntity(
     @PrimaryKey(autoGenerate = true)
-    val id: Long,
-    val value: String,
-    val date: String
+    val id: Long = 0,
+    val value: String = "",
+    val date: String = ""
 )

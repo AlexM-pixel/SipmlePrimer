@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "spends")
 data class SpendEntity(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     var id: Long = 0,
     var spendName: String = "",
     var value: String = "",

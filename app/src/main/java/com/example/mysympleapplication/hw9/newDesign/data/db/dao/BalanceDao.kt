@@ -12,10 +12,8 @@ interface BalanceDao {
 
     @Update
     fun updateB(balance: BalanceEntity)
+    
 
     @Query("SELECT * FROM balance ")
-    fun getBalance(): LiveData<BalanceEntity>
-
-    @Query("SELECT * FROM balance ")
-    suspend fun getBalanceSignIn(): BalanceEntity?
+    suspend fun getBalance(): BalanceEntity
 }
