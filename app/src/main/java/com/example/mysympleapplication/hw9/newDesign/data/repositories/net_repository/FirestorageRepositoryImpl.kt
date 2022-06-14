@@ -10,8 +10,9 @@ class FirestorageRepositoryImpl @Inject constructor(val refStorage: StorageRefer
     FirestorageRepository {
 
     override suspend fun downloadImageUrl(name: String): Uri? {
+      val id="$name.png"
         return refStorage
-            .child(name)
+            .child(id)
             .downloadUrl
             .await()
     }

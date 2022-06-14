@@ -74,12 +74,7 @@ public class DetailActivity  extends BaseActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-        adapter.setDelListener(new DetailMonthAdapter.DeleteSpendListener() {
-            @Override
-            public void onDeleteClickListener(String id, int position) {
-                makeDialogToDelete(id, position);
-            }
-        });
+        adapter.setDelListener(this::makeDialogToDelete);
 
         final ItemTouchHelper touchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override

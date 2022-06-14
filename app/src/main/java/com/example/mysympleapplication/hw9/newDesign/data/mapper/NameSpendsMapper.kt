@@ -5,7 +5,7 @@ import com.example.mysympleapplication.hw9.newDesign.domain.model.NameSpend
 import javax.inject.Inject
 
 class NameSpendsMapper @Inject constructor() : EntityMapper<NameSpendsEntity, NameSpend> {
-    override fun mapFromEntity(entity: NameSpendsEntity): NameSpend {
+    override  fun mapFromEntity(entity: NameSpendsEntity): NameSpend {
         return NameSpend(
             id = entity.id ?: 0,
             nameSpend = entity.nameSpend,

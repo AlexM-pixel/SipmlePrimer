@@ -13,7 +13,11 @@ class ModelsSpendsDbRepositoryImpl @Inject constructor(
         db.namesSpendsDao().insertNameSpend(mapper.mapToEntity(nameSpends))
     }
 
-    override fun getAllNameSpends(): List<NameSpend> {
+    override suspend fun getAllNameSpends(): List<NameSpend> {
+        return mapper.fromEntityList(db.namesSpendsDao().getAllNamesSpends())
+    }
+
+    override fun getAllNameSpendsUnS(): List<NameSpend> {
         return mapper.fromEntityList(db.namesSpendsDao().getAllNamesNoSuspendSpends())
     }
 

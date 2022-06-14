@@ -1,8 +1,6 @@
 package com.example.mysympleapplication.hw9.newDesign.data.db.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.example.mysympleapplication.hw9.model.Balance
 import com.example.mysympleapplication.hw9.newDesign.data.entity_model.BalanceEntity
 
 @Dao

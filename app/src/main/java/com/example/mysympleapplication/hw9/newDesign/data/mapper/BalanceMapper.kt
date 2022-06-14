@@ -5,7 +5,7 @@ import com.example.mysympleapplication.hw9.newDesign.domain.model.Balance
 import javax.inject.Inject
 
 class BalanceMapper @Inject constructor() : EntityMapper<BalanceEntity, Balance> {
-    override fun mapFromEntity(entity: BalanceEntity): Balance {
+    override  fun mapFromEntity(entity: BalanceEntity): Balance {
         return Balance(
             id = entity.id,
             balance = entity.balance

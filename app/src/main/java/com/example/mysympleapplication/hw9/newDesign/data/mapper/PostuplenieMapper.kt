@@ -7,7 +7,7 @@ import com.example.mysympleapplication.hw9.newDesign.domain.model.Postuplenie
 import javax.inject.Inject
 
 class PostuplenieMapper @Inject constructor() : EntityMapper<PostuplenieEntity, Postuplenie> {
-    override fun mapFromEntity(entity: PostuplenieEntity): Postuplenie {
+    override  fun mapFromEntity(entity: PostuplenieEntity): Postuplenie {
         return Postuplenie(
             id = entity.id,
             value = entity.value,

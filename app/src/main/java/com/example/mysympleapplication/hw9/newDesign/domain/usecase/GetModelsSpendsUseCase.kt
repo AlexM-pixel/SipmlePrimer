@@ -4,5 +4,6 @@ import com.example.mysympleapplication.hw9.newDesign.data.repositories.db_reposi
 import javax.inject.Inject
 
 class GetModelsSpendsUseCase @Inject constructor(private val repo: ModelsSpendsDbRepository) {
-    fun getModelsSpends() = repo.getAllNameSpends()
+       suspend fun getModelsSpends() = repo.getAllNameSpends()
+        fun getModelsSpendsUnS() = repo.getAllNameSpendsUnS()
 }

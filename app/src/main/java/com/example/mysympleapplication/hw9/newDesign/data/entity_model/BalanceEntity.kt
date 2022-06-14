@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "balance")
 data class BalanceEntity(
-   @PrimaryKey(autoGenerate = true)
+   @PrimaryKey
     var id: Long=0,
     var balance: String=""
 )

@@ -1,47 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".hw9.newDesign.ui.SpendsOfMonthFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/date_nd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="8dp"
-        android:text="12.23.2020"
-        android:textSize="26sp" />
-
-    <EditText
-        android:id="@+id/insertBodySms"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/monthlySpends_rv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="8dp" />
-
-    <EditText
-        android:id="@+id/validFormRegexInsert"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="8dp" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_start_nd"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:background="@drawable/background_base_button"
-        android:text="Start"
-        android:textSize="24sp" />
-
-    <TextView
-        android:id="@+id/result_nd"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp" />
-</LinearLayout>
+        android:layout_height="match_parent"
+        tools:listitem="@layout/item_monthly_spends" />
+</FrameLayout>

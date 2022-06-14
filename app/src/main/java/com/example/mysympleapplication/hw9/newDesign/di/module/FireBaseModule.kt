@@ -16,6 +16,6 @@ class FireBaseModule {
     fun provideFireBaseFirestore() = FirebaseFirestore.getInstance()
 
     @Provides
-    fun provideFireStorageRef() = FirebaseStorage.getInstance().reference.child(STORAGE_IMAGE)
+    fun provideFireStorageRef() = FirebaseStorage.getInstance().getReference("image")
 
 }

@@ -36,7 +36,7 @@ public class SpendMonthAdapter extends RecyclerView.Adapter<SpendMonthAdapter.Mo
     @NonNull
     @Override
     public MonthSpendsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        CardView cardV = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_mounth_spends, parent, false);
+        CardView cardV = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.item_monthly_spends, parent, false);
         return new MonthSpendsHolder(cardV);
     }
 
@@ -82,10 +82,10 @@ public class SpendMonthAdapter extends RecyclerView.Adapter<SpendMonthAdapter.Mo
         MonthSpendsHolder(@NonNull CardView cardV) {
             super(cardV);
             cardView = cardV;
-            valueMonthSpends = cardView.findViewById(R.id.value_month_spends);
-            date = cardView.findViewById(R.id.date);
-            imageView = cardView.findViewById(R.id.imageSpend);
-            nameSpends = cardView.findViewById(R.id.name_for_spend);
+//            valueMonthSpends = cardView.findViewById(R.id.value_month_spends);
+//            date = cardView.findViewById(R.id.date);
+//            imageView = cardView.findViewById(R.id.imageSpend);
+//            nameSpends = cardView.findViewById(R.id.name_for_spend);
 
         }
     }

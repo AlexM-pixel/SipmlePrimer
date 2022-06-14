@@ -9,6 +9,8 @@ import dagger.android.ContributesAndroidInjector
 
 @Module
 abstract class FragmentsBuilder {
+    @ContributesAndroidInjector
+    abstract fun contributeSplashFragment(): SplashFragment
 
     @ContributesAndroidInjector
     abstract fun contributeLoginFragment(): LoginFragment

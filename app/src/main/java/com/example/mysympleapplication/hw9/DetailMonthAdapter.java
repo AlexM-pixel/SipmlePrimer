@@ -55,7 +55,7 @@ public class DetailMonthAdapter extends RecyclerView.Adapter<DetailMonthAdapter.
     @NonNull
     @Override
     public DetailHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        CardView cardV = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_mounth_spends, parent, false);
+        CardView cardV = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.item_monthly_spends, parent, false);
         return new DetailHolder(cardV);
     }
 
@@ -73,14 +73,11 @@ public class DetailMonthAdapter extends RecyclerView.Adapter<DetailMonthAdapter.
                 listenerDetail.onDetailSpendClickListener(calendarSpendsList.get(position).getDate(), calendarSpendsList.get(position).getSpendName());
             }
         });
-        holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                if (delListener != null) {
-                    delListener.onDeleteClickListener(calendarSpendsList.get(position).getId(),position);
-                }
-                return true;
+        holder.cardView.setOnLongClickListener(v -> {
+            if (delListener != null) {
+                delListener.onDeleteClickListener(calendarSpendsList.get(position).getId(),position);
             }
+            return true;
         });
     }
 
@@ -98,11 +95,11 @@ public class DetailMonthAdapter extends RecyclerView.Adapter<DetailMonthAdapter.
 
         public DetailHolder(@NonNull CardView cardV) {
             super(cardV);
-            cardView = cardV;
-            valueSpends = cardView.findViewById(R.id.value_month_spends);
-            date = cardView.findViewById(R.id.date);
-            nameSpends = cardView.findViewById(R.id.name_for_spend);
-            imageView = cardView.findViewById(R.id.imageSpend);
+//            cardView = cardV;
+//            valueSpends = cardView.findViewById(R.id.value_month_spends);
+//            date = cardView.findViewById(R.id.date);
+//            nameSpends = cardView.findViewById(R.id.name_for_spend);
+//            imageView = cardView.findViewById(R.id.imageSpend);
         }
     }
 }

@@ -1,12 +1,14 @@
 package com.example.mysympleapplication.hw9.newDesign.ui
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.view.ViewCompat
@@ -31,7 +33,7 @@ class HomeFragment : BaseFragment() {
     val viewModel: HomeFragmentViewModel by viewModels { viewModelFactory }
     private lateinit var myAdapter: SumMonthSpendsAdapter
     private var isPermissionGranted = false
-
+    private var balanceTitle: TextView? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,6 +42,7 @@ class HomeFragment : BaseFragment() {
         return inflater.inflate(R.layout.fragment_home_nd, container, false)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView(view)
@@ -48,8 +51,12 @@ class HomeFragment : BaseFragment() {
             showRequestPermission()
         }
         viewModel.getMonthlyExpenses()
+        viewModel.getBalance()
         viewModel.sumSpendsLiveData.observe(viewLifecycleOwner) {
             myAdapter.setMonthList(it)
+        }
+        viewModel.balanceLiveData.observe(viewLifecycleOwner) {
+            balanceTitle?.text = "${it?.balance} BYN"
         }
     }
 
@@ -63,15 +70,19 @@ class HomeFragment : BaseFragment() {
 
     private fun initView(view: View) {
         val rv = view.findViewById<RecyclerView>(R.id.rv_home_spends)
+        balanceTitle = view.findViewById(R.id.textView_balanceValue)
         myAdapter = SumMonthSpendsAdapter()
         rv.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = myAdapter
         }
         myAdapter.onItemClick = { date ->
-            val bundle=Bundle()
-            bundle.putString(ARG_DATE,date)
-            findNavController().navigate(R.id.action_bottomNavFragment_to_spendsOfMonthFragment,bundle)
+            val bundle = Bundle()
+            bundle.putString(ARG_DATE, date)
+            findNavController().navigate(
+                R.id.action_bottomNavFragment_to_spendsOfMonthFragment,
+                bundle
+            )
         }
     }
 
@@ -97,7 +108,6 @@ class HomeFragment : BaseFragment() {
     }
 
     fun ViewPager2.setShowSideItems(pageMarginPx: Int, offsetPx: Int) {
-
         clipToPadding = false
         clipChildren = false
         offscreenPageLimit = 4

@@ -3,10 +3,7 @@ package com.example.mysympleapplication.hw9.newDesign.di.builder
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.mysympleapplication.hw9.newDesign.di.qualifaer.ViewModelKey
-import com.example.mysympleapplication.hw9.newDesign.viewmodels.CreateUserByEmailViewModel
-import com.example.mysympleapplication.hw9.newDesign.viewmodels.HomeFragmentViewModel
-import com.example.mysympleapplication.hw9.newDesign.viewmodels.LoginViewModel
-import com.example.mysympleapplication.hw9.newDesign.viewmodels.SettingsFragmentViewModel
+import com.example.mysympleapplication.hw9.newDesign.viewmodels.*
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -32,6 +29,11 @@ abstract class ViewModelBuilder {
     @IntoMap
     @ViewModelKey(SettingsFragmentViewModel::class)
     abstract fun bindSettingsViewModel(viewModel: SettingsFragmentViewModel):ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MonthlySpendsViewModel::class)
+    abstract fun bindMonthlySpendsViewModel(viewModel: MonthlySpendsViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory

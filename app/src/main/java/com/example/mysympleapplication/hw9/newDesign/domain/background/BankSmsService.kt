@@ -119,7 +119,7 @@ class BankSmsService : IntentService("BankSmsService") {
 
 
     private fun insertNewSpend(bodySms: String) {
-        val list = getModelsSpendsUseCase.getModelsSpends()
+        val list = getModelsSpendsUseCase.getModelsSpendsUnS()
         Log.e("insertNewSpend2", "list.size = ${list.size}")
         for (modelSpend in list) {
             if (bodySms.contains(modelSpend.nameSpend.lowercase())) {
@@ -176,7 +176,7 @@ class BankSmsService : IntentService("BankSmsService") {
         val date = getDate()
         val value = getValue(bodySms)
         val id = getId(ruName, value, Date())
-        return Spend(id = id, spendName = ruName, value = value, date = date)
+        return Spend(id = id, spendName = ruName, value = value, date = date,null)
     }
 
     private fun createNotification(bodySms: String) {

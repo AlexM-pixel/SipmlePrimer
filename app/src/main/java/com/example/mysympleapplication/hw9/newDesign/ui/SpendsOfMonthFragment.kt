@@ -9,19 +9,27 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.mysympleapplication.R
+import com.example.mysympleapplication.hw9.newDesign.base.BaseFragment
+import com.example.mysympleapplication.hw9.newDesign.di.builder.ViewModelFactory
 import com.example.mysympleapplication.hw9.newDesign.domain.background.SmsReceiver
+import com.example.mysympleapplication.hw9.newDesign.ui.adapters.MonthlySpendRvAdapter
+import com.example.mysympleapplication.hw9.newDesign.viewmodels.HomeFragmentViewModel
+import com.example.mysympleapplication.hw9.newDesign.viewmodels.MonthlySpendsViewModel
 import java.util.regex.Pattern
+import javax.inject.Inject
 
 const val ARG_DATE = "date_arg"
 
-class SpendsOfMonthFragment : Fragment() {
+class SpendsOfMonthFragment : BaseFragment() {
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+    val viewModel: MonthlySpendsViewModel by viewModels { viewModelFactory }
+    private lateinit var myAdapter: MonthlySpendRvAdapter
     private var date: String? = null
-    private lateinit var textDate: TextView
-    private lateinit var editBodySms: EditText
-    private lateinit var editRegex: EditText
-    private lateinit var textResult: TextView
-    private lateinit var buttonStart: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,15 +49,22 @@ class SpendsOfMonthFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init(view)
-        textDate.text = date
+        viewModel.getMonthlySpends(date!!)
+        viewModel.monthlySpendsLiveData.observe(viewLifecycleOwner) {
+            myAdapter.setList(it)
+        }
     }
 
     private fun init(view: View) {
-        textDate = view.findViewById(R.id.date_nd)
-        editBodySms = view.findViewById(R.id.insertBodySms)
-        editRegex = view.findViewById(R.id.validFormRegexInsert)
-        textResult = view.findViewById(R.id.result_nd)
-        buttonStart = view.findViewById(R.id.btn_start_nd)
+        val recyclerView = view.findViewById<RecyclerView>(R.id.monthlySpends_rv)
+        myAdapter = MonthlySpendRvAdapter()
+        recyclerView.apply {
+            adapter = myAdapter
+            layoutManager = LinearLayoutManager(context)
+        }
+        myAdapter.onItemClick = { name, date ->
+            Toast.makeText(requireContext(), "$name, $date", Toast.LENGTH_SHORT).show()
+        }
     }
 
 
