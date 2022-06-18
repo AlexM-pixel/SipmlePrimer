@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_cardView_nd"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="6dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="8dp">
+
+        <FrameLayout
+            android:id="@+id/home_frame_spends_nd"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/background_rv_nd"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/image_text_spends_nd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="И"
+                android:textColor="@color/backgroundGreenNDColor"
+                android:textSize="40sp"
+                android:textStyle="bold" />
+        </FrameLayout>
+
+
+        <TextView
+            android:id="@+id/home_title_spend_nd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/cardView_margin"
+            android:text="Июнь"
+            android:textColor="@color/black"
+            android:textSize="@dimen/month_text_size_rv"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/home_frame_spends_nd"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/home_date_spends_nd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/cardView_margin"
+            android:text="05-2022"
+            android:textSize="@dimen/month_text_size_rv"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/home_title_spend_nd"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/home_value_spends_nd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/cardView_margin"
+            android:text="353.96"
+            android:textColor="@color/backgroundGreenNDColor"
+            android:textSize="@dimen/month_text_size_rv"
+            app:layout_constraintBottom_toTopOf="@+id/byn_nd"
+            app:layout_constraintStart_toEndOf="@+id/home_date_spends_nd"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/byn_nd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BYN"
+            android:textColor="@color/backgroundGreenNDColor"
+            android:textSize="@dimen/month_text_size_rv"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/home_value_spends_nd"
+            app:layout_constraintStart_toStartOf="@+id/home_value_spends_nd"
+            app:layout_constraintTop_toBottomOf="@+id/home_value_spends_nd" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/home_value_spends_nd"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_keyboard_arrow_right_24dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.cardview.widget.CardView>

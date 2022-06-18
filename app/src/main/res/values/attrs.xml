@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="splashGradient" format="reference" />
+    <attr name="toggle_button" format="reference" />
+    <attr name="toggle_button_bg_orange" format="reference" />
+    <attr name="text_input_check" format="reference" />
+    <attr name="toggle_text_byn" format="reference" />
+
+</resources>

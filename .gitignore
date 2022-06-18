@@ -12,3 +12,6 @@
 /captures
 .externalNativeBuild
 .cxx
+.idea/jarRepositories.xml
+/.idea
+/.idea/shelf/Uncommitted_changes_before_Checkout_at_15_05_2022,_23_29_[Changes]/shelved.patch

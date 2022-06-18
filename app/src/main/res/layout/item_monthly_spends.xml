@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_cardView_nd"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="6dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="8dp">
+
+        <FrameLayout
+            android:id="@+id/frame_spends_nd"
+            android:layout_width="@dimen/frame_image_size"
+            android:layout_height="@dimen/frame_image_size"
+            android:background="@drawable/background_rv_nd"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/home_image_spends_nd"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/icon_apteka_48"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </FrameLayout>
+
+
+        <TextView
+            android:id="@+id/title_spend_nd"
+            android:layout_width="@dimen/frame_text_size"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginStart="@dimen/cardView_margin"
+            android:text="Магазин"
+            android:textColor="@color/black"
+            android:textSize="@dimen/spend_text_size_rv"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/date_spends_nd"
+            app:layout_constraintStart_toEndOf="@+id/frame_spends_nd"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/date_spends_nd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_text_size_rv"
+            android:text="05-2022-12"
+            android:textSize="@dimen/month_text_size_rv"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/monthly_value_spends_nd"
+            app:layout_constraintStart_toEndOf="@+id/title_spend_nd"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/monthly_value_spends_nd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/cardView_margin"
+            android:text="1353.96"
+            android:textColor="@color/backgroundGreenNDColor"
+            android:textSize="@dimen/month_text_size_rv"
+            app:layout_constraintBottom_toTopOf="@+id/byn_nd"
+            app:layout_constraintStart_toEndOf="@+id/date_spends_nd"
+            app:layout_constraintEnd_toStartOf="@+id/imageView2"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/byn_nd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BYN"
+            android:textColor="@color/backgroundGreenNDColor"
+            android:textSize="@dimen/month_text_size_rv"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/monthly_value_spends_nd"
+            app:layout_constraintStart_toStartOf="@+id/monthly_value_spends_nd"
+            app:layout_constraintTop_toBottomOf="@+id/monthly_value_spends_nd" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="fitStart"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_keyboard_arrow_right_24dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.cardview.widget.CardView>

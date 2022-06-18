@@ -1,11 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="app/src/main/res/drawable-mdpi/cycle.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable-mdpi/toggle_button_def.xml" value="0.112" />
+        <entry key="app/src/main/res/drawable-mdpi/toggle_button_orange.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable-v24/background_base_button.xml" value="0.1715" />
+        <entry key="app/src/main/res/drawable-xxhdpi/background_bottomRadius_nd.xml" value="0.1715" />
+        <entry key="app/src/main/res/drawable/background_bottom_radius_nd.xml" value="0.2875" />
+        <entry key="app/src/main/res/drawable/background_btn_nd.xml" value="0.1545" />
+        <entry key="app/src/main/res/drawable/background_nd_edit.xml" value="0.1545" />
+        <entry key="app/src/main/res/drawable/background_rv_nd.xml" value="0.1545" />
+        <entry key="app/src/main/res/drawable/corners.xml" value="0.1715" />
+        <entry key="app/src/main/res/drawable/ic_keyboard_arrow_right_24dp.xml" value="0.3675" />
+        <entry key="app/src/main/res/drawable/ic_settings_24.xml" value="0.2305" />
+        <entry key="app/src/main/res/drawable/ic_turned_in_not_black_24dp.xml" value="0.2305" />
+        <entry key="app/src/main/res/drawable/login_bg_orange.xml" value="0.1715" />
+        <entry key="app/src/main/res/drawable/radius.xml" value="0.1715" />
+        <entry key="app/src/main/res/drawable/radius2.xml" value="0.1715" />
+        <entry key="app/src/main/res/layout/activity_detail.xml" value="0.2222222222222222" />
+        <entry key="app/src/main/res/layout/activity_detail_month.xml" value="0.4244791666666667" />
+        <entry key="app/src/main/res/layout/card_view_mounth_spends.xml" value="0.4244791666666667" />
+        <entry key="app/src/main/res/layout/fragment_bottom_nav.xml" value="0.4119791666666667" />
+        <entry key="app/src/main/res/layout/fragment_detail_monthly.xml" value="0.4244791666666667" />
+        <entry key="app/src/main/res/layout/fragment_home_nd.xml" value="0.35688405797101447" />
+        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.2671875" />
+        <entry key="app/src/main/res/layout/fragment_registration.xml" value="0.4119791666666667" />
+        <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/fragment_settings_nd.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/fragment_spends_of_mounth.xml" value="0.4244791666666667" />
+        <entry key="app/src/main/res/layout/fragment_splash.xml" value="0.20035460992907803" />
+        <entry key="app/src/main/res/layout/item_detailspend_byname.xml" value="0.45" />
+        <entry key="app/src/main/res/layout/item_monthly_spends.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/item_spends.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/item_viewpager.xml" value="0.4119791666666667" />
+      </map>
+    </option>
+  </component>
   <component name="NullableNotNullManager">
     <option name="myDefaultNullable" value="org.jetbrains.annotations.Nullable" />
     <option name="myDefaultNotNull" value="androidx.annotation.NonNull" />
     <option name="myNullables">
       <value>
-        <list size="12">
+        <list size="13">
           <item index="0" class="java.lang.String" itemvalue="org.jetbrains.annotations.Nullable" />
           <item index="1" class="java.lang.String" itemvalue="javax.annotation.Nullable" />
           <item index="2" class="java.lang.String" itemvalue="javax.annotation.CheckForNull" />
@@ -18,12 +56,13 @@
           <item index="9" class="java.lang.String" itemvalue="org.checkerframework.checker.nullness.compatqual.NullableDecl" />
           <item index="10" class="java.lang.String" itemvalue="org.checkerframework.checker.nullness.compatqual.NullableType" />
           <item index="11" class="java.lang.String" itemvalue="com.android.annotations.Nullable" />
+          <item index="12" class="java.lang.String" itemvalue="org.eclipse.jdt.annotation.Nullable" />
         </list>
       </value>
     </option>
     <option name="myNotNulls">
       <value>
-        <list size="11">
+        <list size="12">
           <item index="0" class="java.lang.String" itemvalue="org.jetbrains.annotations.NotNull" />
           <item index="1" class="java.lang.String" itemvalue="javax.annotation.Nonnull" />
           <item index="2" class="java.lang.String" itemvalue="edu.umd.cs.findbugs.annotations.NonNull" />
@@ -35,11 +74,12 @@
           <item index="8" class="java.lang.String" itemvalue="org.checkerframework.checker.nullness.compatqual.NonNullDecl" />
           <item index="9" class="java.lang.String" itemvalue="org.checkerframework.checker.nullness.compatqual.NonNullType" />
           <item index="10" class="java.lang.String" itemvalue="com.android.annotations.NonNull" />
+          <item index="11" class="java.lang.String" itemvalue="org.eclipse.jdt.annotation.NonNull" />
         </list>
       </value>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

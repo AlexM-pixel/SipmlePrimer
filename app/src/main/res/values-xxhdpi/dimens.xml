@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="auth_btnText_size">18sp</dimen>
+    <dimen name="auth_textQuestion_size">20sp</dimen>
+    <dimen name="cardView_margin">16dp</dimen>
+
+</resources>

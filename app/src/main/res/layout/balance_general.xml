@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#EAF1F1">
+
+    <TextView
+        android:id="@+id/text_balance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="@string/text_view_balance"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+       />
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingBalanceUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="6dp"
+        android:clickable="false"
+        android:theme="@style/fab_user"
+        app:elevation="0dp"
+        app:fabSize="mini"
+        app:layout_constraintStart_toEndOf="@id/text_balance"
+        app:layout_constraintBottom_toBottomOf="@+id/text_balance"
+        app:layout_constraintTop_toTopOf="@+id/text_balance" />
+
+    <TextView
+        android:id="@+id/valueBalanceUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:text="1234.04"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/floatingBalanceUser"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/bun_user_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:text="BYN"
+        android:textColor="#FDCC39"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@id/valueBalanceUser"
+        app:layout_constraintStart_toStartOf="@id/valueBalanceUser"
+        app:layout_constraintTop_toBottomOf="@id/valueBalanceUser" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingBalanceFriend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="6dp"
+        android:clickable="false"
+        android:theme="@style/fab_friend"
+        app:elevation="0dp"
+        app:fabSize="mini"
+        app:layout_constraintEnd_toStartOf="@+id/valueBalanceFriend"
+        app:layout_constraintTop_toTopOf="@id/floatingBalanceUser"
+        />
+    <TextView
+        android:id="@+id/valueBalanceFriend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:text="1234.04"
+        android:textSize="16sp"
+        android:layout_marginEnd="6dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/bun_friend_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:text="BYN"
+        android:textColor="#F8B9BD47"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@id/valueBalanceFriend"
+        app:layout_constraintStart_toStartOf="@id/valueBalanceFriend"
+        app:layout_constraintTop_toBottomOf="@id/valueBalanceFriend" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

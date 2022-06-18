@@ -5,23 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".hw9.Main9Activity">
-    <TextView
-        android:id="@+id/sms_textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:textSize="36sp"
-        android:layout_margin="8dp"
-        app:layout_constraintEnd_toEndOf="parent"/>
-    <TextView
-        android:id="@+id/example_textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/sms_textView"
-        app:layout_constraintStart_toStartOf="parent"
-        android:textSize="36sp"
-        android:layout_margin="8dp"
-        app:layout_constraintEnd_toEndOf="parent"/>
 
+
+  <FrameLayout
+      android:id="@+id/frame_for_fragments"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      />
+  <com.google.android.material.bottomnavigation.BottomNavigationView
+      android:id="@+id/bottom_navigation"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:menu="@menu/old_menu" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="auth_btnText_size">14sp</dimen>
+    <dimen name="auth_textQuestion_size">16sp</dimen>
+    <dimen name="cardView_margin">12dp</dimen>
+    <dimen name="month_text_size_rv">16sp</dimen>
+    <dimen name="spend_text_size_rv">18sp</dimen>
+    <dimen name="margin_text_size_rv">8sp</dimen>
+    <dimen name="frame_text_size">80dp</dimen>
+    <dimen name="frame_image_size">60dp</dimen>
+
+</resources>

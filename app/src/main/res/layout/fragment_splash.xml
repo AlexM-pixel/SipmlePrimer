@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundGreenNDColor"
+    app:layoutDescription="@xml/fragment_splash_scene"
+    tools:context=".hw9.newDesign.ui.SplashFragment">
+
+    <View
+        android:id="@+id/cycle_one"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/cycle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/cycle_two"
+        android:layout_width="286dp"
+        android:layout_height="286dp"
+        android:background="@drawable/cycle"
+        app:layout_constraintBottom_toBottomOf="@+id/cycle_one"
+        app:layout_constraintEnd_toEndOf="@id/cycle_one"
+        app:layout_constraintStart_toStartOf="@+id/cycle_one"
+        app:layout_constraintTop_toTopOf="@+id/cycle_one" />
+
+    <View
+        android:id="@+id/cycle_three"
+        android:layout_width="396dp"
+        android:layout_height="396dp"
+        android:background="@drawable/cycle"
+        app:layout_constraintBottom_toBottomOf="@+id/cycle_one"
+        app:layout_constraintEnd_toEndOf="@id/cycle_one"
+        app:layout_constraintStart_toStartOf="@+id/cycle_one"
+        app:layout_constraintTop_toTopOf="@+id/cycle_one" />
+
+    <ImageView
+        android:id="@+id/imageView_koshel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:src="@drawable/image_splashscreen"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.4" />
+
+    <TextView
+        android:id="@+id/text_splash_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="36dp"
+        android:text="Легкий способ \n сохранить деньги"
+        android:textColor="@color/colorGrafik_line"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_koshel" />
+
+</androidx.constraintlayout.motion.widget.MotionLayout>

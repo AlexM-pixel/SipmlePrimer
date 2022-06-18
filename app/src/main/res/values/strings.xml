@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">MySympleApplication</string>
+    <string name="app_name">Расходы</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="second_activity_label">Answer</string>
-    <string name="next">Клац!</string>
+    <string name="next">Далее</string>
     <string name="previous">Previous</string>
 
     <string name="task_first_activity">введите правильный ответ</string>
@@ -23,7 +23,7 @@
     <string name="statistic">статистика</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_settings_fragment">Settings fragment</string>
     <string name="first_hw">1-я домашка</string>
     <string name="second_hw">дамашка на фрагменты</string>
     <string name="layouts_hw">3-я Layouts</string>
@@ -40,7 +40,7 @@
     <string name="_242_ratings">242 ratings</string>
     <string name="nameUser">Name</string>
     <string name="User_description">Description</string>
-    <string name="input_values">input values</string>
+    <string name="input_values">редактировать:</string>
     <string name="date">date</string>
     <string name="value">value</string>
     <string name="_4_recyclerview">4-я (recyclerView)</string>
@@ -61,4 +61,32 @@
     <string name="weather_button_string">8-я  weather</string>
     <string name="button_string_update">update</string>
     <string name="starting_svalivator">starting Svalivator</string>
+    <string name="title_settings">settings</string>
+    <string name="title_spends">spends</string>
+    <string name="title_home">home</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_balance_fragment">Balance fragment</string>
+    <string name="text_ostatok">Остаток: 125 BYN</string>
+    <string name="text_postupilo">Баланс:--</string>
+    <string name="sign_in">Войти</string>
+    <string name="create_account">Создать аккаунт</string>
+    <string name="sign_out">выход</string>
+    <string name="send_to_support">написать сообщение</string>
+    <string name="hint_email">email</string>
+    <string name="hint_password">password</string>
+    <string name="emailpassword_title_text">Авторизация</string>
+    <string name="signed_out">сохраняйте ваши платежи</string>
+    <string name="insert_email">введите почтовый адрес для восстановления пароля</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="user_spends_textview">Мои \nрасходы</string>
+    <string name="text_view_balance">Баланс:</string>
+    <string name="log_in">Войти</string>
+    <string name="settings_push_notification">"Уведомления "</string>
+
+    <string name="channel_name">main_channel</string>
+    <string name="channel_description">main_channel_description</string>
+    <string name="text_write_name">пиши название платежа</string>
+    <string name="question_save_spend">Сохранить платеж ?</string>
+
 </resources>
