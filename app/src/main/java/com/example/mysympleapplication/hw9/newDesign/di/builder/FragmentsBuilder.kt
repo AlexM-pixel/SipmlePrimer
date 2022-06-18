@@ -34,5 +34,8 @@ abstract class FragmentsBuilder {
     abstract fun contributeSettingsFragment(): SettingsFragment
 
     @ContributesAndroidInjector
-    abstract fun contributeSpendsMonthFragment(): SpendsOfMonthFragment
+    abstract fun contributeSpendsMonthFragment(): MonthlySpendsFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeDetailMonthlyFragment():DetailMonthlyFragment
 }

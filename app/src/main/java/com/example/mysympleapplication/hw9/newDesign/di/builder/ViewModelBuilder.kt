@@ -36,5 +36,10 @@ abstract class ViewModelBuilder {
     abstract fun bindMonthlySpendsViewModel(viewModel: MonthlySpendsViewModel): ViewModel
 
     @Binds
+    @IntoMap
+    @ViewModelKey(DetailMonthlyViewModel::class)
+    abstract fun bindMDetailMonthlyViewModel(viewModel: DetailMonthlyViewModel): ViewModel
+
+    @Binds
     abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 }

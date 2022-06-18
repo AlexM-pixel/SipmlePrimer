@@ -59,7 +59,7 @@ class BankSmsService : IntentService("BankSmsService") {
     lateinit var insertModelUseCase: InsertModelNameBySpendUseCase
 
     @Inject
-    lateinit var getModelsSpendsUseCase: GetModelsSpendsUseCase
+    lateinit var getCategoryPayUseCase: GetCategoryPayUseCase
 
     private var coroutineJob: Job = Job()
     private val coroutineContext: CoroutineContext
@@ -119,7 +119,7 @@ class BankSmsService : IntentService("BankSmsService") {
 
 
     private fun insertNewSpend(bodySms: String) {
-        val list = getModelsSpendsUseCase.getModelsSpendsUnS()
+        val list = getCategoryPayUseCase.getModelsSpendsUnS()
         Log.e("insertNewSpend2", "list.size = ${list.size}")
         for (modelSpend in list) {
             if (bodySms.contains(modelSpend.nameSpend.lowercase())) {

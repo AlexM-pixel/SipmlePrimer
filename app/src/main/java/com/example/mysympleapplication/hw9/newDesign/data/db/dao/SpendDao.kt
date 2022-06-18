@@ -29,8 +29,8 @@ interface SpendDao {
     @Query("DELETE FROM spends WHERE id= :id")
     fun delete(id: String?)
 
-    @Query("SELECT id, value as totalValue, date, spendName FROM spends WHERE strftime(\"%m-%Y\", date)=strftime(\"%m-%Y\",:choiceDate) AND spendName= :name ORDER BY date DESC")
-    fun getAll(choiceDate: String?, name: String?): LiveData<List<CalendarSpendsEntity>>
+    @Query("SELECT id, value , date, spendName FROM spends WHERE strftime(\"%m-%Y\", date)=strftime(\"%m-%Y\",:choiceDate) AND spendName= :name ORDER BY date DESC")
+    suspend fun getDetailSpendsByName(name: String?,choiceDate: String?): List<SpendEntity>
 
     @Query("SELECT SUM(value) as value_spends,strftime(\"%m-%Y\", date) as dateM FROM spends GROUP BY strftime(\"%m-%Y\", date) ORDER BY date DESC")
    suspend fun getSumMonth(): List<SumSpendsOfMonthEntity>

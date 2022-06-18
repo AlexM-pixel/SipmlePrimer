@@ -7,14 +7,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mysympleapplication.R
-import com.example.mysympleapplication.hw9.newDesign.data.repositories.net_repository.FirestorageRepository
-import com.example.mysympleapplication.hw9.newDesign.domain.ext.setImageUrl
-import com.example.mysympleapplication.hw9.newDesign.domain.model.NameSpend
+import com.example.mysympleapplication.hw9.newDesign.domain.ext.setImageByDrawable
+import com.example.mysympleapplication.hw9.newDesign.domain.model.Images
 import com.example.mysympleapplication.hw9.newDesign.domain.model.Spend
 
 class MonthlySpendRvAdapter :
     RecyclerView.Adapter<MonthlySpendRvAdapter.MyViewHolder>() {
-    lateinit var onItemClick: (nameSpend: String, date: String) -> Unit
+    lateinit var onItemClick: (nameSpend: String, date: String,image:String?) -> Unit
     private var list: MutableList<Spend> = mutableListOf()
 
     inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -23,11 +22,12 @@ class MonthlySpendRvAdapter :
         private val dateTextView: TextView = view.findViewById(R.id.date_spends_nd)
         private val valueTextView: TextView = view.findViewById(R.id.monthly_value_spends_nd)
         fun onBind(spend: Spend) {
+            val image = Images.getImageForItem(spend.url)
             titleTextView.text = spend.spendName
             dateTextView.text = spend.date
             valueTextView.text = spend.value
-            imageSpend.setImageUrl(spend.url?:"null")
-            itemView.setOnClickListener { onItemClick.invoke(spend.spendName, spend.date) }
+            imageSpend.setImageByDrawable(image)
+            itemView.setOnClickListener { onItemClick.invoke(spend.spendName, spend.date,spend.url) }
         }
     }
 

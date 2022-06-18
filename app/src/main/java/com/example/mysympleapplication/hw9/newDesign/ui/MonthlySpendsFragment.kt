@@ -10,6 +10,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mysympleapplication.R
@@ -24,7 +25,7 @@ import javax.inject.Inject
 
 const val ARG_DATE = "date_arg"
 
-class SpendsOfMonthFragment : BaseFragment() {
+class MonthlySpendsFragment : BaseFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     val viewModel: MonthlySpendsViewModel by viewModels { viewModelFactory }
@@ -62,8 +63,15 @@ class SpendsOfMonthFragment : BaseFragment() {
             adapter = myAdapter
             layoutManager = LinearLayoutManager(context)
         }
-        myAdapter.onItemClick = { name, date ->
-            Toast.makeText(requireContext(), "$name, $date", Toast.LENGTH_SHORT).show()
+        myAdapter.onItemClick = { name, date, image ->
+            val bundle = Bundle()
+            bundle.putString(ARG_NAME_DETAIL, name)
+            bundle.putString(ARG_DATE_DETAIL, date)
+            bundle.putString(ARG_IMAGE_DETAIL, image)
+            findNavController().navigate(
+                R.id.action_spendsOfMonthFragment_to_detailMonthlyFragment,
+                bundle
+            )
         }
     }
 

@@ -18,4 +18,8 @@ class SpendsDbRepositoryImpl @Inject constructor(
         return mapper.fromEntityList(db.spendDao().getMonthSpends(monthDate))
     }
 
+    override suspend fun getDetailSpendsByName(name: String, date: String): List<Spend> {
+        return mapper.fromEntityList(db.spendDao().getDetailSpendsByName(name = name, choiceDate = date))
+    }
+
 }

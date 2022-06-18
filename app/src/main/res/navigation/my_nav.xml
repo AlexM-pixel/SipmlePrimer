@@ -44,7 +44,9 @@
         tools:layout="@layout/fragment_bottom_nav" >
         <action
             android:id="@+id/action_bottomNavFragment_to_spendsOfMonthFragment"
-            app:destination="@id/spendsOfMonthFragment" />
+            app:destination="@id/spendsOfMonthFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/registrationFragment"
@@ -57,7 +59,16 @@
     </fragment>
     <fragment
         android:id="@+id/spendsOfMonthFragment"
-        android:name="com.example.mysympleapplication.hw9.newDesign.ui.SpendsOfMonthFragment"
+        android:name="com.example.mysympleapplication.hw9.newDesign.ui.MonthlySpendsFragment"
         android:label="fragment_spends_of_mounth"
-        tools:layout="@layout/fragment_spends_of_mounth" />
+        tools:layout="@layout/fragment_spends_of_mounth" >
+        <action
+            android:id="@+id/action_spendsOfMonthFragment_to_detailMonthlyFragment"
+            app:destination="@id/detailMonthlyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailMonthlyFragment"
+        android:name="com.example.mysympleapplication.hw9.newDesign.ui.DetailMonthlyFragment"
+        android:label="fragment_detail_monthly"
+        tools:layout="@layout/fragment_detail_monthly" />
 </navigation>

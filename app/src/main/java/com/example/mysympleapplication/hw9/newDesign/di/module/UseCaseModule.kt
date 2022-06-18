@@ -44,7 +44,7 @@ class UseCaseModule {
         InsertModelNameBySpendUseCase(repo)
 
     @Provides
-    fun provideGetModelsNamesUseCase(repo: ModelsSpendsDbRepository) = GetModelsSpendsUseCase(repo)
+    fun provideGetModelsNamesUseCase(repo: ModelsSpendsDbRepository) = GetCategoryPayUseCase(repo)
 
     @Provides
     fun provideSaveBalanceUseCase(repoDb: BalanceDbRepository, repoFr: BalanceFrRepository) =

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundGreenNDColor"
+    tools:context=".hw9.newDesign.ui.DetailMonthlyFragment">
+
+    <FrameLayout
+        android:id="@+id/frame_detail_spends_nd"
+        android:layout_width="@dimen/frame_image_size"
+        android:layout_height="@dimen/frame_image_size"
+        android:layout_margin="16dp"
+        android:background="@drawable/background_rv_nd"
+        app:layout_constraintEnd_toStartOf="@+id/nameSpend"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/detail_image_spends_nd"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/icon_apteka_48"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/nameSpend"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Аптека"
+        android:textColor="@color/white"
+        android:textSize="28sp"
+        app:layout_constraintBottom_toBottomOf="@+id/frame_detail_spends_nd"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/frame_detail_spends_nd"
+        app:layout_constraintTop_toTopOf="@+id/frame_detail_spends_nd" />
+
+    <View
+        android:id="@+id/cycle_one"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="26dp"
+        android:background="@drawable/cycle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/cycle_two"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:layout_marginBottom="26dp"
+        android:background="@drawable/cycle"
+        app:layout_constraintBottom_toBottomOf="@id/cycle_one"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/cycle_one" />
+
+    <View
+        android:id="@+id/cycle_three"
+        android:layout_width="280dp"
+        android:layout_height="280dp"
+        android:layout_marginBottom="26dp"
+        android:background="@drawable/cycle"
+        app:layout_constraintBottom_toBottomOf="@id/cycle_one"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/cycle_one" />
+
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="6dp"
+        android:background="#797FC88D"
+        android:elevation="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/frame_detail_spends_nd" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/monthly_detail_Spends_rv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider"
+        tools:listitem="@layout/item_detailspend_byname" />
+</androidx.constraintlayout.widget.ConstraintLayout>

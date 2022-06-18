@@ -10,7 +10,7 @@ import com.example.mysympleapplication.R
 import com.example.mysympleapplication.hw9.Months
 import com.example.mysympleapplication.hw9.SumSpendsOfMonth
 
-class SumMonthSpendsAdapter : RecyclerView.Adapter<SumMonthSpendsAdapter.MyHolder>() {
+class SumMonthSpendsRvAdapter : RecyclerView.Adapter<SumMonthSpendsRvAdapter.MyHolder>() {
     private var monthSpendsList: MutableList<SumSpendsOfMonth?> = mutableListOf()
     lateinit var onItemClick: (String) -> Unit
 

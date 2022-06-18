@@ -4,7 +4,6 @@ import android.net.Uri
 import android.widget.ImageView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
-import com.example.mysympleapplication.R
 
 internal fun ImageView.setChatImage(uri: Uri?) {
     val progressDrawable = CircularProgressDrawable(this.context)
@@ -33,7 +32,11 @@ internal fun ImageView.setImageUrl(url: String) {
         .into(this)
 }
 
-
+internal fun ImageView.setImageByDrawable(nameImage: Int) {
+    Glide.with(this.context)
+        .load(nameImage)
+        .into(this)
+}
 //internal fun ImageView.setImageUrlByCircle(url: String) {
 //    val progressDrawable = CircularProgressDrawable(this.context)
 //    progressDrawable.strokeWidth = 15f
