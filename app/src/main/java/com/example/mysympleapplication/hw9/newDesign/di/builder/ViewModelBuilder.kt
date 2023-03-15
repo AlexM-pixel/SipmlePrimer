@@ -28,7 +28,7 @@ abstract class ViewModelBuilder {
     @Binds
     @IntoMap
     @ViewModelKey(SettingsFragmentViewModel::class)
-    abstract fun bindSettingsViewModel(viewModel: SettingsFragmentViewModel):ViewModel
+    abstract fun bindSettingsViewModel(viewModel: SettingsFragmentViewModel): ViewModel
 
     @Binds
     @IntoMap
@@ -39,6 +39,15 @@ abstract class ViewModelBuilder {
     @IntoMap
     @ViewModelKey(DetailMonthlyViewModel::class)
     abstract fun bindMDetailMonthlyViewModel(viewModel: DetailMonthlyViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(EditSpendViewModel::class)
+    abstract fun bindEditSpendViewModelViewModel(viewModel: EditSpendViewModel): ViewModel
+    @Binds
+    @IntoMap
+    @ViewModelKey(ImagesViewModel::class)
+    abstract fun bindImagesViewModel(viewModel: ImagesViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory

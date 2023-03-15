@@ -5,5 +5,6 @@ enum class UserDocuments {
     OBSERVE_FRIENDS,
     BALANCE,
     FRIENDS,
-    POSTUPLENIE
+    POSTUPLENIE,
+    DETAILS_SPEND
 }

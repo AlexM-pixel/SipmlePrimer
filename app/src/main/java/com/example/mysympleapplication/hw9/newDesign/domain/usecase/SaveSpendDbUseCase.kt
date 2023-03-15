@@ -2,7 +2,6 @@ package com.example.mysympleapplication.hw9.newDesign.domain.usecase
 
 import android.util.Log
 import com.example.mysympleapplication.hw9.newDesign.data.repositories.db_repository.SpendsDbRepository
-import com.example.mysympleapplication.hw9.newDesign.data.repositories.net_repository.FireStoreRepository
 import com.example.mysympleapplication.hw9.newDesign.domain.model.Spend
 import com.example.mysympleapplication.hw9.newDesign.utils.Resource
 import kotlinx.coroutines.flow.Flow

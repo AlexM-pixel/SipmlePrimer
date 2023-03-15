@@ -4,5 +4,5 @@ data class NameSpend(
     val id: Long?=null,
     val nameSpend: String,
     val ruName: String,
-    val imageName: String
+    var imageName: String
 )

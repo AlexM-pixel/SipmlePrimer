@@ -6,4 +6,5 @@ import javax.inject.Inject
 class GetCategoryPayUseCase @Inject constructor(private val repo: ModelsSpendsDbRepository) {
        suspend fun getModelsSpends() = repo.getAllNameSpends()
         fun getModelsSpendsUnS() = repo.getAllNameSpendsUnS()
+
 }

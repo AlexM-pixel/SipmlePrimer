@@ -51,4 +51,9 @@ class StorageModule {
     fun provideNamesSpendsDao(db: AppDataBase): NameSpendsDao {
         return db.namesSpendsDao()
     }
+    @Singleton
+    @Provides
+    fun provideDetailsDao(db: AppDataBase): DetailsSpendDao {
+        return db.detailsSpendDao()
+    }
 }

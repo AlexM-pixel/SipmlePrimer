@@ -3,6 +3,7 @@ package com.example.mysympleapplication.hw9.newDesign.data.repositories.db_repos
 import com.example.mysympleapplication.hw9.newDesign.domain.model.Spend
 import com.example.mysympleapplication.hw9.newDesign.data.db.AppDataBase
 import com.example.mysympleapplication.hw9.newDesign.data.mapper.SpendsMapper
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class SpendsDbRepositoryImpl @Inject constructor(
@@ -18,8 +19,19 @@ class SpendsDbRepositoryImpl @Inject constructor(
         return mapper.fromEntityList(db.spendDao().getMonthSpends(monthDate))
     }
 
-    override suspend fun getDetailSpendsByName(name: String, date: String): List<Spend> {
-        return mapper.fromEntityList(db.spendDao().getDetailSpendsByName(name = name, choiceDate = date))
+    override suspend fun getDetailSpendsByName(name: String, date: String): Flow<List<Spend>> {
+        return mapper.fromEntityListFlow(
+            db.spendDao().getDetailSpendsByName(name = name, choiceDate = date)
+        )
     }
+
+    override suspend fun delSpend(id: String) {
+        db.spendDao().delete(id = id)
+    }
+
+    override suspend fun getSpendById(id: String): Spend {
+        return mapper.mapFromEntity(db.spendDao().getSpend(id))
+    }
+
 
 }

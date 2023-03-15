@@ -6,5 +6,4 @@ data class Spend (
     val value: String,
     var date: String,
     var url:String?
-){
-}
+)

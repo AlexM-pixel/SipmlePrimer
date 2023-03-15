@@ -63,11 +63,10 @@ class MonthlySpendsFragment : BaseFragment() {
             adapter = myAdapter
             layoutManager = LinearLayoutManager(context)
         }
-        myAdapter.onItemClick = { name, date, image ->
+        myAdapter.onItemClick = { name, date ->
             val bundle = Bundle()
             bundle.putString(ARG_NAME_DETAIL, name)
             bundle.putString(ARG_DATE_DETAIL, date)
-            bundle.putString(ARG_IMAGE_DETAIL, image)
             findNavController().navigate(
                 R.id.action_spendsOfMonthFragment_to_detailMonthlyFragment,
                 bundle

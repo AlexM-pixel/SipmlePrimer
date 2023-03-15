@@ -5,6 +5,7 @@ import com.example.mysympleapplication.R
 import java.util.*
 
 object Config {
+    const val DEL_SPEND_DIALOG = "dialogToDeleteSpend"
     const val REQUEST_CODE = 1
     const val ALERT_DIALOG_ND = "alert_dialogNd"
     const val COUNT_ERRORS_PASSW = 3
@@ -18,7 +19,7 @@ object Config {
 }
 
 object MainPrefs : KotprefModel() {
-    var mailUser:String by stringPref()
+    var mailUser: String by stringPref()
     var firstStart: Boolean by booleanPref(default = false)
     val setBankNames by stringSetPref {
         return@stringSetPref TreeSet<String>()

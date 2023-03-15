@@ -1,7 +1,9 @@
 package com.example.mysympleapplication.hw9.newDesign.base
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.example.mysympleapplication.hw9.newDesign.utils.Config
@@ -33,5 +35,12 @@ abstract class BaseFragment : DaggerFragment() {
                 }
             }
 
+    }
+    protected fun hideKeyboard() {
+        val view = activity?.getCurrentFocus()
+        if (view != null) {
+            val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
+        }
     }
 }
