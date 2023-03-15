@@ -71,7 +71,7 @@ class EditSpendFragment : BaseFragment() {
         editViewModel.spendLiveData.observe(viewLifecycleOwner) { spend ->
             name = spend?.spendName
             titleFragment?.text = name
-            value = spend?.value   //
+            value = spend?.value   // может после получения значения запускать подщет процентов и сетить прогрессбар
             parentValueTextView?.text = "$value \nBYN"
         }
         init(view)
