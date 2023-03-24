@@ -71,7 +71,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="18dp"
-                android:text="349.07 BYN"
+                android:text="1349.07 BYN"
                 android:textColor="@color/cardview_light_background"
                 android:textSize="28sp"
                 android:textStyle="bold"

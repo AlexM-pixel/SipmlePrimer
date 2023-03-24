@@ -7,11 +7,13 @@ import com.example.mysympleapplication.hw9.newDesign.data.entity_model.SpendEnti
 import com.example.mysympleapplication.hw9.newDesign.data.repositories.db_repository.NameSpendsDbRepository
 import com.example.mysympleapplication.hw9.newDesign.domain.model.NameSpend
 import com.example.mysympleapplication.hw9.newDesign.domain.usecase.GetCategoryPayUseCase
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class SpendsMapper @Inject constructor(private val getCategoryPay: GetCategoryPayUseCase) :
     EntityMapper<SpendEntity, Spend> {
-    override fun mapFromEntity(entity: SpendEntity): Spend {
+    override fun mapFromEntity(entity: SpendEntity): Spend {  // пока не используется
         return Spend(
             id = entity.id,
             spendName = entity.spendName,
@@ -31,7 +33,7 @@ class SpendsMapper @Inject constructor(private val getCategoryPay: GetCategoryPa
         )
     }
 
-    fun susMapFromEntity(entity: SpendEntity, allNamesSpends: List<NameSpend>): Spend {
+    private fun susMapFromEntity(entity: SpendEntity, allNamesSpends: List<NameSpend>): Spend {
         return Spend(
             id = entity.id,
             spendName = entity.spendName,
@@ -45,7 +47,10 @@ class SpendsMapper @Inject constructor(private val getCategoryPay: GetCategoryPa
         for (category in listCategory) {
             if (spendName.equals(category.ruName)) {
                 //    val uri = repoFrStorage.downloadImageUrl(category.imageName)
-                Log.e("getNameImageByMapper", "categoryPay=${category.ruName}, imageName=${category.imageName}")
+                Log.e(
+                    "getNameImageByMapper",
+                    "categoryPay=${category.ruName}, imageName=${category.imageName}"
+                )
                 return category.imageName
             }
         }
@@ -56,4 +61,10 @@ class SpendsMapper @Inject constructor(private val getCategoryPay: GetCategoryPa
         val listCategory = getCategoryPay.getModelsSpends()
         return entityList.map { susMapFromEntity(it, listCategory) }
     }
+
+    suspend fun fromEntityListFlow(entityList: Flow<List<SpendEntity>>): Flow<List<Spend>> {  //  если дао возвращает Flow
+        val listCategory = getCategoryPay.getModelsSpends()
+        return entityList.map { it -> it.map { susMapFromEntity(it, listCategory) } }
+    }
+
 }

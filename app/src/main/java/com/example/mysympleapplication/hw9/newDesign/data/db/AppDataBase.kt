@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 
 @Database(
     entities = [UserEntity::class, SpendEntity::class, PostuplenieEntity::class, BalanceEntity::class,
-        FriendsSpendsEntity::class, FriendsBalanceEntity::class, FriendsPostuplenieEntity::class,NameSpendsEntity::class],
+        FriendsSpendsEntity::class, FriendsBalanceEntity::class, FriendsPostuplenieEntity::class,NameSpendsEntity::class,DetailsSpendEntity::class],
     version = 1
 )
 abstract class AppDataBase : RoomDatabase() {
@@ -27,6 +27,7 @@ abstract class AppDataBase : RoomDatabase() {
     abstract fun balanceDao(): BalanceDao
     abstract fun friendsDao(): FriendsDao
     abstract fun namesSpendsDao():NameSpendsDao
+    abstract fun detailsSpendDao():DetailsSpendDao
 
     companion object {
         const val DB_NAME = "my_expenses.db"

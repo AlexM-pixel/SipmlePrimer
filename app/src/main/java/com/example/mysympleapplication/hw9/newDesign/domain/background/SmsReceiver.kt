@@ -43,7 +43,7 @@ class SmsReceiver : BroadcastReceiver() {
             if (extras != null) {
                 val results = RemoteInput.getResultsFromIntent(intent)
                 val value = extras.getString(EXTRA_BODY)
-                val nameSpendText = results.getCharSequence(NAME_UNKNOWN_PAY)
+                val nameSpendText = results?.getCharSequence(NAME_UNKNOWN_PAY)
                 // val from = extras.getString(EXTRA_FROM)
                 val idNotification =
                     extras.getInt(NOTIFICATION_ID)  // нуже чтобы после сохранения изменить нотификащку на платеж сохранен

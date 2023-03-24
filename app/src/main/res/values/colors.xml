@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorPrimaryDark">#55A364</color>
     <color name="colorAccent">#BC6FCF97</color>
     <color name="colorGreen">#AFB42B</color>
     <color name="colorGrafik_fon">#900097A7</color>
@@ -23,5 +23,9 @@
     <color name="text_colorND">#837777</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-
+    <color name="green_cycle">#3D5FB670</color>
+    <color name="pink_cycle">#3DE91E63</color>
+    <color name="blue_cycle">#3D03A9F4</color>
+    <color name="orange_cycle">#3DFF9800</color>
+    <color name="bright_foreground_light">#ffff</color>
 </resources>

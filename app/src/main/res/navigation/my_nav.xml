@@ -64,11 +64,38 @@
         tools:layout="@layout/fragment_spends_of_mounth" >
         <action
             android:id="@+id/action_spendsOfMonthFragment_to_detailMonthlyFragment"
-            app:destination="@id/detailMonthlyFragment" />
+            app:destination="@id/detailMonthlyFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/detailMonthlyFragment"
         android:name="com.example.mysympleapplication.hw9.newDesign.ui.DetailMonthlyFragment"
         android:label="fragment_detail_monthly"
-        tools:layout="@layout/fragment_detail_monthly" />
+        tools:layout="@layout/fragment_detail_monthly" >
+        <action
+            android:id="@+id/action_detailMonthlyFragment_to_editSpendFragment"
+            app:destination="@id/editSpendFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
+        <action
+            android:id="@+id/action_detailMonthlyFragment_to_imagesFragment"
+            app:destination="@id/imagesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editSpendFragment"
+        android:name="com.example.mysympleapplication.hw9.newDesign.ui.EditSpendFragment"
+        android:label="fragment_edit_spend"
+        tools:layout="@layout/fragment_edit_spend" >
+        <action
+            android:id="@+id/action_editSpendFragment_to_imagesFragment"
+            app:destination="@id/imagesFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/imagesFragment"
+        android:name="com.example.mysympleapplication.hw9.newDesign.ui.ImagesFragment"
+        android:label="fragment_images"
+        tools:layout="@layout/fragment_images" />
 </navigation>

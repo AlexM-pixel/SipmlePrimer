@@ -11,29 +11,33 @@ import com.example.mysympleapplication.hw9.SumSpendsOfMonth
 import com.example.mysympleapplication.hw9.newDesign.data.entity_model.CalendarSpendsEntity
 import com.example.mysympleapplication.hw9.newDesign.data.entity_model.SpendEntity
 import com.example.mysympleapplication.hw9.newDesign.data.entity_model.SumSpendsOfMonthEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface SpendDao {
     @Insert
-  suspend fun insert(spend: SpendEntity)
+    suspend fun insert(spend: SpendEntity)
 
     @Insert
-   suspend fun insertAllSpends(spendList: List<SpendEntity>)
+    suspend fun insertAllSpends(spendList: List<SpendEntity>)
 
     @Query("SELECT * FROM spends")
-  suspend  fun getAllSpends(): List<SpendEntity>
+    suspend fun getAllSpends(): List<SpendEntity>
+
+    @Query("SELECT * FROM spends WHERE id= :id")
+    suspend fun getSpend(id: String?): SpendEntity
 
     @Update
     fun update(spend: SpendEntity)
 
     @Query("DELETE FROM spends WHERE id= :id")
-    fun delete(id: String?)
+    suspend fun delete(id: String?)
 
     @Query("SELECT id, value , date, spendName FROM spends WHERE strftime(\"%m-%Y\", date)=strftime(\"%m-%Y\",:choiceDate) AND spendName= :name ORDER BY date DESC")
-    suspend fun getDetailSpendsByName(name: String?,choiceDate: String?): List<SpendEntity>
+    fun getDetailSpendsByName(name: String?, choiceDate: String?): Flow<List<SpendEntity>>
 
     @Query("SELECT SUM(value) as value_spends,strftime(\"%m-%Y\", date) as dateM FROM spends GROUP BY strftime(\"%m-%Y\", date) ORDER BY date DESC")
-   suspend fun getSumMonth(): List<SumSpendsOfMonthEntity>
+    suspend fun getSumMonth(): List<SumSpendsOfMonthEntity>
 
     @Query("SELECT id, SUM(value) as value, date, spendName FROM spends WHERE strftime(\"%m-%Y\", date)=strftime( :choiceDate) GROUP BY spendName ORDER BY date DESC")
     suspend fun getMonthSpends(choiceDate: String): List<SpendEntity>

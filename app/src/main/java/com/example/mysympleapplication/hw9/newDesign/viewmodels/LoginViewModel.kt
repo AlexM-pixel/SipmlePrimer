@@ -47,7 +47,7 @@ class LoginViewModel @Inject constructor(
                 }
                 is Result.Error -> {
                     if (CheckErrorAuthFirebase().checkLogInError(result.error)
-                            .equals("не верный пароль !")
+                            .equals("неверный пароль !")
                     ) countErrors++
                     _liveDataCount.value = countErrors
                     _stateLiveData.value = State.ERROR

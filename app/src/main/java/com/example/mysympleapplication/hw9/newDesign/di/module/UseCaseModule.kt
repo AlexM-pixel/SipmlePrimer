@@ -57,5 +57,12 @@ class UseCaseModule {
     ) = SavePostuplenieUseCase(repoDb, repoFr)
 
     @Provides
-    fun provideGetMonthlySpendsUseCase(repo:SpendsDbRepository)=GetMonthlySpendsUseCase(repo)
+    fun provideGetMonthlySpendsUseCase(repo: SpendsDbRepository) = GetMonthlySpendsUseCase(repo)
+
+    @Provides
+    fun provideGetDetailsSpendUseCase(repo: DetailsSpendDbRepository) =
+        GetDetailsFlowUseCase(repo)
+//    @Provides
+//    fun provideDelDetailsSpendUseCase(repo: DetailsSpendDbRepository) =
+
 }

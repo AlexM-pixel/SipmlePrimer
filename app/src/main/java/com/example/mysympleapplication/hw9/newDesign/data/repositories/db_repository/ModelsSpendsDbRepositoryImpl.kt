@@ -13,11 +13,15 @@ class ModelsSpendsDbRepositoryImpl @Inject constructor(
         db.namesSpendsDao().insertNameSpend(mapper.mapToEntity(nameSpends))
     }
 
-    override suspend fun getAllNameSpends(): List<NameSpend> {
+    override suspend fun updateNameSpend(nameSpend: NameSpend) {
+        db.namesSpendsDao().updateNameSpend(mapper.mapToEntity(nameSpend))
+    }
+
+    override suspend fun getAllNameSpends(): List<NameSpend> {      //  нужен для получения картинки определенной категории при получении списка спендов
         return mapper.fromEntityList(db.namesSpendsDao().getAllNamesSpends())
     }
 
-    override fun getAllNameSpendsUnS(): List<NameSpend> {
+    override fun getAllNameSpendsUnS(): List<NameSpend> {     //вызываю из сервиса для присвоения спенду категории во время сохранения
         return mapper.fromEntityList(db.namesSpendsDao().getAllNamesNoSuspendSpends())
     }
 

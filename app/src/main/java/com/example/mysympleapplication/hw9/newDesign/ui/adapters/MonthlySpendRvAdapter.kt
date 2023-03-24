@@ -13,7 +13,7 @@ import com.example.mysympleapplication.hw9.newDesign.domain.model.Spend
 
 class MonthlySpendRvAdapter :
     RecyclerView.Adapter<MonthlySpendRvAdapter.MyViewHolder>() {
-    lateinit var onItemClick: (nameSpend: String, date: String,image:String?) -> Unit
+    lateinit var onItemClick: (nameSpend: String, date: String) -> Unit
     private var list: MutableList<Spend> = mutableListOf()
 
     inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -27,7 +27,7 @@ class MonthlySpendRvAdapter :
             dateTextView.text = spend.date
             valueTextView.text = spend.value
             imageSpend.setImageByDrawable(image)
-            itemView.setOnClickListener { onItemClick.invoke(spend.spendName, spend.date,spend.url) }
+            itemView.setOnClickListener { onItemClick.invoke(spend.spendName, spend.date)}
         }
     }
 

@@ -99,7 +99,26 @@ class RepositoryModule {
     }
 
     @Provides
-    fun providePostuplenieFrRepository(fr: FirebaseFirestore,mapper: PostuplenieMapper): PostuplenieFrRepository {
-        return PostuplenieFrRepoImpl(fr = fr,mapper)
+    fun providePostuplenieFrRepository(
+        fr: FirebaseFirestore,
+        mapper: PostuplenieMapper
+    ): PostuplenieFrRepository {
+        return PostuplenieFrRepoImpl(fr = fr, mapper)
+    }
+
+    @Provides
+    fun provideDetailsSpendDbRepository(
+        db: AppDataBase,
+        mapper: DetailsSpendMapper
+    ): DetailsSpendDbRepository {
+        return DetailsSpendDbRepositoryImpl(db = db, mapper = mapper)
+    }
+
+    @Provides
+    fun provideDetailsSpendFrRepository(
+        fr: FirebaseFirestore,
+        mapper: DetailsSpendMapper
+    ): DetailsSpendFrRepository {
+        return DetailsSpendFrRepositoryImpl(fr = fr, mapper)
     }
 }

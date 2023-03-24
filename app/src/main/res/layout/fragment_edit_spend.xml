@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".hw9.newDesign.ui.EditSpendFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:background="@drawable/background_bottom_radius_nd"
+        android:elevation="8dp">
+
+        <ImageButton
+            android:id="@+id/btn_back_from_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/ic_backspace_24"
+            android:padding="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/title_editSpend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="18dp"
+            android:layout_marginBottom="8dp"
+            android:text="Аптека"
+            android:textColor="@color/white"
+            android:textSize="28sp"
+            app:layout_constraintBottom_toTopOf="@+id/card_editFragment"
+            app:layout_constraintEnd_toStartOf="@+id/cycle_three"
+            app:layout_constraintStart_toEndOf="@+id/btn_back_from_edit"
+            app:layout_constraintTop_toTopOf="@+id/btn_back_from_edit" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_editFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginBottom="18dp"
+            app:cardCornerRadius="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <FrameLayout
+                    android:id="@+id/frame_image_user"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/background_rv_nd"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/edit_image_spends_nd"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/icon_apteka_48"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/title_text_editSpend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="0.0 BYN"
+                    android:textColor="@color/text_colorND"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toTopOf="@+id/progressBar_editFragment"
+                    app:layout_constraintStart_toEndOf="@+id/frame_image_user"
+                    app:layout_constraintTop_toTopOf="@+id/frame_image_user" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar_editFragment"
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="36dp"
+                    android:progress="30"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/value_editFragment"
+                    app:layout_constraintStart_toStartOf="@+id/title_text_editSpend"
+                    app:layout_constraintTop_toBottomOf="@+id/title_text_editSpend" />
+
+                <TextView
+                    android:id="@+id/text_percents_progressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="0 %"
+                    android:textColor="@color/text_colorND"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/title_text_editSpend"
+                    app:layout_constraintEnd_toEndOf="@+id/progressBar_editFragment"
+                    app:layout_constraintTop_toTopOf="@+id/title_text_editSpend" />
+
+                <TextView
+                    android:id="@+id/value_editFragment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:gravity="center_horizontal"
+                    android:text="234.34 \nBYN"
+                    android:textColor="@color/backgroundGreenNDColor"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <View
+            android:id="@+id/cycle_one"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginBottom="26dp"
+            android:background="@drawable/cycle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/cycle_two"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            android:layout_marginBottom="26dp"
+            android:background="@drawable/cycle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/cycle_three"
+            android:layout_width="280dp"
+            android:layout_height="280dp"
+            android:layout_marginBottom="26dp"
+            android:background="@drawable/cycle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/title_description_adding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="Добавьте описание покупки :"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="18sp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout_name"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:expandedHintEnabled="false"
+        app:hintEnabled="true"
+        android:layout_margin="8dp"
+        android:hint="название:">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textInput_EditText_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="например:  шоколадка" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout_value"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:expandedHintEnabled="false"
+        app:hintEnabled="true"
+        android:layout_margin="8dp"
+        android:hint="сумма:">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textInput_EditText_value"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="numberDecimal"
+            android:hint="15.23 BYN" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/btn_save_editFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@drawable/background_btn_nd"
+        android:text="Добавить" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/gradient_bg"
+        android:elevation="1dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_edit_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

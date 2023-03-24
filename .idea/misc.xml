@@ -4,37 +4,61 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable-mdpi/cycle.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable-mdpi/gradient_bg.xml" value="0.3385" />
         <entry key="app/src/main/res/drawable-mdpi/toggle_button_def.xml" value="0.112" />
         <entry key="app/src/main/res/drawable-mdpi/toggle_button_orange.xml" value="0.1" />
         <entry key="app/src/main/res/drawable-v24/background_base_button.xml" value="0.1715" />
+        <entry key="app/src/main/res/drawable-v24/color_cycle.xml" value="0.3805" />
+        <entry key="app/src/main/res/drawable-v24/shadow.xml" value="0.423" />
         <entry key="app/src/main/res/drawable-xxhdpi/background_bottomRadius_nd.xml" value="0.1715" />
+        <entry key="app/src/main/res/drawable-xxhdpi/background_card_nd.xml" value="0.279" />
         <entry key="app/src/main/res/drawable/background_bottom_radius_nd.xml" value="0.2875" />
         <entry key="app/src/main/res/drawable/background_btn_nd.xml" value="0.1545" />
+        <entry key="app/src/main/res/drawable/background_card_nd.xml" value="0.3295" />
         <entry key="app/src/main/res/drawable/background_nd_edit.xml" value="0.1545" />
         <entry key="app/src/main/res/drawable/background_rv_nd.xml" value="0.1545" />
         <entry key="app/src/main/res/drawable/corners.xml" value="0.1715" />
+        <entry key="app/src/main/res/drawable/cycle_colorful.xml" value="0.125" />
+        <entry key="app/src/main/res/drawable/delete_forever_black_24dp.xml" value="0.3385" />
+        <entry key="app/src/main/res/drawable/frame.xml" value="0.309" />
+        <entry key="app/src/main/res/drawable/gradient_bg.xml" value="0.2955" />
         <entry key="app/src/main/res/drawable/ic_keyboard_arrow_right_24dp.xml" value="0.3675" />
         <entry key="app/src/main/res/drawable/ic_settings_24.xml" value="0.2305" />
         <entry key="app/src/main/res/drawable/ic_turned_in_not_black_24dp.xml" value="0.2305" />
+        <entry key="app/src/main/res/drawable/login_bg_def.xml" value="0.3295" />
         <entry key="app/src/main/res/drawable/login_bg_orange.xml" value="0.1715" />
+        <entry key="app/src/main/res/drawable/my_button_bg_nd.xml" value="0.3385" />
         <entry key="app/src/main/res/drawable/radius.xml" value="0.1715" />
         <entry key="app/src/main/res/drawable/radius2.xml" value="0.1715" />
+        <entry key="app/src/main/res/drawable/shadow.xml" value="0.3295" />
         <entry key="app/src/main/res/layout/activity_detail.xml" value="0.2222222222222222" />
         <entry key="app/src/main/res/layout/activity_detail_month.xml" value="0.4244791666666667" />
+        <entry key="app/src/main/res/layout/card_view_general_month.xml" value="0.4244791666666667" />
         <entry key="app/src/main/res/layout/card_view_mounth_spends.xml" value="0.4244791666666667" />
+        <entry key="app/src/main/res/layout/dialog_email.xml" value="0.41794871794871796" />
         <entry key="app/src/main/res/layout/fragment_bottom_nav.xml" value="0.4119791666666667" />
         <entry key="app/src/main/res/layout/fragment_detail_monthly.xml" value="0.4244791666666667" />
+        <entry key="app/src/main/res/layout/fragment_edit_spend.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/fragment_general_expenses.xml" value="0.4244791666666667" />
         <entry key="app/src/main/res/layout/fragment_home_nd.xml" value="0.35688405797101447" />
+        <entry key="app/src/main/res/layout/fragment_images.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.2671875" />
         <entry key="app/src/main/res/layout/fragment_registration.xml" value="0.4119791666666667" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.165" />
         <entry key="app/src/main/res/layout/fragment_settings_nd.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_spends_of_mounth.xml" value="0.4244791666666667" />
         <entry key="app/src/main/res/layout/fragment_splash.xml" value="0.20035460992907803" />
-        <entry key="app/src/main/res/layout/item_detailspend_byname.xml" value="0.45" />
+        <entry key="app/src/main/res/layout/fragment_statistics_nd.xml" value="0.4244791666666667" />
+        <entry key="app/src/main/res/layout/item_detail_byname.xml" value="0.351129363449692" />
+        <entry key="app/src/main/res/layout/item_details_inFragmentEdit.xml" value="0.3463541666666667" />
+        <entry key="app/src/main/res/layout/item_details_in_fragment_monthly.xml" value="0.4244791666666667" />
+        <entry key="app/src/main/res/layout/item_detailspend_byname.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/item_empty_detail_spend.xml" value="0.4244791666666667" />
+        <entry key="app/src/main/res/layout/item_image.xml" value="0.4234375" />
         <entry key="app/src/main/res/layout/item_monthly_spends.xml" value="0.5" />
         <entry key="app/src/main/res/layout/item_spends.xml" value="0.1" />
         <entry key="app/src/main/res/layout/item_viewpager.xml" value="0.4119791666666667" />
+        <entry key="app/src/main/res/layout/save_values.xml" value="0.4244791666666667" />
       </map>
     </option>
   </component>

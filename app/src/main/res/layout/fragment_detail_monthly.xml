@@ -5,8 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundGreenNDColor"
-    tools:context=".hw9.newDesign.ui.DetailMonthlyFragment">
+    tools:context=".hw9.newDesign.ui.DetailMonthlyFragment"
+    >
 
     <FrameLayout
         android:id="@+id/frame_detail_spends_nd"
@@ -14,7 +14,6 @@
         android:layout_height="@dimen/frame_image_size"
         android:layout_margin="16dp"
         android:background="@drawable/background_rv_nd"
-        app:layout_constraintEnd_toStartOf="@+id/nameSpend"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -32,12 +31,13 @@
         android:id="@+id/nameSpend"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:text="Аптека"
-        android:textColor="@color/white"
         android:textSize="28sp"
+        android:gravity="center_horizontal"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/frame_detail_spends_nd"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/cycle_three"
         app:layout_constraintStart_toEndOf="@+id/frame_detail_spends_nd"
         app:layout_constraintTop_toTopOf="@+id/frame_detail_spends_nd" />
 
@@ -46,7 +46,7 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginBottom="26dp"
-        android:background="@drawable/cycle"
+        android:background="@drawable/cycle_colorful"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -56,7 +56,7 @@
         android:layout_width="180dp"
         android:layout_height="180dp"
         android:layout_marginBottom="26dp"
-        android:background="@drawable/cycle"
+        android:background="@drawable/cycle_colorful"
         app:layout_constraintBottom_toBottomOf="@id/cycle_one"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="parent"
@@ -67,7 +67,7 @@
         android:layout_width="280dp"
         android:layout_height="280dp"
         android:layout_marginBottom="26dp"
-        android:background="@drawable/cycle"
+        android:background="@drawable/cycle_colorful"
         app:layout_constraintBottom_toBottomOf="@id/cycle_one"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="parent"
@@ -80,13 +80,26 @@
         android:layout_marginTop="6dp"
         android:background="#797FC88D"
         android:elevation="8dp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frame_detail_spends_nd" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/monthly_detail_Spends_rv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider"
-        tools:listitem="@layout/item_detailspend_byname" />
+        tools:listitem="@layout/item_detail_byname" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_value_by_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_add_24"
+        app:backgroundTint="@color/colorPrimaryDark"
+        android:backgroundTint="@color/design_default_color_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

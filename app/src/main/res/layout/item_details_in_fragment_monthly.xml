@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/itemDetailByName_cardView_nd"
+    android:layout_width="match_parent"
+    android:background="@drawable/frame"
+    android:layout_height="wrap_content"
+    android:elevation="6dp"
+    android:layout_margin="4dp"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/name_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="сосиски сосискисосискисосискисоссосиски"
+        android:textColor="@color/text_colorND"
+        android:layout_weight="1"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:layout_margin="8dp"
+        />
+    <TextView
+        android:id="@+id/value_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="11124.12 byn"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:textColor="@color/text_colorND"
+        android:textSize="18sp"
+        android:layout_margin="8dp"
+        />
+</LinearLayout>
