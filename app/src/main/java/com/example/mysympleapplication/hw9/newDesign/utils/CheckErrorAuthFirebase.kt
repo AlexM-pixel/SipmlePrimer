@@ -28,7 +28,7 @@ class CheckErrorAuthFirebase {
 
     fun checkResetPassByMailError(e: Exception): String {
         if (e.message!!.contains("The email address is badly formatted")) {
-            return "Не корректный email"
+            return "Некорректный email"
         }
         return e.message.toString()
     }

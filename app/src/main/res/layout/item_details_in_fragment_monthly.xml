@@ -4,17 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/itemDetailByName_cardView_nd"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     android:background="@drawable/frame"
-    android:padding="8dp"
-    android:layout_margin="2dp"
+    android:layout_height="wrap_content"
+    android:elevation="6dp"
+    android:layout_margin="4dp"
     android:orientation="horizontal">
 
     <TextView
         android:id="@+id/name_description"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="сосиски"
+        android:text="сосиски сосискисосискисосискисоссосиски"
         android:textColor="@color/text_colorND"
         android:layout_weight="1"
         android:textSize="18sp"
@@ -25,7 +25,7 @@
         android:id="@+id/value_description"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="24.12 byn"
+        android:text="11124.12 byn"
         android:layout_weight="1"
         android:gravity="center"
         android:layout_gravity="center"
@@ -33,14 +33,4 @@
         android:textSize="18sp"
         android:layout_margin="8dp"
         />
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/btn_del_detailSpend_nd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:padding="6dp"
-        android:layout_gravity="center"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:src="@drawable/ic_delete_outline_24"
-       />
 </LinearLayout>

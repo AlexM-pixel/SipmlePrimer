@@ -9,10 +9,7 @@ import com.example.mysympleapplication.hw9.newDesign.domain.model.DetailsSpend
 import com.example.mysympleapplication.hw9.newDesign.domain.model.NameSpend
 import com.example.mysympleapplication.hw9.newDesign.domain.model.Spend
 import com.example.mysympleapplication.hw9.newDesign.domain.model.State
-import com.example.mysympleapplication.hw9.newDesign.domain.usecase.GetCategoriesUseCase
-import com.example.mysympleapplication.hw9.newDesign.domain.usecase.GetDetailsFlowUseCase
-import com.example.mysympleapplication.hw9.newDesign.domain.usecase.GetSpendByIdUseCase
-import com.example.mysympleapplication.hw9.newDesign.domain.usecase.InsertDetailsSpendUseCase
+import com.example.mysympleapplication.hw9.newDesign.domain.usecase.*
 import com.example.mysympleapplication.hw9.newDesign.utils.Config.DEF_SPEND_NAME
 import com.example.mysympleapplication.hw9.newDesign.utils.MainPrefs
 import com.example.mysympleapplication.hw9.newDesign.utils.Resource
@@ -28,7 +25,8 @@ class EditSpendViewModel @Inject constructor(
     private val insertDetails: InsertDetailsSpendUseCase,
     private val getDetailsUseCase: GetDetailsFlowUseCase,
     private val getCategoryUseCase: GetCategoriesUseCase,
-    private val getSpendByIdUseCase: GetSpendByIdUseCase
+    private val getSpendByIdUseCase: GetSpendByIdUseCase,
+    private val delDetailsSpendUseCase: DelDetailsSpendUseCase
 ) :
     ViewModel() {
     private val _stateLiveData = MutableLiveData<State>()
@@ -122,6 +120,26 @@ class EditSpendViewModel @Inject constructor(
             }
         }.launchIn(viewModelScope)
     }
-}   // оставить в бандле только id остальное брать со спенда с этого метода(повесить слушателя на лайвдату) Сделано!!!
+
+    fun deleteDetails(id: Long) {
+        Log.e("deleteDetails", "This is deleteDetailsBYSpend")
+        delDetailsSpendUseCase(id = id, mail = MainPrefs.mailUser).onEach {
+            when (it) {
+                is Resource.Loading -> {
+                    _stateLiveData.value = State.LOADING
+                }
+                is Resource.Success -> {
+                    _stateLiveData.value = State.SUCCESS
+                    Log.e("deleteDetails", "Delete Details Success")
+                }
+                is Resource.Error -> {
+                    _stateLiveData.value = State.ERROR
+                    Log.e("deleteDetails", "Error: ${it.message}")
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+
+}
 
 

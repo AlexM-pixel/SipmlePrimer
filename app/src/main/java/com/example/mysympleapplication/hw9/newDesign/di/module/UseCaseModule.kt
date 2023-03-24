@@ -62,4 +62,7 @@ class UseCaseModule {
     @Provides
     fun provideGetDetailsSpendUseCase(repo: DetailsSpendDbRepository) =
         GetDetailsFlowUseCase(repo)
+//    @Provides
+//    fun provideDelDetailsSpendUseCase(repo: DetailsSpendDbRepository) =
+
 }

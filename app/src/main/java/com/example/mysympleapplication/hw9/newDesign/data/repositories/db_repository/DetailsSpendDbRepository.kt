@@ -7,4 +7,5 @@ interface DetailsSpendDbRepository {
     suspend fun getDetailsListFlow(id:Long): Flow<List<DetailsSpend>>
     suspend fun getAllDetails(): List<DetailsSpend>
     suspend fun insertDetail(detailsSpend: DetailsSpend)
+    suspend fun delDetails(id: Long)
 }

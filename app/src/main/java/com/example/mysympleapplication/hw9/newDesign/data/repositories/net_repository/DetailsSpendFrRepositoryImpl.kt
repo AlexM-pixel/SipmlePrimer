@@ -7,7 +7,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
-class DetailsSpendFrRepositoryImpl @Inject constructor(private val fr: FirebaseFirestore, private val mapper: DetailsSpendMapper):DetailsSpendFrRepository {
+class DetailsSpendFrRepositoryImpl @Inject constructor(
+    private val fr: FirebaseFirestore,
+    private val mapper: DetailsSpendMapper
+) : DetailsSpendFrRepository {
     override suspend fun saveDetailsSpend(mail: String, detailsSpend: DetailsSpend) {
         fr
             .collection(mail)
@@ -27,5 +30,15 @@ class DetailsSpendFrRepositoryImpl @Inject constructor(private val fr: FirebaseF
             .get()
             .await()
         return snapshot.toObjects(DetailsSpend::class.java)
+    }
+
+    override suspend fun delDetailsSpend(mail: String, id: String) {
+        fr
+            .collection(mail)
+            .document(UserDocuments.DETAILS_SPEND.name)
+            .collection(UserDocuments.DETAILS_SPEND.name)
+            .document(id)
+            .delete()
+            .await()
     }
 }

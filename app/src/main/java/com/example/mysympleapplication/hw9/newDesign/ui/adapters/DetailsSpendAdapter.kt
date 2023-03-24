@@ -40,7 +40,7 @@ class DetailsSpendAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerV
             1 -> {
                 MyVewHolder(
                     LayoutInflater.from(parent.context)
-                        .inflate(R.layout.item_detailspend_byname, parent, false)
+                        .inflate(R.layout.item_details_in_fragment_monthly, parent, false)
                 )
             }
             else -> throw ClassCastException("Unknown viewType ${viewType}")

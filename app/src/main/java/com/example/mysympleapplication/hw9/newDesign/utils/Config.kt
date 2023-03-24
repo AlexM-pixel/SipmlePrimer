@@ -6,6 +6,7 @@ import java.util.*
 
 object Config {
     const val DEL_SPEND_DIALOG = "dialogToDeleteSpend"
+    const val DEL_DETAILS_DIALOG = "dialogToDeleteDetailsSpend"
     const val REQUEST_CODE = 1
     const val ALERT_DIALOG_ND = "alert_dialogNd"
     const val COUNT_ERRORS_PASSW = 3

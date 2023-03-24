@@ -21,6 +21,8 @@ import com.example.mysympleapplication.hw9.newDesign.di.builder.ViewModelFactory
 import com.example.mysympleapplication.hw9.newDesign.domain.model.Images
 import com.example.mysympleapplication.hw9.newDesign.domain.model.State
 import com.example.mysympleapplication.hw9.newDesign.ui.adapters.EditRvAdapter
+import com.example.mysympleapplication.hw9.newDesign.ui.dialogues.DeleteDetailsDialog
+import com.example.mysympleapplication.hw9.newDesign.utils.Config
 import com.example.mysympleapplication.hw9.newDesign.viewmodels.EditSpendViewModel
 import javax.inject.Inject
 import kotlin.math.roundToInt
@@ -46,6 +48,7 @@ class EditSpendFragment : BaseFragment() {
     private var value: String? = "Empty"
     private var idKey: Long? = null
     var progr = 0
+    var detailsValue = 0f
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,7 +74,8 @@ class EditSpendFragment : BaseFragment() {
         editViewModel.spendLiveData.observe(viewLifecycleOwner) { spend ->
             name = spend?.spendName
             titleFragment?.text = name
-            value = spend?.value   // может после получения значения запускать подщет процентов и сетить прогрессбар
+            value =
+                spend?.value   // может после получения значения запускать подщет процентов и сетить прогрессбар
             parentValueTextView?.text = "$value \nBYN"
         }
         init(view)
@@ -132,6 +136,19 @@ class EditSpendFragment : BaseFragment() {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = editAdapter
         }
+        editAdapter.onDeleteClick = { idDetails ->
+            val fragmentDialog = DeleteDetailsDialog()
+            if (!fragmentDialog.isAdded) {
+                val bundle = Bundle()
+                bundle.putLong(Config.DEL_DETAILS_DIALOG, idDetails)
+                fragmentDialog.arguments = bundle
+            }
+            requireActivity().supportFragmentManager.let {
+                if (!fragmentDialog.isAdded) {
+                    fragmentDialog.show(it, "dialog_list")
+                }
+            }
+        }
     }
 
     private fun setListeners() {
@@ -169,19 +186,37 @@ class EditSpendFragment : BaseFragment() {
     private fun setProgressBar(actualValue: Float) {
         val percents: Int = (actualValue / (value?.toFloat() ?: 0f) * 100).roundToInt()
         progressBar?.max = 100
-        mHandler =
-            object : Handler(Looper.getMainLooper()) {
-                @SuppressLint("SetTextI18n")
-                override fun handleMessage(msg: Message) {
-                    super.handleMessage(msg)
-                    if (progr < percents) {
-                        progr += 1
-                        progressBar?.progress = progr
-                        progressByValue?.text = "$progr%"
-                        mHandler?.sendEmptyMessageDelayed(0, 3)
+        if (actualValue < detailsValue) {
+            mHandler =
+                object : Handler(Looper.getMainLooper()) {
+                    @SuppressLint("SetTextI18n")
+                    override fun handleMessage(msg: Message) {
+                        super.handleMessage(msg)
+                        if (progr > percents) {
+                            progr -= 1
+                            progressBar?.progress = progr
+                            progressByValue?.text = "$progr%"
+                            mHandler?.sendEmptyMessageDelayed(0, 3)
+                        }
                     }
                 }
-            }
-        (mHandler as Handler).sendEmptyMessage(0)
+            (mHandler as Handler).sendEmptyMessage(0)
+        } else {
+            mHandler =
+                object : Handler(Looper.getMainLooper()) {
+                    @SuppressLint("SetTextI18n")
+                    override fun handleMessage(msg: Message) {
+                        super.handleMessage(msg)
+                        if (progr < percents) {
+                            progr += 1
+                            progressBar?.progress = progr
+                            progressByValue?.text = "$progr%"
+                            mHandler?.sendEmptyMessageDelayed(0, 3)
+                        }
+                    }
+                }
+            (mHandler as Handler).sendEmptyMessage(0)
+        }
+        detailsValue = actualValue
     }
 }

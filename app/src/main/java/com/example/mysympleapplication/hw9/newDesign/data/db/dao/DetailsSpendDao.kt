@@ -16,5 +16,8 @@ interface DetailsSpendDao {
     fun getDetailsBySpendFlow(idSpend: Long): Flow<List<DetailsSpendEntity>>
 
     @Query("SELECT * FROM detailsSpend")
-  suspend  fun getAllDetails():List<DetailsSpendEntity>
+    suspend fun getAllDetails(): List<DetailsSpendEntity>
+
+    @Query("DELETE FROM detailsSpend WHERE id= :id")
+    suspend fun delDetail(id: Long)
 }

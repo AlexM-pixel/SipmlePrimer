@@ -21,4 +21,9 @@ class DetailsSpendDbRepositoryImpl @Inject constructor(
     override suspend fun insertDetail(detailsSpend: DetailsSpend) {
         db.detailsSpendDao().insertDetailBySpend(mapper.mapToEntity(detailsSpend))
     }
+
+    override suspend fun delDetails(id: Long) {
+        db.detailsSpendDao().delDetail(id = id)
+    }
+
 }
