@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.viewModels
@@ -54,16 +55,45 @@ class HomeFragment : BaseFragment() {
             myAdapter.setMonthList(it)
         }
         viewModel.balanceLiveData.observe(viewLifecycleOwner) {
-            balanceTitle?.text = "${it?.balance} BYN"
+            balanceTitle?.text = it?.balance
         }
     }
 
     private fun setViewPager(view: View) {
         val viewPager2 = view.findViewById<ViewPager2>(R.id.viewPager_home)
-        viewPager2.adapter = ViewPagerAdapter()
+        val viewPagerAdapter = ViewPagerAdapter()
+        viewPager2.adapter = viewPagerAdapter
         val transformerSideMargin =
             pixelToDp(requireActivity(), resources.getDimension(R.dimen.cardView_margin) * 2)
         viewPager2.setShowSideItems(transformerSideMargin, transformerSideMargin)
+        viewPager2.setCurrentItem(1, false)
+        viewPagerAdapter.onButtonClick = { position ->
+            when (position) {
+                0 -> {
+                    Toast.makeText(
+                        requireContext(),
+                        "Посмотрите отчёт за эту неделю",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                1 -> {
+                    startAddingManualFragment()
+                }
+                2 -> {
+                    Toast.makeText(
+                        requireContext(),
+                        "Воспользуйтесь нашим калькулятором с удобным ковертором",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                3 -> {
+                    Toast.makeText(requireContext(), "Всего вы потратили", Toast.LENGTH_SHORT)
+                        .show()
+                }
+                else -> Toast.makeText(requireContext(), "Error item position", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
     }
 
     private fun initView(view: View) {
@@ -128,5 +158,12 @@ class HomeFragment : BaseFragment() {
     fun pixelToDp(context: Context, pixelValue: Float): Int {
         val scale: Float = context.resources.displayMetrics.density
         return (pixelValue / scale + 0.5f).toInt()
+    }
+
+    private fun startAddingManualFragment() {
+        val bundle = Bundle()
+        val balance = balanceTitle?.text.toString()
+        bundle.putFloat(ARG_BALANCE, balance.toFloatOrNull() ?: 0f)
+        findNavController().navigate(R.id.action_global_addManualSpendFragment, bundle)
     }
 }

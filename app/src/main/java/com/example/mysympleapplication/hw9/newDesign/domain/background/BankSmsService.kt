@@ -80,7 +80,7 @@ class BankSmsService : IntentService("BankSmsService") {
                     handleActionSms(body = bodySms.lowercase(), name = nameAddresses)
                 }
             }
-            ACTION_NOTIFICATION -> {
+            ACTION_NOTIFICATION -> {    // проследить откуда приходит и если незнакомый платеж придумать как сохранять
                 val namePay = intent.getStringExtra(NAME_UNKNOWN_PAY)
                 val body = intent.getStringExtra(SMS_BODY)
                 val idNotification = intent.getIntExtra(NOTIFICATION_ID, 0)
@@ -174,6 +174,8 @@ class BankSmsService : IntentService("BankSmsService") {
 
     private fun getSpend(bodySms: String, ruName: String): Spend {
         val date = getDate()
+        Log.e("getSpend", "getSpend!!!! DATE: $date")
+
         val value = getValue(bodySms)
         val id = getId(ruName, value, Date())
         return Spend(id = id, spendName = ruName, value = value, date = date,null)
@@ -338,7 +340,7 @@ class BankSmsService : IntentService("BankSmsService") {
     }
 
     private fun saveNameModelByBodySms(bodySms: String, nameUnknownPay: String) {
-        val nameSpendByBodySms: String? = parseSmsContent(bodySms)
+        val nameSpendByBodySms: String? = parseSmsContent(bodySms) //тут возможно надо метод чтобы взять имя для новой категории из смс
         if (nameSpendByBodySms != null) {
             scope.launch {
                 insertModelUseCase.addNewModelNameBySpend(

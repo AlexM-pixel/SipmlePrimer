@@ -53,4 +53,7 @@ abstract class FragmentsBuilder {
     @ContributesAndroidInjector
     abstract fun contributeImagesFragment(): ImagesFragment
 
+    @ContributesAndroidInjector
+    abstract fun contributeAddManuallyFragment(): AddManualSpendFragment
+
 }

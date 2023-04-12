@@ -98,4 +98,16 @@
         android:name="com.example.mysympleapplication.hw9.newDesign.ui.ImagesFragment"
         android:label="fragment_images"
         tools:layout="@layout/fragment_images" />
+    <fragment
+        android:id="@+id/addManualSpendFragment"
+        android:name="com.example.mysympleapplication.hw9.newDesign.ui.AddManualSpendFragment"
+        android:label="fragment_add_manual_spend"
+        tools:layout="@layout/fragment_add_manual_spend" />
+    <action
+        android:id="@+id/action_global_addManualSpendFragment"
+        app:destination="@id/addManualSpendFragment"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_enter_anim"
+        app:popExitAnim="@anim/nav_default_exit_anim" />
 </navigation>

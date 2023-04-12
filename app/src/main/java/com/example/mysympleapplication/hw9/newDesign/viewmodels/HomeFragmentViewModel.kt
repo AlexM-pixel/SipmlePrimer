@@ -45,9 +45,10 @@ class HomeFragmentViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    fun getInformationCards() {
+    fun getInformationCards() {  // отправить зарпрос на получение списка с заголовками viewPager2
 
     }
+
 
     fun getBalance() {
         getBalanceUseCase().onEach {

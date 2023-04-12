@@ -36,7 +36,7 @@ public enum NameSpends {
     KOMMUNALNIEPLATEGHI(R.drawable.icon_kommunalnie_48, "KOMMUNALNIE PLATEGHI", "Коммунальные \n платежи", "schetchik"),
     OZZ(R.drawable.icon_atrbook, "PRINOSIM RADOST", "OZ", "books_oz"),
     BUSLIK(R.drawable.icons_buslik, "BUSLIK", "Буслик", "busllik"),
-    FUNTASTIK(R.drawable.icons_lego, "FUNTASTIK", "FUNTASTIK \n магазин", "toy_lego"),
+    FUNTASTIK(R.drawable.icons_lego, "FUNTASTIK", "FUNTASTIK  магазин", "toy_lego"),
     APTEK(R.drawable.icon_apteka_48, " BELFARMATSIYA APTEK", "Аптека", "tabletki"),
     ELEMENT(R.drawable.element, "5 ELEMENT", "5 ЭЛЕМЕНТ", "element"),
     YANDEX(R.drawable.music, "Yandex", "Yandex музыка", "y_music"),
@@ -52,7 +52,8 @@ public enum NameSpends {
     GASTRONOM_SUPERPROD(R.drawable.icon_shop_48, "GASTRONOM SUPERPROD", "Магазин Суперпрод", "produkti"),
     SLADKIY_DOMIK(R.drawable.sladkiy, "SLADKIY DOMIK", "Сладкий домик", "sladkiy_house"),
     SMS_INFORM(R.drawable.icon_sms_48, "SMS-INFORM", "Смс-оповещение", "sms_ka"),
-    SPORTMASTER(R.drawable.sport, "SPORTMASTER", "Спорт Мастер", "sport");
+    SPORTMASTER(R.drawable.sport, "SPORTMASTER", "Спорт Мастер", "sport"),
+    OTHER(R.drawable.icon_shop_48,"OTHER","Другое","produkti");
     private int image;
     private String nameSpand;
     private String russianName;
@@ -76,7 +77,9 @@ public enum NameSpends {
         }
         // return nameSend.image;
         return ZORINA.image;
-    }
+    }                             //     создавать при добавлении в ручную новую Спенду и новую Нэймспенд(категорию) категорию наверное создавать не надо
+       // можно просто написать русское имя твоей Спенды и сумму затем в логике прохожу по всему списку СпендНеймов и
+         //   есле тм в руНеймах(ruName) такой нет сохздаю новую категорию где в nameSpend просто продублирую ruName. Автозаполненме!
 
     public String getNameSpand() {
         return nameSpand;

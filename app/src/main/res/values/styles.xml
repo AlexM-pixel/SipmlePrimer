@@ -11,7 +11,7 @@
         <item name="splashGradient">@drawable/login_bg_def</item>
         <item name="toggle_text_byn">@color/colorPaletteDef</item>
         <item name="toggle_button">@drawable/toggle_button_def</item>
-<!--        <item name="android:colorBackground">#FCE3F6F8</item>-->
+        <!--        <item name="android:colorBackground">#FCE3F6F8</item>-->
 
     </style>
 
@@ -20,13 +20,13 @@
         <item name="colorPrimary">#E91E63</item>
         <item name="colorPrimaryDark">#B3194D</item>
         <item name="cycle_color">@color/pink_cycle</item>
-        <item name="colorAccent">#FD6B9D</item>                        // text color and other
+        <item name="colorAccent">#FD6B9D</item>
+        // text color and other
         <item name="splashGradient">@drawable/login_bg_pink</item>
         <item name="toggle_button">@drawable/toggle_button_pink</item>
         <item name="toggle_text_byn">@color/splashStart.pink</item>
-<!--        <item name="android:colorBackground">#F6E2EC</item>-->
+        <!--        <item name="android:colorBackground">#F6E2EC</item>-->
         <item name="colorSurface">#F3F3F1</item>
-
 
 
     </style>
@@ -36,24 +36,29 @@
         <item name="colorPrimary">#FF9800</item>
         <item name="cycle_color">@color/orange_cycle</item>
         <item name="colorPrimaryDark">#FF5722</item>
-        <item name="colorAccent">#FFFF5722</item>               // text color and other
-        <item name="colorSurface">#F3F3F1</item>         // background for bottom navigation
+        <item name="colorAccent">#FFFF5722</item>
+        // text color and other
+        <item name="colorSurface">#F3F3F1</item>
+        // background for bottom navigation
         <item name="toggle_text_byn">@color/colorPaletteOrange</item>
         <item name="splashGradient">@drawable/login_bg_orange</item>
-<!--        <item name="android:colorBackground">#FAEEDD</item>-->
+        <!--        <item name="android:colorBackground">#FAEEDD</item>-->
         <item name="toggle_button">@drawable/toggle_button_orange</item>
 
 
     </style>
+
     <style name="AppThemeBlue" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">#03A9F4</item>
         <item name="colorPrimaryDark">#065593</item>
         <item name="cycle_color">@color/blue_cycle</item>
-        <item name="colorAccent">#03A9F4</item>                   // text color and other
-        <item name="colorSurface">#F3F3F1</item>         // background for bottom navigation
+        <item name="colorAccent">#03A9F4</item>
+        // text color and other
+        <item name="colorSurface">#F3F3F1</item>
+        // background for bottom navigation
         <item name="toggle_text_byn">@color/colorPaletteBlue</item>
-<!--        <item name="android:colorBackground">#CEEFFD</item>-->
+        <!--        <item name="android:colorBackground">#CEEFFD</item>-->
         <item name="splashGradient">@drawable/login_bg_blue</item>
         <item name="toggle_button">@drawable/toggle_button_blue</item>
 
@@ -119,6 +124,21 @@
     </style>
 
 
+    <style name="MaterialCalendarTheme" parent="ThemeOverlay.MaterialComponents.MaterialCalendar">
+        <!--       <item name="colorOnPrimary">@color/backgroundYellowNDColor</item> //цвет техта вверху-->
+        <item name="colorPrimary">#A65FB670</item>
+        <item name="colorSurface">#E4FFFFFF</item>
+
+        <!-- Buttons -->
+        <item name="buttonBarPositiveButtonStyle">@style/TextButton.Dialog1</item>
+        <item name="buttonBarNegativeButtonStyle">@style/TextButton.Dialog1</item>
+
+    </style>
+
+
+    <style name="TextButton.Dialog1" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/black_white_color_selector</item>
+    </style>
 
 
 </resources>

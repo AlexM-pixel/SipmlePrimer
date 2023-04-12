@@ -3,6 +3,7 @@ package com.example.mysympleapplication.hw9.newDesign.di.builder
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.mysympleapplication.hw9.newDesign.di.qualifaer.ViewModelKey
+import com.example.mysympleapplication.hw9.newDesign.ui.AddManualSpendFragment
 import com.example.mysympleapplication.hw9.newDesign.viewmodels.*
 import dagger.Binds
 import dagger.Module
@@ -44,10 +45,16 @@ abstract class ViewModelBuilder {
     @IntoMap
     @ViewModelKey(EditSpendViewModel::class)
     abstract fun bindEditSpendViewModelViewModel(viewModel: EditSpendViewModel): ViewModel
+
     @Binds
     @IntoMap
     @ViewModelKey(ImagesViewModel::class)
     abstract fun bindImagesViewModel(viewModel: ImagesViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ManuallyAddSpendViewModel::class)
+    abstract fun bindAddSpendMViewModel(viewModel: ManuallyAddSpendViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
