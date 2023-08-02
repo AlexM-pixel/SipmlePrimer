@@ -53,6 +53,7 @@ public enum NameSpends {
     SLADKIY_DOMIK(R.drawable.sladkiy, "SLADKIY DOMIK", "Сладкий домик", "sladkiy_house"),
     SMS_INFORM(R.drawable.icon_sms_48, "SMS-INFORM", "Смс-оповещение", "sms_ka"),
     SPORTMASTER(R.drawable.sport, "SPORTMASTER", "Спорт Мастер", "sport"),
+    OMA(R.drawable.icon_mile_48, "STROITELN.GIPERMARKET 'OMA'", "ОМА", "stroi_shop"),
     OTHER(R.drawable.icon_shop_48,"OTHER","Другое","produkti");
     private int image;
     private String nameSpand;

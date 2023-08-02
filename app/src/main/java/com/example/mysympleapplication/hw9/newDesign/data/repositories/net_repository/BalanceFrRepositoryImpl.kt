@@ -27,6 +27,8 @@ class BalanceFrRepositoryImpl @Inject constructor(private val fr: FirebaseFirest
         val snapshot = fr
             .collection(mail)
             .document(UserDocuments.BALANCE.name)
+            .collection(UserDocuments.BALANCE.name)
+            .document("0")
             .get()
             .await()
         val res = snapshot.toObject(BalanceEntity::class.java)

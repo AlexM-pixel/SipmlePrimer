@@ -21,7 +21,7 @@ import com.example.mysympleapplication.hw9.newDesign.di.builder.ViewModelFactory
 import com.example.mysympleapplication.hw9.newDesign.domain.model.Images
 import com.example.mysympleapplication.hw9.newDesign.domain.model.State
 import com.example.mysympleapplication.hw9.newDesign.ui.adapters.EditRvAdapter
-import com.example.mysympleapplication.hw9.newDesign.ui.dialogues.DeleteDetailsDialog
+import com.example.mysympleapplication.hw9.newDesign.ui.dialogues.*
 import com.example.mysympleapplication.hw9.newDesign.utils.Config
 import com.example.mysympleapplication.hw9.newDesign.viewmodels.EditSpendViewModel
 import javax.inject.Inject
@@ -33,7 +33,7 @@ class EditSpendFragment : BaseFragment() {
     lateinit var viewModelFactory: ViewModelFactory
     private val editViewModel: EditSpendViewModel by viewModels { viewModelFactory }
     private lateinit var editAdapter: EditRvAdapter
-    private var titleFragment: TextView? = null
+    private var titleFragment: Button? = null
     private var parentValueTextView: TextView? = null
     private var btnSave: Button? = null
     private var btnBack: ImageButton? = null
@@ -76,7 +76,7 @@ class EditSpendFragment : BaseFragment() {
             titleFragment?.text = name
             value =
                 spend?.value   // может после получения значения запускать подщет процентов и сетить прогрессбар
-            parentValueTextView?.text = "$value \nBYN"
+            parentValueTextView?.text = "$value"
         }
         init(view)
         setListeners()
@@ -99,6 +99,7 @@ class EditSpendFragment : BaseFragment() {
                 State.ERROR -> {
                     Toast.makeText(requireContext(), "ошибочка вышла!", Toast.LENGTH_SHORT).show()
                 }
+                else -> {}
             }
         }
         editViewModel.errorLiveData.observe(viewLifecycleOwner) {
@@ -121,6 +122,7 @@ class EditSpendFragment : BaseFragment() {
     @SuppressLint("SetTextI18n")
     private fun init(view: View) {
         titleFragment = view.findViewById(R.id.title_editSpend)
+        titleFragment?.setOnClickListener { showDialogSetSpend()}
         imageTitle = view.findViewById(R.id.edit_image_spends_nd)
         parentValueTextView = view.findViewById<TextView>(R.id.value_editFragment)
         btnBack = view.findViewById(R.id.btn_back_from_edit)
@@ -218,5 +220,20 @@ class EditSpendFragment : BaseFragment() {
             (mHandler as Handler).sendEmptyMessage(0)
         }
         detailsValue = actualValue
+    }
+    private fun showDialogSetSpend(){
+        val fragmentDialog = EditSpendDialog()
+        if (!fragmentDialog.isAdded) {
+            val bundle = Bundle()
+            bundle.putString(SPEND_DIALOG_NAME, name)
+            bundle.putString(SPEND_DIALOG_VALUE, value)
+            bundle.putLong(SPEND_ID_ARG,idKey!!)
+            fragmentDialog.arguments = bundle
+        }
+        requireActivity().supportFragmentManager.let {
+            if (!fragmentDialog.isAdded) {
+                fragmentDialog.show(it, "dialog_list")
+            }
+        }
     }
 }

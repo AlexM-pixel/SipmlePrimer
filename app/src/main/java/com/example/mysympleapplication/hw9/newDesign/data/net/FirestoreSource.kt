@@ -44,7 +44,8 @@ class FirestoreSource @Inject constructor(private val fr: FirebaseFirestore) {
             .set(spendEntity)
             .await()
     }
-    suspend fun deleteSpend(idSpend:String, mail: String) {
+
+    suspend fun deleteSpend(idSpend: String, mail: String) {
         fr
             .collection(mail)
             .document("spends")

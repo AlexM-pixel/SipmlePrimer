@@ -6,27 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.findNavController
 import com.example.mysympleapplication.R
 import com.example.mysympleapplication.hw9.newDesign.base.BaseFragment
-import com.example.mysympleapplication.hw9.newDesign.data.db.AppDataBase
-import com.example.mysympleapplication.hw9.newDesign.data.entity_model.BalanceEntity
-import com.example.mysympleapplication.hw9.newDesign.data.entity_model.SpendEntity
-import com.example.mysympleapplication.hw9.newDesign.di.builder.ViewModelFactory
-import com.example.mysympleapplication.hw9.newDesign.viewmodels.LoginViewModel
-import com.google.android.material.bottomappbar.BottomAppBar
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.launch
+import com.example.mysympleapplication.hw9.newDesign.utils.MainPrefs.isHasAccess
 import me.ibrahimsn.lib.SmoothBottomBar
-import javax.inject.Inject
 
 
 class BottomNavFragment : BaseFragment() {
@@ -34,7 +19,8 @@ class BottomNavFragment : BaseFragment() {
     lateinit var fragment: Fragment
     private lateinit var bottomNavigationView: SmoothBottomBar
     private lateinit var homeFragment: HomeFragment
-    private lateinit var statisticsFragment: StatisticsFragment
+    private lateinit var statisticSoloFragment: StatisticSoloFragment
+    private lateinit var statisticFragment: StatisticFragment
     private lateinit var settingsFragment: SettingsFragment
 
     override fun onCreateView(
@@ -61,7 +47,10 @@ class BottomNavFragment : BaseFragment() {
             Log.e("homeFragment", "bottomNavigationView: i = $i ")
             fragment = when (i) {
                 0 -> homeFragment
-                1 -> statisticsFragment
+                1 -> {
+                    if (isHasAccess) statisticSoloFragment
+                    else statisticFragment
+                }
                 2 -> settingsFragment
                 else -> homeFragment
             }
@@ -75,7 +64,8 @@ class BottomNavFragment : BaseFragment() {
 
     private fun initVal(view: View) {
         homeFragment = HomeFragment()
-        statisticsFragment = StatisticsFragment()
+        statisticSoloFragment = StatisticSoloFragment()
+        statisticFragment = StatisticFragment()
         settingsFragment = SettingsFragment()
         fm = requireActivity().supportFragmentManager
         bottomNavigationView = view.findViewById(R.id.bottom_nav)

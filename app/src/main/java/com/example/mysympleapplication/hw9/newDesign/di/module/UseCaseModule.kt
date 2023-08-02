@@ -27,7 +27,7 @@ class UseCaseModule {
     fun provideCheckDataUseCase(repo: UserDataRepository) = CheckDataFireStoreAndDbUseCase(repo)
 
     @Provides
-    fun provideGetMonthExpensesUseCase(repo: SumMonthlySpendsRepository) =
+    fun provideGetMonthExpensesUseCase(repo: SumSpendsRepository) =
         GetMonthlyExpensesUseCase(repo)
 
     @Provides
@@ -62,7 +62,16 @@ class UseCaseModule {
     @Provides
     fun provideGetDetailsSpendUseCase(repo: DetailsSpendDbRepository) =
         GetDetailsFlowUseCase(repo)
-//    @Provides
-//    fun provideDelDetailsSpendUseCase(repo: DetailsSpendDbRepository) =
+
+    @Provides
+    fun provideUpdateSpendDbUseCase(repo: SpendsDbRepository) = UpdateSpendDbUseCase(repo)
+
+    @Provides
+    fun provideGetUserExpensesUseCase(repo: SumSpendsRepository) = GetUserExpensesUseCase(repo)
+
+    @Provides
+    fun provideGetFriendExpensesUseCase(repo: FriendsDataRepository) =
+        GetFriendExpensesUseCase(repo)
+
 
 }

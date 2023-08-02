@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface SpendsDbRepository {
     suspend fun saveSpend(spend: Spend)
+    suspend fun update(spend: Spend)
     suspend fun getMonthSpends(monthDate: String): List<Spend>
     suspend fun getDetailSpendsByName(name: String, date: String): Flow<List<Spend>>
     suspend fun delSpend(id: String)

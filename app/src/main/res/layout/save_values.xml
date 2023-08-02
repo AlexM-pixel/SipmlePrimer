@@ -1,29 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout_valuesInput"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="8dp"
+    android:background="@drawable/cycle"
+   >
 
     <TextView
         android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
         android:text="@string/input_values"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/input_valueX"
-        android:layout_width="match_parent"
+        android:id="@+id/input_name"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="@string/date"
-        android:focusable="true" />
+        android:hint="@string/nameSpend"
+        android:layout_margin="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text" />
 
     <EditText
-        android:id="@+id/input_valueY"
-        android:layout_width="match_parent"
+        android:id="@+id/input_value"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="@string/value"
-        android:inputType="numberDecimal" />
-</LinearLayout>
+        android:inputType="numberDecimal"
+        android:layout_margin="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/input_name" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_cancelEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="cancel"
+        android:layout_margin="6dp"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:textColor="@color/text_colorND"
+        app:layout_constraintEnd_toStartOf="@+id/btn_ok_editSpend"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/input_value" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_ok_editSpend"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ok"
+        android:layout_margin="6dp"
+        app:layout_constraintStart_toEndOf="@+id/btn_cancelEdit"
+        android:textColor="@color/black_white_color_selector"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/input_value" />
+</androidx.constraintlayout.widget.ConstraintLayout>

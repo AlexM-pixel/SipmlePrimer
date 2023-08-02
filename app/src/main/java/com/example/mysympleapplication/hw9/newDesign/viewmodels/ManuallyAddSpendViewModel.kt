@@ -148,7 +148,7 @@ class ManuallyAddSpendViewModel @Inject constructor(
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun getDate(date: String): String {
-        val oldDatePattern = "MMM d, yyyy"
+        val oldDatePattern = "d MMM yyyy"
         val newDatePattern = "yyyy-MM-dd"
         val oldFormatter = DateTimeFormatter.ofPattern(oldDatePattern)
         val newFormatter = DateTimeFormatter.ofPattern(newDatePattern)

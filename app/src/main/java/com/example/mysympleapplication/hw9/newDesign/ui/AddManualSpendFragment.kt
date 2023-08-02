@@ -1,5 +1,6 @@
 package com.example.mysympleapplication.hw9.newDesign.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -36,6 +37,7 @@ class AddManualSpendFragment : BaseFragment() {
     private var oldBalance: Float? = null
     private var newBalance: Float? = null
     private var getBalanceFromEdit: String? = null
+    private var dateN: String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,11 +79,12 @@ class AddManualSpendFragment : BaseFragment() {
                     Toast.makeText(requireContext(), state.stateDescription, Toast.LENGTH_SHORT)
                         .show()
                 }
+                else -> {}
             }
         }
-        val date_n: String = SimpleDateFormat("MMM d, yyyy", Locale.getDefault()).format(Date())
-        dateTextView?.text = date_n
-        Log.e("AddManualSpendFragment", "from DAte: $date_n")
+        dateN = SimpleDateFormat("d MMM yyyy", Locale.getDefault()).format(Date())
+        dateTextView?.text = dateN
+        Log.e("AddManualSpendFragment", "from DAte: $dateN")
     }
 
     private fun init(view: View) {
@@ -117,6 +120,7 @@ class AddManualSpendFragment : BaseFragment() {
         Log.e("balanceCalculation!!!!!", "NewBalance = $newBalance , OldBalance = $oldBalance")
     }
 
+    @SuppressLint("SimpleDateFormat")
     private fun showDatePickerDialog() {
         datePicker =
             MaterialDatePicker.Builder.datePicker()
@@ -125,8 +129,14 @@ class AddManualSpendFragment : BaseFragment() {
                 .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
                 .build()
         datePicker?.addOnPositiveButtonClickListener() {
-            dateTextView?.text = datePicker?.headerText
             Log.e("AddManualSpendFragment", "from Picker: ${datePicker?.headerText}")
+            val utc = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+            utc.timeInMillis = it
+            val format = SimpleDateFormat("d MMM yyyy")
+            dateN = format.format(utc.time)
+            dateTextView?.text = dateN
+            Log.e("AddManualSpendFragment", "from Picker FORMATTED : $dateN")
+
         }
         datePicker?.show(childFragmentManager, "addManuallyDate")
     }
@@ -141,15 +151,20 @@ class AddManualSpendFragment : BaseFragment() {
             )
             if (newBalance != oldBalance && isEmptyBalanceEditView()) {  // если баланс изменился, сохраняю новое значение
                 viewModel.changeBalance(newBalance ?: 0f)
-            } else {
+            } else if (!isEmptyBalanceEditView()) {
                 newBalance = getBalanceFromEdit?.toFloat()
-                viewModel.changeBalance(getBalanceFromEdit?.toFloat() ?: 0f) // если пользователь вручную ввел баланс
+                viewModel.changeBalance(
+                    getBalanceFromEdit?.toFloat() ?: 0f
+                ) // если пользователь вручную ввел баланс
+            } else {
+                viewModel.changeBalance(oldBalance ?: 0f)
             }
         } else Toast.makeText(requireContext(), "insert all members", Toast.LENGTH_SHORT).show()
     }
 
     private fun isEmptyBalanceEditView(): Boolean {
         getBalanceFromEdit = balanceEdit?.text.toString()
+        Log.e("AddManualSpendFragment", "BALANCE FROM EditView : ${getBalanceFromEdit?.toFloatOrNull()}")
         return getBalanceFromEdit?.toFloatOrNull() == null
     }
 

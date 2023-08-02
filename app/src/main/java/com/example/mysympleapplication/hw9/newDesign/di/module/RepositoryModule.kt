@@ -22,6 +22,14 @@ class RepositoryModule {
     }
 
     @Provides
+    fun provideFriendDataRepository(
+        fr: FirebaseFirestore,
+        mapper: BalanceMapper
+    ): FriendsDataRepository {
+        return FriendsDataRepositoryImpl(fr, mapper)
+    }
+
+    @Provides
     fun provideUsersDataRepository(
         usersDbSours: UsersDbSours,
         frSource: FirestoreSource
@@ -33,8 +41,8 @@ class RepositoryModule {
     fun provideMonthlySpendsRepository(
         db: AppDataBase,
         ofMonthMapper: SumSpendsOfMonthMapper
-    ): SumMonthlySpendsRepository {
-        return SumMonthlySpendsRepositoryImpl(db, ofMonthMapper)
+    ): SumSpendsRepository {
+        return SumSpendsRepositoryImpl(db, ofMonthMapper)
     }
 
     @Provides

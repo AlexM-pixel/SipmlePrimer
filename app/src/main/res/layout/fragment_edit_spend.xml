@@ -25,8 +25,9 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/title_editSpend"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="18dp"
@@ -113,15 +114,29 @@
                 <TextView
                     android:id="@+id/value_editFragment"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:gravity="center_horizontal"
-                    android:text="234.34 \nBYN"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="18dp"
+                    android:text="234.34"
+                    android:gravity="bottom|center"
+                    android:textColor="@color/backgroundGreenNDColor"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toTopOf="@+id/byn_valueNd"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+
+                <TextView
+                    android:id="@+id/byn_valueNd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:text="BYN"
+                    android:gravity="top|center"
                     android:textColor="@color/backgroundGreenNDColor"
                     android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintEnd_toEndOf="@+id/value_editFragment"
+                    app:layout_constraintStart_toStartOf="@+id/value_editFragment"
+                    app:layout_constraintTop_toBottomOf="@+id/value_editFragment" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
@@ -173,10 +188,10 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:expandedHintEnabled="false"
-        app:hintEnabled="true"
         android:layout_margin="8dp"
-        android:hint="название:">
+        android:hint="название:"
+        app:expandedHintEnabled="false"
+        app:hintEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textInput_EditText_name"
@@ -185,22 +200,23 @@
             android:hint="например:  шоколадка" />
 
     </com.google.android.material.textfield.TextInputLayout>
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout_value"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:expandedHintEnabled="false"
-        app:hintEnabled="true"
         android:layout_margin="8dp"
-        android:hint="сумма:">
+        android:hint="сумма:"
+        app:expandedHintEnabled="false"
+        app:hintEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textInput_EditText_value"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="numberDecimal"
-            android:hint="15.23 BYN" />
+            android:hint="15.23 BYN"
+            android:inputType="numberDecimal" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

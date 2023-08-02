@@ -63,6 +63,7 @@ class ImagesFragment : BaseFragment() {
                 State.ERROR -> {
                     Toast.makeText(requireContext(), "ошибочка вышла!", Toast.LENGTH_SHORT).show()
                 }
+                else -> {}
             }
         }
     }

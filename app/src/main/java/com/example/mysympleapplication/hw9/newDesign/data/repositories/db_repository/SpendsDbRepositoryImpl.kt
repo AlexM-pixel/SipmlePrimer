@@ -15,6 +15,10 @@ class SpendsDbRepositoryImpl @Inject constructor(
         db.spendDao().insert(mapper.mapToEntity(spend))
     }
 
+    override suspend fun update(spend: Spend) {
+        db.spendDao().update(spend = mapper.mapToEntity(spend))
+    }
+
     override suspend fun getMonthSpends(monthDate: String): List<Spend> {
         return mapper.fromEntityList(db.spendDao().getMonthSpends(monthDate))
     }

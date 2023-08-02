@@ -26,8 +26,11 @@ class EditSpendViewModel @Inject constructor(
     private val getDetailsUseCase: GetDetailsFlowUseCase,
     private val getCategoryUseCase: GetCategoriesUseCase,
     private val getSpendByIdUseCase: GetSpendByIdUseCase,
-    private val delDetailsSpendUseCase: DelDetailsSpendUseCase
-) :
+    private val delDetailsSpendUseCase: DelDetailsSpendUseCase,
+    private val updateSpendDbCase: UpdateSpendDbUseCase,
+    private val saveSpendFrStoreUseCase: SaveSpendFrStoreUseCase,
+
+    ) :
     ViewModel() {
     private val _stateLiveData = MutableLiveData<State>()
     val stateLiveData: LiveData<State> get() = _stateLiveData
@@ -135,6 +138,41 @@ class EditSpendViewModel @Inject constructor(
                 is Resource.Error -> {
                     _stateLiveData.value = State.ERROR
                     Log.e("deleteDetails", "Error: ${it.message}")
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    fun updateEditSpend(spend: Spend) {
+        updateSpendDbCase(spend=spend).onEach {
+            Log.e("updateSpend", "onUpdateEachDb")
+            when (it) {
+                is Resource.Loading -> {
+                    _stateLiveData.value = State.LOADING
+                }
+                is Resource.Success -> {
+                    Log.e("UpdateSpendM", "updateSpendDbUseCase Success!")
+                    _stateLiveData.value = State.SUCCESS
+                }
+                is Resource.Error -> {
+                    Log.e("updateSpendM", "updateSpendDbUseCase ERROR: i${it.message}")
+                }
+            }
+        }.launchIn(viewModelScope)
+
+        saveSpendFrStoreUseCase(spend = spend).onEach {
+            Log.e("updateSpendM", "onUpdateEachFrStoreM")
+            when (it) {
+                is Resource.Loading -> {
+                    _stateLiveData.value = State.LOADING
+                }
+                is Resource.Success -> {
+                    Log.e("updateSpendM", "updateSpendFrStoreUseCaseM Success!")
+                    //  _stateLiveData.value = State.SUCCESS
+                }
+                is Resource.Error -> {
+                    _stateLiveData.value = State.ERROR
+                    Log.e("updateSpendM", "updateFrStoreUseCaseM ERROR: i${it.message}")
                 }
             }
         }.launchIn(viewModelScope)

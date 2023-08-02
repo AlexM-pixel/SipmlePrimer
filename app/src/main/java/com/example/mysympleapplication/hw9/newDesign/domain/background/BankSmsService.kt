@@ -111,7 +111,7 @@ class BankSmsService : IntentService("BankSmsService") {
     }
 
     private fun getSmsType(body: String): SmsType {
-        if (body.contains("popolnenie") || body.contains("postuplenie") || body.contains("credit")) {
+        if (body.contains("popolnenie") || body.contains("postuplenie") || body.contains("credit") || body.contains("zachislenie")) {
             return SmsType.POPOLNENIE
         }
         return SmsType.SPEND
@@ -145,6 +145,7 @@ class BankSmsService : IntentService("BankSmsService") {
                 is Resource.Error -> {
                     Log.e("saveSpend", "saveSpendDbUseCase ERROR: i${it.message}")
                 }
+                else -> {}
             }
         }.launchIn(scope)
         saveSpendFrStoreUseCase(spend = spend).onEach {
@@ -156,6 +157,7 @@ class BankSmsService : IntentService("BankSmsService") {
                 is Resource.Error -> {
                     Log.e("saveSpend", "saveSpendFrStoreUseCase ERROR: i${it.message}")
                 }
+                else -> {}
             }
         }.launchIn(scope)
     }

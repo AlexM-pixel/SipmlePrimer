@@ -265,10 +265,10 @@
             android:id="@+id/textView_show_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="8dp"
+            android:layout_gravity="center|end"
+            android:layout_margin="6dp"
             android:text="21-04-2023"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
     </FrameLayout>

@@ -2,7 +2,6 @@ package com.example.mysympleapplication.hw9;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -27,7 +26,6 @@ import com.example.mysympleapplication.hw9.view.auth.EmailPasswordActivity;
 import com.example.mysympleapplication.hw9.view.iu.BaseActivity;
 import com.example.mysympleapplication.hw9.viewModel.MyViewModel;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -165,8 +163,8 @@ public class DetailActivity  extends BaseActivity {
         View promptsView = li.inflate(R.layout.save_values, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(promptsView);
-        final EditText userInputName = promptsView.findViewById(R.id.input_valueX);
-        final EditText userInputValue = promptsView.findViewById(R.id.input_valueY);
+        final EditText userInputName = promptsView.findViewById(R.id.input_name);
+        final EditText userInputValue = promptsView.findViewById(R.id.input_value);
         userInputName.setText(spend.getSpendName());
         userInputValue.setText(spend.getTotalValue());
         builder

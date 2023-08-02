@@ -3,6 +3,7 @@ package com.example.mysympleapplication.hw9.newDesign.domain.model
 enum class UserDocuments {
     USERNAME,
     OBSERVE_FRIENDS,
+    SPENDS,
     BALANCE,
     FRIENDS,
     POSTUPLENIE,

@@ -42,6 +42,7 @@
     <string name="User_description">Description</string>
     <string name="input_values">редактировать:</string>
     <string name="date">date</string>
+    <string name="nameSpend">name</string>
     <string name="value">value</string>
     <string name="_4_recyclerview">4-я (recyclerView)</string>
     <string name="customview">5-я CustomView</string>

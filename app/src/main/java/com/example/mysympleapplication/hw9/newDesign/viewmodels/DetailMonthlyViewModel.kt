@@ -75,6 +75,7 @@ class DetailMonthlyViewModel @Inject constructor(
                 is Resource.Success -> {
                     detailLiveData.value = it.data
                 }
+                else -> {}
             }
         }.launchIn(viewModelScope)
     }
@@ -109,4 +110,5 @@ class DetailMonthlyViewModel @Inject constructor(
         }
         return Config.DEF_SPEND_NAME
     }
+
 }

@@ -4,6 +4,7 @@ package com.example.mysympleapplication.hw9.newDesign.di.builder
 import com.example.mysympleapplication.hw9.newDesign.ui.*
 import com.example.mysympleapplication.hw9.newDesign.ui.dialogues.DeleteDetailsDialog
 import com.example.mysympleapplication.hw9.newDesign.ui.dialogues.DeleteSpendDialog
+import com.example.mysympleapplication.hw9.newDesign.ui.dialogues.EditSpendDialog
 import com.example.mysympleapplication.hw9.newDesign.ui.dialogues.ResetPassDialogFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -33,10 +34,13 @@ abstract class FragmentsBuilder {
     abstract fun contributeDeleteDetailsDialogFragment(): DeleteDetailsDialog
 
     @ContributesAndroidInjector
+    abstract fun contributeEditSpendDialogFragment():EditSpendDialog
+
+    @ContributesAndroidInjector
     abstract fun contributeHomeFragment(): HomeFragment
 
     @ContributesAndroidInjector
-    abstract fun contributeStatisticsFragment(): StatisticsFragment
+    abstract fun contributeStatisticSoloFragment(): StatisticSoloFragment
 
     @ContributesAndroidInjector
     abstract fun contributeSettingsFragment(): SettingsFragment
@@ -55,5 +59,8 @@ abstract class FragmentsBuilder {
 
     @ContributesAndroidInjector
     abstract fun contributeAddManuallyFragment(): AddManualSpendFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeStatisticsFragment(): StatisticFragment
 
 }
