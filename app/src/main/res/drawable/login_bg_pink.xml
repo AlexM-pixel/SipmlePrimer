@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     >
     <gradient android:type="radial"
-        android:startColor="@color/splashStart.pink"
+        android:startColor="@color/splash_start_pink"
         android:endColor="@color/colorPalette1"
         android:centerX="0.5"
         android:centerY="0.4"

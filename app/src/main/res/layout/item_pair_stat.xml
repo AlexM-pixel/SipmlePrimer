@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_cardView_nd"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="6dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp">
+
+        <FrameLayout
+            android:id="@+id/frame_spends_nd"
+            android:layout_width="@dimen/frame_image_size"
+            android:layout_height="@dimen/frame_image_size"
+            android:layout_marginTop="@dimen/standard_margin"
+            android:background="@drawable/background_rv_nd"
+            app:layout_constraintBottom_toTopOf="@id/stat_title_spend_nd"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            >
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/statistic_image_spends_nd"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/icon_apteka_48" />
+        </FrameLayout>
+
+
+        <TextView
+            android:id="@+id/stat_title_spend_nd"
+            android:layout_width="@dimen/frame_text_size"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
+            android:text="Магазин"
+            android:textColor="@color/black"
+            android:textSize="@dimen/spend_text_size_rv"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/frame_spends_nd"
+            app:layout_constraintStart_toStartOf="@+id/frame_spends_nd"
+            app:layout_constraintTop_toBottomOf="@id/frame_spends_nd" />
+
+        <TextView
+            android:id="@+id/user_spends_rvstat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Я"
+            android:textSize="@dimen/month_text_size_rv"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/stat_title_spend_nd"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/friend_spends_rvstat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Марина"
+            android:textSize="@dimen/month_text_size_rv"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/stat_title_spend_nd" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.cardview.widget.CardView>

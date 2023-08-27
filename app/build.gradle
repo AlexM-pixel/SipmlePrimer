@@ -4,7 +4,7 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 33
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.example.mysympleapplication"
@@ -96,7 +96,10 @@ dependencies {
     //MPAndroidChart
     implementation'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }
-
+// to avoid dupplicate classes
+configurations.implementation {
+    exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk8'
+}
 
 repositories {
     mavenCentral()

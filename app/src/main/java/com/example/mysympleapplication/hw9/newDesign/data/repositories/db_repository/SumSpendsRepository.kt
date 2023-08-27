@@ -5,5 +5,5 @@ import com.example.mysympleapplication.hw9.SumSpendsOfMonth
 
 interface SumSpendsRepository {
  suspend fun  getSumSpendsOfMonth(): List<SumSpendsOfMonth>
- suspend fun getCurrentMonthExp(mDate:String):SumSpendsOfMonth
+ suspend fun getCurrentMonthExp(mDate:String): SumSpendsOfMonth
 }

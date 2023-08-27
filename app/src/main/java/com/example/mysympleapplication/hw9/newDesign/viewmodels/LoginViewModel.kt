@@ -24,7 +24,7 @@ class LoginViewModel @Inject constructor(
     private val useCaseResetPass: ResetPasswUseCase,
     private val checkDataFireStoreAndDbUseCase: CheckDataFireStoreAndDbUseCase
 ) : ViewModel() {
-    var countErrors = 0
+    var countErrors = 1
 
     private val _stateLiveData = MutableLiveData<State>()
     val stateLiveData: LiveData<State> get() = _stateLiveData
@@ -46,6 +46,8 @@ class LoginViewModel @Inject constructor(
                     _stateLiveData.value = State.SUCCESS
                 }
                 is Result.Error -> {
+                    Log.e("createUser Result.Error", "Error:  ${_liveDataCount.value}")
+
                     if (CheckErrorAuthFirebase().checkLogInError(result.error)
                             .equals("неверный пароль !")
                     ) countErrors++
@@ -59,7 +61,6 @@ class LoginViewModel @Inject constructor(
             }
         }
     }
-
 
 
     fun resetPasswByEmail(email: String) {

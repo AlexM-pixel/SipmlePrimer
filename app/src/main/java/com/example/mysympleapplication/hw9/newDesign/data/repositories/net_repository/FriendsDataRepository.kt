@@ -9,5 +9,5 @@ import com.example.mysympleapplication.hw9.newDesign.utils.Result
 interface FriendsDataRepository {
     suspend fun getFriendsBalance(mail:String): Balance?
     suspend fun getFriendsExpensesByMonth(date: String): SumSpendsOfMonth
-    suspend fun getTestFriendsExpensesByMonth(date: String,  mail: String): Result<Exception,MutableList<SpendEntity>>
+    suspend fun getTestFriendsExpensesByMonth(date: String,  mail: String): Result<Exception,List<Spend>>
 }

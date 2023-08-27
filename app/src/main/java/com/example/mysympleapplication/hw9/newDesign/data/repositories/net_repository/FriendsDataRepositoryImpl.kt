@@ -5,7 +5,9 @@ import com.example.mysympleapplication.hw9.SumSpendsOfMonth
 import com.example.mysympleapplication.hw9.newDesign.data.entity_model.BalanceEntity
 import com.example.mysympleapplication.hw9.newDesign.data.entity_model.SpendEntity
 import com.example.mysympleapplication.hw9.newDesign.data.mapper.BalanceMapper
+import com.example.mysympleapplication.hw9.newDesign.data.mapper.SpendsMapper
 import com.example.mysympleapplication.hw9.newDesign.domain.model.Balance
+import com.example.mysympleapplication.hw9.newDesign.domain.model.Spend
 import com.example.mysympleapplication.hw9.newDesign.domain.model.UserDocuments
 import com.example.mysympleapplication.hw9.newDesign.utils.Result
 import com.google.firebase.firestore.FirebaseFirestore
@@ -14,7 +16,8 @@ import javax.inject.Inject
 
 class FriendsDataRepositoryImpl @Inject constructor(
     private val fr: FirebaseFirestore,
-    private val mapper: BalanceMapper
+    private val mapper: BalanceMapper,
+    private val spendMapper: SpendsMapper
 ) : FriendsDataRepository {
     override suspend fun getFriendsBalance(mail: String): Balance? {
         val snapshot = fr
@@ -47,7 +50,7 @@ class FriendsDataRepositoryImpl @Inject constructor(
     override suspend fun getTestFriendsExpensesByMonth(
         date: String,
         mail: String
-    ): Result<Exception, MutableList<SpendEntity>> {
+    ): Result<Exception, List<Spend>> {
         val snapshot = fr
             .collection(mail)
             .document("spends")
@@ -59,11 +62,8 @@ class FriendsDataRepositoryImpl @Inject constructor(
         Log.e(
             "loginUser", "getSpendsFirestore: allItems.size = ${res.size} "
         )
-      val sumSpends:SumSpendsOfMonth=SumSpendsOfMonth(res.firstOrNull()?.date,res.sumOf { it.value.toFloat() })
-        Log.e(
-            "SumSpendsOfMonth", "SumSpendsOfMonth: == ${sumSpends.value_spends} "
-        )
-        return Result.build { res }
+
+        return Result.build { spendMapper.fromEntityList(res) }
     }
 }
 

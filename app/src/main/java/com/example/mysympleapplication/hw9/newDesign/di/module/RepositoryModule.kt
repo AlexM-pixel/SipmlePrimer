@@ -24,9 +24,10 @@ class RepositoryModule {
     @Provides
     fun provideFriendDataRepository(
         fr: FirebaseFirestore,
-        mapper: BalanceMapper
+        mapper: BalanceMapper,
+        spendsMapper: SpendsMapper
     ): FriendsDataRepository {
-        return FriendsDataRepositoryImpl(fr, mapper)
+        return FriendsDataRepositoryImpl(fr, mapper,spendsMapper)
     }
 
     @Provides

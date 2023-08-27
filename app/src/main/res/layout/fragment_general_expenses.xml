@@ -8,8 +8,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_month"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="99dp"
+        android:layout_height="293dp"
         android:nestedScrollingEnabled="true"
         android:orientation="horizontal"
         android:scrollbars="horizontal"

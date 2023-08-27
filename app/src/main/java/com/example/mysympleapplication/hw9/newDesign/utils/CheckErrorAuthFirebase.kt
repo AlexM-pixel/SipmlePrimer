@@ -8,7 +8,7 @@ class CheckErrorAuthFirebase {
             return "не зарегистрированный email"
         }
         if (e.message!!.contains("The password is invalid or the user does not have a password")) {
-            return "не верный пароль !"
+            return "неверный пароль !"
         }
         if (e.message!!.contains("You can immediately restore it by resetting your password or you can try again later.")) {
             return "Попробуйте позже или зайдите на почту для сброса пароля !"

@@ -24,7 +24,7 @@
         // text color and other
         <item name="splashGradient">@drawable/login_bg_pink</item>
         <item name="toggle_button">@drawable/toggle_button_pink</item>
-        <item name="toggle_text_byn">@color/splashStart.pink</item>
+        <item name="toggle_text_byn">@color/splash_start_pink</item>
         <!--        <item name="android:colorBackground">#F6E2EC</item>-->
         <item name="colorSurface">#F3F3F1</item>
 

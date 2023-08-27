@@ -11,10 +11,16 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.mysympleapplication.R
+import com.example.mysympleapplication.hw9.Months
 import com.example.mysympleapplication.hw9.newDesign.base.BaseFragment
 import com.example.mysympleapplication.hw9.newDesign.di.builder.ViewModelFactory
 import com.example.mysympleapplication.hw9.newDesign.domain.model.State
+import com.example.mysympleapplication.hw9.newDesign.ui.adapters.PairStatisticsRvAdapter
+import com.example.mysympleapplication.hw9.newDesign.ui.adapters.SumMonthSpendsRvAdapter
+import com.example.mysympleapplication.hw9.newDesign.ui.dialogues.ResultsDialogFragment
 import com.example.mysympleapplication.hw9.newDesign.viewmodels.StatisticViewModel
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.Chart
@@ -38,9 +44,10 @@ class StatisticFragment : BaseFragment() {
     var friendBalance: TextView? = null
     var userBalance: TextView? = null
     var progressBar: ProgressBar? = null
+    private lateinit var myAdapter: PairStatisticsRvAdapter
+    private var nameMonth: TextView? = null
     private var userSpends: Float? = null
     private var frSpends: Float? = null
-
 
     private var pieChart: PieChart? = null
     private var tfRegular: Typeface? = null
@@ -55,6 +62,7 @@ class StatisticFragment : BaseFragment() {
         return inflater.inflate(R.layout.fragment_statistic, container, false)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         init(view)
         var totalExpenses = 0f
@@ -66,16 +74,16 @@ class StatisticFragment : BaseFragment() {
             userBalance?.text = it?.balance
         }
         viewModelStatistic.userSpendsLiveData.observe(viewLifecycleOwner) {
-            userExpenses?.text = it?.value_spends.toString()
+            userExpenses?.text = "${it?.value_spends} BYN"
             userSpends = it!!.value_spends
             totalExpenses += it.value_spends
             if (frSpends != null) {
                 preparePieData(userSpends, frSpends, totalExpenses)
             }
-
+            nameMonth?.text = Months.getMonth(viewModelStatistic.getDateDbFormat()).nameMonth
         }
         viewModelStatistic.friendSpendsLiveData.observe(viewLifecycleOwner) {
-            friendExpenses?.text = it.value_spends.toString()
+            friendExpenses?.text = "${it?.value_spends} BYN"
             frSpends = it.value_spends
             totalExpenses += it.value_spends
             if (userSpends != null) {
@@ -90,10 +98,14 @@ class StatisticFragment : BaseFragment() {
                 State.SUCCESS -> {
                     hideView(progressBar!!)
                 }
+
                 State.LOADING -> showView(progressBar!!)
                 State.ERROR -> showMessage(state.stateDescription)
                 else -> State.ERROR
             }
+        }
+        viewModelStatistic.usersSpendsListLiveData.observe(viewLifecycleOwner) {
+            myAdapter.setList(it)
         }
 
     }
@@ -106,6 +118,13 @@ class StatisticFragment : BaseFragment() {
         progressBar = view.findViewById(R.id.progressBar)
         pieChart = view.findViewById(R.id.pieChart)
         pieChart!!.setNoDataText("")
+        nameMonth = view.findViewById(R.id.name_month_statistic)
+        val rvAdapter: RecyclerView = view.findViewById(R.id.rv_pair_statistic)
+        myAdapter = PairStatisticsRvAdapter()
+        rvAdapter.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = myAdapter
+        }
     }
 
     private fun preparePieData(userData: Float?, frData: Float?, expenses: Float) {
@@ -115,7 +134,8 @@ class StatisticFragment : BaseFragment() {
         pieChart!!.setExtraOffsets(5F, 10F, 5F, 5F)
         pieChart!!.dragDecelerationFrictionCoef = 0.95f
         pieChart!!.setCenterTextTypeface(tfLight)
-        pieChart!!.centerText = String.format("Всего Расходы: %.2f", expenses)
+        pieChart!!.setCenterTextSize(14f)
+        pieChart!!.centerText = String.format("Всего Расходы:\n %.2f BYN", expenses)
         pieChart!!.isDrawHoleEnabled = true
         pieChart!!.setHoleColor(Color.WHITE)
         pieChart!!.setTransparentCircleColor(Color.WHITE)
@@ -186,8 +206,8 @@ class StatisticFragment : BaseFragment() {
         // add colors
         val colors: ArrayList<Int> = ArrayList()
 
-        colors.add(ColorTemplate.rgb(getString(R.color.colorGrafik_fon)))
-        colors.add(ColorTemplate.rgb(getString(R.color.colorGreen)))
+        colors.add(ColorTemplate.rgb(getString(R.color.GreenNDColor)))
+        colors.add(ColorTemplate.rgb(getString(R.color.colorPrimaryDarkND)))
 
         colors.add(ColorTemplate.getHoloBlue())
         dataSet.colors = colors

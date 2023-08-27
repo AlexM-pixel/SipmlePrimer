@@ -47,10 +47,6 @@ class SpendsMapper @Inject constructor(private val getCategoryPay: GetCategoryPa
         for (category in listCategory) {
             if (spendName.equals(category.ruName)) {
                 //    val uri = repoFrStorage.downloadImageUrl(category.imageName)
-                Log.e(
-                    "getNameImageByMapper",
-                    "categoryPay=${category.ruName}, imageName=${category.imageName}"
-                )
                 return category.imageName
             }
         }

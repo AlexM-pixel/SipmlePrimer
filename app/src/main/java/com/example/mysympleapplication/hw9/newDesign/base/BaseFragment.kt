@@ -47,11 +47,12 @@ abstract class BaseFragment : DaggerFragment() {
     }
     fun showMessage(text: String?) {
         val toast = Toast.makeText(
-            context,
+            requireContext(),
             text,
             Toast.LENGTH_LONG
         )
         toast.setGravity(Gravity.CENTER, 0, 0)
         toast.show()
     }
+
 }

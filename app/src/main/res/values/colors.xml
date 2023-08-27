@@ -11,16 +11,20 @@
 
     <color name="colorPalette3">#2C3E50</color>
     <color name="colorPalette1">#FFFFFF</color>
-    <color name="splashStart.pink">#FA7DB4</color>
-    <color name="splashEnd.pink">#FE3998</color>
+    <color name="splash_start_pink">#FA7DB4</color>
+    <color name="splash_end_pink">#FE3998</color>
     <color name="colorPaletteBlue">#03A9F4</color>
     <color name="colorPaletteOrange">#FF9800</color>
     <color name="colorPaletteDef">#00BCD4</color>
 
     //----newDesign_colors//
+    <color name="colorPrimaryDarkND">#4A8F57</color>
+
     <color name="backgroundGreenNDColor">#5FB670</color>
+    <color name="GreenNDColor">#68C67A</color>
     <color name="backgroundYellowNDColor">#ffe54a</color>
     <color name="text_colorND">#837777</color>
+    <color name="color_PaletteND">#888787</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="green_cycle">#3D5FB670</color>

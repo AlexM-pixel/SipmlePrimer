@@ -3,6 +3,7 @@ package com.example.mysympleapplication.hw9.newDesign.data.repositories.db_repos
 import com.example.mysympleapplication.hw9.SumSpendsOfMonth
 import com.example.mysympleapplication.hw9.newDesign.data.mapper.SumSpendsOfMonthMapper
 import com.example.mysympleapplication.hw9.newDesign.data.db.AppDataBase
+import com.example.mysympleapplication.hw9.newDesign.data.entity_model.SumSpendsOfMonthEntity
 import javax.inject.Inject
 
 class SumSpendsRepositoryImpl @Inject constructor(
@@ -15,7 +16,7 @@ class SumSpendsRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getCurrentMonthExp(mDate:String): SumSpendsOfMonth {
-        val monthExpenses = db.spendDao().getCurrentMonthExpenses(mDate)!!
+        val monthExpenses = db.spendDao().getCurrentMonthExpenses(mDate)?: SumSpendsOfMonthEntity(mDate,0f)
         return mapper.mapFromEntity(monthExpenses)
     }
 }

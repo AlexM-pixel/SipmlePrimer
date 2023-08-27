@@ -42,6 +42,6 @@ interface SpendDao {
     @Query("SELECT id, SUM(value) as value, date, spendName FROM spends WHERE strftime(\'%m-%Y\', date)=strftime( :choiceDate) GROUP BY spendName ORDER BY date DESC")
     suspend fun getMonthSpends(choiceDate: String): List<SpendEntity>
 
-    @Query("SELECT SUM(value) as value_spends, date as dateM  FROM spends WHERE strftime(\'%m-%Y\', date)=strftime(\'%m-%Y\',:currentDate) GROUP BY strftime(\'%m-%Y\', date) ORDER BY date DESC LIMIT 1")
+    @Query("SELECT SUM(value) as value_spends, strftime('%m-%Y', date) as dateM  FROM spends WHERE strftime(\'%m-%Y\', date)=strftime(\'%m-%Y\',:currentDate) GROUP BY strftime(\'%m-%Y\', date) ORDER BY date DESC LIMIT 1")
     suspend fun getCurrentMonthExpenses(currentDate:String): SumSpendsOfMonthEntity?
 }

@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
@@ -23,16 +22,20 @@
         <entry key="app/src/main/res/drawable/delete_forever_black_24dp.xml" value="0.3385" />
         <entry key="app/src/main/res/drawable/frame.xml" value="0.309" />
         <entry key="app/src/main/res/drawable/frame_black.xml" value="0.2935" />
+        <entry key="app/src/main/res/drawable/gradient_bar.xml" value="0.247" />
         <entry key="app/src/main/res/drawable/gradient_bg.xml" value="0.2955" />
         <entry key="app/src/main/res/drawable/ic_keyboard_arrow_right_24dp.xml" value="0.3675" />
         <entry key="app/src/main/res/drawable/ic_settings_24.xml" value="0.2305" />
         <entry key="app/src/main/res/drawable/ic_turned_in_not_black_24dp.xml" value="0.2305" />
         <entry key="app/src/main/res/drawable/login_bg_def.xml" value="0.3295" />
         <entry key="app/src/main/res/drawable/login_bg_orange.xml" value="0.1715" />
+        <entry key="app/src/main/res/drawable/login_bg_pink.xml" value="0.247" />
         <entry key="app/src/main/res/drawable/my_button_bg_nd.xml" value="0.3385" />
         <entry key="app/src/main/res/drawable/radius.xml" value="0.1715" />
         <entry key="app/src/main/res/drawable/radius2.xml" value="0.1715" />
         <entry key="app/src/main/res/drawable/shadow.xml" value="0.3295" />
+        <entry key="app/src/main/res/drawable/stats_progress.xml" value="0.247" />
+        <entry key="app/src/main/res/drawable/toggle_button_pink.xml" value="0.247" />
         <entry key="app/src/main/res/layout/activity_constrain.xml" value="0.24814814814814815" />
         <entry key="app/src/main/res/layout/activity_detail.xml" value="0.2222222222222222" />
         <entry key="app/src/main/res/layout/activity_detail_month.xml" value="0.4244791666666667" />
@@ -44,7 +47,7 @@
         <entry key="app/src/main/res/layout/fragment_bottom_nav.xml" value="0.4119791666666667" />
         <entry key="app/src/main/res/layout/fragment_detail_monthly.xml" value="0.4244791666666667" />
         <entry key="app/src/main/res/layout/fragment_edit_spend.xml" value="0.375" />
-        <entry key="app/src/main/res/layout/fragment_general_expenses.xml" value="0.4244791666666667" />
+        <entry key="app/src/main/res/layout/fragment_general_expenses.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_home_nd.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_images.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.2671875" />
@@ -54,7 +57,7 @@
         <entry key="app/src/main/res/layout/fragment_settings_nd.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_spends_of_mounth.xml" value="0.4244791666666667" />
         <entry key="app/src/main/res/layout/fragment_splash.xml" value="0.20035460992907803" />
-        <entry key="app/src/main/res/layout/fragment_statistic.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/fragment_statistic.xml" value="0.45" />
         <entry key="app/src/main/res/layout/fragment_statistics_nd.xml" value="0.4244791666666667" />
         <entry key="app/src/main/res/layout/item_detail_byname.xml" value="0.351129363449692" />
         <entry key="app/src/main/res/layout/item_details_inFragmentEdit.xml" value="0.3463541666666667" />
@@ -63,7 +66,7 @@
         <entry key="app/src/main/res/layout/item_empty_detail_spend.xml" value="0.4244791666666667" />
         <entry key="app/src/main/res/layout/item_image.xml" value="0.4234375" />
         <entry key="app/src/main/res/layout/item_monthly_spends.xml" value="0.5" />
-        <entry key="app/src/main/res/layout/item_spends.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/item_spends.xml" value="0.4166666666666667" />
         <entry key="app/src/main/res/layout/item_viewpager.xml" value="0.4119791666666667" />
         <entry key="app/src/main/res/layout/save_values.xml" value="0.2916666666666667" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.375" />
@@ -76,7 +79,7 @@
     <option name="myDefaultNotNull" value="androidx.annotation.NonNull" />
     <option name="myNullables">
       <value>
-        <list size="13">
+        <list size="14">
           <item index="0" class="java.lang.String" itemvalue="org.jetbrains.annotations.Nullable" />
           <item index="1" class="java.lang.String" itemvalue="javax.annotation.Nullable" />
           <item index="2" class="java.lang.String" itemvalue="javax.annotation.CheckForNull" />
@@ -90,12 +93,13 @@
           <item index="10" class="java.lang.String" itemvalue="org.checkerframework.checker.nullness.compatqual.NullableType" />
           <item index="11" class="java.lang.String" itemvalue="com.android.annotations.Nullable" />
           <item index="12" class="java.lang.String" itemvalue="org.eclipse.jdt.annotation.Nullable" />
+          <item index="13" class="java.lang.String" itemvalue="org.jspecify.nullness.Nullable" />
         </list>
       </value>
     </option>
     <option name="myNotNulls">
       <value>
-        <list size="12">
+        <list size="13">
           <item index="0" class="java.lang.String" itemvalue="org.jetbrains.annotations.NotNull" />
           <item index="1" class="java.lang.String" itemvalue="javax.annotation.Nonnull" />
           <item index="2" class="java.lang.String" itemvalue="edu.umd.cs.findbugs.annotations.NonNull" />
@@ -108,11 +112,12 @@
           <item index="9" class="java.lang.String" itemvalue="org.checkerframework.checker.nullness.compatqual.NonNullType" />
           <item index="10" class="java.lang.String" itemvalue="com.android.annotations.NonNull" />
           <item index="11" class="java.lang.String" itemvalue="org.eclipse.jdt.annotation.NonNull" />
+          <item index="12" class="java.lang.String" itemvalue="org.jspecify.nullness.NonNull" />
         </list>
       </value>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="jbr-17" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
