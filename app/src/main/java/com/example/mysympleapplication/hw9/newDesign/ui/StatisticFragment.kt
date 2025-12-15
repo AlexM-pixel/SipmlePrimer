@@ -2,7 +2,6 @@ package com.example.mysympleapplication.hw9.newDesign.ui
 
 import android.annotation.SuppressLint
 import android.graphics.Color
-import android.graphics.Paint
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,11 +18,8 @@ import com.example.mysympleapplication.hw9.newDesign.base.BaseFragment
 import com.example.mysympleapplication.hw9.newDesign.di.builder.ViewModelFactory
 import com.example.mysympleapplication.hw9.newDesign.domain.model.State
 import com.example.mysympleapplication.hw9.newDesign.ui.adapters.PairStatisticsRvAdapter
-import com.example.mysympleapplication.hw9.newDesign.ui.adapters.SumMonthSpendsRvAdapter
-import com.example.mysympleapplication.hw9.newDesign.ui.dialogues.ResultsDialogFragment
 import com.example.mysympleapplication.hw9.newDesign.viewmodels.StatisticViewModel
 import com.github.mikephil.charting.animation.Easing
-import com.github.mikephil.charting.charts.Chart
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData

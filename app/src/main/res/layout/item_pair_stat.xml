@@ -23,8 +23,7 @@
             app:layout_constraintBottom_toTopOf="@id/stat_title_spend_nd"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            >
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/statistic_image_spends_nd"
@@ -42,11 +41,23 @@
             android:gravity="center"
             android:text="Магазин"
             android:textColor="@color/black"
-            android:textSize="@dimen/spend_text_size_rv"
+            android:textSize="@dimen/item_text_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/frame_spends_nd"
             app:layout_constraintStart_toStartOf="@+id/frame_spends_nd"
             app:layout_constraintTop_toBottomOf="@id/frame_spends_nd" />
+
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/barChartUser"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:elevation="8dp"
+            app:layout_constraintBottom_toTopOf="@id/user_spends_rvstat"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
         <TextView
             android:id="@+id/user_spends_rvstat"

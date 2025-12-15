@@ -29,8 +29,8 @@ class ViewPagerAdapter : RecyclerView.Adapter<ViewPagerAdapter.PagerVH>() {
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: PagerVH, position: Int) {
-        holder.desc.text = "${holder.desc.text} + $position"
-        holder.title.text = "${holder.title.text} + $position"
+        holder.desc.text = if (position==1)"Здесь можно добавить покупку которую случайно удалил" else "${holder.desc.text}  $position"
+        holder.title.text = if (position==1) "Добавить покупку" else "${holder.title.text} + $position"
         holder.btn.setOnClickListener { onButtonClick.invoke(position)}
     }
 

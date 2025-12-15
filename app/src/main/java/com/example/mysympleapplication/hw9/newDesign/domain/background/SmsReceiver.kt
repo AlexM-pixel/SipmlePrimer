@@ -30,7 +30,7 @@ class SmsReceiver : BroadcastReceiver() {
                         bodySms.append(smsMessage.displayMessageBody)
                     }
                     sender = smsMessage?.displayOriginatingAddress
-                    Log.e("SmsReceiver", " onReceive: , $bodySms \n $sender")
+                    Log.e("SmsReceiver", "Новый ресивер onReceive: , $bodySms \n $sender")
                     BankSmsService.startActionSms(
                         context = context,
                         nameAddresses = sender ?: "null",

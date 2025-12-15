@@ -22,8 +22,8 @@ class FriendsDataRepositoryImpl @Inject constructor(
     override suspend fun getFriendsBalance(mail: String): Balance? {
         val snapshot = fr
             .collection(mail)
-            .document("balance")  //заменить на  UserDocuments.BALANCE.name
-            .collection("balance")
+            .document(UserDocuments.BALANCE.name)
+            .collection(UserDocuments.BALANCE.name)
             .document("0")
             .get()
             .await()

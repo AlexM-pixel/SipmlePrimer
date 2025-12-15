@@ -9,6 +9,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.RemoteInput
+import androidx.lifecycle.viewModelScope
 import com.example.mysympleapplication.R
 import com.example.mysympleapplication.hw9.newDesign.domain.model.Balance
 import com.example.mysympleapplication.hw9.newDesign.domain.model.NameSpend
@@ -61,6 +62,9 @@ class BankSmsService : IntentService("BankSmsService") {
     @Inject
     lateinit var getCategoryPayUseCase: GetCategoryPayUseCase
 
+    @Inject
+    lateinit var addNewCategoryUseCase: InsertModelNameBySpendUseCase
+
     private var coroutineJob: Job = Job()
     private val coroutineContext: CoroutineContext
         get() = Dispatchers.IO + coroutineJob
@@ -80,6 +84,7 @@ class BankSmsService : IntentService("BankSmsService") {
                     handleActionSms(body = bodySms.lowercase(), name = nameAddresses)
                 }
             }
+
             ACTION_NOTIFICATION -> {    // проследить откуда приходит и если незнакомый платеж придумать как сохранять
                 val namePay = intent.getStringExtra(NAME_UNKNOWN_PAY)
                 val body = intent.getStringExtra(SMS_BODY)
@@ -95,13 +100,14 @@ class BankSmsService : IntentService("BankSmsService") {
 
     private fun handleActionSms(body: String, name: String?) {
         val bankSet = MainPrefs.setBankNames
-        Log.e("handleActionSms", "bankSet[0]=${body}")
+        Log.e("handleActionSms", "bankSet.size=${bankSet.size}, bankset[0]: ${bankSet.firstOrNull()}")
         if (bankSet.size > 0 && checkIsBankSms(name, bankSet)) {
             when (getSmsType(body)) {
                 SmsType.POPOLNENIE -> {
                     insertNewPostuplenie(body)
                     saveBalance(body)
                 }
+
                 SmsType.SPEND -> {
                     Log.e("SmsType.SPEND", "OK!")
                     insertNewSpend(body)
@@ -111,7 +117,10 @@ class BankSmsService : IntentService("BankSmsService") {
     }
 
     private fun getSmsType(body: String): SmsType {
-        if (body.contains("popolnenie") || body.contains("postuplenie") || body.contains("credit") || body.contains("zachislenie")) {
+        if (body.contains("popolnenie") || body.contains("postuplenie") || body.contains("credit") || body.contains(
+                "zachislenie"
+            )
+        ) {
             return SmsType.POPOLNENIE
         }
         return SmsType.SPEND
@@ -133,6 +142,16 @@ class BankSmsService : IntentService("BankSmsService") {
         createNotification(bodySms)
     }
 
+    private fun addNewCategory(nameNewCategory: String) {
+        Log.e("BankSmsService", "addNewCategory  : $nameNewCategory")
+        val nameSpend = NameSpend(
+            id = null, nameSpend = nameNewCategory, ruName = nameNewCategory,
+            Config.DEF_SPEND_NAME
+        )
+        scope.launch(Dispatchers.IO) {
+            addNewCategoryUseCase.addNewModelNameBySpend(nameSpend)
+        }
+    }
 
     private fun saveSpend(spend: Spend, id: Int?) {
         saveSpendDbUseCase(spend = spend).onEach {
@@ -142,9 +161,11 @@ class BankSmsService : IntentService("BankSmsService") {
                     Log.e("saveSpend", "saveSpendDbUseCase Success!")
                     if (id != null) resultNotify(id)
                 }
+
                 is Resource.Error -> {
                     Log.e("saveSpend", "saveSpendDbUseCase ERROR: i${it.message}")
                 }
+
                 else -> {}
             }
         }.launchIn(scope)
@@ -154,9 +175,11 @@ class BankSmsService : IntentService("BankSmsService") {
                 is Resource.Success -> {
                     Log.e("saveSpend", "saveSpendFrStoreUseCase Success!")
                 }
+
                 is Resource.Error -> {
                     Log.e("saveSpend", "saveSpendFrStoreUseCase ERROR: i${it.message}")
                 }
+
                 else -> {}
             }
         }.launchIn(scope)
@@ -180,7 +203,7 @@ class BankSmsService : IntentService("BankSmsService") {
 
         val value = getValue(bodySms)
         val id = getId(ruName, value, Date())
-        return Spend(id = id, spendName = ruName, value = value, date = date,null)
+        return Spend(id = id, spendName = ruName, value = value, date = date, "null")
     }
 
     private fun createNotification(bodySms: String) {
@@ -279,19 +302,33 @@ class BankSmsService : IntentService("BankSmsService") {
             if (matcherMss.find()) {
                 value = checkBalance(i, body)
                 Log.e("getBalance!!!", "matcherMss word= $i")
-                return Balance(0L, value?:"error checkBalance")
+                return Balance(0L, value ?: "error checkBalance")
             }
         }
         return null
     }
 
     private fun checkBalance(keyWord: String, body: String): String? {
-        val pattern:Pattern  =   when (keyWord) {
-           "ост"  -> {Pattern.compile("(ост+)(.*)([byn])")}
-           "ost"  -> {Pattern.compile("(ost+)(.*)([byn])")}
-           "ostatok"  -> {Pattern.compile("(ostatok+)(.*)([byn])")}
-           "dostupno"  -> {Pattern.compile("(dostupno+)(.*)([byn])")}
-            else -> { Pattern.compile("(OST+)(.*)([BYN])")}
+        val pattern: Pattern = when (keyWord) {
+            "ост" -> {
+                Pattern.compile("(ост+)(.*)([byn])")
+            }
+
+            "ost" -> {
+                Pattern.compile("(ost+)(.*)([byn])")
+            }
+
+            "ostatok" -> {
+                Pattern.compile("(ostatok+)(.*)([byn])")
+            }
+
+            "dostupno" -> {
+                Pattern.compile("(dostupno+)(.*)([byn])")
+            }
+
+            else -> {
+                Pattern.compile("(OST+)(.*)([BYN])")
+            }
         }
         val matcherValue = pattern.matcher(body)
         if (matcherValue.find()) {
@@ -338,11 +375,13 @@ class BankSmsService : IntentService("BankSmsService") {
         saveNameModelByBodySms(bodySms, nameUnknownPay)
         val spend: Spend = getSpend(bodySms = bodySms, ruName = nameUnknownPay)
         saveSpend(spend = spend, id = id)
+        addNewCategory(nameUnknownPay)      // здесь добавил новую категорию при создании неизвестного платежа (тут бы чат GPT)
         saveBalance(bodySms)
     }
 
     private fun saveNameModelByBodySms(bodySms: String, nameUnknownPay: String) {
-        val nameSpendByBodySms: String? = parseSmsContent(bodySms) //тут возможно надо метод чтобы взять имя для новой категории из смс
+        val nameSpendByBodySms: String? =
+            parseSmsContent(bodySms) //тут возможно надо метод чтобы взять имя для новой категории из смс
         if (nameSpendByBodySms != null) {
             scope.launch {
                 insertModelUseCase.addNewModelNameBySpend(
@@ -421,7 +460,10 @@ class BankSmsService : IntentService("BankSmsService") {
     private fun getValue(bodySms: String): String {
         var value = ""
         val patternValue: Pattern
-        if (!bodySms.contains("usd") && !bodySms.contains("summa") && !bodySms.contains("retail") && !bodySms.contains("oplata")) {
+        if (!bodySms.contains("usd") && !bodySms.contains("summa") && !bodySms.contains("retail") && !bodySms.contains(
+                "oplata"
+            )
+        ) {
             patternValue = Pattern.compile("(сумма+)(.*)([byn])")
             Log.e("qwe", "(сумма+)(.*)([byn])")
         } else if (bodySms.contains("summa") && !bodySms.contains("usd")) {
@@ -432,7 +474,7 @@ class BankSmsService : IntentService("BankSmsService") {
             Log.e("qwe", "(retail+)(.*)([byn])")
         } else if (bodySms.contains("summa") && bodySms.contains("usd")) {
             patternValue = Pattern.compile("(summa+)(.*)([usd])")
-        }else if (bodySms.contains("oplata") && bodySms.contains("byn")){
+        } else if (bodySms.contains("oplata") && bodySms.contains("byn")) {
             patternValue = Pattern.compile("(oplata+)(.*)([byn])")
         } else {
             patternValue = Pattern.compile("(сумма+)(.*)([usd])")

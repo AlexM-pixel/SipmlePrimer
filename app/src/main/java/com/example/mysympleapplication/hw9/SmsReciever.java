@@ -46,6 +46,8 @@ public class SmsReciever extends BroadcastReceiver {
                        body_sms.append(messages[i].getMessageBody());
                     }
                     String adressat_sms = messages[0].getDisplayOriginatingAddress();
+                    Log.e("SmsReciever", adressat_sms + " , старый ресивер на джаве");
+
                     Intent serviceIntent = new Intent(context, NotificationSmsService.class);
                     serviceIntent.putExtra(SMS_BODY, body_sms.toString());
                     serviceIntent.putExtra(SMS_ADDRESSAT, adressat_sms);

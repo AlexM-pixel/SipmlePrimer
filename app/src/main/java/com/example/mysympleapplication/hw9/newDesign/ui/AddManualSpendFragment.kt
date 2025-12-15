@@ -159,7 +159,8 @@ class AddManualSpendFragment : BaseFragment() {
             } else {
                 viewModel.changeBalance(oldBalance ?: 0f)
             }
-        } else Toast.makeText(requireContext(), "insert all members", Toast.LENGTH_SHORT).show()
+        } else Toast.makeText(requireContext(),
+            getString(R.string.insert_all_members), Toast.LENGTH_SHORT).show()
     }
 
     private fun isEmptyBalanceEditView(): Boolean {

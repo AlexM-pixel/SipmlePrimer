@@ -7,10 +7,12 @@
         android:id="@+id/textHomefr"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="StatisticFragment"
-        android:textSize="26sp"
+        android:text="Statistic Fragment \n позже добавлю статистику с графиками"
+        android:textSize="28sp"
+        android:textColor="@color/white"
         android:background="@drawable/my_button_bg_nd"
         android:gravity="center"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

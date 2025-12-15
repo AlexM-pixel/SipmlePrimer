@@ -89,5 +89,6 @@
     <string name="channel_description">main_channel_description</string>
     <string name="text_write_name">пиши название платежа</string>
     <string name="question_save_spend">Сохранить платеж ?</string>
+    <string name="insert_all_members">insert all members</string>
 
 </resources>

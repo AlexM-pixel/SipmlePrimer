@@ -48,6 +48,7 @@ enum class Images(val imageSource: Int, val nameImage: String) {
     PROTEIN(R.drawable.protein, "protein"),
     SUMKA(R.drawable.sumka, "simple_sumka"),
     ZUB(R.drawable.tooth, "tooth"),
+    NULL(R.drawable.produkti, "produkti"),
     VANNA(R.drawable.vanna, "vanna");
 
     companion object {

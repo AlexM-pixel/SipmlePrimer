@@ -82,13 +82,16 @@ class HomeFragment : BaseFragment() {
                 2 -> {
                     Toast.makeText(
                         requireContext(),
-                        "Воспользуйтесь нашим калькулятором с удобным ковертором",
+                        "Воспользуйтесь нашим калькулятором с удобным конвертором",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
                 3 -> {
                     Toast.makeText(requireContext(), "Всего вы потратили", Toast.LENGTH_SHORT)
                         .show()
+                }
+                4-> {
+                    Toast.makeText(requireContext(), "пока не придумал", Toast.LENGTH_SHORT).show()
                 }
                 else -> Toast.makeText(requireContext(), "Error item position", Toast.LENGTH_SHORT)
                     .show()

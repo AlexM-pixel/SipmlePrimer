@@ -48,8 +48,8 @@ class BottomNavFragment : BaseFragment() {
             fragment = when (i) {
                 0 -> homeFragment
                 1 -> {
-                    if (isHasAccess) statisticSoloFragment
-                    else statisticFragment
+                    if (isHasAccess)  statisticFragment
+                    else statisticSoloFragment
                 }
                 2 -> settingsFragment
                 else -> homeFragment
