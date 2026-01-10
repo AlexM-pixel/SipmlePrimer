@@ -74,6 +74,14 @@ class RepositoryModule {
     ): NameSpendsDbRepository {
         return NameSpendsDbRepositoryImpl(db = db, mapper = mapper)
     }
+    @Provides
+    fun provideBankCardDbRepository(
+        db: AppDataBase,
+        mapper: BankCardMapper
+    ): BankCardDbRepository {
+        return BankCardRepositoryImpl(db, mapper = mapper)
+    }
+
 
     @Provides
     fun provideModelsSpendsDbRepository(

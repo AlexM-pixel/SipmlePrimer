@@ -19,6 +19,7 @@ class SpendsMapper @Inject constructor(private val getCategoryPay: GetCategoryPa
             spendName = entity.spendName,
             value = entity.value,
             date = entity.date,
+            cardId = entity.cardId,
             url = null
         )
     }
@@ -29,7 +30,8 @@ class SpendsMapper @Inject constructor(private val getCategoryPay: GetCategoryPa
             id = domainModel.id,
             spendName = domainModel.spendName,
             value = domainModel.value,
-            date = domainModel.date
+            date = domainModel.date,
+            cardId = domainModel.cardId
         )
     }
 
@@ -39,6 +41,7 @@ class SpendsMapper @Inject constructor(private val getCategoryPay: GetCategoryPa
             spendName = entity.spendName,
             value = entity.value,
             date = entity.date,
+            cardId = entity.cardId,
             url = getNameImage(entity.spendName, allNamesSpends) ?: "produkti"
         )
     }

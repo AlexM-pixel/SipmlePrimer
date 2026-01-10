@@ -5,5 +5,6 @@ data class Spend (
     var  spendName: String,
     var value: String,
     var date: String,
+    var cardId: String,
     var url:String?
 )

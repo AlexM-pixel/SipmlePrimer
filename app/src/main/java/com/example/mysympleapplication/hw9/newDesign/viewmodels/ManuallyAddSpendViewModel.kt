@@ -113,7 +113,7 @@ class ManuallyAddSpendViewModel @Inject constructor(
         }
         return false
     }
-
+//если при изменении имени приходит категорииПокупки нет то запустить метод: addNewCategory, усли есть заменить и там имя
     private fun addNewCategory(nameNewCategory: String) {
         Log.e("CheckCategory", "Just don't have category : $nameNewCategory")
         val nameSpend = NameSpend(

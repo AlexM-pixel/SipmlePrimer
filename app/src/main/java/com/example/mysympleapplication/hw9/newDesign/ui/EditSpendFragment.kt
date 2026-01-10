@@ -75,7 +75,7 @@ class EditSpendFragment : BaseFragment() {
             name = spend?.spendName
             titleFragment?.text = name
             value =
-                spend?.value   // может после получения значения запускать подщет процентов и сетить прогрессбар
+                spend?.value
             parentValueTextView?.text = "$value"
         }
         init(view)
@@ -85,6 +85,7 @@ class EditSpendFragment : BaseFragment() {
             sumCount = 0f
             editAdapter.setList(list)
             list.forEach {
+                Log.e("  list.forEach ", "DetailSpend.value=${it.value}")
                 sumCount += it.value.toFloat()
             }
             sumValue?.text = "$sumCount BYN"
@@ -96,9 +97,11 @@ class EditSpendFragment : BaseFragment() {
                     hideKeyboard()
                     clearEditTexts()
                 }
+
                 State.ERROR -> {
                     Toast.makeText(requireContext(), "ошибочка вышла!", Toast.LENGTH_SHORT).show()
                 }
+
                 else -> {}
             }
         }
@@ -122,7 +125,7 @@ class EditSpendFragment : BaseFragment() {
     @SuppressLint("SetTextI18n")
     private fun init(view: View) {
         titleFragment = view.findViewById(R.id.title_editSpend)
-        titleFragment?.setOnClickListener { showDialogSetSpend()}
+        titleFragment?.setOnClickListener { showDialogSetSpend() }
         imageTitle = view.findViewById(R.id.edit_image_spends_nd)
         parentValueTextView = view.findViewById<TextView>(R.id.value_editFragment)
         btnBack = view.findViewById(R.id.btn_back_from_edit)
@@ -186,9 +189,20 @@ class EditSpendFragment : BaseFragment() {
     }
 
     private fun setProgressBar(actualValue: Float) {
-        val percents: Int = (actualValue / (value?.toFloat() ?: 0f) * 100).roundToInt()
+        Log.e("setProgressBar","actualValue=$actualValue, value=$value")
+
+        // 1. Безопасно парсим строку. Если пусто или не число — получим 0.0
+        val totalValue = value?.toFloatOrNull() ?: 0f
+        Log.d("setProgressBar", "actualValue=$actualValue, totalValue=$totalValue")
+
+        // Считаем проценты только если totalValue > 0, иначе всегда 0
+        val percents: Int = if (totalValue > 0f && !actualValue.isNaN()) {
+            ((actualValue / totalValue) * 100).roundToInt()
+        } else {
+            0
+        }
         progressBar?.max = 100
-        if (actualValue < detailsValue) {
+        if (!actualValue.isNaN() && actualValue < detailsValue) {
             mHandler =
                 object : Handler(Looper.getMainLooper()) {
                     @SuppressLint("SetTextI18n")
@@ -221,13 +235,14 @@ class EditSpendFragment : BaseFragment() {
         }
         detailsValue = actualValue
     }
-    private fun showDialogSetSpend(){
+
+    private fun showDialogSetSpend() {
         val fragmentDialog = EditSpendDialog()
         if (!fragmentDialog.isAdded) {
             val bundle = Bundle()
             bundle.putString(SPEND_DIALOG_NAME, name)
             bundle.putString(SPEND_DIALOG_VALUE, value)
-            bundle.putLong(SPEND_ID_ARG,idKey!!)
+            bundle.putLong(SPEND_ID_ARG, idKey!!)
             fragmentDialog.arguments = bundle
         }
         requireActivity().supportFragmentManager.let {

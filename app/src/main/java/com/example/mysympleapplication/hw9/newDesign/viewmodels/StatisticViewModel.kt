@@ -119,7 +119,8 @@ class StatisticViewModel @Inject constructor(
                                 0,
                                 key,
                                 valSpend.toString(),
-                                pairList.firstOrNull()?.date?:"0",
+                                pairList.firstOrNull()?.date ?: "0",
+                                pairList.firstOrNull()?.cardId ?: "",
                                 pairList.firstOrNull()?.url ?: ""
                             )
                             friendSpendList.add(spend)
@@ -234,7 +235,9 @@ class StatisticViewModel @Inject constructor(
                 val pairSpends =
                     PairSpends(
                         valueUser = 0f,
-                        valueFriend = friend.value.toFloatOrNull() ?: 0f, nameSpend = friend.spendName, url = friend.url
+                        valueFriend = friend.value.toFloatOrNull() ?: 0f,
+                        nameSpend = friend.spendName,
+                        url = friend.url
                     )
                 pairSpendsList.add(pairSpends)
             }
@@ -276,7 +279,7 @@ class StatisticViewModel @Inject constructor(
         return newDateFormat.format(getdate);
     }
 
-     fun getDateDbFormat(): String {
+    fun getDateDbFormat(): String {
         val getdate = Date()
         val newDateFormat = SimpleDateFormat("MM-yyyy")
         return newDateFormat.format(getdate)

@@ -90,7 +90,7 @@ class EditSpendViewModel @Inject constructor(
             if (spendName.equals(category.ruName)) {
                 Log.e(
                     "getNameImage",
-                    "categoryPay=${category.ruName}, imageName=${category.imageName}"
+                    "categoryPay=${category.ruName}, imageName=${category.imageName},spendName= $spendName "
                 )
                 return category.imageName
             }

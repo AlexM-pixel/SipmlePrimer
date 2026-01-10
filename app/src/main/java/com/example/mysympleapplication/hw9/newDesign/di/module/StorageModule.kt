@@ -21,6 +21,11 @@ class StorageModule {
     fun provideUserDao(db: AppDataBase): UserDao {
         return db.userDao()
     }
+    @Singleton
+    @Provides
+    fun provideBankCardDao(db: AppDataBase): BankCardDao {
+        return db.bankCardDao()
+    }
 
     @Singleton
     @Provides
