@@ -31,4 +31,8 @@ class BankCardRepositoryImpl @Inject constructor(
         db.bankCardDao().updateCard(mapper.mapToEntity(card))
     }
 
+    override suspend fun deleteCard(cardId: Long) {
+        db.bankCardDao().deleteCardById(cardId = cardId)
+    }
+
 }

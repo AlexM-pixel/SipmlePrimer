@@ -8,4 +8,5 @@ interface BankCardDbRepository {
     fun getCards(): Flow<List<BankCard>>
     suspend fun getCardByDigits(digits: String): BankCard?
     suspend fun updateCardBalance(card: BankCard)
+    suspend fun deleteCard(cardId: Long)
 }

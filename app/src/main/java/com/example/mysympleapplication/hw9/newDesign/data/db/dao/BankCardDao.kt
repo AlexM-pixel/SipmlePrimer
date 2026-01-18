@@ -19,6 +19,10 @@ interface BankCardDao {
     @Update
     suspend fun updateCard(card: BankCardEntity)
 
+
+    @Query("DELETE FROM bank_cards WHERE id = :cardId")
+    suspend fun deleteCardById(cardId: Long)
+
     // Получить список всех карт (для UI, чтобы листать их)
     // Используем Flow, чтобы UI обновлялся сам при изменении баланса
     @Query("SELECT * FROM bank_cards")

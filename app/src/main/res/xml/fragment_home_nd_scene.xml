@@ -38,7 +38,7 @@
             android:id="@+id/viewPager_home"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            motion:layout_constraintTop_toBottomOf="@+id/cardProgress"
+            motion:layout_constraintTop_toBottomOf="@+id/dots_indicator"
             android:layout_marginTop="16dp"
             motion:layout_constraintStart_toStartOf="parent" />
     </ConstraintSet>

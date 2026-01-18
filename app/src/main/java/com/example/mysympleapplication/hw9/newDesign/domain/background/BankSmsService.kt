@@ -17,7 +17,6 @@ import com.example.mysympleapplication.hw9.newDesign.domain.model.NameSpend
 import com.example.mysympleapplication.hw9.newDesign.domain.model.Postuplenie
 import com.example.mysympleapplication.hw9.newDesign.domain.model.Spend
 import com.example.mysympleapplication.hw9.newDesign.domain.usecase.*
-import com.example.mysympleapplication.hw9.newDesign.utils.Config
 import com.example.mysympleapplication.hw9.newDesign.utils.Config.CHANNEL_ID
 import com.example.mysympleapplication.hw9.newDesign.utils.Config.DEF_SPEND_NAME
 import com.example.mysympleapplication.hw9.newDesign.utils.Config.GROUP_KEY_WORK_EMAIL
@@ -25,8 +24,6 @@ import com.example.mysympleapplication.hw9.newDesign.utils.MainPrefs
 import com.example.mysympleapplication.hw9.newDesign.utils.Resource
 import dagger.android.AndroidInjection
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.regex.Pattern
@@ -59,7 +56,7 @@ class BankSmsService : Service() {
     @Inject
     lateinit var getCardByDigitsUseCase: GetCardByDigitsUseCase
     @Inject
-    lateinit var updateCardBalanceUseCase: UpdateCardBalanceUseCase
+    lateinit var updateCardUseCase: UpdateCardUseCase
 
     // SaveBankCardUseCase пригодится, если решите сохранять новую карту автоматически
     @Inject
@@ -493,7 +490,7 @@ class BankSmsService : Service() {
             // СЦЕНАРИЙ 1: Карта уже есть в базе -> Обновляем её
             card != null -> {
                 val updatedCard = card.copy(balance = newBalanceValue)
-                updateCardBalanceUseCase(updatedCard)
+                updateCardUseCase(updatedCard)
                 Log.e(
                     "BankSmsSer/saveBalance",
                     "СЦЕНАРИЙ 1: Обновлен баланс карты *${card.lastFourDigits} , баланс карты: ${updatedCard.balance}"

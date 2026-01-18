@@ -7,13 +7,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mysympleapplication.hw9.newDesign.domain.model.Balance
+import com.example.mysympleapplication.hw9.newDesign.domain.model.BankCard
 import com.example.mysympleapplication.hw9.newDesign.domain.model.NameSpend
 import com.example.mysympleapplication.hw9.newDesign.domain.model.Spend
 import com.example.mysympleapplication.hw9.newDesign.domain.model.State
 import com.example.mysympleapplication.hw9.newDesign.domain.usecase.*
 import com.example.mysympleapplication.hw9.newDesign.utils.Config
-import com.example.mysympleapplication.hw9.newDesign.utils.MainPrefs
 import com.example.mysympleapplication.hw9.newDesign.utils.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.launchIn
@@ -29,13 +28,29 @@ class ManuallyAddSpendViewModel @Inject constructor(
     private val saveSpendDbUseCase: SaveSpendDbUseCase,
     private val saveSpendFrStoreUseCase: SaveSpendFrStoreUseCase,
     private val addNewCategoryUseCase: InsertModelNameBySpendUseCase,
-    private val saveBalanceUseCase: SaveBalanceUseCase
+    // === НОВЫЕ ИНЖЕКТЫ ===
+    private val getBankCardsUseCase: GetBankCardsUseCase,       // Чтобы найти карту по ID
+    private val updateCardUseCase: UpdateCardUseCase // Чтобы обновить её баланс
 ) : ViewModel() {
 
     private val _stateLiveData = MutableLiveData<State>()
     val stateLiveData: LiveData<State> get() = _stateLiveData
     private val _namesCategorySpendLiveData = MutableLiveData<List<String>>()
     val namesCategorySpendLiveData: MutableLiveData<List<String>> get() = _namesCategorySpendLiveData
+    // Локальный список карт, чтобы мы могли быстро найти нужную по ID
+    private var currentCards: List<BankCard> = emptyList()
+    init {
+        loadCards()
+    }
+
+    // Подписываемся на карты сразу при создании ViewModel
+    private fun loadCards() {
+        getBankCardsUseCase().onEach { result ->
+            if (result is Resource.Success) {
+                currentCards = result.data ?: emptyList()
+            }
+        }.launchIn(viewModelScope)
+    }
 
     fun getAllNamesSpendForAutoComplete() {
         getCategoryUseCase().onEach { listNamesSpend ->
@@ -56,7 +71,7 @@ class ManuallyAddSpendViewModel @Inject constructor(
     }
 
 
-    fun addNewSpend(name: String, value: String, date: String, nameImage: String?) {
+    fun addNewSpend(name: String, value: String, date: String,cardId:String, nameImage: String?) {
         if (!isHavingNewCategory(name)) {
             addNewCategory(name)       // усли имя спенды новое, создаю новую категорию
         }
@@ -69,14 +84,13 @@ class ManuallyAddSpendViewModel @Inject constructor(
                 spendName = name,
                 value = value,
                 date = _date,
+                cardId = cardId,
                 url = nameImage
             )
         saveSpendDbUseCase(spend = spend).onEach {
             Log.e("saveSpendM", "onEachDbM")
             when (it) {
-                is Resource.Loading -> {
-                    _stateLiveData.value = State.LOADING
-                }
+                is Resource.Loading -> { _stateLiveData.value = State.LOADING }
                 is Resource.Success -> {
                     Log.e("saveSpendM", "saveSpendDbUseCaseM Success!")
                     _stateLiveData.value = State.SUCCESS
@@ -103,6 +117,25 @@ class ManuallyAddSpendViewModel @Inject constructor(
             }
         }.launchIn(viewModelScope)
     }
+    /**
+     * Метод находит карту по ID, вычитает сумму покупки и сохраняет новый баланс
+     */
+    fun saveNewBalance(cardIdString: String, balance: String) {
+        // Парсим ID карты (если "-1" или ошибка, то выходим)
+        val cardId = cardIdString.toLongOrNull() ?: return
+
+        // Ищем карту в нашем локальном списке
+        val cardToUpdate = currentCards.find { it.id == cardId } ?: return
+
+        // Создаем копию карты с новым балансом
+        val updatedCard = cardToUpdate.copy(balance = balance)
+
+        // Сохраняем в БД через UseCase
+        viewModelScope.launch(Dispatchers.IO) {
+            updateCardUseCase(updatedCard)
+            Log.d("ManuallyAddSpendVM", "Баланс карты ${updatedCard.cardName} обновлен: $balance")
+        }
+    }
 
     private fun isHavingNewCategory(name: String): Boolean {
         for (ruNameCategory in _namesCategorySpendLiveData.value!!) {
@@ -113,7 +146,7 @@ class ManuallyAddSpendViewModel @Inject constructor(
         }
         return false
     }
-//если при изменении имени приходит категорииПокупки нет то запустить метод: addNewCategory, усли есть заменить и там имя
+
     private fun addNewCategory(nameNewCategory: String) {
         Log.e("CheckCategory", "Just don't have category : $nameNewCategory")
         val nameSpend = NameSpend(
@@ -122,17 +155,6 @@ class ManuallyAddSpendViewModel @Inject constructor(
         )
         viewModelScope.launch(Dispatchers.IO) {
             addNewCategoryUseCase.addNewModelNameBySpend(nameSpend)
-        }
-    }
-
-    fun changeBalance(newBalance: Float) {
-        Log.e("changeBalance!!!", "Just saving new Balance! : $newBalance ")
-        val balance = Balance(0, newBalance.toString())
-        viewModelScope.launch(Dispatchers.IO) {
-            saveBalanceUseCase.saveBalance(
-                MainPrefs.mailUser,
-                balance = balance
-            )
         }
     }
 

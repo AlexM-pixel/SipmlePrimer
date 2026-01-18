@@ -21,6 +21,7 @@ import java.util.*
 import javax.inject.Inject
 
 const val ARG_BALANCE = "balanceM"
+const val ARG_ID_CARD = "_idCard"
 
 class AddManualSpendFragment : BaseFragment() {
     @Inject
@@ -36,6 +37,7 @@ class AddManualSpendFragment : BaseFragment() {
     private var adapter: ArrayAdapter<String>? = null
     private var oldBalance: Float? = null
     private var newBalance: Float? = null
+    private var idCard: String? = null
     private var getBalanceFromEdit: String? = null
     private var dateN: String? = null
 
@@ -43,6 +45,7 @@ class AddManualSpendFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let { oldBalance = it.getFloat(ARG_BALANCE) }
+        arguments?.let { idCard = it.getString(ARG_ID_CARD)?: "-1" }
     }
 
     override fun onCreateView(
@@ -74,11 +77,13 @@ class AddManualSpendFragment : BaseFragment() {
                     namesSpend?.setText("")
                     valueSpend?.setText("")
                 }
+
                 State.ERROR -> {
                     hideKeyboard()
                     Toast.makeText(requireContext(), state.stateDescription, Toast.LENGTH_SHORT)
                         .show()
                 }
+
                 else -> {}
             }
         }
@@ -141,31 +146,35 @@ class AddManualSpendFragment : BaseFragment() {
         datePicker?.show(childFragmentManager, "addManuallyDate")
     }
 
-    private fun saveSpend() {
+    private fun saveSpend() {                   // при создании новой траты беру idCard с главного фрагмента
         if (namesSpend?.text!!.isNotEmpty() && valueSpend?.text!!.isNotEmpty()) {
             viewModel.addNewSpend(
                 name = namesSpend?.text.toString(),
                 value = valueSpend?.text.toString(),
                 date = dateTextView?.text.toString(),
+                cardId = idCard ?: "",
                 nameImage = null
-            )
-            if (newBalance != oldBalance && isEmptyBalanceEditView()) {  // если баланс изменился, сохраняю новое значение
-                viewModel.changeBalance(newBalance ?: 0f)
-            } else if (!isEmptyBalanceEditView()) {
+            ) // ПОСЛЕ  СОХРАНЕНИЯ ТРАТЫ -> ОБНОВЛЯЕМ БАЛАНС КАРТЫ
+            if (newBalance != oldBalance && isEmptyBalanceEditView()) {  // если баланс изменился, сохраняю новое значение и isEmptyBalanceEditView возвращает true
+                viewModel.saveNewBalance(idCard?:"",newBalance.toString() )
+            } else if (!isEmptyBalanceEditView()) { // если пользователь сам ввел баланс
                 newBalance = getBalanceFromEdit?.toFloat()
-                viewModel.changeBalance(
-                    getBalanceFromEdit?.toFloat() ?: 0f
-                ) // если пользователь вручную ввел баланс
+                viewModel.saveNewBalance(idCard?:"",getBalanceFromEdit?:"0") // если пользователь вручную ввел баланс
             } else {
-                viewModel.changeBalance(oldBalance ?: 0f)
+                viewModel.saveNewBalance(idCard?:"",oldBalance.toString())
             }
-        } else Toast.makeText(requireContext(),
-            getString(R.string.insert_all_members), Toast.LENGTH_SHORT).show()
+        } else Toast.makeText(
+            requireContext(),
+            getString(R.string.insert_all_members), Toast.LENGTH_SHORT
+        ).show()
     }
 
     private fun isEmptyBalanceEditView(): Boolean {
         getBalanceFromEdit = balanceEdit?.text.toString()
-        Log.e("AddManualSpendFragment", "BALANCE FROM EditView : ${getBalanceFromEdit?.toFloatOrNull()}")
+        Log.e(
+            "AddManualSpendFragment",
+            "BALANCE FROM EditView : ${getBalanceFromEdit?.toFloatOrNull()}"
+        )
         return getBalanceFromEdit?.toFloatOrNull() == null
     }
 
