@@ -13,7 +13,7 @@ import com.example.mysympleapplication.R
 
 class ViewPagerAdapter : RecyclerView.Adapter<ViewPagerAdapter.PagerVH>() {
     private var listTiles: MutableList<String> = mutableListOf()
-    lateinit var onButtonClick: (position:Int) -> Unit
+    lateinit var onButtonClick: (position: Int) -> Unit
 
     class PagerVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val title = itemView.findViewById<TextView>(R.id.title_viewPager)
@@ -29,9 +29,24 @@ class ViewPagerAdapter : RecyclerView.Adapter<ViewPagerAdapter.PagerVH>() {
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: PagerVH, position: Int) {
-        holder.desc.text = if (position==1)"Здесь можно добавить покупку которую случайно удалил" else "${holder.desc.text}  $position"
-        holder.title.text = if (position==1) "Добавить покупку" else "${holder.title.text} + $position"
-        holder.btn.setOnClickListener { onButtonClick.invoke(position)}
+        when (position) {
+            0 -> { holder.desc.text = "Лимит месяца: не установлен → Нажмите, чтобы задать"
+                holder.title.text = "Лимит"}
+            1 -> {
+                holder.desc.text = "Здесь можно добавить покупку которую случайно удалил"
+                holder.title.text = "Добавить покупку"
+                holder.btn.setOnClickListener { onButtonClick.invoke(position) }
+            }
+            2 ->{ holder.btn.setOnClickListener { onButtonClick.invoke(position) }}
+            3 ->{}
+            4 ->{}
+            else -> {
+                holder.desc.text = "${holder.desc.text}  $position"
+                holder.title.text = "${holder.title.text} + $position"
+            }
+        }
+
+
     }
 
     override fun getItemCount(): Int {

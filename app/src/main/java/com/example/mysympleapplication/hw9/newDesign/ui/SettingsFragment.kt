@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioGroup
+import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.viewModels
 import com.example.mysympleapplication.R
 import com.example.mysympleapplication.hw9.newDesign.base.BaseFragment
@@ -30,6 +31,7 @@ class SettingsFragment : BaseFragment() {
     var btnAddFriend: Button? = null
     var btnSendMsg: Button? = null
     var radioGroup: RadioGroup? = null
+
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -66,6 +68,15 @@ class SettingsFragment : BaseFragment() {
         btnSendMsg = view.findViewById(R.id.button_support_nd)
         radioGroup = view.findViewById(R.id.radio_group_styleTheme_nd)
         initRadioButton()
+        val switchTotal = view.findViewById<SwitchCompat>(R.id.total_cart_switcher)
+        // 1. Устанавливаем текущее состояние из памяти
+        switchTotal.isChecked = MainPrefs.isShowTotalCard
+
+        // 2. Слушаем изменения
+        switchTotal.setOnCheckedChangeListener { _, isChecked ->
+            // Kotpref сам сохранит значение в SharedPreferences
+            MainPrefs.isShowTotalCard = isChecked
+        }
     }
 
     private fun goToFeedback(msg: String) {   // техт не передается в сообщение

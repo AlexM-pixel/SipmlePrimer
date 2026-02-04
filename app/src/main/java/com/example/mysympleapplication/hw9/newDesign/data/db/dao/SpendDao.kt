@@ -1,14 +1,9 @@
 package com.example.mysympleapplication.hw9.newDesign.data.db.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import com.example.mysympleapplication.hw9.CalendarSpends
-import com.example.mysympleapplication.hw9.Spend
-import com.example.mysympleapplication.hw9.SumSpendsOfMonth
-import com.example.mysympleapplication.hw9.newDesign.data.entity_model.CalendarSpendsEntity
 import com.example.mysympleapplication.hw9.newDesign.data.entity_model.SpendEntity
 import com.example.mysympleapplication.hw9.newDesign.data.entity_model.SumSpendsOfMonthEntity
 import kotlinx.coroutines.flow.Flow
@@ -44,4 +39,7 @@ interface SpendDao {
 
     @Query("SELECT SUM(value) as value_spends, strftime('%m-%Y', date) as dateM  FROM spends WHERE strftime(\'%m-%Y\', date)=strftime(\'%m-%Y\',:currentDate) GROUP BY strftime(\'%m-%Y\', date) ORDER BY date DESC LIMIT 1")
     suspend fun getCurrentMonthExpenses(currentDate:String): SumSpendsOfMonthEntity?
+
+    @Query("SELECT SUM(value) FROM spends WHERE strftime('%m-%Y', date) = strftime('%m-%Y', 'now')")
+    fun getTotalSpentThisMonth(): Flow<Double?>
 }

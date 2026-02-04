@@ -65,8 +65,11 @@ abstract class AppDataBase : RoomDatabase() {
                 // 2. Создаем дефолтную карту (ID=1)
                 database.execSQL(
                     """
-                    INSERT INTO bank_cards (id, card_name, last_four_digits, balance, currency)
-                    VALUES (1, 'Основная карта', 'Main', '0.0', 'BYN')
+                     INSERT INTO bank_cards (id, card_name, last_four_digits, balance, currency)
+                    SELECT 1, 'Основная карта', 'Main', balance, 'BYN' 
+                    FROM balance 
+                    WHERE CAST(balance AS REAL) > 0
+                    LIMIT 1
                     """
                 )
 

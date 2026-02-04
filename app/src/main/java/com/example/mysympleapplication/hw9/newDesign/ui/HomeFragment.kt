@@ -77,8 +77,18 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun observeData() {
-        viewModel.sumSpendsLiveData.observe(viewLifecycleOwner) {
-            myAdapter.setMonthList(it)
+        viewModel.sumSpendsLiveData.observe(viewLifecycleOwner) {list ->
+            myAdapter.setMonthList(list)
+
+            // Так как сортировка в SQL идет по убыванию даты (ORDER BY date DESC):
+            // Индекс 0 = Текущий месяц
+            // Индекс 1 = Прошлый месяц
+            val currentMonthSpent = list.getOrNull(0)?.value_spends!!.toDouble()
+            val previousMonthSpent = list.getOrNull(1)?.value_spends!!.toDouble()
+
+            // Передаем эти цифры в адаптер карт для отрисовки прогресса
+            cardsAdapter.setSpendingData(currentMonthSpent, previousMonthSpent)
+            // ---------------------------
         }
 
         // Следим за списком карт

@@ -84,6 +84,7 @@
     <string name="text_view_balance">Баланс:</string>
     <string name="log_in">Войти</string>
     <string name="settings_push_notification">"Уведомления "</string>
+    <string name="settings_total_cart">"Показывать карту"</string>
 
     <string name="channel_name">main_channel</string>
     <string name="channel_description">main_channel_description</string>
