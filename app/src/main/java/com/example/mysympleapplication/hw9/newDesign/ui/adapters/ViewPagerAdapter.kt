@@ -30,16 +30,24 @@ class ViewPagerAdapter : RecyclerView.Adapter<ViewPagerAdapter.PagerVH>() {
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: PagerVH, position: Int) {
         when (position) {
-            0 -> { holder.desc.text = "Лимит месяца: не установлен → Нажмите, чтобы задать"
-                holder.title.text = "Лимит"}
+            0 -> {
+                holder.desc.text = "Лимит месяца: не установлен → Нажмите, чтобы задать"
+                holder.title.text = "Лимит"
+                holder.btn.setOnClickListener { onButtonClick.invoke(position) }
+            }
+
             1 -> {
                 holder.desc.text = "Здесь можно добавить покупку которую случайно удалил"
                 holder.title.text = "Добавить покупку"
                 holder.btn.setOnClickListener { onButtonClick.invoke(position) }
             }
-            2 ->{ holder.btn.setOnClickListener { onButtonClick.invoke(position) }}
-            3 ->{}
-            4 ->{}
+
+            2 -> {
+                holder.btn.setOnClickListener { onButtonClick.invoke(position) }
+            }
+
+            3 -> {}
+            4 -> {}
             else -> {
                 holder.desc.text = "${holder.desc.text}  $position"
                 holder.title.text = "${holder.title.text} + $position"

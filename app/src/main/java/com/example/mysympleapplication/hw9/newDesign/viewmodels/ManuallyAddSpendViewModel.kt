@@ -7,12 +7,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.mysympleapplication.hw9.newDesign.domain.model.Balance
 import com.example.mysympleapplication.hw9.newDesign.domain.model.BankCard
 import com.example.mysympleapplication.hw9.newDesign.domain.model.NameSpend
 import com.example.mysympleapplication.hw9.newDesign.domain.model.Spend
 import com.example.mysympleapplication.hw9.newDesign.domain.model.State
 import com.example.mysympleapplication.hw9.newDesign.domain.usecase.*
 import com.example.mysympleapplication.hw9.newDesign.utils.Config
+import com.example.mysympleapplication.hw9.newDesign.utils.MainPrefs
 import com.example.mysympleapplication.hw9.newDesign.utils.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.launchIn
@@ -27,6 +29,7 @@ class ManuallyAddSpendViewModel @Inject constructor(
     private val getCategoryUseCase: GetCategoriesUseCase,
     private val saveSpendDbUseCase: SaveSpendDbUseCase,
     private val saveSpendFrStoreUseCase: SaveSpendFrStoreUseCase,
+    private val saveBalanceDbFrUseCase: SaveBalanceDbFrUseCase,
     private val addNewCategoryUseCase: InsertModelNameBySpendUseCase,
     // === НОВЫЕ ИНЖЕКТЫ ===
     private val getBankCardsUseCase: GetBankCardsUseCase,       // Чтобы найти карту по ID
@@ -37,8 +40,10 @@ class ManuallyAddSpendViewModel @Inject constructor(
     val stateLiveData: LiveData<State> get() = _stateLiveData
     private val _namesCategorySpendLiveData = MutableLiveData<List<String>>()
     val namesCategorySpendLiveData: MutableLiveData<List<String>> get() = _namesCategorySpendLiveData
+
     // Локальный список карт, чтобы мы могли быстро найти нужную по ID
     private var currentCards: List<BankCard> = emptyList()
+
     init {
         loadCards()
     }
@@ -58,10 +63,12 @@ class ManuallyAddSpendViewModel @Inject constructor(
                 is Resource.Loading -> {
                     _stateLiveData.value = State.LOADING
                 }
+
                 is Resource.Success -> {
                     Log.e("колличество категории", "count: ${listNamesSpend.data?.size}")
                     namesCategorySpendLiveData.value = listNamesSpend.data?.map { it.ruName }
                 }
+
                 is Resource.Error -> {
                     _stateLiveData.value = State.ERROR
                     Log.e("getCategoryToImageM", "ErrorM: ${listNamesSpend.message}")
@@ -71,7 +78,8 @@ class ManuallyAddSpendViewModel @Inject constructor(
     }
 
 
-    fun addNewSpend(name: String, value: String, date: String,cardId:String, nameImage: String?) {
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun addNewSpend(name: String, value: String, date: String, cardId: String, nameImage: String?) {
         if (!isHavingNewCategory(name)) {
             addNewCategory(name)       // усли имя спенды новое, создаю новую категорию
         }
@@ -90,11 +98,15 @@ class ManuallyAddSpendViewModel @Inject constructor(
         saveSpendDbUseCase(spend = spend).onEach {
             Log.e("saveSpendM", "onEachDbM")
             when (it) {
-                is Resource.Loading -> { _stateLiveData.value = State.LOADING }
+                is Resource.Loading -> {
+                    _stateLiveData.value = State.LOADING
+                }
+
                 is Resource.Success -> {
                     Log.e("saveSpendM", "saveSpendDbUseCaseM Success!")
                     _stateLiveData.value = State.SUCCESS
                 }
+
                 is Resource.Error -> {
                     Log.e("saveSpendM", "saveSpendDbUseCaseM ERROR: i${it.message}")
                 }
@@ -106,10 +118,12 @@ class ManuallyAddSpendViewModel @Inject constructor(
                 is Resource.Loading -> {
                     _stateLiveData.value = State.LOADING
                 }
+
                 is Resource.Success -> {
                     Log.e("saveSpendM", "saveSpendFrStoreUseCaseM Success!")
                     //  _stateLiveData.value = State.SUCCESS
                 }
+
                 is Resource.Error -> {
                     _stateLiveData.value = State.ERROR
                     Log.e("saveSpendM", "saveSpendFrStoreUseCaseM ERROR: i${it.message}")
@@ -117,6 +131,7 @@ class ManuallyAddSpendViewModel @Inject constructor(
             }
         }.launchIn(viewModelScope)
     }
+
     /**
      * Метод находит карту по ID, вычитает сумму покупки и сохраняет новый баланс
      */
@@ -133,7 +148,8 @@ class ManuallyAddSpendViewModel @Inject constructor(
         // Сохраняем в БД через UseCase
         viewModelScope.launch(Dispatchers.IO) {
             updateCardUseCase(updatedCard)
-            Log.d("ManuallyAddSpendVM", "Баланс карты ${updatedCard.cardName} обновлен: $balance")
+            saveBalanceDbFrUseCase.saveBalance(MainPrefs.mailUser, Balance(0L,updatedCard.balance))
+            Log.d("ManuallyAddSpendVM", "Баланс карты ${updatedCard.cardName} обновлен: $balance , saveBalanceFrUseCase: ${MainPrefs.mailUser}" )
         }
     }
 

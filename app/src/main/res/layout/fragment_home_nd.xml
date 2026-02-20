@@ -73,7 +73,7 @@
             android:id="@+id/rv_home_spends"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="46dp"
+            android:layout_marginTop="@dimen/margin_topRvSpends"
             app:layout_constraintTop_toBottomOf="@+id/viewPager_home"
             tools:listitem="@layout/item_spends" />
     </androidx.cardview.widget.CardView>

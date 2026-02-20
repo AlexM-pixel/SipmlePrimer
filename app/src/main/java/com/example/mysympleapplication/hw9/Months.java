@@ -1,5 +1,7 @@
 package com.example.mysympleapplication.hw9;
 
+import android.util.Log;
+
 import com.example.mysympleapplication.R;
 
 import java.util.ArrayList;

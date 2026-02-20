@@ -11,7 +11,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="220dp">
+        android:layout_height="@dimen/bankCard_Size">
 
         <!-- Декоративные круги (как в старом дизайне) -->
         <View
@@ -94,31 +94,7 @@
             app:layout_constraintBaseline_toBaselineOf="@+id/tvBalanceValue"
             app:layout_constraintStart_toEndOf="@+id/tvBalanceValue" />
 
-        <!-- Прогресс бар перенесен ВНУТРЬ карточки -->
-        <TextView
-            android:id="@+id/text_for_progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:text="70 %"
-            android:textColor="#E0FFFFFF"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toTopOf="@+id/progress_horizontalBar"
-            app:layout_constraintStart_toStartOf="@+id/progress_horizontalBar" />
 
-        <ProgressBar
-            android:id="@+id/progress_horizontalBar"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="24dp"
-            android:layout_marginBottom="24dp"
-            android:progress="70"
-            android:progressTint="#FFFFFF"
-            android:progressBackgroundTint="#80FFFFFF"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

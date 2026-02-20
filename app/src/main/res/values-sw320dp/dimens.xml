@@ -6,10 +6,12 @@
     <dimen name="month_text_size_rv">16sp</dimen>
     <dimen name="yer_text_size_rv">14sp</dimen>
     <dimen name="spend_text_size_rv">14sp</dimen>
-    <dimen name="frame_image_size">60dp</dimen>
-    <dimen name="bankCard_Size">180dp</dimen>
-    <dimen name="margin_topRvSpends">26dp</dimen>
-    <dimen name="height_progressBar">4dp</dimen>
-    <dimen name="title_Text_size">26sp</dimen>
+    <dimen name="button_horizontal_margin">6dp</dimen>
+    <dimen name="bankCard_Size">190dp</dimen>
+    <dimen name="margin_topRvSpends">28dp</dimen>
+    <dimen name="height_progressBar">5dp</dimen>
+    <dimen name="frame_image_size">80dp</dimen>
+    <dimen name="title_Text_size">20sp</dimen>
+
 
 </resources>

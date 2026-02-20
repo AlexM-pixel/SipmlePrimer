@@ -48,7 +48,7 @@ class UseCaseModule {
 
     @Provides
     fun provideSaveBalanceUseCase(repoDb: BalanceDbRepository, repoFr: BalanceFrRepository) =
-        SaveBalanceUseCase(repoDb = repoDb, repoFr = repoFr)
+        SaveBalanceDbFrUseCase(repoDb = repoDb, repoFr = repoFr)
 
     @Provides
     fun provideSavePostuplenieUseCase(

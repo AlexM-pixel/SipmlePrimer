@@ -6,6 +6,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,6 +29,7 @@ import com.example.mysympleapplication.hw9.newDesign.ui.adapters.CardsAdapter
 import com.example.mysympleapplication.hw9.newDesign.ui.adapters.SumMonthSpendsRvAdapter
 import com.example.mysympleapplication.hw9.newDesign.ui.adapters.ViewPagerAdapter
 import com.example.mysympleapplication.hw9.newDesign.utils.Config.REQUEST_CODE
+import com.example.mysympleapplication.hw9.newDesign.utils.MainPrefs
 import com.example.mysympleapplication.hw9.newDesign.viewmodels.HomeFragmentViewModel
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -53,6 +55,23 @@ class HomeFragment : BaseFragment() {
     )
     private var isPermissionGranted = false
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // Слушаем результат от LimitFragment
+        childFragmentManager.setFragmentResultListener(LimitFragment.REQUEST_KEY_LIMIT, this) { _, bundle ->
+            val isUpdated = bundle.getBoolean(LimitFragment.BUNDLE_KEY_UPDATED)
+            if (isUpdated) {
+                // Если лимит изменился, просто просим адаптер перерисовать список.
+                // Он сам возьмет новый MainPrefs.monthlyLimit внутри onBindViewHolder
+                myAdapter.notifyDataSetChanged()
+
+                // Если у вас есть логика во ViewModel (например, budgetSuggestion),
+                // можно дернуть её обновление тоже:
+                // viewModel.calculateAverageLimit(...)
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,6 +84,7 @@ class HomeFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView(view)
+        Log.e("onViewCreatedByStFr","userMail: ${MainPrefs.mailUser}, friendMail: ${MainPrefs.mailFriend}")
         setupCardsViewPager(view) // Настройка верхней карусели
         setViewPager(view)
         if (!isPermissionGranted) {
@@ -77,18 +97,8 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun observeData() {
-        viewModel.sumSpendsLiveData.observe(viewLifecycleOwner) {list ->
+        viewModel.uiState.observe(viewLifecycleOwner) {list ->
             myAdapter.setMonthList(list)
-
-            // Так как сортировка в SQL идет по убыванию даты (ORDER BY date DESC):
-            // Индекс 0 = Текущий месяц
-            // Индекс 1 = Прошлый месяц
-            val currentMonthSpent = list.getOrNull(0)?.value_spends!!.toDouble()
-            val previousMonthSpent = list.getOrNull(1)?.value_spends!!.toDouble()
-
-            // Передаем эти цифры в адаптер карт для отрисовки прогресса
-            cardsAdapter.setSpendingData(currentMonthSpent, previousMonthSpent)
-            // ---------------------------
         }
 
         // Следим за списком карт
@@ -192,7 +202,7 @@ class HomeFragment : BaseFragment() {
         viewPager2.setCurrentItem(1, false)
         viewPagerAdapter.onButtonClick = { position ->
             when (position) {
-                0 -> Toast.makeText(requireContext(), "Отчёт за неделю", Toast.LENGTH_SHORT).show()
+                0 -> { findNavController().navigate(R.id.action_homeFragment_to_limitFragment)}
                 1 -> startAddingManualFragment()
                 2 -> {
                     Toast.makeText(

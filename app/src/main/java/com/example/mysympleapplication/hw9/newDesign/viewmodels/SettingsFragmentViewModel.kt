@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mysympleapplication.hw9.newDesign.domain.model.State
 import com.example.mysympleapplication.hw9.newDesign.domain.usecase.LogOutUseCase
+import com.example.mysympleapplication.hw9.newDesign.utils.MainPrefs
 import com.example.mysympleapplication.hw9.newDesign.utils.MainPrefs.setBankNames
 import com.example.mysympleapplication.hw9.newDesign.utils.Result
 import kotlinx.coroutines.launch
@@ -54,6 +55,8 @@ class SettingsFragmentViewModel @Inject constructor(
     }
 
     fun addFriend(name:String) {
-        TODO("Not yet implemented")
+       MainPrefs.mailFriend=name
+        Log.e("addFriend","userMail: ${MainPrefs.mailUser}, friendMail: ${MainPrefs.mailFriend}")
+        _stateLiveData.value = State.SUCCESS
     }
 }

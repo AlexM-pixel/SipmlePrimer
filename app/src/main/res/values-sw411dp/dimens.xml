@@ -10,14 +10,14 @@
     <dimen name="field_width_standard">160dp</dimen>
 
     <dimen name="button_horizontal_margin">8dp</dimen>
-
-    //-----------------NDesign-------------//
     <dimen name="auth_btnText_size">16sp</dimen>
+    <dimen name="title_Text_size">26sp</dimen>
     <dimen name="auth_textQuestion_size">18sp</dimen>
     <dimen name="cardView_margin">14dp</dimen>
-    <dimen name="bankCard_Size">200dp</dimen>
-    <dimen name="margin_topRvSpends">34dp</dimen>
+    <dimen name="bankCard_Size">220dp</dimen>
+    <dimen name="margin_topRvSpends">32dp</dimen>
     <dimen name="height_progressBar">6dp</dimen>
+    <dimen name="frame_image_size">80dp</dimen>
 
 
 </resources>

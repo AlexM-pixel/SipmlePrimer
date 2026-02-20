@@ -14,6 +14,8 @@
     <color name="splash_start_pink">#FA7DB4</color>
     <color name="splash_end_pink">#FE3998</color>
     <color name="colorPaletteBlue">#03A9F4</color>
+    <color name="colorOrigStart">#9CE7A7</color>
+    <color name="colorOrigEnd">#439580</color>
     <color name="colorPaletteOrange">#FF9800</color>
     <color name="colorPaletteDef">#00BCD4</color>
 

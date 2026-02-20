@@ -28,6 +28,7 @@ object MainPrefs : KotprefModel() {
     val setBankNames by stringSetPref {
         return@stringSetPref TreeSet<String>()
     }
+    var monthlyLimit: Float by floatPref(default = 0.0f)
     var stile: Int by intPref(default = R.style.AppTheme)
 }
 

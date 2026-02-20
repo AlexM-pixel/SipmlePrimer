@@ -302,7 +302,7 @@
                         <com.google.android.material.radiobutton.MaterialRadioButton
                             android:id="@+id/radio_blue_nd"
                             style="@style/RadioButtonBase"
-                            android:text="blue"
+                            android:text="origin"
                             android:textSize="18sp" />
 
                         <com.google.android.material.radiobutton.MaterialRadioButton

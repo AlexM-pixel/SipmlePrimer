@@ -110,4 +110,16 @@
         app:exitAnim="@anim/nav_default_exit_anim"
         app:popEnterAnim="@anim/nav_default_enter_anim"
         app:popExitAnim="@anim/nav_default_exit_anim" />
+    <fragment
+        android:id="@+id/limitFragment"
+        android:name="com.example.mysympleapplication.hw9.newDesign.ui.LimitFragment"
+        android:label="LimitFragment"
+        tools:layout="@layout/fragment_limit" />
+    <action
+        android:id="@+id/action_homeFragment_to_limitFragment"
+        app:destination="@id/limitFragment"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_enter_anim"
+        app:popExitAnim="@anim/nav_default_exit_anim" />
 </navigation>

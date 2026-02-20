@@ -40,7 +40,7 @@ class BankSmsService : Service() {
     @Inject
     lateinit var savePostuplenieUseCase: SavePostuplenieUseCase
     @Inject
-    lateinit var saveBalanceUseCase: SaveBalanceUseCase
+    lateinit var saveBalanceDbFrUseCase: SaveBalanceDbFrUseCase
     @Inject
     lateinit var saveSpendDbUseCase: SaveSpendDbUseCase
     @Inject
@@ -491,6 +491,7 @@ class BankSmsService : Service() {
             card != null -> {
                 val updatedCard = card.copy(balance = newBalanceValue)
                 updateCardUseCase(updatedCard)
+                saveBalanceDbFrUseCase.saveBalance(MainPrefs.mailUser, parsedBalance)  // 2. Сохраняем в Firestore (Облако)
                 Log.e(
                     "BankSmsSer/saveBalance",
                     "СЦЕНАРИЙ 1: Обновлен баланс карты *${card.lastFourDigits} , баланс карты: ${updatedCard.balance}"
@@ -509,7 +510,7 @@ class BankSmsService : Service() {
                 )
 
                 saveBankCardUseCase(newCard)
-
+                saveBalanceDbFrUseCase.saveBalance(MainPrefs.mailUser, parsedBalance)
                 Log.e(
                     "BankSmsSer/saveBalance",
                     "СЦЕНАРИЙ 2: Карты нет, но в СМС есть 4 цифры -> СОЗДАЕМ НОВУЮ КАРТУ , Автоматически создана новая карта: *$digitsFromSms"
@@ -521,7 +522,7 @@ class BankSmsService : Service() {
 
             // СЦЕНАРИЙ 3: В СМС нет цифр карты -> Обновляем "Общий баланс" по-старому
             else -> {
-                saveBalanceUseCase.saveBalance(MainPrefs.mailUser, parsedBalance)
+                saveBalanceDbFrUseCase.saveBalance(MainPrefs.mailUser, parsedBalance)
                 Log.e(
                     "BankSmsSer/saveBalance",
                     "СЦЕНАРИЙ 3: В СМС нет цифр карты , Обновлен общий баланс (карта не определена)"

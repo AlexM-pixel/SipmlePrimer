@@ -6,7 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mysympleapplication.hw9.SumSpendsOfMonth
+import com.example.mysympleapplication.hw9.newDesign.data.mapper.MonthUiMapper
 import com.example.mysympleapplication.hw9.newDesign.domain.model.BankCard
+import com.example.mysympleapplication.hw9.newDesign.domain.model.MonthUiModel
 import com.example.mysympleapplication.hw9.newDesign.domain.model.State
 import com.example.mysympleapplication.hw9.newDesign.domain.usecase.DeleteBankCardUseCase
 import com.example.mysympleapplication.hw9.newDesign.domain.usecase.GetBankCardsUseCase
@@ -24,31 +26,41 @@ class HomeFragmentViewModel @Inject constructor(
     private val useCaseGetMonthlyExpenses: GetMonthlyExpensesUseCase,
     private val getBankCardsUseCase: GetBankCardsUseCase,
     private val deleteBankCardUseCase: DeleteBankCardUseCase,
-    private val editBankCardUseCase:UpdateCardUseCase,
-    private val saveBankCardUseCase: SaveBankCardUseCase
+    private val editBankCardUseCase: UpdateCardUseCase,
+    private val saveBankCardUseCase: SaveBankCardUseCase,
+    private var uiMapper: MonthUiMapper
 ) :
     ViewModel() {
     private val _stateLiveData = MutableLiveData<State>()
     val stateLiveData: LiveData<State> get() = _stateLiveData
-    private val _sumSpendsLiveData = MutableLiveData<List<SumSpendsOfMonth>>()
-    val sumSpendsLiveData: MutableLiveData<List<SumSpendsOfMonth>> get() = _sumSpendsLiveData
+
+
+    private val _uiState = MutableLiveData<List<MonthUiModel>>()
+    val uiState: LiveData<List<MonthUiModel>> get() = _uiState
+
     // ИЗМЕНИЛИСЬ ДАННЫЕ: Теперь список карт
     private val _cardsLiveData = MutableLiveData<List<BankCard>>()
     val cardsLiveData: LiveData<List<BankCard>> get() = _cardsLiveData
 
     fun getMonthlyExpenses() {
-        useCaseGetMonthlyExpenses().onEach {
-            when (it) {
+        useCaseGetMonthlyExpenses().onEach { resource ->
+            when (resource) {
                 is Resource.Loading -> {
                     _stateLiveData.value = State.LOADING
                 }
+
                 is Resource.Success -> {
                     _stateLiveData.value = State.SUCCESS
-                    _sumSpendsLiveData.value = it.data ?: mutableListOf()
+                    val rawData = resource.data ?: emptyList()
+
+                    // !!! ПРЕВРАЩАЕМ ДАННЫЕ В UI-МОДЕЛИ !!!
+                    val uiModels = uiMapper.map(rawData)
+                    _uiState.value = uiModels
                 }
+
                 is Resource.Error -> {
                     _stateLiveData.value = State.ERROR
-                    Log.e("homeViewModel", "Error: ${it.message}")
+                    Log.e("homeViewModel", "Error: ${resource.message}")
                 }
             }
         }.launchIn(viewModelScope)
@@ -64,6 +76,7 @@ class HomeFragmentViewModel @Inject constructor(
                     // Обновляем список карт
                     _cardsLiveData.postValue(it.data ?: emptyList())
                 }
+
                 is Resource.Error -> _stateLiveData.value = State.ERROR
             }
         }.launchIn(viewModelScope)
