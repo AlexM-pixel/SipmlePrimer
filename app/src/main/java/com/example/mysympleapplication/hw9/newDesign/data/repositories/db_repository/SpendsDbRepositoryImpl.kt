@@ -3,7 +3,10 @@ package com.example.mysympleapplication.hw9.newDesign.data.repositories.db_repos
 import com.example.mysympleapplication.hw9.newDesign.domain.model.Spend
 import com.example.mysympleapplication.hw9.newDesign.data.db.AppDataBase
 import com.example.mysympleapplication.hw9.newDesign.data.mapper.SpendsMapper
+import com.example.mysympleapplication.hw9.newDesign.domain.model.MonthStatDto
+import com.example.mysympleapplication.hw9.newDesign.domain.model.PlaceStatDto
 import kotlinx.coroutines.flow.Flow
+import java.util.Calendar
 import javax.inject.Inject
 
 class SpendsDbRepositoryImpl @Inject constructor(
@@ -35,6 +38,24 @@ class SpendsDbRepositoryImpl @Inject constructor(
 
     override suspend fun getSpendById(id: String): Spend {
         return mapper.mapFromEntity(db.spendDao().getSpend(id))
+    }
+
+    override fun getPlaceStatsByMonth(monthYear: String): Flow<List<PlaceStatDto>> {
+        return db.spendDao().getPlaceStatsByMonth(monthYear)
+    }
+
+    override fun getPlaceStatsByYear(year: String): Flow<List<PlaceStatDto>> {
+        return db.spendDao().getPlaceStatsByYear(year)
+    }
+
+    override fun getYearStats(year: String): Flow<List<MonthStatDto>> {
+        return db.spendDao().getYearStats(year = year)
+    }
+
+    override suspend fun getFirstTransactionYear(): Int {
+        val yearStr = db.spendDao().getFirstTransactionYear()
+        // Если база пустая, возвращаем текущий год (чтобы не улететь в 1970)
+        return yearStr?.toIntOrNull() ?: Calendar.getInstance().get(Calendar.YEAR)
     }
 
 

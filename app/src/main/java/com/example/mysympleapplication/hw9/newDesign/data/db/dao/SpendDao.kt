@@ -6,6 +6,8 @@ import androidx.room.Query
 import androidx.room.Update
 import com.example.mysympleapplication.hw9.newDesign.data.entity_model.SpendEntity
 import com.example.mysympleapplication.hw9.newDesign.data.entity_model.SumSpendsOfMonthEntity
+import com.example.mysympleapplication.hw9.newDesign.domain.model.MonthStatDto
+import com.example.mysympleapplication.hw9.newDesign.domain.model.PlaceStatDto
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -42,4 +44,27 @@ interface SpendDao {
 
     @Query("SELECT SUM(value) FROM spends WHERE strftime('%m-%Y', date) = strftime('%m-%Y', 'now')")
     fun getTotalSpentThisMonth(): Flow<Double?>
+
+
+    // 1. Статистика по МЕСТАМ за конкретный месяц (например, "02-2026")
+    // Используется для PieChart и нижнего списка
+    @Query(" SELECT spendName as name, SUM(value) as total FROM spends WHERE strftime('%m-%Y', date) = :monthYear GROUP BY spendName ORDER BY total DESC")
+    fun getPlaceStatsByMonth(monthYear: String): Flow<List<PlaceStatDto>>
+
+    // 2. Статистика по МЕСЯЦАМ за конкретный год (например, "2026")
+    // Используется для LineChart (Волна)
+    @Query(" SELECT strftime('%m', date) as month, SUM(value) as total FROM spends WHERE strftime('%Y', date) = :year GROUP BY month ORDER BY month ASC")
+    fun getYearStats(year: String): Flow<List<MonthStatDto>>
+
+    // Статистика по МЕСТАМ за конкретный Год
+    @Query(" SELECT spendName as name, SUM(value) as total FROM spends WHERE strftime('%Y', date) = :year GROUP BY spendName ORDER BY total DESC")
+    fun getPlaceStatsByYear(year: String): Flow<List<PlaceStatDto>>
+
+    // Получаем год самой первой записи в таблице (Минимальный год)
+    @Query("SELECT MIN(strftime('%Y', date)) FROM spends")
+    suspend fun getFirstTransactionYear(): String?
+
+    // Получить все покупки в конкретном месте за конкретный год
+    @Query(" SELECT * FROM spends WHERE spendName = :placeName AND strftime('%Y', date) = :year ORDER BY date DESC")
+    fun getHistoryForPlace(placeName: String, year: String): Flow<List<SpendEntity>>
 }

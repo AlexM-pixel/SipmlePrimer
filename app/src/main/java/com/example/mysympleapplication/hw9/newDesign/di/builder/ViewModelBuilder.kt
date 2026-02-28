@@ -59,7 +59,11 @@ abstract class ViewModelBuilder {
  @Binds
     @IntoMap
     @ViewModelKey(StatisticViewModel::class)
-    abstract fun bindStatisticViewModel(viewModel: StatisticViewModel): ViewModel
+    abstract fun bindStatisticViewModel(viewModel: StatisticViewModel): ViewModel @Binds
+
+    @IntoMap
+    @ViewModelKey(StatisticSoloViewModel::class)
+    abstract fun bindStatisticSoloViewModel(viewModel: StatisticSoloViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:layout_marginVertical="@dimen/standard_margin"
+    android:focusable="true"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="12dp"
+    android:background="?attr/selectableItemBackground">
+
+    <!-- ИКОНКА-КРУЖОК (Слева) -->
+    <!-- Мы будем менять цвет (backgroundTint) программно в адаптере -->
+    <FrameLayout
+        android:id="@+id/iv_dot"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/bg_circle_shape"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <TextView
+            android:id="@+id/tv_place_letter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            tools:text="E" />
+    </FrameLayout>
+
+    <!-- НАЗВАНИЕ МЕСТА -->
+    <TextView
+        android:id="@+id/tv_place_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="#333333"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/tv_amount"
+        app:layout_constraintStart_toEndOf="@id/iv_dot"
+        app:layout_constraintTop_toTopOf="@id/iv_dot"
+        tools:text="Евроопт Market" />
+
+    <!-- СУММА -->
+    <TextView
+        android:id="@+id/tv_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#6FCF97"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_place_name"
+        tools:text="675.00 BYN" />
+
+    <!-- ПРОЦЕНТ (Маленькая цифра справа) -->
+    <TextView
+        android:id="@+id/tv_percent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:textColor="#888888"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_amount"
+        tools:text="45%" />
+
+    <!-- ПРОГРЕСС БАР (Доля места) -->
+    <!-- Находится под именем и занимает место до процентов -->
+    <ProgressBar
+        android:id="@+id/pb_stat"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="6dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="12dp"
+        android:progress="45"
+        android:progressDrawable="@drawable/bg_progress_rounded"
+        app:layout_constraintEnd_toStartOf="@+id/tv_percent"
+        app:layout_constraintStart_toStartOf="@id/tv_place_name"
+        app:layout_constraintTop_toBottomOf="@id/tv_place_name" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
