@@ -58,5 +58,9 @@ class SpendsDbRepositoryImpl @Inject constructor(
         return yearStr?.toIntOrNull() ?: Calendar.getInstance().get(Calendar.YEAR)
     }
 
+    override  fun getSpendsByPlace(placeName: String): Flow<List<Spend>> {
+        return mapper.fromEntityListFlow(db.spendDao().getSpendsByPlace(placeName))
+    }
+
 
 }

@@ -56,10 +56,16 @@ abstract class ViewModelBuilder {
     @ViewModelKey(ManuallyAddSpendViewModel::class)
     abstract fun bindAddSpendMViewModel(viewModel: ManuallyAddSpendViewModel): ViewModel
 
- @Binds
+    @Binds
     @IntoMap
     @ViewModelKey(StatisticViewModel::class)
-    abstract fun bindStatisticViewModel(viewModel: StatisticViewModel): ViewModel @Binds
+    abstract fun bindStatisticViewModel(viewModel: StatisticViewModel): ViewModel
+    @Binds
+    @IntoMap
+    @ViewModelKey(StatPlaceViewModel::class)
+    abstract fun bindStatPlaceViewModel(viewModel: StatPlaceViewModel): ViewModel
+
+    @Binds
 
     @IntoMap
     @ViewModelKey(StatisticSoloViewModel::class)

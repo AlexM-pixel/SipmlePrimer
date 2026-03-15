@@ -44,6 +44,7 @@ class DetailMonthlyViewModel @Inject constructor(
         viewModelScope.launch {
             spendsByNameUseCase.getListSpendsByName(name, dateMonth = month).collect {
                 _detailSpendsByNameLiveData.value = it
+                Log.e("getMonthlySpends", "This is getMonthlySpends name= $name , list.first= ${it.first().spendName}")
                 getCurSpendDetailsList()
             }
         }

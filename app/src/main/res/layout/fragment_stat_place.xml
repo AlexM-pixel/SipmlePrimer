@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FAFAFA"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/fade_green"
+        android:orientation="vertical">
+
+        <!-- 1. HEADER (Зеленый фон + Название) -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:background="@drawable/background_bottom_radius_nd"> <!-- Твой зеленый фон -->
+
+            <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="start|top"
+                android:layout_margin="16dp"
+                android:background="?selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_backspace_24"
+                app:tint="@android:color/white" />
+
+            <TextView
+                android:id="@+id/tv_place_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/standard_margin"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/title_Text_size"
+                android:textStyle="bold"
+                tools:text="adidas Store" />
+        </FrameLayout>
+
+        <!-- 2. БОЛЬШАЯ КАРТОЧКА С ГРАФИКОМ -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="-40dp"
+            android:layout_marginBottom="16dp"
+            app:cardBackgroundColor="@android:color/white"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:id="@+id/title_chart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Динамика за 6 месяцев"
+                    android:textColor="#909090"
+                    android:textSize="14sp" />
+
+                <!-- ГРАФИК -->
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/chart_place"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="16dp" />
+
+                <!-- ОБЩАЯ СУММА -->
+                <TextView
+                    android:id="@+id/tv_total_spent_place"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:textColor="#333333"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    tools:text="Total Spent: 1,076.00 BYN" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- 3. ТРИ КАРТОЧКИ В РЯД -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="12dp"
+            android:weightSum="3">
+
+            <!-- Card 1: Yearly -->
+            <include
+                android:id="@+id/card_yearly"
+                layout="@layout/item_stat_small_card"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:layout_weight="1" />
+
+            <!-- Card 2: Top Month -->
+            <include
+                android:id="@+id/card_top_month"
+                layout="@layout/item_stat_small_card"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:layout_weight="1" />
+
+            <!-- Card 3: Habits -->
+            <include
+                android:id="@+id/card_habits"
+                layout="@layout/item_stat_small_card"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <!-- 4. ДВЕ КАРТОЧКИ ВНИЗУ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="12dp"
+            android:paddingBottom="24dp"
+            android:weightSum="2">
+
+            <!-- Card: Best Day -->
+            <include
+                android:id="@+id/card_best_day"
+                layout="@layout/item_stat_medium_card"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="4dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="@dimen/cardView_margin"
+                android:layout_weight="1" />
+
+            <!-- Card: Category -->
+            <include
+                android:id="@+id/card_visits"
+                layout="@layout/item_stat_medium_card"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="4dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="@dimen/cardView_margin"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

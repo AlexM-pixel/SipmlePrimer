@@ -127,9 +127,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    app:dotsColor="#E0E0E0"
-                    app:dotsStrokeColor="#6FCF97"
+                    app:dotsColor="@color/colorAccent"
                     app:dotsCornerRadius="8dp"
+                    app:dotsStrokeColor="@color/color_PaletteND"
                     app:dotsSize="10dp"
                     app:dotsSpacing="6dp" />
             </LinearLayout>

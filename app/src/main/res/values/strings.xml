@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Расходы</string>
+    <string name="app_name">Moniq</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="second_activity_label">Answer</string>

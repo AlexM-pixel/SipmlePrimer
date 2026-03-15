@@ -67,4 +67,8 @@ interface SpendDao {
     // Получить все покупки в конкретном месте за конкретный год
     @Query(" SELECT * FROM spends WHERE spendName = :placeName AND strftime('%Y', date) = :year ORDER BY date DESC")
     fun getHistoryForPlace(placeName: String, year: String): Flow<List<SpendEntity>>
+
+    // Получаем все покупки в конкретном месте (сортируем по дате)
+    @Query("SELECT * FROM spends WHERE spendName = :placeName ORDER BY date ASC")
+    fun getSpendsByPlace(placeName: String): Flow<List<SpendEntity>>
 }

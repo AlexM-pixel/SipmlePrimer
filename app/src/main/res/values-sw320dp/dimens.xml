@@ -13,6 +13,8 @@
     <dimen name="frame_image_size">80dp</dimen>
     <dimen name="title_Text_size">20sp</dimen>
     <dimen name="layout_header_size">80dp</dimen>
+    <dimen name="item_text_size">12sp</dimen>
+
 
 
 </resources>

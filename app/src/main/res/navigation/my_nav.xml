@@ -5,11 +5,12 @@
     android:id="@+id/my_nav"
     app:startDestination="@id/splashFragment">
 
+    <!-- Splash -->
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.example.mysympleapplication.hw9.newDesign.ui.SplashFragment"
         android:label="fragment_splash"
-        tools:layout="@layout/fragment_splash" >
+        tools:layout="@layout/fragment_splash">
         <action
             android:id="@+id/action_splashFragment_to_loginFragment"
             app:destination="@id/loginFragment"
@@ -25,11 +26,13 @@
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true" />
     </fragment>
+
+    <!-- Login -->
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.mysympleapplication.hw9.newDesign.ui.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_bottomNavFragment"
             app:destination="@id/bottomNavFragment" />
@@ -37,42 +40,62 @@
             android:id="@+id/action_loginFragment_to_registrationFragment"
             app:destination="@id/registrationFragment" />
     </fragment>
+
+    <!-- Bottom Nav (Главный контейнер) -->
     <fragment
         android:id="@+id/bottomNavFragment"
         android:name="com.example.mysympleapplication.hw9.newDesign.ui.BottomNavFragment"
         android:label="fragment_bottom_nav"
-        tools:layout="@layout/fragment_bottom_nav" >
+        tools:layout="@layout/fragment_bottom_nav">
+
+        <!-- Переход к деталям месяца -->
         <action
             android:id="@+id/action_bottomNavFragment_to_spendsOfMonthFragment"
             app:destination="@id/spendsOfMonthFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim" />
+
+        <!-- ПЕРЕХОД К СТАТИСТИКЕ МЕСТА (Перенесли сюда) -->
+        <!-- Без popUpTo, чтобы сохранить историю -->
+        <action
+            android:id="@+id/action_statistics_to_details"
+            app:destination="@id/StatPlaceFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
+
+    <!-- Registration -->
     <fragment
         android:id="@+id/registrationFragment"
         android:name="com.example.mysympleapplication.hw9.newDesign.ui.RegistrationFragment"
         android:label="fragment_registration"
-        tools:layout="@layout/fragment_registration" >
+        tools:layout="@layout/fragment_registration">
         <action
             android:id="@+id/action_registrationFragment_to_bottomNavFragment"
             app:destination="@id/bottomNavFragment" />
     </fragment>
+
+    <!-- Monthly Spends -->
     <fragment
         android:id="@+id/spendsOfMonthFragment"
         android:name="com.example.mysympleapplication.hw9.newDesign.ui.MonthlySpendsFragment"
         android:label="fragment_spends_of_mounth"
-        tools:layout="@layout/fragment_spends_of_mounth" >
+        tools:layout="@layout/fragment_spends_of_mounth">
         <action
             android:id="@+id/action_spendsOfMonthFragment_to_detailMonthlyFragment"
             app:destination="@id/detailMonthlyFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim" />
     </fragment>
+
+    <!-- Detail Monthly -->
     <fragment
         android:id="@+id/detailMonthlyFragment"
         android:name="com.example.mysympleapplication.hw9.newDesign.ui.DetailMonthlyFragment"
         android:label="fragment_detail_monthly"
-        tools:layout="@layout/fragment_detail_monthly" >
+        tools:layout="@layout/fragment_detail_monthly">
         <action
             android:id="@+id/action_detailMonthlyFragment_to_editSpendFragment"
             app:destination="@id/editSpendFragment"
@@ -82,27 +105,35 @@
             android:id="@+id/action_detailMonthlyFragment_to_imagesFragment"
             app:destination="@id/imagesFragment" />
     </fragment>
+
+    <!-- Edit Spend -->
     <fragment
         android:id="@+id/editSpendFragment"
         android:name="com.example.mysympleapplication.hw9.newDesign.ui.EditSpendFragment"
         android:label="fragment_edit_spend"
-        tools:layout="@layout/fragment_edit_spend" >
+        tools:layout="@layout/fragment_edit_spend">
         <action
             android:id="@+id/action_editSpendFragment_to_imagesFragment"
             app:destination="@id/imagesFragment"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out" />
     </fragment>
+
+    <!-- Images -->
     <fragment
         android:id="@+id/imagesFragment"
         android:name="com.example.mysympleapplication.hw9.newDesign.ui.ImagesFragment"
         android:label="fragment_images"
         tools:layout="@layout/fragment_images" />
+
+    <!-- Add Manual Spend -->
     <fragment
         android:id="@+id/addManualSpendFragment"
         android:name="com.example.mysympleapplication.hw9.newDesign.ui.AddManualSpendFragment"
         android:label="fragment_add_manual_spend"
         tools:layout="@layout/fragment_add_manual_spend" />
+
+    <!-- Global Actions -->
     <action
         android:id="@+id/action_global_addManualSpendFragment"
         app:destination="@id/addManualSpendFragment"
@@ -110,11 +141,14 @@
         app:exitAnim="@anim/nav_default_exit_anim"
         app:popEnterAnim="@anim/nav_default_enter_anim"
         app:popExitAnim="@anim/nav_default_exit_anim" />
+
+    <!-- Limit Fragment -->
     <fragment
         android:id="@+id/limitFragment"
         android:name="com.example.mysympleapplication.hw9.newDesign.ui.LimitFragment"
         android:label="LimitFragment"
         tools:layout="@layout/fragment_limit" />
+
     <action
         android:id="@+id/action_homeFragment_to_limitFragment"
         app:destination="@id/limitFragment"
@@ -122,4 +156,19 @@
         app:exitAnim="@anim/nav_default_exit_anim"
         app:popEnterAnim="@anim/nav_default_enter_anim"
         app:popExitAnim="@anim/nav_default_exit_anim" />
+
+    <!-- Statistic Solo Fragment  -->
+    <fragment
+        android:id="@+id/statisticSoloFragment"
+        tools:layout="@layout/fragment_statistics_nd"
+        android:name="com.example.mysympleapplication.hw9.newDesign.ui.StatisticSoloFragment"
+        android:label="StatisticSoloFragment" />
+
+    <!-- Stat Place Fragment (Детали места) -->
+    <fragment
+        android:id="@+id/StatPlaceFragment"
+        android:name="com.example.mysympleapplication.hw9.newDesign.ui.StatPlaceFragment"
+        android:label="StatPlaceFragment"
+        tools:layout="@layout/fragment_stat_place" />
+
 </navigation>

@@ -16,4 +16,5 @@ interface SpendsDbRepository {
     fun getPlaceStatsByYear(year: String): Flow<List<PlaceStatDto>>
     fun getYearStats(year: String): Flow<List<MonthStatDto>>
     suspend fun getFirstTransactionYear(): Int
+    fun getSpendsByPlace(placeName: String): Flow<List<Spend>>
 }

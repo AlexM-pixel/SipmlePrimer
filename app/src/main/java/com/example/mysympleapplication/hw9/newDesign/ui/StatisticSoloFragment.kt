@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -104,17 +105,10 @@ class StatisticSoloFragment : BaseFragment() {
 
     private fun openPlaceDetails(placeName: String) {
         val year: String = viewModel.selectedYear// Берем текущий год из ViewModel
-
-        // Вариант А: Переход на новый фрагмент через Navigation Component
         val bundle = Bundle().apply {
             putString("arg_place_name", placeName)
             putString("arg_year", year)
         }
-
-        // Предполагаем, что у тебя есть фрагмент для деталей (например, DetailsFragment)
-        // findNavController().navigate(R.id.action_statistics_to_details, bundle)
-        // ИЛИ (для теста) просто покажем Тост
-        showMessage("История $placeName за $year год")
-
+         findNavController().navigate(R.id.action_statistics_to_details, bundle)
     }
 }

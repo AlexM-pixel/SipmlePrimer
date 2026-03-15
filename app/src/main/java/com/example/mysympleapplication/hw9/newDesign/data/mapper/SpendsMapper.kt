@@ -61,9 +61,18 @@ class SpendsMapper @Inject constructor(private val getCategoryPay: GetCategoryPa
         return entityList.map { susMapFromEntity(it, listCategory) }
     }
 
-    suspend fun fromEntityListFlow(entityList: Flow<List<SpendEntity>>): Flow<List<Spend>> {  //  если дао возвращает Flow
-        val listCategory = getCategoryPay.getModelsSpends()
-        return entityList.map { it -> it.map { susMapFromEntity(it, listCategory) } }
+//     fun fromEntityListFlow(entityList: Flow<List<SpendEntity>>): Flow<List<Spend>> {  //  если дао возвращает Flow
+//        val listCategory = getCategoryPay.getModelsSpends()
+//        return entityList.map { it -> it.map { susMapFromEntity(it, listCategory) } }
+//    }
+
+    fun fromEntityListFlow(entityListFlow: Flow<List<SpendEntity>>): Flow<List<Spend>> {
+        return entityListFlow.map { entityList ->
+            // Загружаем категории внутри потока (это suspend вызов)
+            val listCategory = getCategoryPay.getModelsSpends()
+            // Маппим список
+            entityList.map { susMapFromEntity(it, listCategory) }
+        }
     }
 
 }

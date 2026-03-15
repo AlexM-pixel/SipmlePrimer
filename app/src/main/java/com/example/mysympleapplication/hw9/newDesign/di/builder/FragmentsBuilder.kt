@@ -34,13 +34,16 @@ abstract class FragmentsBuilder {
     abstract fun contributeDeleteDetailsDialogFragment(): DeleteDetailsDialog
 
     @ContributesAndroidInjector
-    abstract fun contributeEditSpendDialogFragment():EditSpendDialog
+    abstract fun contributeEditSpendDialogFragment(): EditSpendDialog
 
     @ContributesAndroidInjector
     abstract fun contributeHomeFragment(): HomeFragment
 
     @ContributesAndroidInjector
     abstract fun contributeStatisticSoloFragment(): StatisticSoloFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeStatPlaceFragment(): StatPlaceFragment
 
     @ContributesAndroidInjector
     abstract fun contributeSettingsFragment(): SettingsFragment
