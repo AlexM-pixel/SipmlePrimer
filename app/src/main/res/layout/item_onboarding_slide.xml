@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+
+        >
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="46dp"
+            android:gravity="center"
+            android:text="Привет ! \n Я кот Моник"
+            android:textColor="@color/onBoardingNDColor"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/iv_image"
+            android:layout_width="match_parent"
+            android:layout_height="320dp"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:src="@drawable/onboarding_welcome" />
+
+        <TextView
+            android:id="@+id/tv_subtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_title"
+            android:gravity="center"
+            android:text="Я слежу за твоими расходами \n и показываю, куда уходят \n деньги "
+            android:textColor="@color/onBoardingNDColor"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_subtitle2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:gravity="center"
+            android:text=" Я все посчитаю за тебя"
+            android:textColor="@color/onBoardingNDColor"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/et_bank_input"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_margin="@dimen/margin_title"
+            android:background="@drawable/background_nd_edit"
+            android:hint="Например: Priorbank"
+            android:inputType="textNoSuggestions"
+            android:maxLines="1"
+            android:paddingHorizontal="16dp"
+            android:textColor="#333333"
+            />
+
+    </LinearLayout>
+</ScrollView>

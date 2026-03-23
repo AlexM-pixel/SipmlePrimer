@@ -6,6 +6,7 @@
     <dimen name="bankCard_Size">210dp</dimen>
     <dimen name="margin_topRvSpends">38dp</dimen>
     <dimen name="height_progressBar">6dp</dimen>
+    <dimen name="margin_title">26dp</dimen>
 
 
 </resources>

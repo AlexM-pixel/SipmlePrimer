@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundGreenNDColor"
+    android:background="#95CEAB"
     tools:context=".hw9.newDesign.ui.LoginFragment">
 
     <View
@@ -39,24 +39,17 @@
         app:layout_constraintTop_toTopOf="@+id/cycle_oneLogin" />
 
 
-    <EditText
-        android:id="@+id/edit_username"
+    <ImageView
+        android:id="@+id/iv_image"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="28dp"
-        android:background="@drawable/background_nd_edit"
-        android:drawableStart="@drawable/ic_person_24"
-        android:drawablePadding="12dp"
-        android:elevation="18dp"
-        android:hint="write username"
-        android:padding="12dp"
-        android:textColor="@color/text_colorND"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/edit_mail"
+        android:layout_height="320dp"
+        android:layout_marginEnd="@dimen/margin_title"
+        android:adjustViewBounds="true"
+        android:src="@drawable/login_image"
+        app:layout_constraintBottom_toBottomOf="@+id/edit_mail"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/edit_mail" />
 
     <EditText
         android:id="@+id/edit_mail"
@@ -134,6 +127,7 @@
         android:text="Не зарегистрированы?"
         android:textColor="@color/colorPalette1"
         android:textSize="@dimen/auth_textQuestion_size"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_goTo_registrFragment"
         app:layout_constraintStart_toStartOf="parent" />
@@ -142,9 +136,10 @@
         android:id="@+id/btn_goTo_registrFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/my_button_bg_nd"
-        android:padding="6dp"
+        android:layout_marginEnd="@dimen/standard_margin"
+        android:background="@drawable/background_login_btn"
+        android:paddingStart="@dimen/cardView_margin"
+        android:paddingEnd="@dimen/cardView_margin"
         android:text="РЕГИСТРАЦИЯ"
         android:textColor="@color/colorPalette1"
         android:textSize="@dimen/auth_btnText_size"

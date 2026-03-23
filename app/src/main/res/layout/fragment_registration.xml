@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundGreenNDColor"
+    android:background="#95CEAB"
     tools:context=".hw9.newDesign.ui.RegistrationFragment">
 
     <View
@@ -70,10 +70,24 @@
         android:textColor="@color/text_colorND"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_image"
+        android:layout_width="match_parent"
+        android:layout_height="320dp"
+        android:layout_gravity="center"
+        android:adjustViewBounds="true"
+        android:layout_marginEnd="@dimen/margin_title"
+
+        android:src="@drawable/login_image"
+        app:layout_constraintBottom_toBottomOf="@+id/edit_username_registration"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/edit_username_registration" />
 
 
     <EditText
@@ -102,7 +116,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/next"
-        android:textColor="#FFFF"
+        android:textColor="@color/white"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -129,6 +143,7 @@
         android:text="Уже зарегистрированы?"
         android:textColor="@color/colorPalette1"
         android:textSize="@dimen/auth_textQuestion_size"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_goTo_loginFragment"
         app:layout_constraintStart_toStartOf="parent" />
@@ -138,7 +153,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/my_button_bg_nd"
+        android:background="@drawable/background_login_btn"
         android:text="ВОЙТИ"
         android:textColor="@color/colorPalette1"
         android:textSize="@dimen/auth_btnText_size"

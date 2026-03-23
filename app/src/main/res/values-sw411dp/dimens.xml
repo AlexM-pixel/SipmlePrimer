@@ -15,11 +15,13 @@
     <dimen name="auth_textQuestion_size">18sp</dimen>
     <dimen name="cardView_margin">14dp</dimen>
     <dimen name="bankCard_Size">220dp</dimen>
+    <dimen name="margin_title">28dp</dimen>
     <dimen name="margin_topRvSpends">32dp</dimen>
     <dimen name="height_progressBar">6dp</dimen>
     <dimen name="frame_image_size">80dp</dimen>
     <dimen name="layout_header_size">100dp</dimen>
     <dimen name="item_text_size">14sp</dimen>
+    <dimen name="standard_margin">8dp</dimen>
 
 
 

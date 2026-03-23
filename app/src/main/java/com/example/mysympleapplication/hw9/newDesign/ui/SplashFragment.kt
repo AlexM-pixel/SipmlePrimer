@@ -22,8 +22,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.coroutines.coroutineContext
 
@@ -34,19 +36,35 @@ class SplashFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Handler(Looper.getMainLooper()).postDelayed({
-            if (getUser()) {
-                findNavController().navigate(R.id.action_splashFragment_to_bottomNavFragment)
-            } else {
-                findNavController().navigate(R.id.action_splashFragment_to_loginFragment)
-            }
-        }, 2600)
         return inflater.inflate(R.layout.fragment_splash, container, false)
     }
 
-    fun getUser(): Boolean {
-        val mAuth: FirebaseAuth =
-            FirebaseAuth.getInstance()                  // dagger должен наверное предоставлять
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        //  корутины для безопасной задержки
+        MainPrefs.firstStart = true // Отмечаем, что онбординг пройден
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            delay(2600) // Ждем 2.6 секунды
+            when {
+                // 1. ПЕРВЫЙ ЗАПУСК -> Идем знакомиться с котом
+                MainPrefs.firstStart -> {
+                    findNavController().navigate(R.id.action_splashFragment_to_onboardingFragment)
+                }
+                // 2. ПОЛЬЗОВАТЕЛЬ АВТОРИЗОВАН -> Идем на главный экран
+                getUser() -> {
+                    findNavController().navigate(R.id.action_splashFragment_to_bottomNavFragment)
+                }
+                // 3. ПОЛЬЗОВАТЕЛЬ НЕ АВТОРИЗОВАН -> Идем на экран входа (логин/регистрация)
+                else -> {
+                    findNavController().navigate(R.id.action_splashFragment_to_loginFragment)
+                }
+            }
+        }
+    }
+
+    private fun getUser(): Boolean {
+        val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
         val user: FirebaseUser? = mAuth.currentUser
         return user != null
     }
