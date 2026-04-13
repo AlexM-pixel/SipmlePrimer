@@ -9,6 +9,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.OvershootInterpolator
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.mysympleapplication.R
@@ -42,7 +45,30 @@ class SplashFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //  корутины для безопасной задержки
-        MainPrefs.firstStart = true // Отмечаем, что онбординг пройден
+        MainPrefs.firstStart = false // Отмечаем, что онбординг пройден
+
+        val logo = view.findViewById<ImageView>(R.id.iv_splash_logo)
+        val title = view.findViewById<TextView>(R.id.text_splash_title)
+
+        // 1. Прячем элементы перед анимацией
+        logo.alpha = 0f
+        logo.translationY = 500f
+        title.alpha = 0f
+
+        // 2. Запускаем красивую анимацию (Кот выпрыгивает и появляется)
+        logo.animate()
+            .translationY(0f)
+            .alpha(1f)
+            .setInterpolator(OvershootInterpolator()) // Эффект пружинки
+            .setDuration(1000)
+            .start()
+
+        // Название плавно появляется чуть позже
+        title.animate()
+            .alpha(1f)
+            .setStartDelay(500)
+            .setDuration(800)
+            .start()
 
         viewLifecycleOwner.lifecycleScope.launch {
             delay(2600) // Ждем 2.6 секунды

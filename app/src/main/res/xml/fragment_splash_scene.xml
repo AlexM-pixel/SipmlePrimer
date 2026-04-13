@@ -61,7 +61,7 @@
             motion:layout_constraintBottom_toBottomOf="parent"
             motion:layout_constraintEnd_toEndOf="parent"
             android:layout_width="wrap_content"
-            android:id="@+id/imageView_koshel" />
+            android:id="@+id/iv_splash_logo" />
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/end">
@@ -73,6 +73,6 @@
             motion:layout_constraintBottom_toBottomOf="parent"
             motion:layout_constraintEnd_toEndOf="parent"
             android:layout_width="wrap_content"
-            android:id="@+id/imageView_koshel" />
+            android:id="@+id/iv_splash_logo" />
     </ConstraintSet>
 </MotionScene>

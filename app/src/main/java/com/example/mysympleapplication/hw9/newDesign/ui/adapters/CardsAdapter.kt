@@ -28,8 +28,22 @@ class CardsAdapter(
     }
 
     // Логика: показывать Общую карту, если в настройках ON и карт больше одной
-    private val isShowTotal: Boolean
-        get() = MainPrefs.isShowTotalCard && currentList.size > 1
+    var isShowTotal: Boolean = false
+        private set
+    // Метод для безопасного обновления настроек из Фрагмента
+    fun checkSettingsVisibility(): Boolean {
+        val shouldShow = MainPrefs.isShowTotalCard && currentList.size > 1
+        if (isShowTotal != shouldShow) {
+            isShowTotal = shouldShow
+            return true // Возвращаем true, если настройка изменилась
+        }
+        return false
+    }
+
+    override fun submitList(list: List<BankCard>?) {
+        super.submitList(list)
+        checkSettingsVisibility()
+    }
 
     override fun getItemCount(): Int {
         val actualCount = currentList.size

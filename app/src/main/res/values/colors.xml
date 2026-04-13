@@ -30,6 +30,11 @@
     <color name="color_PaletteND">#888787</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="onBoardingBg">#B9E3CF</color>
+    <color name="onBoardingSplashBg">#95CEAB</color>
+    <color name="itemUncheckBg">#EAECE9</color>
+    <color name="itemStroke">#6FCF97</color>
+    <color name="itemSelectBg">#E8F5E9</color>
     <color name="green_cycle">#3D5FB670</color>
     <color name="pink_cycle">#3DE91E63</color>
     <color name="blue_cycle">#3D03A9F4</color>
