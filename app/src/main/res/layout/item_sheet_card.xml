@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Добавили background из селектора -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    android:background="@drawable/bg_sheet_card_selector"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingHorizontal="20dp"
+    android:paddingVertical="16dp">
+
+    <!-- Иконка -->
+    <ImageView
+        android:id="@+id/iv_icon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_cat_face_small"
+        app:tint="@color/color_sheet_text_balance" /> <!-- Тинт сам поменяется! -->
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <!-- Цвет текста сам поменяется! -->
+        <TextView
+            android:id="@+id/tv_sheet_card_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_sheet_text_name"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:text="Зарплатная карта" />
+
+        <TextView
+            android:id="@+id/tv_sheet_card_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/color_sheet_text_balance"
+            android:textSize="14sp"
+            tools:text="1 450.00 BYN" />
+    </LinearLayout>
+
+    <RadioButton
+        android:id="@+id/radio_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:buttonTint="#6FCF97"
+        android:clickable="false" />
+
+</LinearLayout>

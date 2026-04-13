@@ -12,7 +12,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.LinearLayout
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.view.ViewCompat
@@ -28,11 +27,10 @@ import com.example.mysympleapplication.hw9.newDesign.domain.model.BankCard
 import com.example.mysympleapplication.hw9.newDesign.ui.adapters.CardsAdapter
 import com.example.mysympleapplication.hw9.newDesign.ui.adapters.SumMonthSpendsRvAdapter
 import com.example.mysympleapplication.hw9.newDesign.ui.adapters.ViewPagerAdapter
+import com.example.mysympleapplication.hw9.newDesign.ui.dialogues.CardSelectorBottomSheet
 import com.example.mysympleapplication.hw9.newDesign.utils.Config.REQUEST_CODE
 import com.example.mysympleapplication.hw9.newDesign.utils.MainPrefs
 import com.example.mysympleapplication.hw9.newDesign.viewmodels.HomeFragmentViewModel
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
 import javax.inject.Inject
 
@@ -58,6 +56,15 @@ class HomeFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // Слушаем результат от шторки выбора карты
+        childFragmentManager.setFragmentResultListener(CardSelectorBottomSheet.REQUEST_KEY, this) { _, bundle ->
+            val cardId = bundle.getString(CardSelectorBottomSheet.RESULT_ID) ?: "-1"
+            val balance = bundle.getFloat(CardSelectorBottomSheet.RESULT_BALANCE, 0f)
+
+            // Переходим на экран добавления с уже выбранной картой
+            navigateToManualSpend(cardId, balance)
+        }
+
         // Слушаем результат от LimitFragment
         childFragmentManager.setFragmentResultListener(LimitFragment.REQUEST_KEY_LIMIT, this) { _, bundle ->
             val isUpdated = bundle.getBoolean(LimitFragment.BUNDLE_KEY_UPDATED)
@@ -65,10 +72,6 @@ class HomeFragment : BaseFragment() {
                 // Если лимит изменился, просто просим адаптер перерисовать список.
                 // Он сам возьмет новый MainPrefs.monthlyLimit внутри onBindViewHolder
                 myAdapter.notifyDataSetChanged()
-
-                // Если у вас есть логика во ViewModel (например, budgetSuggestion),
-                // можно дернуть её обновление тоже:
-                // viewModel.calculateAverageLimit(...)
             }
         }
     }
@@ -95,6 +98,22 @@ class HomeFragment : BaseFragment() {
         observeData()
 
     }
+  // Срабатывает, когда мы переключаемся между вкладками (Home <-> Settings)
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if (!hidden) {
+            refreshAdapterSafely()
+        }
+    }
+
+    // Срабатывает, если мы свернули приложение полностью и вернулись
+    override fun onResume() {
+        super.onResume()
+        if (!isHidden) {
+            refreshAdapterSafely()
+        }
+    }
+
 
     private fun observeData() {
         viewModel.uiState.observe(viewLifecycleOwner) {list ->
@@ -245,7 +264,7 @@ class HomeFragment : BaseFragment() {
         }
     }
 
-    fun showRequestPermission() {
+    private fun showRequestPermission() {
         ActivityCompat.requestPermissions(
             requireActivity(), arrayOf(
                 Manifest.permission.RECEIVE_SMS,
@@ -255,6 +274,7 @@ class HomeFragment : BaseFragment() {
 
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -292,28 +312,53 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun startAddingManualFragment() {
-        val bundle = Bundle()
-        // 1. Находим ViewPager с картами (так как он не сохранен в глобальную переменную)
-        val vpCards = view?.findViewById<ViewPager2>(R.id.vp_cards)
+        val vpCards = view?.findViewById<ViewPager2>(R.id.vp_cards) ?: return
+        val currentPosition = vpCards.currentItem
+        val cardsList = cardsAdapter.currentList // Список карт из адаптера
 
-        // 2. Получаем индекс текущей видимой карточки
-        val currentPosition = vpCards?.currentItem ?: 0
+        // ВАЖНО: В CardsAdapter нужно сделать isShowTotal публичным свойством (val),
+        // чтобы мы могли прочитать его здесь.
+        val isTotalVisible = cardsAdapter.isShowTotal
 
-        // 3. Берем актуальный список карт прямо из адаптера
-        val cardsList = cardsAdapter.currentList
+        // 1. Проверяем, стоит ли юзер на Общей карте (если она включена)
+        val isTotalCardSelected = isTotalVisible && currentPosition == 0
 
-        // 4. Достаем баланс по индексу (с проверкой, чтобы не вылететь за пределы списка)
-        var balance = 0f
-        var idCard = ""
-        if (cardsList.isNotEmpty() && currentPosition in cardsList.indices) {
-            balance = cardsList[currentPosition].balance.toFloatOrNull() ?: 0f
-            idCard = cardsList[currentPosition].id.toString()
+        // 2. Проверяем, стоит ли юзер на карточке "Добавить карту" (последняя позиция)
+        val isAddCardSelected = currentPosition == cardsAdapter.itemCount - 1
+
+        if (isTotalCardSelected || isAddCardSelected) {
+            // Если у пользователя вообще нет реальных карт
+            if (cardsList.isEmpty()) {
+                Toast.makeText(requireContext(), "Сначала добавьте банковскую карту", Toast.LENGTH_SHORT).show()
+                return
+            }
+
+            // Готовим списки для шторки (исключаем техническую карту "Main", если она скрыта)
+            val realCards = cardsList.filter { it.lastFourDigits != "Main" }
+
+            val names = realCards.map { it.cardName }.toTypedArray()
+            val ids = realCards.map { it.id.toString() }.toTypedArray()
+            val balances = realCards.map { it.balance.toFloatOrNull() ?: 0f }.toFloatArray()
+            //val sel=realCards.map { it. }
+
+            // Открываем шторку выбора карты
+            val bottomSheet = CardSelectorBottomSheet.newInstance(names, ids, balances, null)
+            bottomSheet.show(childFragmentManager, "SelectCardSheet")
+
+        } else {
+            // СЦЕНАРИЙ Б: Пользователь стоит на конкретной карточке банка
+            // Вычисляем правильный индекс в списке данных
+            val dataIndex = if (isTotalVisible) currentPosition - 1 else currentPosition
+
+            if (dataIndex in cardsList.indices) {
+                val card = cardsList[dataIndex]
+                val balance = card.balance.toFloatOrNull() ?: 0f
+                val idCard = card.id.toString()
+
+                // Сразу переходим на экран добавления
+                navigateToManualSpend(idCard, balance)
+            }
         }
-
-        //val balance = balanceTitle?.text.toString()
-        bundle.putFloat(ARG_BALANCE, balance)
-        bundle.putString(ARG_ID_CARD, idCard)
-        findNavController().navigate(R.id.action_global_addManualSpendFragment, bundle)
     }
 
     // 2. Диалог удаления
@@ -372,5 +417,42 @@ class HomeFragment : BaseFragment() {
             }
             .setNegativeButton("Отмена", null)
             .show()
+    }
+
+    // Вспомогательный метод для перехода
+    private fun navigateToManualSpend(cardId: String, balance: Float) {
+        val bundle = Bundle().apply {
+            putFloat(ARG_BALANCE, balance)
+            putString(ARG_ID_CARD, cardId)
+        }
+        findNavController().navigate(R.id.action_global_addManualSpendFragment, bundle)
+    }
+    private fun refreshAdapterSafely() {
+        if (!::vpCards.isInitialized) return
+
+        // Проверяем, изменилась ли настройка "Общей карты" в адаптере
+        val isChanged = cardsAdapter.checkSettingsVisibility()
+
+        if (isChanged) {
+            val currentPos = vpCards.currentItem
+
+            // ГЛАВНЫЙ ФИКС КРАША: Полностью переподключаем адаптер.
+            // Это сбрасывает сломанное внутреннее состояние ViewPager2.
+            vpCards.adapter = cardsAdapter
+
+            // Безопасно сдвигаем позицию, чтобы юзер остался на той же визуальной карте
+            val maxPos = (cardsAdapter.itemCount - 1).coerceAtLeast(0)
+            val newPos = if (cardsAdapter.isShowTotal) {
+                currentPos + 1 // Добавилась общая карта, сдвигаем вправо
+            } else {
+                currentPos - 1 // Удалилась общая карта, сдвигаем влево
+            }
+
+            // Устанавливаем безопасную позицию (чтобы не вылететь за пределы списка)
+            vpCards.setCurrentItem(newPos.coerceIn(0, maxPos), false)
+
+            // Перерисовываем точки
+            dotsIndicator.attachTo(vpCards)
+        }
     }
 }

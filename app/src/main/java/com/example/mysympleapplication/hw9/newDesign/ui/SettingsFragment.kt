@@ -1,6 +1,9 @@
 package com.example.mysympleapplication.hw9.newDesign.ui
 
+import android.app.AlertDialog
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,111 +12,239 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioGroup
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.widget.SwitchCompat
-import androidx.fragment.app.viewModels
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.mysympleapplication.R
-import com.example.mysympleapplication.hw9.newDesign.base.BaseFragment
-import com.example.mysympleapplication.hw9.newDesign.di.builder.ViewModelFactory
-import com.example.mysympleapplication.hw9.newDesign.utils.Config.FEEDBACK_EMAIL_ADDRESS
-import com.example.mysympleapplication.hw9.newDesign.utils.Config.FEEDBACK_SEND_EMAIL
-import com.example.mysympleapplication.hw9.newDesign.utils.Config.FEEDBACK_SUBJECT
+import com.example.mysympleapplication.hw9.newDesign.utils.Config
 import com.example.mysympleapplication.hw9.newDesign.utils.MainPrefs
-import com.example.mysympleapplication.hw9.newDesign.viewmodels.SettingsFragmentViewModel
-import com.example.mysympleapplication.hw9.view.iu.BaseActivity
-import java.util.*
-import javax.inject.Inject
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
+import com.google.firebase.auth.FirebaseAuth
 
-class SettingsFragment : BaseFragment() {
-    var bankName: EditText? = null
-    var friendsLogin: EditText? = null
-    var btnBankName: Button? = null
-    var btnSignOut: Button? = null
-    var btnAddFriend: Button? = null
-    var btnSendMsg: Button? = null
-    var radioGroup: RadioGroup? = null
+class SettingsFragment : Fragment() {
 
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-    private val viewModelSettings: SettingsFragmentViewModel by viewModels { viewModelFactory }
+    private lateinit var chipGroupBanks: ChipGroup
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_settings_nd, container, false)
+        return inflater.inflate(R.layout.fragment_settings_nd, container, false) // Убедись, что имя файла верное
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        init(view)
-        setListeners()
-    }
 
-    private fun setListeners() {
-        btnBankName?.setOnClickListener { viewModelSettings.setNewBankName(bankName?.text.toString()) }
-        btnSignOut?.setOnClickListener { viewModelSettings.logOut() }
-        btnAddFriend?.setOnClickListener { viewModelSettings.addFriend(friendsLogin?.text.toString()) }
-        btnSendMsg?.setOnClickListener { goToFeedback("helloWorld") }
-        radioGroup?.setOnCheckedChangeListener { radioGroup, i -> checkStyleTheme(i) }
-    }
+        // --- ИНИЦИАЛИЗАЦИЯ ВЬЮШЕК ---
+        val tvEmail = view.findViewById<TextView>(R.id.tv_email_badge)
+        chipGroupBanks = view.findViewById(R.id.chipGroup_banks)
+        val btnAddBank = view.findViewById<Button>(R.id.btn_add_bank)
 
-    private fun init(view: View) {
-        bankName = view.findViewById(R.id.edit_text_BankNameNd)
-        friendsLogin = view.findViewById(R.id.email_friends_nd)
-        btnBankName = view.findViewById(R.id.button_add)
-        btnSignOut = view.findViewById(R.id.button_sign_Out)
-        btnAddFriend = view.findViewById(R.id.button_add_Friends)
-        btnSendMsg = view.findViewById(R.id.button_support_nd)
-        radioGroup = view.findViewById(R.id.radio_group_styleTheme_nd)
-        initRadioButton()
-        val switchTotal = view.findViewById<SwitchCompat>(R.id.total_cart_switcher)
-        // 1. Устанавливаем текущее состояние из памяти
-        switchTotal.isChecked = MainPrefs.isShowTotalCard
+        val etFriendEmail = view.findViewById<EditText>(R.id.et_friend_email)
+        val btnInviteFriend = view.findViewById<Button>(R.id.btn_invite_friend)
 
-        // 2. Слушаем изменения
-        switchTotal.setOnCheckedChangeListener { _, isChecked ->
-            // Kotpref сам сохранит значение в SharedPreferences
+        val radioGroupTheme = view.findViewById<RadioGroup>(R.id.radio_group_styleTheme_nd)
+
+        val switchTotalCard = view.findViewById<SwitchCompat>(R.id.total_cart_switcher)
+        val switchPush = view.findViewById<SwitchCompat>(R.id.switch_push)
+
+        val rowSupport = view.findViewById<View>(R.id.row_support)
+        val btnLogout = view.findViewById<Button>(R.id.btn_logout)
+
+
+        // --- 1. ПРОФИЛЬ ---
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        tvEmail.text = MainPrefs.mailUser.ifEmpty { currentUser?.email ?: "Пользователь" }
+
+
+        // --- 2. БАНКИ (Чипы) ---
+        refreshBankChips()
+
+        btnAddBank.setOnClickListener {
+            showAddBankDialog()
+        }
+
+
+        // --- 3. ОБЩИЙ БЮДЖЕТ (Друзья) ---
+        // Показываем текущего друга, если он уже сохранен
+        if (MainPrefs.mailFriend.isNotEmpty()) {
+            etFriendEmail.setText(MainPrefs.mailFriend)
+        }
+
+        btnInviteFriend.setOnClickListener {
+            val email = etFriendEmail.text.toString().trim()
+            if (email.isNotEmpty()) {
+                MainPrefs.mailFriend = email
+                Toast.makeText(context, "Бюджет объединен с $email", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(context, "Введите email друга", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+
+        // --- 4. ЦВЕТОВАЯ СХЕМА (Темы) ---
+        // Восстанавливаем выбранную радио-кнопку из памяти
+        when (MainPrefs.stile) {
+            R.style.AppThemePink -> radioGroupTheme.check(R.id.radio_pink_nd)
+            R.style.AppThemeOrange -> radioGroupTheme.check(R.id.radio_orange_nd)
+            R.style.AppThemeBlue -> radioGroupTheme.check(R.id.radio_blue_nd)
+            else -> radioGroupTheme.check(R.id.radio_def_nd)
+        }
+
+        // Слушаем переключения тем
+        radioGroupTheme.setOnCheckedChangeListener { _, checkedId ->
+            val selectedStyle = when (checkedId) {
+                R.id.radio_pink_nd -> R.style.AppThemePink
+                R.id.radio_orange_nd -> R.style.AppThemeOrange
+                R.id.radio_blue_nd -> R.style.AppThemeBlue
+                else -> R.style.AppTheme // Default
+            }
+
+            if (MainPrefs.stile != selectedStyle) {
+                MainPrefs.stile = selectedStyle
+                // Перезапускаем Activity, чтобы тема применилась ко всему приложению
+                requireActivity().recreate()
+            }
+        }
+
+
+        // --- 5. ПЕРЕКЛЮЧАТЕЛИ (Свитчи) ---
+        switchTotalCard.isChecked = MainPrefs.isShowTotalCard // Проверь, что это поле есть в MainPrefs
+        switchTotalCard.setOnCheckedChangeListener { _, isChecked ->
             MainPrefs.isShowTotalCard = isChecked
         }
-    }
 
-    private fun goToFeedback(msg: String) {   // техт не передается в сообщение
-        val emailIntent = Intent(
-            Intent.ACTION_SENDTO, Uri.fromParts("mailto", FEEDBACK_EMAIL_ADDRESS, null)
-        )
-        //  emailIntent.data = Uri.parse("mailto:")
-        //   emailIntent.putExtra(Intent.EXTRA_EMAIL, FEEDBACK_EMAIL_ADDRESS)
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, FEEDBACK_SUBJECT)
-        emailIntent.putExtra(Intent.EXTRA_TEXT, msg)
-        startActivity(Intent.createChooser(emailIntent, FEEDBACK_SEND_EMAIL))
-    }
+        // Если у тебя есть поле isPushEnabled в MainPrefs, раскомментируй:
+        // switchPush.isChecked = MainPrefs.isPushEnabled
+        // switchPush.setOnCheckedChangeListener { _, isChecked ->
+        //     MainPrefs.isPushEnabled = isChecked
+        // }
 
-    private fun checkStyleTheme(checkedId: Int) {
-        when (checkedId) {
-            R.id.radio_pink_nd -> setStyleTheme(R.style.AppThemePink)
-            R.id.radio_orange_nd -> setStyleTheme(R.style.AppThemeOrange)
-            R.id.radio_blue_nd -> setStyleTheme(R.style.AppThemeBlue)
-            R.id.radio_def_nd -> setStyleTheme(R.style.AppTheme)
+
+        // --- 6. СЛУЖБА ПОДДЕРЖКИ ---
+        rowSupport.setOnClickListener {
+            // Собираем техническую информацию о телефоне
+            val appVersion = "1.0.0" // Или получи программно: BuildConfig.VERSION_NAME
+            val deviceModel = android.os.Build.MODEL
+            val androidVersion = android.os.Build.VERSION.RELEASE
+
+            // Формируем шаблон письма
+            val messageBody = """
+                
+                
+                -----------------------
+                Пожалуйста, не удаляйте этот текст:
+                Версия приложения: $appVersion
+                Устройство: $deviceModel
+                Android: $androidVersion
+            """.trimIndent()
+
+            val intent = Intent(Intent.ACTION_SENDTO).apply {
+                data = Uri.parse("mailto:") // Только почтовые приложения
+                putExtra(Intent.EXTRA_EMAIL, arrayOf(Config.FEEDBACK_EMAIL_ADDRESS))
+                putExtra(Intent.EXTRA_SUBJECT, Config.FEEDBACK_SUBJECT)
+                // Подставляем шаблон письма в тело сообщения
+                putExtra(Intent.EXTRA_TEXT, messageBody)
+            }
+
+            try {
+                startActivity(intent)
+            } catch (e: Exception) {
+                Toast.makeText(requireContext(), "Нет приложения для отправки Email", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+
+        // --- 7. ВЫХОД ---
+        btnLogout.setOnClickListener {
+            confirmLogout()
         }
     }
 
-    private fun setStyleTheme(newStyle: Int) {                                      // сохраняю выбранный стиль и перезапускаю активити
-        val oldStyle: Int = MainPrefs.stile
-        if (oldStyle != newStyle) {
-            MainPrefs.stile = newStyle
-            requireActivity().recreate()
+
+    // ==========================================
+    // ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ
+    // ==========================================
+
+    /**
+     * Отрисовка чипов с именами банков
+     */
+    private fun refreshBankChips() {
+        chipGroupBanks.removeAllViews() // Очищаем старые перед перерисовкой
+
+        val bankNames = MainPrefs.setBankNames
+
+        for (bank in bankNames) {
+            val chip = Chip(requireContext()).apply {
+                text = bank
+                isCloseIconVisible = true // Показываем крестик удаления
+
+                // Настраиваем цвета чипа (зеленый фон, белый текст)
+                val greenColor = ContextCompat.getColor(requireContext(), R.color.colorPrimaryDarkND) // Укажи свой зеленый
+                chipBackgroundColor = ColorStateList.valueOf(greenColor)
+                setTextColor(Color.WHITE)
+                closeIconTint = ColorStateList.valueOf(Color.WHITE)
+
+                // Обработка удаления банка
+                setOnCloseIconClickListener {
+                    removeBank(bank)
+                }
+            }
+            chipGroupBanks.addView(chip)
         }
     }
 
-    private fun initRadioButton() {                                                // отображает нажатую кнопку при открытии активити
-        val stile: Int = MainPrefs.stile
-        when (stile) {
-            R.style.AppThemePink -> radioGroup?.check(R.id.radio_pink_nd)
-            R.style.AppThemeOrange -> radioGroup?.check(R.id.radio_orange_nd)
-            R.style.AppThemeBlue -> radioGroup?.check(R.id.radio_blue_nd)
-            R.style.AppTheme -> radioGroup?.check(R.id.radio_def_nd)
+    /**
+     * Удаление банка из настроек
+     */
+    private fun removeBank(bankName: String) {
+        MainPrefs.setBankNames.remove(bankName) // Удаляем из Kotpref
+        refreshBankChips() // Перерисовываем UI
+        Toast.makeText(requireContext(), "Банк $bankName удален", Toast.LENGTH_SHORT).show()
+    }
+
+    /**
+     * Диалог добавления нового банка
+     */
+    private fun showAddBankDialog() {
+        val input = EditText(requireContext()).apply {
+            hint = "Например: Priorbank"
+            setPadding(50, 40, 50, 40) // Внутренние отступы
         }
+
+        AlertDialog.Builder(requireContext())
+            .setTitle("Добавить банк")
+            .setMessage("Укажите имя отправителя СМС, которое мы должны отслеживать.")
+            .setView(input)
+            .setPositiveButton("Добавить") { _, _ ->
+                val newBank = input.text.toString().trim()
+                if (newBank.isNotEmpty()) {
+                    MainPrefs.setBankNames.add(newBank) // Добавляем в Kotpref
+                    refreshBankChips() // Сразу рисуем новый чип
+                    Toast.makeText(context, "$newBank добавлен!", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .setNegativeButton("Отмена", null)
+            .show()
+    }
+
+    /**
+     * Диалог подтверждения выхода
+     */
+    private fun confirmLogout() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Выход")
+            .setMessage("Вы уверены, что хотите выйти из аккаунта?")
+            .setPositiveButton("Да, выйти") { _, _ ->
+                FirebaseAuth.getInstance().signOut()
+                // Настрой ID экшена в nav_graph для перехода на экран логина
+                findNavController().navigate(R.id.action_bottomNavFragment_to_loginFragment) // Пример
+            }
+            .setNegativeButton("Отмена", null)
+            .show()
     }
 }

@@ -1,445 +1,569 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="@color/onBoardingBg"
+    android:fillViewport="true"> <!-- Фон как на скрине (светло-мятный) -->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:background="@drawable/background_bottom_radius_nd"
-        android:elevation="8dp">
-
-        <TextView
-            android:id="@+id/Title_Settings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:text="Settings"
-            android:textColor="@color/white"
-            android:textSize="24sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <FrameLayout
-            android:id="@+id/settings_image_user"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:background="@drawable/background_rv_nd"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/Title_Settings"
-            app:layout_constraintStart_toStartOf="@+id/Title_Settings"
-            app:layout_constraintTop_toBottomOf="@+id/Title_Settings">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_baseline_person_24" />
-        </FrameLayout>
-
-        <TextView
-            android:id="@+id/user_mail_settings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="sasha@mail.ru"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="@+id/settings_image_user"
-            app:layout_constraintStart_toEndOf="@+id/settings_image_user"
-            app:layout_constraintTop_toTopOf="@+id/settings_image_user" />
+        android:layout_height="wrap_content">
 
         <View
             android:id="@+id/cycle_one"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginBottom="26dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:background="@drawable/cycle"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <View
             android:id="@+id/cycle_two"
-            android:layout_width="180dp"
-            android:layout_height="180dp"
-            android:layout_marginBottom="26dp"
+            android:layout_width="220dp"
+            android:layout_height="220dp"
             android:background="@drawable/cycle"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/cycle_one"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/cycle_one" />
 
         <View
             android:id="@+id/cycle_three"
-            android:layout_width="280dp"
-            android:layout_height="280dp"
-            android:layout_marginBottom="26dp"
+            android:layout_width="320dp"
+            android:layout_height="320dp"
             android:background="@drawable/cycle"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/cycle_one"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
+            app:layout_constraintTop_toTopOf="@+id/cycle_one" />
+        <!-- КОТ (Сверху) -->
+        <!-- Важно: id картинки кота должен быть правильным -->
+        <ImageView
+            android:id="@+id/iv_cat_top"
+            android:layout_width="220dp"
+            android:layout_height="0dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitEnd"
+            android:src="@drawable/cat_setting"
+            app:layout_constraintBottom_toTopOf="@+id/card_main"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+        <!-- ========================================== -->
+        <!-- КАРТОЧКА 1: ПРОФИЛЬ И БАНКИ                -->
+        <!-- ========================================== -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="-4dp"
+            app:cardBackgroundColor="@android:color/white"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="2dp"
+            app:layout_constraintTop_toBottomOf="@id/iv_cat_top">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView_one"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:elevation="8dp"
-                app:cardCornerRadius="8dp">
+                android:orientation="vertical">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <!-- СЕКЦИЯ ПРОФИЛЯ -->
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_base_button"
+                    android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/text_input_name_bank"
-                        style="@style/AppTheme"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="#E6EFEF"
-                        android:elevation="6dp"
-                        android:paddingStart="18dp"
-                        android:paddingTop="28dp"
-                        android:paddingBottom="8dp"
-                        android:text="Введите имя вашего банка"
-                        android:textSize="18sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <EditText
-                        android:id="@+id/edit_text_BankNameNd"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:hint="введите имя банка отправителя смс"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/text_input_name_bank" />
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/button_add"
+                        android:id="@+id/tv_greeting"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
+                        android:layout_marginStart="@dimen/cardView_margin"
+                        android:layout_marginTop="@dimen/cardView_margin"
+                        android:text="Привет, Саня"
+                        android:textColor="#3A6A51"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/cardView_margin"
+                        android:layout_marginTop="@dimen/standard_margin"
+                        android:text="Я слежу за твоими расходами"
+                        android:textColor="@color/onBoardingNDColor"
+                        android:textSize="15sp" />
+
+                    <!-- Плашка с почтой -->
+                    <TextView
+                        android:id="@+id/tv_email_badge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/cardView_margin"
+                        android:layout_marginTop="@dimen/cardView_margin"
+                        android:layout_marginBottom="@dimen/standard_margin"
+                        android:background="@drawable/bg_email_pill"
+                        android:drawableStart="@drawable/ic_baseline_person_24"
+                        android:drawablePadding="8dp"
+                        android:drawableTint="#888888"
+                        android:elevation="6dp"
+                        android:paddingHorizontal="16dp"
+                        android:paddingVertical="6dp"
+                        android:textColor="#555555"
+                        android:textSize="14sp"
+                        tools:text="sasha@mail.ru" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#F0F0F0" />
+
+                <!-- СЕКЦИЯ БАНКОВ -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <!-- Заголовок с иконкой кота -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_cat_face_small" /> <!-- Маленькая мордочка кота -->
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="Банк"
+                            android:textColor="#333333"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/standard_margin"
+                        android:text="Я читаю сообщения от:"
+                        android:textColor="@color/onBoardingNDColor"
+                        android:textSize="16sp" />
+
+                    <!-- ЧИПЫ (Банки) -->
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/standard_margin"
+                        android:scrollbars="none" >
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/chipGroup_banks"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/standard_margin"
+                       >
+
+
+                        <!-- Пример добавленных банков (в коде они будут добавляться динамически) -->
+                        <com.google.android.material.chip.Chip
+                            style="@style/Widget.MaterialComponents.Chip.Action"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="SBERBANK"
+                            android:textColor="@android:color/white"
+                            app:chipBackgroundColor="@color/colorPrimaryDarkND"
+                            app:chipCornerRadius="8dp" />
+
+                        <com.google.android.material.chip.Chip
+                            style="@style/Widget.MaterialComponents.Chip.Action"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="ALFABANK"
+                            android:textColor="@android:color/white"
+                            app:chipBackgroundColor="@color/colorPrimaryDarkND"
+                            app:chipCornerRadius="8dp" />
+
+                        <com.google.android.material.chip.Chip
+                            style="@style/Widget.MaterialComponents.Chip.Action"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="ALFABANK"
+                            android:textColor="@android:color/white"
+                            app:chipBackgroundColor="@color/colorPrimaryDarkND"
+                            app:chipCornerRadius="8dp" />
+                        <com.google.android.material.chip.Chip
+                            style="@style/Widget.MaterialComponents.Chip.Action"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="ALFABANK"
+                            android:textColor="@android:color/white"
+                            app:chipBackgroundColor="@color/colorPrimaryDarkND"
+                            app:chipCornerRadius="8dp" />
+
+                    </com.google.android.material.chip.ChipGroup>
+                    </HorizontalScrollView>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_add_bank"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginVertical="@dimen/standard_margin"
                         android:background="@drawable/background_btn_nd"
-                        android:paddingStart="48dp"
-                        android:paddingEnd="48dp"
-                        android:text="add"
-                        android:textColor="@color/white"
-                        android:textSize="18sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/edit_text_BankNameNd" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                        android:text="+ Добавить банк"
+                        android:textColor="@android:color/white"
+                        android:textSize="18sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
+        <!-- ========================================== -->
+        <!-- КАРТОЧКА 2: ОБЩИЙ БЮДЖЕТ                   -->
+        <!-- ========================================== -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_budget"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            app:cardBackgroundColor="@android:color/white"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="2dp"
+            app:layout_constraintTop_toBottomOf="@id/card_main">
 
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView_two"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:elevation="8dp"
-                app:cardCornerRadius="8dp">
+                android:orientation="vertical"
+                android:padding="16dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_cat_face_small" />
 
                     <TextView
-                        android:id="@+id/text_exit_acc"
-                        style="@style/AppTheme"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="#E6EFEF"
-                        android:elevation="3dp"
-                        android:paddingStart="18dp"
-                        android:paddingTop="28dp"
-                        android:paddingBottom="8dp"
-                        android:text="Выход из аккаунта"
-                        android:textSize="18sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/button_add" />
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/button_sign_Out"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_margin="8dp"
-                        android:background="@drawable/background_btn_nd"
-                        android:paddingStart="48dp"
-                        android:paddingEnd="48dp"
-                        android:text="@string/sign_out"
-                        android:textColor="@color/white"
-                        android:textSize="18sp"
-                       />
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView_three"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:elevation="8dp"
-                app:cardCornerRadius="8dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/text_add_friend"
-                        style="@style/AppTheme"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="#E6EFEF"
-                        android:elevation="3dp"
-                        android:paddingStart="18dp"
-                        android:paddingTop="28dp"
-                        android:paddingBottom="8dp"
-                        android:text="Добавить друга для общего буджета"
-                        android:textSize="18sp" />
-
-                    <EditText
-                        android:id="@+id/email_friends_nd"
-                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:hint="write email friends" />
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/button_add_Friends"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_margin="8dp"
-                        android:background="@drawable/background_btn_nd"
-                        android:paddingStart="48dp"
-                        android:paddingEnd="48dp"
-                        android:text="add friend"
-                        android:textColor="@color/white"
-                        android:textSize="18sp" />
-
+                        android:text="Общий бюджет"
+                        android:textColor="#333333"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
-            </androidx.cardview.widget.CardView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Добавь друга и делите расходы"
+                    android:textColor="@color/onBoardingNDColor"
+                    android:textSize="14sp" />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView_four"
+                <!-- Поле ввода и кнопка в один ряд -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/et_friend_email"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="@dimen/standard_margin"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_edittext_outline"
+                        android:hint="email друга"
+                        android:paddingHorizontal="16dp"
+                        android:textColorHint="#999999"
+                        android:textSize="14sp" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_invite_friend"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/standard_margin"
+                        android:layout_weight="1"
+                        android:background="@drawable/background_btn_nd"
+                        android:text="Пригласить"
+                        android:textAllCaps="false"
+                        android:textColor="@android:color/white"
+                        android:textSize="16sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_themes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            app:cardBackgroundColor="@android:color/white"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="2dp"
+            app:layout_constraintTop_toBottomOf="@id/card_budget">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:elevation="8dp"
-                app:cardCornerRadius="8dp">
+                android:orientation="vertical"
+                android:padding="16dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_cat_face_small" />
 
                     <TextView
-                        android:id="@+id/text_theme_style"
-                        style="@style/AppTheme"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="#E6EFEF"
-                        android:elevation="3dp"
-                        android:paddingStart="18dp"
-                        android:paddingTop="28dp"
-                        android:paddingBottom="8dp"
+                        android:layout_marginStart="8dp"
                         android:text="Цветовая схема"
-                        android:textSize="18sp" />
-
-                    <RadioGroup
-                        android:id="@+id/radio_group_styleTheme_nd"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        android:orientation="horizontal">
-
-                        <com.google.android.material.radiobutton.MaterialRadioButton
-                            android:id="@+id/radio_pink_nd"
-                            style="@style/RadioButtonBase"
-                            android:text="pink"
-                            android:textSize="18sp" />
-
-                        <com.google.android.material.radiobutton.MaterialRadioButton
-                            android:id="@+id/radio_orange_nd"
-                            style="@style/RadioButtonBase"
-                            android:text="orange"
-                            android:textSize="18sp" />
-
-                        <com.google.android.material.radiobutton.MaterialRadioButton
-                            android:id="@+id/radio_blue_nd"
-                            style="@style/RadioButtonBase"
-                            android:text="origin"
-                            android:textSize="18sp" />
-
-                        <com.google.android.material.radiobutton.MaterialRadioButton
-                            android:id="@+id/radio_def_nd"
-                            style="@style/RadioButtonBase"
-                            android:text="default"
-                            android:textSize="18sp" />
-                    </RadioGroup>
+                        android:textColor="#333333"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
-            </androidx.cardview.widget.CardView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Выберите тему вашего приложения"
+                    android:textColor="@color/onBoardingNDColor"
+                    android:textSize="14sp" />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView_five"
+                <!-- Поле ввода и кнопка в один ряд -->
+
+                <RadioGroup
+                    android:id="@+id/radio_group_styleTheme_nd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/standard_margin"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/radio_pink_nd"
+                        style="@style/RadioButtonBase"
+                        android:text="pink"
+                        android:textSize="@dimen/item_text_size" />
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/radio_orange_nd"
+                        style="@style/RadioButtonBase"
+                        android:text="orange"
+                        android:textSize="@dimen/item_text_size" />
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/radio_blue_nd"
+                        style="@style/RadioButtonBase"
+                        android:text="origin"
+                        android:textSize="@dimen/item_text_size" />
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/radio_def_nd"
+                        style="@style/RadioButtonBase"
+                        android:text="default"
+                        android:textSize="@dimen/item_text_size" />
+                </RadioGroup>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_switch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            app:cardBackgroundColor="@android:color/white"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="2dp"
+            app:layout_constraintTop_toBottomOf="@id/card_themes">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:elevation="8dp"
-                app:cardCornerRadius="8dp">
+                android:orientation="vertical"
+                android:padding="16dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_cat_face_small" />
+
                     <TextView
-                        android:id="@+id/text_support"
-                        style="@style/AppTheme"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="#E6EFEF"
-                        android:elevation="3dp"
-                        android:paddingStart="18dp"
-                        android:paddingTop="28dp"
-                        android:paddingBottom="8dp"
-                        android:text="служба поддержки"
-                        android:textSize="18sp" />
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/button_support_nd"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_margin="8dp"
-                        android:background="@drawable/background_btn_nd"
-                        android:paddingStart="48dp"
-                        android:paddingEnd="48dp"
-                        android:text="@string/send_to_support"
-                        android:textColor="@color/white"
-                        android:textSize="18sp"
-                        />
-
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView_six"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:elevation="8dp"
-                app:cardCornerRadius="8dp">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:orientation="vertical"
-                    android:layout_height="match_parent">
-                    <TextView
-                        android:id="@+id/text_totalCart"
-                        style="@style/AppTheme"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="#E6EFEF"
-                        android:elevation="3dp"
-                        android:paddingStart="18dp"
-                        android:paddingTop="28dp"
-                        android:paddingBottom="8dp"
-                        android:text="@string/settings_total_cart"
-                        android:textSize="18sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/button_support" />
-                    <androidx.appcompat.widget.SwitchCompat
-                        android:id="@+id/total_cart_switcher"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="18sp"
-                        android:textColor="#2C3E50"
+                        android:layout_marginStart="8dp"
                         android:text="Общая карта"
-                        android:paddingTop="16dp"
-                        android:paddingBottom="16dp"
-                        android:paddingStart="30dp"
-                        android:paddingEnd="23dp"
-                        />
+                        android:textColor="#333333"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView_seven"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:elevation="8dp"
-                app:cardCornerRadius="8dp">
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/total_cart_switcher"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/standard_margin"
+                    android:paddingEnd="23dp"
+                    android:paddingBottom="16dp"
+                    android:text="Отображать общую карту всех расходов"
+                    android:textColor="@color/onBoardingNDColor" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/onBoardingSplashBg" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:orientation="vertical"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/standard_margin"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_cat_face_small" />
+
                     <TextView
-                        android:id="@+id/text_push_notification"
-                        style="@style/AppTheme"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="#E6EFEF"
-                        android:elevation="3dp"
-                        android:paddingStart="18dp"
-                        android:paddingTop="28dp"
-                        android:paddingBottom="8dp"
-                        android:text="@string/settings_push_notification"
-                        android:textSize="18sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/button_support" />
-                    <androidx.appcompat.widget.SwitchCompat
-                        android:id="@+id/switch_push"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="18sp"
-                        android:textColor="#2C3E50"
+                        android:layout_marginStart="8dp"
                         android:text="Пуш-уведомления"
-                        android:paddingTop="16dp"
-                        android:paddingBottom="16dp"
-                        android:paddingStart="30dp"
-                        android:paddingEnd="23dp"
-                        />
+                        android:textColor="#333333"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
 
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switch_push"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/standard_margin"
+                    android:paddingEnd="23dp"
+                    android:paddingBottom="16dp"
+                    android:text="показывать пуш-уведомления "
+                    android:textColor="@color/onBoardingNDColor" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_support"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            app:cardBackgroundColor="@android:color/white"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            app:layout_constraintTop_toBottomOf="@id/card_switch">
+
+            <LinearLayout
+                android:id="@+id/row_support"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="16dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Написать в поддержку"
+                    android:textColor="@color/onBoardingNDColor"
+                    android:textStyle="bold"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <View
+            android:id="@+id/cycle_bottom"
+            android:layout_width="520dp"
+            android:layout_height="520dp"
+            android:background="@drawable/cycle"
+            app:layout_constraintEnd_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+        <View
+            android:id="@+id/cycle_botM"
+            android:layout_width="360dp"
+            android:layout_height="360dp"
+            android:background="@drawable/cycle"
+            app:layout_constraintEnd_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/card_support">
+
+            <Button
+            android:id="@+id/btn_logout"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+                android:layout_margin="@dimen/standard_margin"
+            android:text="Выйти из аккаунта"
+            android:textColor="#FF5252"
+            android:textStyle="bold" />
+
+
+
+            <TextView
+            android:id="@+id/version_tx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Версия 1.0.0"
+            android:textColor="@color/onBoardingNDColor"
+            android:textSize="12sp" />
         </LinearLayout>
-    </ScrollView>
 
 
-</LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

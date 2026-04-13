@@ -6,5 +6,6 @@
     <attr name="text_input_check" format="reference" />
     <attr name="toggle_text_byn" format="reference" />
     <attr name="cycle_color" format="reference" />
+    <attr name="BottomSheet_stroke_color" format="reference" />
 
 </resources>
