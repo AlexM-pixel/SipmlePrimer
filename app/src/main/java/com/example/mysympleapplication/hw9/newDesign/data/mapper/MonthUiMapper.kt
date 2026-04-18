@@ -4,8 +4,8 @@ package com.example.mysympleapplication.hw9.newDesign.data.mapper
 import android.graphics.Color
 import android.util.Log
 import com.example.mysympleapplication.hw9.Months
-import com.example.mysympleapplication.hw9.SumSpendsOfMonth
 import com.example.mysympleapplication.hw9.newDesign.domain.model.MonthUiModel
+import com.example.mysympleapplication.hw9.newDesign.domain.model.SumSpendsOfMonth
 import com.example.mysympleapplication.hw9.newDesign.utils.MainPrefs
 import javax.inject.Inject
 
@@ -18,7 +18,7 @@ class MonthUiMapper @Inject constructor() {
         val benchmark = calculateBenchmark(rawList)
         val manualLimit = MainPrefs.monthlyLimit.toDouble()
         rawList.forEachIndexed { index, item ->
-            val spendValue = item.value_spends.toDouble()
+            val spendValue = item.valueSpends.toDouble()
             val monthData = Months.getMonth(item.dateM)
 
             // Если benchmark посчитался (значит данных хватило или стоит лимит) — показываем.
@@ -95,7 +95,7 @@ class MonthUiMapper @Inject constructor() {
                     dateM = item.dateM,
                     monthName = monthData.nameMonth,
                     year = Regex("(\\d{4})").find(item.dateM)?.value ?: item.dateM,
-                    sumText = item.value_spends.toString(),
+                    sumText = item.valueSpends.toString(),
                     firstLetter = if (monthData.nameMonth.isNotEmpty()) monthData.nameMonth[0].toString() else "",
                     isProgressVisible = showProgress,
                     progressValue = progressValue,
@@ -119,7 +119,7 @@ class MonthUiMapper @Inject constructor() {
         Log.e("BENCHMARK", "pastMonths size = ${pastMonths.size}")
         // Превращаем в список чисел
         val values = pastMonths.mapNotNull {
-            it.value_spends.toString().toDoubleOrNull()
+            it.valueSpends.toString().toDoubleOrNull()
         }.filter { it > 0.0 } // Игнорируем месяцы с 0
         Log.d("BENCHMARK", "values = $values")
         if (values.size < 2) return 0.0

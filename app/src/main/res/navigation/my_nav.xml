@@ -55,6 +55,14 @@
         android:label="fragment_bottom_nav"
         tools:layout="@layout/fragment_bottom_nav">
 
+        <!-- ПЕРЕХОД по кнопке к солоСтатистике -->
+        <action
+            android:id="@+id/action_bottomNavFragment_to_statisticSoloFragment"
+            app:destination="@id/statisticSoloFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <!-- Переход к деталям месяца -->
         <action
             android:id="@+id/action_bottomNavFragment_to_spendsOfMonthFragment"
@@ -62,15 +70,6 @@
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim" />
 
-        <!-- ПЕРЕХОД К СТАТИСТИКЕ МЕСТА (Перенесли сюда) -->
-        <!-- Без popUpTo, чтобы сохранить историю -->
-        <action
-            android:id="@+id/action_statistics_to_details"
-            app:destination="@id/StatPlaceFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
             android:id="@+id/action_bottomNavFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
@@ -151,6 +150,15 @@
         app:exitAnim="@anim/nav_default_exit_anim"
         app:popEnterAnim="@anim/nav_default_enter_anim"
         app:popExitAnim="@anim/nav_default_exit_anim" />
+    <!-- ПЕРЕХОД К СТАТИСТИКЕ МЕСТА (Перенес сюда чтобы работало из разных мест) -->
+    <action
+        android:id="@+id/action_global_to_StatPlaceFragment"
+        app:destination="@id/StatPlaceFragment"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
 
     <!-- Limit Fragment -->
     <fragment
@@ -173,6 +181,8 @@
         android:name="com.example.mysympleapplication.hw9.newDesign.ui.StatisticSoloFragment"
         android:label="StatisticSoloFragment"
         tools:layout="@layout/fragment_statistics_nd" />
+
+
 
     <!-- Stat Place Fragment (Детали места) -->
     <fragment

@@ -1,9 +1,9 @@
 package com.example.mysympleapplication.hw9.newDesign.data.repositories.db_repository
 
-import com.example.mysympleapplication.hw9.SumSpendsOfMonth
 import com.example.mysympleapplication.hw9.newDesign.data.mapper.SumSpendsOfMonthMapper
 import com.example.mysympleapplication.hw9.newDesign.data.db.AppDataBase
 import com.example.mysympleapplication.hw9.newDesign.data.entity_model.SumSpendsOfMonthEntity
+import com.example.mysympleapplication.hw9.newDesign.domain.model.SumSpendsOfMonth
 import javax.inject.Inject
 
 class SumSpendsRepositoryImpl @Inject constructor(

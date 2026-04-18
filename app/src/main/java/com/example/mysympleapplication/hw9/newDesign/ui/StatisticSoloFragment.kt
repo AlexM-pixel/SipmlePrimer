@@ -109,6 +109,6 @@ class StatisticSoloFragment : BaseFragment() {
             putString("arg_place_name", placeName)
             putString("arg_year", year)
         }
-         findNavController().navigate(R.id.action_statistics_to_details, bundle)
+         findNavController().navigate(R.id.action_global_to_StatPlaceFragment, bundle)
     }
 }

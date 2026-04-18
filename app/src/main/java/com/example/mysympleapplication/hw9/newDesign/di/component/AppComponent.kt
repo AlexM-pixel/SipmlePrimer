@@ -1,7 +1,6 @@
 package com.example.mysympleapplication.hw9.newDesign.di.component
 
 import android.app.Application
-import com.example.mysympleapplication.hw9.App
 import com.example.mysympleapplication.hw9.newDesign.MyApp
 import com.example.mysympleapplication.hw9.newDesign.di.builder.ActivityBuilder
 import com.example.mysympleapplication.hw9.newDesign.di.builder.ServiceBuilder

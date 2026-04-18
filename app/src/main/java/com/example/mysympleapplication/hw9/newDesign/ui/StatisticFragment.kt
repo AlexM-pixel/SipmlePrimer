@@ -12,6 +12,7 @@ import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.mysympleapplication.R
 import com.example.mysympleapplication.hw9.Months
 import com.example.mysympleapplication.hw9.newDesign.base.BaseFragment
@@ -42,8 +43,8 @@ class StatisticFragment : BaseFragment() {
     var progressBar: ProgressBar? = null
     private lateinit var myAdapter: PairStatisticsRvAdapter
     private var nameMonth: TextView? = null
-    private var userSpends: Float? = null
-    private var frSpends: Float? = null
+    private var currentUserSpends: Float = 0f
+    private var currentFriendSpends: Float = 0f
 
     private var pieChart: PieChart? = null
     private var tfRegular: Typeface? = null
@@ -70,21 +71,19 @@ class StatisticFragment : BaseFragment() {
             userBalance?.text = it?.balance
         }
         viewModelStatistic.userSpendsLiveData.observe(viewLifecycleOwner) {
-            userExpenses?.text = "${it?.value_spends} BYN"
-            userSpends = it!!.value_spends
-            totalExpenses += it.value_spends
-            if (frSpends != null) {
-                preparePieData(userSpends, frSpends, totalExpenses)
-            }
+            // ИСПРАВЛЕНО: не делаем +=, просто сохраняем текущее значение
+            currentUserSpends = it?.valueSpends?.toString()?.toFloatOrNull() ?: 0f
+            userExpenses?.text = "$currentUserSpends BYN"
             nameMonth?.text = Months.getMonth(viewModelStatistic.getDateDbFormat()).nameMonth
+
+            updatePieChart() // Перерисовываем график
         }
         viewModelStatistic.friendSpendsLiveData.observe(viewLifecycleOwner) {
-            friendExpenses?.text = "${it?.value_spends} BYN"
-            frSpends = it.value_spends
-            totalExpenses += it.value_spends
-            if (userSpends != null) {
-                preparePieData(userSpends, frSpends, totalExpenses)
-            }
+            // ИСПРАВЛЕНО: не делаем +=
+            currentFriendSpends = it?.valueSpends?.toString()?.toFloatOrNull() ?: 0f
+            friendExpenses?.text = "$currentFriendSpends BYN"
+
+            updatePieChart() // Перерисовываем график
         }
         viewModelStatistic.friendsBalanceLiveData.observe(viewLifecycleOwner) { it ->
             friendBalance?.text = it?.balance
@@ -118,7 +117,7 @@ class StatisticFragment : BaseFragment() {
         val rvAdapter: RecyclerView = view.findViewById(R.id.rv_pair_statistic)
         myAdapter = PairStatisticsRvAdapter()
         rvAdapter.apply {
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
             adapter = myAdapter
         }
     }
@@ -218,6 +217,12 @@ class StatisticFragment : BaseFragment() {
         // undo all highlights
         pieChart!!.highlightValues(null)
         pieChart!!.invalidate()
+    }
+    private fun updatePieChart() {
+        val totalExpenses = currentUserSpends + currentFriendSpends
+        if (totalExpenses >= 0f) { // График рисуется даже если 0 (чтобы не было багов с пустым экраном)
+            preparePieData(currentUserSpends, currentFriendSpends, totalExpenses)
+        }
     }
 
 }

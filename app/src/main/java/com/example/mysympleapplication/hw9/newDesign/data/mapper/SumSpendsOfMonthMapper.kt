@@ -1,7 +1,7 @@
 package com.example.mysympleapplication.hw9.newDesign.data.mapper
 
-import com.example.mysympleapplication.hw9.SumSpendsOfMonth
 import com.example.mysympleapplication.hw9.newDesign.data.entity_model.SumSpendsOfMonthEntity
+import com.example.mysympleapplication.hw9.newDesign.domain.model.SumSpendsOfMonth
 import javax.inject.Inject
 
 class SumSpendsOfMonthMapper @Inject constructor() : EntityMapper<SumSpendsOfMonthEntity, SumSpendsOfMonth> {
@@ -14,7 +14,7 @@ class SumSpendsOfMonthMapper @Inject constructor() : EntityMapper<SumSpendsOfMon
     override fun mapToEntity(domainModel: SumSpendsOfMonth): SumSpendsOfMonthEntity {
       return SumSpendsOfMonthEntity(
           dateM = domainModel.dateM,
-          valueSpends = domainModel.value_spends
+          valueSpends = domainModel.valueSpends
       )
     }
 

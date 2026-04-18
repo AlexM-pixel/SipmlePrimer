@@ -26,7 +26,7 @@ import com.example.mysympleapplication.hw9.newDesign.di.builder.ViewModelFactory
 import com.example.mysympleapplication.hw9.newDesign.domain.model.BankCard
 import com.example.mysympleapplication.hw9.newDesign.ui.adapters.CardsAdapter
 import com.example.mysympleapplication.hw9.newDesign.ui.adapters.SumMonthSpendsRvAdapter
-import com.example.mysympleapplication.hw9.newDesign.ui.adapters.ViewPagerAdapter
+import com.example.mysympleapplication.hw9.newDesign.ui.adapters.MainButtonsAdapter
 import com.example.mysympleapplication.hw9.newDesign.ui.dialogues.CardSelectorBottomSheet
 import com.example.mysympleapplication.hw9.newDesign.utils.Config.REQUEST_CODE
 import com.example.mysympleapplication.hw9.newDesign.utils.MainPrefs
@@ -213,33 +213,25 @@ class HomeFragment : BaseFragment() {
 
     private fun setViewPager(view: View) {
         val viewPager2 = view.findViewById<ViewPager2>(R.id.viewPager_home)
-        val viewPagerAdapter = ViewPagerAdapter()
-        viewPager2.adapter = viewPagerAdapter
+        val mainButtonsAdapter = MainButtonsAdapter()
+        viewPager2.adapter = mainButtonsAdapter
         val transformerSideMargin =
             pixelToDp(requireActivity(), resources.getDimension(R.dimen.cardView_margin) * 2)
         viewPager2.setShowSideItems(transformerSideMargin, transformerSideMargin)
         viewPager2.setCurrentItem(1, false)
-        viewPagerAdapter.onButtonClick = { position ->
+        mainButtonsAdapter.onButtonClick = { position ->
             when (position) {
                 0 -> { findNavController().navigate(R.id.action_homeFragment_to_limitFragment)}
                 1 -> startAddingManualFragment()
-                2 -> {
+                2 -> { findNavController().navigate(R.id.action_bottomNavFragment_to_statisticSoloFragment) }
+
+                3 -> {
                     Toast.makeText(
                         requireContext(),
                         "Воспользуйтесь нашим калькулятором с удобным конвертором",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
-
-                3 -> {
-                    Toast.makeText(requireContext(), "Всего вы потратили", Toast.LENGTH_SHORT)
-                        .show()
-                }
-
-                4 -> {
-                    Toast.makeText(requireContext(), "пока не придумал", Toast.LENGTH_SHORT).show()
-                }
-
                 else -> Toast.makeText(requireContext(), "Error item position", Toast.LENGTH_SHORT)
                     .show()
             }

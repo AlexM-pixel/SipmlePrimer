@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mysympleapplication.hw9.SumSpendsOfMonth
 import com.example.mysympleapplication.hw9.newDesign.data.mapper.MonthUiMapper
 import com.example.mysympleapplication.hw9.newDesign.domain.model.BankCard
 import com.example.mysympleapplication.hw9.newDesign.domain.model.MonthUiModel

@@ -1,19 +1,12 @@
 package com.example.mysympleapplication.hw9.newDesign.ui.adapters
 
-import android.content.res.ColorStateList
-import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mysympleapplication.R
-import com.example.mysympleapplication.hw9.Months
-import com.example.mysympleapplication.hw9.SumSpendsOfMonth
 import com.example.mysympleapplication.hw9.newDesign.domain.model.MonthUiModel
-import com.example.mysympleapplication.hw9.newDesign.utils.MainPrefs
 import com.google.android.material.progressindicator.LinearProgressIndicator
 
 class SumMonthSpendsRvAdapter : RecyclerView.Adapter<SumMonthSpendsRvAdapter.MyHolder>() {

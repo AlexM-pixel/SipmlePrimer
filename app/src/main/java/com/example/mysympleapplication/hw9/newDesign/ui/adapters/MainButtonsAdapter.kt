@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mysympleapplication.R
 
 
-class ViewPagerAdapter : RecyclerView.Adapter<ViewPagerAdapter.PagerVH>() {
+class MainButtonsAdapter : RecyclerView.Adapter<MainButtonsAdapter.PagerVH>() {
     private var listTiles: MutableList<String> = mutableListOf()
     lateinit var onButtonClick: (position: Int) -> Unit
 
@@ -43,11 +43,13 @@ class ViewPagerAdapter : RecyclerView.Adapter<ViewPagerAdapter.PagerVH>() {
             }
 
             2 -> {
+                holder.desc.text = "Здесь можно глянуть куда деньги деваются"
+                holder.title.text = "Статистика"
                 holder.btn.setOnClickListener { onButtonClick.invoke(position) }
             }
 
-            3 -> {}
-            4 -> {}
+            3 -> { holder.btn.setOnClickListener { onButtonClick.invoke(position) }}
+
             else -> {
                 holder.desc.text = "${holder.desc.text}  $position"
                 holder.title.text = "${holder.title.text} + $position"
@@ -58,7 +60,7 @@ class ViewPagerAdapter : RecyclerView.Adapter<ViewPagerAdapter.PagerVH>() {
     }
 
     override fun getItemCount(): Int {
-        return 5
+        return 4
     }
 
 }

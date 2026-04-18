@@ -1,13 +1,13 @@
 package com.example.mysympleapplication.hw9.newDesign.data.repositories.net_repository
 
 import android.util.Log
-import com.example.mysympleapplication.hw9.SumSpendsOfMonth
 import com.example.mysympleapplication.hw9.newDesign.data.entity_model.BalanceEntity
 import com.example.mysympleapplication.hw9.newDesign.data.entity_model.SpendEntity
 import com.example.mysympleapplication.hw9.newDesign.data.mapper.BalanceMapper
 import com.example.mysympleapplication.hw9.newDesign.data.mapper.SpendsMapper
 import com.example.mysympleapplication.hw9.newDesign.domain.model.Balance
 import com.example.mysympleapplication.hw9.newDesign.domain.model.Spend
+import com.example.mysympleapplication.hw9.newDesign.domain.model.SumSpendsOfMonth
 import com.example.mysympleapplication.hw9.newDesign.domain.model.UserDocuments
 import com.example.mysympleapplication.hw9.newDesign.utils.Result
 import com.google.firebase.firestore.FirebaseFirestore
@@ -31,7 +31,6 @@ class FriendsDataRepositoryImpl @Inject constructor(
             snapshot.toObject(BalanceEntity::class.java)
         Log.e("login", "getFriendBalanceFirestore: ${res?.toString()}")
         return res?.let { mapper.mapFromEntity(it) }
-
     }
 
     override suspend fun getFriendsExpensesByMonth(date: String): SumSpendsOfMonth {

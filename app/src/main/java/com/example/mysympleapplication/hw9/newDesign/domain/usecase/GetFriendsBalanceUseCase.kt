@@ -1,6 +1,5 @@
 package com.example.mysympleapplication.hw9.newDesign.domain.usecase
 
-import com.example.mysympleapplication.hw9.SumSpendsOfMonth
 import com.example.mysympleapplication.hw9.newDesign.data.repositories.net_repository.FriendsDataRepository
 import com.example.mysympleapplication.hw9.newDesign.domain.model.Balance
 import com.example.mysympleapplication.hw9.newDesign.utils.Resource

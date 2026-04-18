@@ -1,14 +1,8 @@
 package com.example.mysympleapplication.hw9.newDesign.data.net
 
 import android.util.Log
-import com.example.mysympleapplication.hw9.Spend
 import com.example.mysympleapplication.hw9.newDesign.data.entity_model.SpendEntity
-import com.example.mysympleapplication.hw9.newDesign.utils.Result
-import com.example.mysympleapplication.hw9.view.auth.EmailPasswordActivity
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QueryDocumentSnapshot
-import kotlinx.coroutines.tasks.await
-import java.util.ArrayList
 import javax.inject.Inject
 
 class FirestoreSourceExample @Inject constructor(private val firestore: FirebaseFirestore) {

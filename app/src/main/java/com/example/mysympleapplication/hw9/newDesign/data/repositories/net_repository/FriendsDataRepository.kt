@@ -1,9 +1,8 @@
 package com.example.mysympleapplication.hw9.newDesign.data.repositories.net_repository
 
-import com.example.mysympleapplication.hw9.SumSpendsOfMonth
-import com.example.mysympleapplication.hw9.newDesign.data.entity_model.SpendEntity
 import com.example.mysympleapplication.hw9.newDesign.domain.model.Balance
 import com.example.mysympleapplication.hw9.newDesign.domain.model.Spend
+import com.example.mysympleapplication.hw9.newDesign.domain.model.SumSpendsOfMonth
 import com.example.mysympleapplication.hw9.newDesign.utils.Result
 
 interface FriendsDataRepository {
