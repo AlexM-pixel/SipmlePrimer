@@ -27,114 +27,168 @@ class StatisticViewModel @Inject constructor(
     private val getMonthlySpendsUseCase: GetMonthlySpendsUseCase
 ) : ViewModel() {
 
-    // --- Состояния экрана (Инкапсуляция) ---
+    // =========================================================================
+    // 1. СОСТОЯНИЯ ЭКРАНА (LIVE DATA ДЛЯ ФРАГМЕНТА)
+    // =========================================================================
+
+    // Индикатор загрузки (крутилка)
     private val _stateLiveData = MutableLiveData<State>()
     val stateLiveData: LiveData<State> get() = _stateLiveData
 
+    // Общая сумма твоих расходов за месяц
     private val _userSpendsLiveData = MutableLiveData<SumSpendsOfMonth?>()
     val userSpendsLiveData: LiveData<SumSpendsOfMonth?> get() = _userSpendsLiveData
 
-    private val _friendSpendsLiveData = MutableLiveData<SumSpendsOfMonth>()
-    val friendSpendsLiveData: LiveData<SumSpendsOfMonth> get() = _friendSpendsLiveData
+    // Общая сумма расходов друга за месяц
+    private val _friendSpendsLiveData = MutableLiveData<SumSpendsOfMonth?>()
+    val friendSpendsLiveData: LiveData<SumSpendsOfMonth?> get() = _friendSpendsLiveData
 
+    // Балансы на картах
     private val _friendsBalanceLiveData = MutableLiveData<Balance?>()
     val friendsBalanceLiveData: LiveData<Balance?> get() = _friendsBalanceLiveData
 
     private val _userBalanceLiveData = MutableLiveData<Balance?>()
     val userBalanceLiveData: LiveData<Balance?> get() = _userBalanceLiveData
 
-    // Внутренние списки трат для объединения
+    // Итоговый склеенный список трат (Твои + Друга) по категориям
+    private val _pairSpendsLiveData = MutableLiveData<List<PairSpends>>()
+    val pairSpendsLiveData: LiveData<List<PairSpends>> get() = _pairSpendsLiveData
+
+
+    // =========================================================================
+    // 2. ВНУТРЕННИЕ ПЕРЕМЕННЫЕ (ДЛЯ ВЫЧИСЛЕНИЙ)
+    // =========================================================================
+
+    // Эти списки мы не отдаем во фрагмент. Мы храним их здесь, чтобы
+    // мгновенно склеить их вместе, когда придут оба ответа.
     private var localUserSpendsList: List<Spend> = emptyList()
     private var localFriendSpendsList: List<Spend> = emptyList()
 
+    // Внутренние суммы для графика
+    private var localUserTotal: SumSpendsOfMonth? = null
+    private var localFriendTotal: SumSpendsOfMonth? = null
 
-    // --- Форматтеры дат (Создаем один раз для экономии ресурсов) ---
+    // Флаги "Барьера". Они говорят нам, пришли ли данные из баз.
+    private var isUserListLoaded = false
+    private var isUserTotalLoaded = false
+    private var isFriendDataLoaded = false // Firebase отдает и список, и сумму разом
+
+    // Форматтеры дат (Создаем один раз, чтобы не засорять память)
+    private val currentDate = Date()
     private val dateFormatFull = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
     private val dateFormatMonthYear = SimpleDateFormat("MM-yyyy", Locale.getDefault())
     private val dateFormatFirestore = SimpleDateFormat("yyyy-MM", Locale.getDefault())
-    private val currentDate = Date()
 
-    // --- ИНКАПСУЛЯЦИЯ СПИСКА ---
-    private val _usersSpendsListLiveData = MutableLiveData<List<PairSpends>>()
-    val usersSpendsListLiveData: LiveData<List<PairSpends>> get() = _usersSpendsListLiveData
-
-    // --- ФЛАГИ ДЛЯ БАРЬЕРА ---
-    private var isUserSpendsLoaded = false
-    private var isFriendSpendsLoaded = false
 
     init {
-
         loadAllData()
     }
 
-
-     fun loadAllData() {
+    // Стартовая загрузка всех данных
+    fun loadAllData() {
         _stateLiveData.value = State.LOADING
-        // Сбрасываем флаги перед новой загрузкой
-        isUserSpendsLoaded = false
-        isFriendSpendsLoaded = false
 
-        getMonthlyUserSpends()
-        getUserExpenses()
-        getFriendBalance()
-        getBalance()
-        getFriendsExpenses()
+        // Сбрасываем барьер перед новой загрузкой
+
+
+        isUserListLoaded = false
+        isUserTotalLoaded = false
+        isFriendDataLoaded = false
+
+        getUserExpenses()        // Запрос общей суммы (Room)
+        getMonthlyUserSpends()   // Запрос детального списка (Room)
+        getBalance()             // Запрос баланса (Room)
+
+        getFriendsExpenses()     // Запрос списка и суммы друга (Firebase)
+        getFriendBalance()       // Запрос баланса друга (Firebase)
     }
 
-    // 1. Твои расходы (Общая сумма)
+    // =========================================================================
+    // 3. ПОЛУЧЕНИЕ ДАННЫХ
+    // =========================================================================
+
+    // А) Твои расходы (Общая сумма из Room)
     fun getUserExpenses() {
         getExpensesUserUseCase(dateFormatFull.format(currentDate)).onEach { resource ->
             when (resource) {
                 is Resource.Success -> {
-                    _userSpendsLiveData.value = resource.data
+                    localUserTotal = resource.data
+                    isUserTotalLoaded = true
+                    checkAndMerge()
                 }
+
                 is Resource.Error -> {
-                    _stateLiveData.value = State.ERROR
-                    // Защита: передаем нули в виде строк, если ошибка
-                    _userSpendsLiveData.value = SumSpendsOfMonth(dateFormatFull.format(currentDate), 0f)
+                    localUserTotal = SumSpendsOfMonth(dateFormatFull.format(currentDate), 0f)
+                    isUserTotalLoaded = true
+                    checkAndMerge()
                     Log.e("StatisticViewModel", "Error User Expenses: ${resource.message}")
                 }
+
                 else -> {}
             }
         }.launchIn(viewModelScope)
     }
 
-    // 2. Расходы друга (Сумма + Детальный список)
+    // Б) Твои расходы (Детальный список из Room)
+    private fun getMonthlyUserSpends() {
+        getMonthlySpendsUseCase(dateMonth = dateFormatMonthYear.format(currentDate)).onEach { resource ->
+            if (resource is Resource.Success) {
+                // 1. Сохраняем детальные траты во внутреннюю переменную
+                localUserSpendsList = resource.data ?: emptyList()
+                // 2. Говорим: "Мои данные готовы!" и дергаем барьер
+                isUserListLoaded = true
+                checkAndMerge()
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    // В) Расходы друга (Детальный список и Общая сумма из Firebase)
     fun getFriendsExpenses() {
         viewModelScope.launch(Dispatchers.IO) {
             val friendEmail = MainPrefs.mailFriend
 
-            // Если друга нет, притворяемся, что его данные "загрузились" (они пустые)
+            // Если друга нет, пропускаем загрузку из сети
             if (friendEmail.isEmpty()) {
-                isFriendSpendsLoaded = true
+                isFriendDataLoaded = true
                 checkAndMerge()
                 return@launch
             }
 
-            when (val res = getExpensesFriendUseCase(dateFormatFirestore.format(currentDate), friendEmail)) {
+            when (val res =
+                getExpensesFriendUseCase(dateFormatFirestore.format(currentDate), friendEmail)) {
                 is Result.Value -> {
-                    // ... (тут твой код суммирования баланса друга, который был раньше) ...
-                    val totalFriendSpends = res.value.sumOf { it.value.toDoubleOrNull() ?: 0.0 }.toFloat()
+                    // 1. Считаем общую сумму друга и отправляем во фрагмент
+                    val totalFriendSpends =
+                        res.value.sumOf { it.value.toDoubleOrNull() ?: 0.0 }.toFloat()
                     val sumSpends = SumSpendsOfMonth(
                         res.value.firstOrNull()?.date ?: dateFormatFull.format(currentDate),
                         totalFriendSpends
                     )
-                    _friendSpendsLiveData.postValue(sumSpends)
+                    // СОХРАНЯЕМ СУММУ ЛОКАЛЬНО
+                    localFriendTotal = sumSpends
 
-                    val friendSpendList = res.value.groupBy { it.spendName }.map { (category, list) ->
-                        val totalValue = list.sumOf { it.value.toDoubleOrNull() ?: 0.0 }
-                        Spend(0, category, totalValue.toString(), list.firstOrNull()?.date ?: "", list.firstOrNull()?.cardId ?: "", list.firstOrNull()?.url)
-                    }
+                    // 2. Группируем детальные траты друга по названиям мест
+                    localFriendSpendsList =
+                        res.value.groupBy { it.spendName }.map { (category, list) ->
+                            val totalValue = list.sumOf { it.value.toDoubleOrNull() ?: 0.0 }
+                            Spend(
+                                0,
+                                category,
+                                totalValue.toString(),
+                                list.firstOrNull()?.date ?: "",
+                                list.firstOrNull()?.cardId ?: "",
+                                list.firstOrNull()?.url
+                            )
+                        }
 
-                    // СОХРАНЯЕМ В ЛОКАЛЬНУЮ ПЕРЕМЕННУЮ
-                    localFriendSpendsList = friendSpendList
-                    // ДАННЫЕ ДРУГА ПРИШЛИ! Ставим флаг и проверяем барьер
-                    isFriendSpendsLoaded = true
+                    // 3. "Данные друга готовы!"  дергаем барьер
+                    isFriendDataLoaded = true
                     checkAndMerge()
                 }
+
                 is Result.Error -> {
-                    // Даже если ошибка, снимаем блокировку, чтобы показать хотя бы твои траты
-                    isFriendSpendsLoaded = true
+                    // Если ошибка интернета - снимаем барьер, чтобы показать хотя бы данные юзера
+                    isFriendDataLoaded = true
                     checkAndMerge()
                     Log.e("StatisticViewModel", "Error Friend Expenses: ${res.error.message}")
                 }
@@ -142,78 +196,67 @@ class StatisticViewModel @Inject constructor(
         }
     }
 
-   // Возвращаем метод для Фрагмента, чтобы он мог узнать текущий месяц
+    // Г) Балансы (Room и Firebase)
+    fun getFriendBalance() {
+        getBalanceFriendUseCase(MainPrefs.mailFriend).onEach { resource ->
+            if (resource is Resource.Success) _friendsBalanceLiveData.value = resource.data
+        }.launchIn(viewModelScope)
+    }
+
+    fun getBalance() {
+        getBalanceUserUseCase().onEach { resource ->
+            if (resource is Resource.Success) _userBalanceLiveData.postValue(resource.data)
+        }.launchIn(viewModelScope)
+    }
+
+    // Возвращаем текущий месяц для UI (например, "Апрель")
     fun getDateDbFormat(): String {
         return dateFormatMonthYear.format(currentDate)
     }
 
-    // 3. Баланс друга
-    fun getFriendBalance() {
-        getBalanceFriendUseCase(MainPrefs.mailFriend).onEach { resource ->
-            if (resource is Resource.Success) {
-                _friendsBalanceLiveData.value = resource.data
-            }
-        }.launchIn(viewModelScope)
-    }
+    // =========================================================================
+    // 4. ЛОГИКА СЛИЯНИЯ СПИСКОВ (БАРЬЕР И МАГИЯ KOTLIN)
+    // =========================================================================
 
-    // 4. Твой баланс
-    fun getBalance() {
-        getBalanceUserUseCase().onEach { resource ->
-            if (resource is Resource.Success) {
-                _userBalanceLiveData.value = resource.data
-            }
-        }.launchIn(viewModelScope)
-    }
-
-    // 5. Твои расходы (Детальный список)
-    private fun getMonthlyUserSpends() {
-        getMonthlySpendsUseCase(dateMonth = dateFormatMonthYear.format(currentDate)).onEach { resource ->
-            if (resource is Resource.Success) {
-                // 1. Сохраняем твои детальные траты во внутреннюю переменную
-                localUserSpendsList = resource.data ?: emptyList()
-
-                // 2. Говорим: "Мои данные готовы!" и дергаем барьер
-                isUserSpendsLoaded = true
-                checkAndMerge()
-            }
-        }.launchIn(viewModelScope)
-    }
+    /**
+     * Барьер. Этот метод вызывается дважды (когда загрузился ты, и когда загрузился друг).
+     * Он ждет, пока оба флага станут true, и только тогда склеивает списки.
+     * @Synchronized защищает от одновременного доступа с разных потоков.
+     */
     @Synchronized
     private fun checkAndMerge() {
-        // Ждем, пока загрузятся ОБА списка
-        if (isUserSpendsLoaded && isFriendSpendsLoaded) {
-            // Склеиваем и сортируем
+        if (isUserListLoaded && isUserTotalLoaded && isFriendDataLoaded) {
+            // 1. Данные пришли из обеих баз. Запускаем слияние!
             val mergedList = mergeSpends(localUserSpendsList, localFriendSpendsList)
+            // 2. Отправляем готовый список во фрагмент (наконец-то!)
+            _pairSpendsLiveData.postValue(mergedList)
+            // 1. Отдаем суммы для Пончика
+            _userSpendsLiveData.postValue(localUserTotal)
+            _friendSpendsLiveData.postValue(localFriendTotal)
 
-            // Отправляем готовый красивый список в UI
-            _usersSpendsListLiveData.postValue(mergedList)
-
-            // Выключаем прогресс-бар
+            // 3. Прячем крутилку загрузки
             _stateLiveData.postValue(State.SUCCESS)
         }
     }
 
-
-
     /**
-     *  слияние двух списков расходов (Твои и Друга)
-     *  никаких циклов в цикле!
+     * Метод склеивания двух списков в один красивый список PairSpends
      */
-    private fun mergeSpends(userList: List<Spend>?, friendList: List<Spend>?): List<PairSpends> {
-        val safeUserList = userList ?: emptyList()
-        val safeFriendList = friendList ?: emptyList()
+    private fun mergeSpends(userList: List<Spend>, friendList: List<Spend>): List<PairSpends> {
+        // Собираем уникальные категории (например, "Евроопт", "Аптека") из обоих списков
+        val allCategories =
+            (userList.map { it.spendName } + friendList.map { it.spendName }).toSet()
 
-        // 1. Собираем все уникальные категории из обоих списков (Set исключает дубликаты)
-        val allCategories = (safeUserList.map { it.spendName } + safeFriendList.map { it.spendName }).toSet()
-
-        // 2. Проходимся по каждой категории и склеиваем данные
         return allCategories.map { category ->
-            val userSpend = safeUserList.find { it.spendName == category }
-            val friendSpend = safeFriendList.find { it.spendName == category }
+            // Находим сумму в этой категории для тебя
+            val userValue = userList.find { it.spendName == category }?.value?.toFloatOrNull() ?: 0f
+            // Находим сумму в этой категории для друга
+            val friendValue =
+                friendList.find { it.spendName == category }?.value?.toFloatOrNull() ?: 0f
 
-            val userValue = userSpend?.value?.toFloatOrNull() ?: 0f
-            val friendValue = friendSpend?.value?.toFloatOrNull() ?: 0f
-            val iconUrl = userSpend?.url ?: friendSpend?.url
+            // Ищем иконку категории
+            val iconUrl = userList.find { it.spendName == category }?.url
+                ?: friendList.find { it.spendName == category }?.url
 
             PairSpends(
                 valueUser = userValue,
@@ -221,6 +264,7 @@ class StatisticViewModel @Inject constructor(
                 nameSpend = category,
                 url = iconUrl
             )
-        }.sortedByDescending { it.valueUser + it.valueFriend } // Сортируем: сверху самые большие общие траты
+        }
+            .sortedByDescending { it.valueUser + it.valueFriend } // Сортируем: наверху самые дорогие общие покупки
     }
 }

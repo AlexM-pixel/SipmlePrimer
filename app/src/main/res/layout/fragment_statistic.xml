@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:background="@drawable/background_rv_nd"
     tools:context=".hw9.newDesign.ui.StatisticFragment">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -28,220 +27,232 @@
             app:collapsedTitleTextColor="@color/backgroundGreenNDColor"
             app:titleEnabled="false">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clipToPadding="false"
-                android:orientation="vertical">
+                android:paddingBottom="24dp">
 
-
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <!-- 1. ЗЕЛЕНЫЙ ФОН (Верхняя половина) -->
+                <View
+                    android:id="@+id/header_bg"
                     android:layout_width="match_parent"
-                    android:layout_height="120dp"
+                    android:layout_height="0dp"
                     android:background="@drawable/background_bottom_radius_nd"
-                    >
+                    app:layout_constraintBottom_toBottomOf="@+id/cards_container"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginBottom="50dp" /> <!-- Оставляем карточки торчать снизу -->
 
-                    <TextView
-                        android:id="@+id/name_month_statistic"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
-                        android:text="Август"
-                        android:textColor="@color/white"
-                        android:textSize="24sp"
-                        app:layout_constraintBottom_toTopOf="@+id/card_Stat"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                <!-- Декоративные круги -->
+                <View
+                    android:id="@+id/cycle_one"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="-30dp"
+                    android:layout_marginEnd="-30dp"
+                    android:background="@drawable/cycle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/card_Stat"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="8dp"
-                        android:layout_marginBottom="18dp"
-                        android:elevation="8dp"
-                        app:cardCornerRadius="16dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/name_month_statistic">
+                <!-- 2. КОТ С КОШЕЛЬКОМ -->
+                <!-- Поставь сюда картинку кота с деньгами -->
+                <ImageView
+                    android:id="@+id/iv_cat_header"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:src="@drawable/cat_hello"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                <!-- 3. ЗАГОЛОВОК СПРАВА ОТ КОТА -->
+                <TextView
+                    android:id="@+id/tv_main_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:gravity="center"
+                    android:text="Общая статистика\nрасходов"
+                    android:textColor="#1F4D36"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_cat_header"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/iv_cat_header"
+                    app:layout_constraintTop_toTopOf="@+id/iv_cat_header" />
 
-                            <TextView
-                                android:id="@+id/nameCurrentUserB"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="@dimen/standard_margin"
-                                android:text="Ваш баланс : "
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                <!-- (Скрытый старый ID, чтобы фрагмент не крашился при поиске месяца) -->
+                <TextView
+                    android:id="@+id/name_month_statistic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    tools:ignore="MissingConstraints" />
 
-                            <TextView
-                                android:id="@+id/nameFriendUserB"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="@dimen/standard_margin"
-                                android:text="Баланс Марины : "
-                                app:layout_constraintBottom_toBottomOf="@+id/nameCurrentUserB"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="@+id/nameCurrentUserB" />
-
-                            <TextView
-                                android:id="@+id/val_balance_user"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="@dimen/standard_margin"
-                                android:text="234 Byn"
-                                android:textColor="@color/GreenNDColor"
-                                android:textSize="18sp"
-                                android:textStyle="bold"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="@+id/nameCurrentUserB"
-                                app:layout_constraintStart_toStartOf="@+id/nameCurrentUserB"
-                                app:layout_constraintTop_toBottomOf="@+id/nameCurrentUserB" />
-
-                            <TextView
-                                android:id="@+id/val_balance_friends"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="@dimen/standard_margin"
-                                android:text="534 Byn"
-                                android:textColor="@color/colorPrimaryDarkND"
-                                android:textSize="18sp"
-                                android:textStyle="bold"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="@+id/nameFriendUserB"
-                                app:layout_constraintStart_toStartOf="@+id/nameFriendUserB"
-                                app:layout_constraintTop_toBottomOf="@+id/nameFriendUserB" />
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-                    </androidx.cardview.widget.CardView>
-
-
-                    <View
-                        android:id="@+id/cycle_one"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:layout_marginBottom="26dp"
-                        android:background="@drawable/cycle"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <View
-                        android:id="@+id/cycle_two"
-                        android:layout_width="180dp"
-                        android:layout_height="180dp"
-                        android:layout_marginBottom="26dp"
-                        android:background="@drawable/cycle"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <View
-                        android:id="@+id/cycle_three"
-                        android:layout_width="280dp"
-                        android:layout_height="280dp"
-                        android:layout_marginBottom="26dp"
-                        android:background="@drawable/cycle"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cardView_expenses"
+                <!-- 4. КОНТЕЙНЕР ДЛЯ ДВУХ КАРТОЧЕК -->
+                <LinearLayout
+                    android:id="@+id/cards_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/standard_margin"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="8dp">
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="8dp"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    app:layout_constraintTop_toBottomOf="@+id/iv_cat_header">
 
+                    <!-- КАРТОЧКА 1: ТЫ (СЛЕВА) -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="6dp"
+                        android:layout_weight="1"
+                        app:cardBackgroundColor="@android:color/white"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="6dp"
+                        app:strokeWidth="0dp">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <ProgressBar
-                            android:id="@+id/progressBar"
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:layout_constraintBottom_toTopOf="@+id/nameCurrentUser"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            android:orientation="vertical"
+                            android:padding="12dp">
 
-                        <com.github.mikephil.charting.charts.PieChart
-                            android:id="@+id/pieChart"
+                            <!-- Аватарка и Имя -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:id="@+id/iv_my_avatar"
+                                    android:layout_width="48dp"
+                                    android:layout_height="48dp"
+                                    android:src="@drawable/ic_baseline_person_24" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/nameCurrentUserB"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Саша"
+                                        android:textColor="#1F4D36"
+                                        android:textSize="18sp"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/tv_my_email"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="sasha@mail.ru"
+                                        android:textColor="#999999"
+                                        android:textSize="12sp"
+                                        android:maxLines="1"
+                                        android:ellipsize="end"/>
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <!-- ПЛАШКА С БАЛАНСОМ -->
+                            <TextView
+                                android:id="@+id/val_balance_user"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="16dp"
+                                android:background="@drawable/bg_balance_pill_green"
+                                android:gravity="center"
+                                android:paddingVertical="10dp"
+                                tools:text="3421.49 BYN"
+                                android:textColor="@android:color/white"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- КАРТОЧКА 2: ДРУГ (СПРАВА) -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:layout_weight="1"
+                        app:cardBackgroundColor="@android:color/white"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="6dp"
+                        app:strokeWidth="0dp">
+
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="240dp"
-                            android:elevation="8dp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-
-                        <TextView
-                            android:id="@+id/nameCurrentUser"
-                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/standard_margin"
-                            android:text="Ваши расходы : "
-                            android:textColor="@color/text_colorND"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/pieChart" />
+                            android:orientation="vertical"
+                            android:padding="12dp">
 
-                        <TextView
-                            android:id="@+id/nameFriendUser"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/standard_margin"
-                            android:text="Расходы Марины : "
-                            android:textColor="@color/text_colorND"
-                            app:layout_constraintBottom_toBottomOf="@+id/nameCurrentUser"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/nameCurrentUser" />
+                            <!-- Аватарка и Имя -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
 
-                        <TextView
-                            android:id="@+id/val_expenses_user"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginBottom="@dimen/standard_margin"
-                            android:text="234 BYN"
-                            android:textColor="@color/GreenNDColor"
-                            android:textSize="22sp"
-                            android:textStyle="bold"
-                            app:layout_constraintStart_toStartOf="@+id/nameCurrentUser"
-                            app:layout_constraintTop_toBottomOf="@+id/nameCurrentUser" />
+                                <ImageView
+                                    android:id="@+id/iv_friend_avatar"
+                                    android:layout_width="48dp"
+                                    android:layout_height="48dp"
+                                    android:src="@drawable/ic_baseline_person_24" />
 
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/val_expenses_friends"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginBottom="@dimen/standard_margin"
-                            android:text="534 BYN"
-                            android:textColor="@color/colorPrimaryDarkND"
-                            android:textSize="22sp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="@+id/nameFriendUser"
-                            app:layout_constraintTop_toBottomOf="@+id/nameFriendUser" />
+                                    <TextView
+                                        android:id="@+id/nameFriendUserB"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Alex"
+                                        android:textColor="#1F4D36"
+                                        android:textSize="18sp"
+                                        android:textStyle="bold" />
 
+                                    <TextView
+                                        android:id="@+id/tv_friend_email"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="alex@mail.ru"
+                                        android:textColor="#999999"
+                                        android:textSize="12sp"
+                                        android:maxLines="1"
+                                        android:ellipsize="end"/>
+                                </LinearLayout>
+                            </LinearLayout>
 
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                            <!-- ПЛАШКА С БАЛАНСОМ -->
+                            <TextView
+                                android:id="@+id/val_balance_friends"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="16dp"
+                                android:background="@drawable/bg_balance_pill_blue"
+                                android:gravity="center"
+                                android:paddingVertical="10dp"
+                                tools:text="2870.15 BYN"
+                                android:textColor="@android:color/white"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
 
-                </androidx.cardview.widget.CardView>
-            </LinearLayout>
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>

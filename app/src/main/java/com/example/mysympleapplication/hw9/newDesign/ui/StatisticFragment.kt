@@ -99,7 +99,7 @@ class StatisticFragment : BaseFragment() {
                 else -> State.ERROR
             }
         }
-        viewModelStatistic.usersSpendsListLiveData.observe(viewLifecycleOwner) {
+        viewModelStatistic.pairSpendsLiveData.observe(viewLifecycleOwner) {
             myAdapter.setList(it)
         }
 
@@ -117,7 +117,7 @@ class StatisticFragment : BaseFragment() {
         val rvAdapter: RecyclerView = view.findViewById(R.id.rv_pair_statistic)
         myAdapter = PairStatisticsRvAdapter()
         rvAdapter.apply {
-            layoutManager = StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
+            layoutManager = LinearLayoutManager(context)
             adapter = myAdapter
         }
     }

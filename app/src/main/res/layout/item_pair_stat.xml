@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Внешний мятный фон (карточка) -->
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    app:cardBackgroundColor="@android:color/white"
-    app:cardCornerRadius="16dp"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="@dimen/standard_margin"
+    app:cardBackgroundColor="@color/itemSelectBg"
+    app:cardCornerRadius="24dp"
     app:cardElevation="2dp"
-    app:strokeColor="#F0F0F0"
-    app:strokeWidth="1dp">
+    app:strokeWidth="0dp">
+
+    <!-- Если у тебя есть текстура фона, можно добавить ImageView сюда -->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,107 +20,197 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- ИКОНКА И НАЗВАНИЕ -->
+        <!-- 1. ШАПКА: ИКОНКА И НАЗВАНИЕ КАТЕГОРИИ -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingStart="8dp"
+            android:paddingBottom="12dp">
 
-            <FrameLayout
-                android:id="@+id/fl_icon_bg"
-                android:padding="@dimen/standard_margin"
+            <!-- Иконка категории -->
+            <ImageView
+                android:id="@+id/iv_category_icon"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:background="@drawable/background_rv_nd">
-
-                <ImageView
-                    android:id="@+id/iv_category_icon"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/produkti"
-                    android:layout_gravity="center"/>
-            </FrameLayout>
+                tools:src="@drawable/ic_cat_face_small" />
 
             <TextView
                 android:id="@+id/tv_category_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
+                android:layout_marginStart="@dimen/cardView_margin"
                 android:layout_weight="1"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:textColor="#333333"
-                android:textSize="15sp"
+                android:textColor="@color/color_sheet_text_name"
+                android:textSize="@dimen/title_Text_size"
                 android:textStyle="bold"
-                tools:text="Продукты" />
+                tools:text="OSTIN" />
         </LinearLayout>
 
-        <!-- ОБЩАЯ СУММА КАТЕГОРИИ -->
-        <TextView
-            android:id="@+id/tv_total_amount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:textColor="#333333"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            tools:text="1 250 BYN" />
-
-        <!-- КТО СКОЛЬКО ПОТРАТИЛ (Текст) -->
-        <LinearLayout
+        <!-- 2. БЕЛАЯ ВНУТРЕННЯЯ КАРТОЧКА -->
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tv_my_amount"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="#6FCF97"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                tools:text="Ты: 800" />
-
-            <TextView
-                android:id="@+id/tv_friend_amount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#FFCA28"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                tools:text="Марина: 450" />
-        </LinearLayout>
-
-        <!-- ДВУХЦВЕТНАЯ ШКАЛА ДОЛЕЙ -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="6dp"
-            android:layout_marginTop="6dp"
-            app:cardCornerRadius="3dp"
+            app:cardBackgroundColor="@android:color/white"
+            app:cardCornerRadius="20dp"
             app:cardElevation="0dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/standard_margin">
 
-                <View
-                    android:id="@+id/view_my_share"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="50"
-                    android:background="#6FCF97" />
+                <!-- ОБЩАЯ СУММА -->
+                <TextView
+                    android:id="@+id/tv_total_amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/onBoardingNDColor"
+                    android:textSize="@dimen/title_Total_spend"
+                    android:textStyle="bold"
+                    tools:text="1 900 BYN" />
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Всего потратили"
+                    android:textColor="#888888"
+                    android:textSize="16sp" />
+
+                <!-- РАЗДЕЛИТЕЛЬ -->
                 <View
-                    android:id="@+id/view_friend_share"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="50"
-                    android:background="#FFCA28" />
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/standard_margin"
+                    android:layout_marginBottom="16dp"
+                    android:background="#E0E0E0" />
+
+                <!-- СТАТИСТИКА ЮЗЕРА (САША) -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/standard_margin"
+                    android:layout_marginBottom="16dp">
+
+                    <ImageView
+                        android:id="@+id/iv_my_avatar"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:src="@drawable/boy_1"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <TextView
+                        android:id="@+id/tv_my_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:text="Ты"
+                        android:textColor="#333333"
+                        android:textSize="18sp"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        app:layout_constraintBottom_toTopOf="@+id/pb_my_share"
+                        app:layout_constraintStart_toEndOf="@id/iv_my_avatar"
+                        app:layout_constraintTop_toTopOf="@id/iv_my_avatar" />
+
+                    <TextView
+                        android:id="@+id/tv_my_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="@dimen/auth_textQuestion_size"
+                        android:textStyle="bold"
+                        app:layout_constraintBaseline_toBaselineOf="@id/tv_my_name"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        tools:text="1 085 BYN" />
+
+                    <!-- Прогресс-бар -->
+                    <com.google.android.material.progressindicator.LinearProgressIndicator
+                        android:id="@+id/pb_my_share"
+                        android:layout_width="0dp"
+                        android:layout_height="8dp"
+                        android:layout_marginTop="8dp"
+                        app:trackThickness="@dimen/standard_margin"
+                        app:indicatorColor="@color/colorPrimaryDark"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@id/tv_my_name"
+                        app:layout_constraintTop_toBottomOf="@id/tv_my_name"
+                        app:trackColor="#D8EFE0"
+                        app:trackCornerRadius="4dp"
+                        tools:progress="57" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <!-- СТАТИСТИКА ДРУГА (АЛЕКС) -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_marginHorizontal="@dimen/standard_margin"
+                    android:layout_marginBottom="@dimen/standard_margin"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/iv_friend_avatar"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:src="@drawable/girl_1"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0" />
+                    <!-- Замени иконку друга на нужную -->
+
+                    <TextView
+                        android:id="@+id/tv_friend_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:text="Друг"
+                        android:textColor="#333333"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toTopOf="@+id/pb_friend_share"
+                        app:layout_constraintStart_toEndOf="@id/iv_friend_avatar"
+                        app:layout_constraintTop_toTopOf="@id/iv_friend_avatar" />
+
+                    <TextView
+                        android:id="@+id/tv_friend_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#75BBB9"
+                        android:textSize="@dimen/auth_textQuestion_size"
+                        android:textStyle="bold"
+                        app:layout_constraintBaseline_toBaselineOf="@id/tv_friend_name"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        tools:text="815 BYN" />
+
+                    <!-- Прогресс-бар -->
+                    <com.google.android.material.progressindicator.LinearProgressIndicator
+                        android:id="@+id/pb_friend_share"
+                        android:layout_width="0dp"
+                        android:layout_height="8dp"
+                        android:layout_marginTop="8dp"
+                        app:indicatorColor="#75BBB9"
+                        app:trackThickness="@dimen/standard_margin"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@id/tv_friend_name"
+                        app:layout_constraintTop_toBottomOf="@id/tv_friend_name"
+                        app:trackColor="#D0E6E5"
+                        app:trackCornerRadius="4dp"
+                        tools:progress="43" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

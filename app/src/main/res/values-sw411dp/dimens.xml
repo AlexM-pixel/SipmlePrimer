@@ -12,6 +12,7 @@
     <dimen name="button_horizontal_margin">8dp</dimen>
     <dimen name="auth_btnText_size">16sp</dimen>
     <dimen name="title_Text_size">24sp</dimen>
+    <dimen name="title_Total_spend">32sp</dimen>
     <dimen name="auth_textQuestion_size">18sp</dimen>
     <dimen name="cardView_margin">14dp</dimen>
     <dimen name="bankCard_Size">220dp</dimen>

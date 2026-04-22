@@ -7,6 +7,7 @@
     <dimen name="yer_text_size_rv">14sp</dimen>
     <dimen name="spend_text_size_rv">14sp</dimen>
     <dimen name="frame_image_size">60dp</dimen>
+    <dimen name="title_Total_spend">28sp</dimen>
     <dimen name="bankCard_Size">180dp</dimen>
     <dimen name="margin_topRvSpends">26dp</dimen>
     <dimen name="height_progressBar">4dp</dimen>

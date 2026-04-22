@@ -35,41 +35,78 @@ class PairStatisticsRvAdapter : RecyclerView.Adapter<PairStatisticsRvAdapter.Pai
     override fun getItemCount(): Int = listSpends.size
 
     inner class PairHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val categoryIcon: ImageView = itemView.findViewById(R.id.iv_category_icon)
+
+        private val ivCategoryIcon: ImageView = itemView.findViewById(R.id.iv_category_icon)
         private val tvCategoryName: TextView = itemView.findViewById(R.id.tv_category_name)
         private val tvTotalAmount: TextView = itemView.findViewById(R.id.tv_total_amount)
+
+        // Ты
+        private val tvMyName: TextView = itemView.findViewById(R.id.tv_my_name)
         private val tvMyAmount: TextView = itemView.findViewById(R.id.tv_my_amount)
+        private val pbMyShare: com.google.android.material.progressindicator.LinearProgressIndicator =
+            itemView.findViewById(R.id.pb_my_share)
+
+        // Друг
+        private val tvFriendName: TextView = itemView.findViewById(R.id.tv_friend_name)
         private val tvFriendAmount: TextView = itemView.findViewById(R.id.tv_friend_amount)
-        private val viewMyShare: View = itemView.findViewById(R.id.view_my_share)
-        private val viewFriendShare: View = itemView.findViewById(R.id.view_friend_share)
+        private val pbFriendShare: com.google.android.material.progressindicator.LinearProgressIndicator =
+            itemView.findViewById(R.id.pb_friend_share)
 
         fun bind(item: PairSpends) {
-            val friendName = MainPrefs.mailFriend.split("@").firstOrNull() ?: "Друг" // Берем имя до @
-
-            // 1. Название
+            // 1. НАЗВАНИЕ И ИКОНКА
             tvCategoryName.text = item.nameSpend
 
-            // 2. ИКОНКА
-            val image = Images.getImageForItem(item.url)
+            val imageName = item.url ?: "produkti"
+            val context = itemView.context
+            val resId = context.resources.getIdentifier(imageName, "drawable", context.packageName)
+            if (resId != 0) {
+                // Если у тебя есть extension-метод для Glide, используй его:
+                // ivCategoryIcon.setImageByDrawable(resId)
+                ivCategoryIcon.setImageResource(resId) // Временная замена, если Glide тут нет
+            } else {
+                ivCategoryIcon.setImageResource(R.drawable.ic_cat_face_small)
+            }
 
-            // 2. Суммы
+            // 2. ИМЕНА
+            val friendEmail = MainPrefs.mailFriend
+            val friendName = if (friendEmail.isNotEmpty()) friendEmail.split("@")[0] else "Друг"
+
+            // Если есть имя пользователя в профиле, можно тоже достать, пока пишем "Ты"
+            tvMyName.text = "Ты"
+            tvFriendName.text = friendName
+
+            // 3. СУММЫ
             val mySpent = item.valueUser
             val friendSpent = item.valueFriend
             val total = mySpent + friendSpent
 
-            tvTotalAmount.text = String.format(Locale.US, "%.2f BYN", total)
-            tvMyAmount.text = "Ты: ${mySpent.toInt()}"
-            tvFriendAmount.text = "$friendName: ${friendSpent.toInt()}"
-            categoryIcon.setImageByDrawable(image)
-            // 3. Динамическая шкала (Сплит)
-            val myWeight = if (total > 0) (mySpent / total) * 100 else 50f
-            val friendWeight = if (total > 0) (friendSpent / total) * 100 else 50f
+            // Форматируем без копеек, если они равны нулю (как на скрине 1900 вместо 1900.00)
+            tvTotalAmount.text = formatMoney(total)
+            tvMyAmount.text = formatMoney(mySpent)
+            tvFriendAmount.text = formatMoney(friendSpent)
 
-            // Меняем вес (weight) для View
-            (viewMyShare.layoutParams as LinearLayout.LayoutParams).weight = myWeight
-            (viewFriendShare.layoutParams as LinearLayout.LayoutParams).weight = friendWeight
+            // 4. ПРОГРЕСС-БАРЫ
+            if (total > 0) {
+                // Считаем долю каждого от общей суммы
+                val myPercent = ((mySpent / total) * 100).toInt()
+                val friendPercent = ((friendSpent / total) * 100).toInt()
 
-            viewMyShare.requestLayout()
+                pbMyShare.progress = myPercent
+                pbFriendShare.progress = friendPercent
+            } else {
+                pbMyShare.progress = 0
+                pbFriendShare.progress = 0
+            }
+        }
+
+        // Вспомогательная функция для красивого вывода денег
+        private fun formatMoney(amount: Float): String {
+            return if (amount % 1.0 == 0.0) {
+                String.format(java.util.Locale.US, "%.0f BYN", amount) // 1900 BYN
+            } else {
+                String.format(java.util.Locale.US, "%.2f BYN", amount) // 1085.50 BYN
+            }
         }
     }
+
 }
