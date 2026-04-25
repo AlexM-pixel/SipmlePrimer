@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FAFAFA"
     android:fitsSystemWindows="true"
     tools:context=".hw9.newDesign.ui.StatisticFragment">
 
@@ -13,18 +14,14 @@
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         android:fitsSystemWindows="true"
-        android:minHeight="?attr/actionBarSize">
+        app:elevation="0dp">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/collapsing"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="?attr/actionBarSize"
-            app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
             android:fitsSystemWindows="true"
-            app:contentScrim="@color/colorGrafik_line"
-            app:title="Oven Oven"
-            app:collapsedTitleTextColor="@color/backgroundGreenNDColor"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:titleEnabled="false">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -38,31 +35,48 @@
                     android:id="@+id/header_bg"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
+                    android:layout_marginBottom="40dp"
                     android:background="@drawable/background_bottom_radius_nd"
                     app:layout_constraintBottom_toBottomOf="@+id/cards_container"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_marginBottom="50dp" /> <!-- Оставляем карточки торчать снизу -->
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <!-- Декоративные круги -->
                 <View
                     android:id="@+id/cycle_one"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_marginTop="-30dp"
-                    android:layout_marginEnd="-30dp"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:background="@drawable/cycle"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <View
+                    android:id="@+id/cycle_two"
+                    android:layout_width="210dp"
+                    android:layout_height="210dp"
+                    android:background="@drawable/cycle"
+                    app:layout_constraintBottom_toBottomOf="@+id/cycle_one"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/cycle_one" />
+
+                <View
+                    android:id="@+id/cycle_three"
+                    android:layout_width="320dp"
+                    android:layout_height="320dp"
+                    android:background="@drawable/cycle"
+                    app:layout_constraintBottom_toBottomOf="@+id/cycle_one"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/cycle_one" />
                 <!-- 2. КОТ С КОШЕЛЬКОМ -->
-                <!-- Поставь сюда картинку кота с деньгами -->
                 <ImageView
                     android:id="@+id/iv_cat_header"
                     android:layout_width="160dp"
                     android:layout_height="160dp"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:src="@drawable/cat_hello"
+                    android:scaleType="fitEnd"
+                    android:src="@drawable/pair_stat_cat"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -71,33 +85,38 @@
                     android:id="@+id/tv_main_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginEnd="@dimen/title_bottom_margin"
+                    android:layout_marginBottom="@dimen/title_bottom_margin"
                     android:gravity="center"
-                    android:text="Общая статистика\nрасходов"
-                    android:textColor="#1F4D36"
-                    android:textSize="20sp"
+                    android:text="Общая статистика"
+                    android:textColor="@color/onBoardingNDColor"
+                    android:textSize="@dimen/title_Total_spend"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/iv_cat_header"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/iv_cat_header"
-                    app:layout_constraintTop_toTopOf="@+id/iv_cat_header" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <!-- (Скрытый старый ID, чтобы фрагмент не крашился при поиске месяца) -->
                 <TextView
                     android:id="@+id/name_month_statistic"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    tools:ignore="MissingConstraints" />
+                    android:text="Апрель"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/title_Text_size"
+                    android:textStyle="bold"
+                    android:layout_marginEnd="@dimen/standard_margin"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_main_title"
+                    app:layout_constraintStart_toStartOf="@+id/tv_main_title"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_main_title"
+                 />
 
-                <!-- 4. КОНТЕЙНЕР ДЛЯ ДВУХ КАРТОЧЕК -->
+                <!-- 4. КОНТЕЙНЕР ДЛЯ ДВУХ КАРТОЧЕК (БАЛАНСЫ) -->
                 <LinearLayout
                     android:id="@+id/cards_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginHorizontal="10dp"
                     android:baselineAligned="false"
                     android:orientation="horizontal"
                     android:weightSum="2"
@@ -107,20 +126,21 @@
                     <com.google.android.material.card.MaterialCardView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/standard_margin"
                         android:layout_marginEnd="6dp"
+                        android:layout_marginBottom="@dimen/standard_margin"
                         android:layout_weight="1"
                         app:cardBackgroundColor="@android:color/white"
                         app:cardCornerRadius="20dp"
-                        app:cardElevation="6dp"
+                        app:cardElevation="4dp"
                         app:strokeWidth="0dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:padding="12dp">
+                            android:padding="@dimen/standard_margin">
 
-                            <!-- Аватарка и Имя -->
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -131,13 +151,13 @@
                                     android:id="@+id/iv_my_avatar"
                                     android:layout_width="48dp"
                                     android:layout_height="48dp"
-                                    android:src="@drawable/ic_baseline_person_24" />
+                                    android:src="@drawable/boy_1" />
 
                                 <LinearLayout
                                     android:layout_width="0dp"
-                                    android:layout_weight="1"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="8dp"
+                                    android:layout_weight="1"
                                     android:orientation="vertical">
 
                                     <TextView
@@ -153,27 +173,26 @@
                                         android:id="@+id/tv_my_email"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+                                        android:ellipsize="end"
+                                        android:maxLines="1"
                                         android:text="sasha@mail.ru"
                                         android:textColor="#999999"
-                                        android:textSize="12sp"
-                                        android:maxLines="1"
-                                        android:ellipsize="end"/>
+                                        android:textSize="12sp" />
                                 </LinearLayout>
                             </LinearLayout>
 
-                            <!-- ПЛАШКА С БАЛАНСОМ -->
                             <TextView
                                 android:id="@+id/val_balance_user"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="16dp"
+                                android:layout_marginTop="@dimen/standard_margin"
                                 android:background="@drawable/bg_balance_pill_green"
                                 android:gravity="center"
-                                android:paddingVertical="10dp"
-                                tools:text="3421.49 BYN"
+                                android:paddingVertical="@dimen/standard_margin"
                                 android:textColor="@android:color/white"
                                 android:textSize="18sp"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                tools:text="3421.49 BYN" />
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
 
@@ -182,19 +201,20 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"
+                        android:layout_marginEnd="@dimen/standard_margin"
+                        android:layout_marginBottom="@dimen/standard_margin"
                         android:layout_weight="1"
                         app:cardBackgroundColor="@android:color/white"
                         app:cardCornerRadius="20dp"
-                        app:cardElevation="6dp"
+                        app:cardElevation="4dp"
                         app:strokeWidth="0dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:padding="12dp">
+                            android:padding="@dimen/standard_margin">
 
-                            <!-- Аватарка и Имя -->
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -205,13 +225,13 @@
                                     android:id="@+id/iv_friend_avatar"
                                     android:layout_width="48dp"
                                     android:layout_height="48dp"
-                                    android:src="@drawable/ic_baseline_person_24" />
+                                    android:src="@drawable/girl_1" />
 
                                 <LinearLayout
                                     android:layout_width="0dp"
-                                    android:layout_weight="1"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="8dp"
+                                    android:layout_weight="1"
                                     android:orientation="vertical">
 
                                     <TextView
@@ -227,41 +247,150 @@
                                         android:id="@+id/tv_friend_email"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+                                        android:ellipsize="end"
+                                        android:maxLines="1"
                                         android:text="alex@mail.ru"
                                         android:textColor="#999999"
-                                        android:textSize="12sp"
-                                        android:maxLines="1"
-                                        android:ellipsize="end"/>
+                                        android:textSize="12sp" />
                                 </LinearLayout>
                             </LinearLayout>
 
-                            <!-- ПЛАШКА С БАЛАНСОМ -->
                             <TextView
                                 android:id="@+id/val_balance_friends"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="16dp"
+                                android:layout_marginTop="@dimen/standard_margin"
                                 android:background="@drawable/bg_balance_pill_blue"
                                 android:gravity="center"
-                                android:paddingVertical="10dp"
-                                tools:text="2870.15 BYN"
+                                android:paddingVertical="@dimen/standard_margin"
                                 android:textColor="@android:color/white"
                                 android:textSize="18sp"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                tools:text="2870.15 BYN" />
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
 
                 </LinearLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <!-- ========================================== -->
+                <!-- НОВЫЙ БЛОК: ГРАФИК И СУММЫ РАСХОДОВ        -->
+                <!-- ========================================== -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardView_expenses"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="16dp"
+                    app:cardBackgroundColor="@android:color/white"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="4dp"
+                    app:layout_constraintTop_toBottomOf="@+id/cards_container">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="20dp">
+
+                        <!-- Индикатор загрузки (пока грузятся расходы) -->
+                        <ProgressBar
+                            android:id="@+id/progressBar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="@+id/pieChart"
+                            app:layout_constraintEnd_toEndOf="@+id/pieChart"
+                            app:layout_constraintStart_toStartOf="@+id/pieChart"
+                            app:layout_constraintTop_toTopOf="@+id/pieChart" />
+
+                        <!-- КРУГОВОЙ ГРАФИК (ПОНЧИК) -->
+                        <!-- Ограничил высоту, чтобы он не был гигантским -->
+                        <com.github.mikephil.charting.charts.PieChart
+                            android:id="@+id/pieChart"
+                            android:layout_width="match_parent"
+                            android:layout_height="220dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <!-- ПОДПИСИ ПОД ГРАФИКОМ -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="24dp"
+                            android:baselineAligned="false"
+                            android:orientation="horizontal"
+                            app:layout_constraintTop_toBottomOf="@id/pieChart">
+
+                            <!-- РАСХОДЫ ТВОИ (Слева) -->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/nameCurrentUser"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Ваши расходы:"
+                                    android:textColor="#888888"
+                                    android:textSize="13sp" />
+
+                                <TextView
+                                    android:id="@+id/val_expenses_user"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:textColor="#95D0A1"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold"
+                                    tools:text="356.16 BYN" />
+                            </LinearLayout>
+
+                            <!-- РАСХОДЫ ДРУГА (Справа) -->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="end"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/nameFriendUser"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Расходы Марины:"
+                                    android:textColor="#888888"
+                                    android:textSize="13sp" />
+
+                                <TextView
+                                    android:id="@+id/val_expenses_friends"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:textColor="#77C2B8"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold"
+                                    tools:text="1433.14 BYN" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- 5. СПИСОК КАТЕГОРИЙ (Баттл) -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_pair_statistic"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingTop="8dp"
+        android:paddingBottom="24dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:listitem="@layout/item_pair_stat" />
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

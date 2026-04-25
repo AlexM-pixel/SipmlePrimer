@@ -53,6 +53,7 @@ class HomeFragment : BaseFragment() {
     )
     private var isPermissionGranted = false
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -83,11 +84,10 @@ class HomeFragment : BaseFragment() {
         return inflater.inflate(R.layout.fragment_home_nd, container, false)
     }
 
-    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView(view)
-        Log.e("onViewCreatedByStFr","userMail: ${MainPrefs.mailUser}, friendMail: ${MainPrefs.mailFriend}")
+            // Log.e("onViewCreatedByStFr","userMail: ${MainPrefs.mailUser}, friendMail: ${MainPrefs.mailFriend}")
         setupCardsViewPager(view) // Настройка верхней карусели
         setViewPager(view)
         if (!isPermissionGranted) {

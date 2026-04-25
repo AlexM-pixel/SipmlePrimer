@@ -13,5 +13,7 @@
     <dimen name="standard_margin">8dp</dimen>
     <dimen name="bankCard_Size">190dp</dimen>
     <dimen name="margin_topRvSpends">30dp</dimen>
+    <dimen name="vp_buttons_margin">24dp</dimen>
+
 
 </resources>

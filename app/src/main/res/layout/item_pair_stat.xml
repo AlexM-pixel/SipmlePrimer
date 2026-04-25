@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="16dp"
+    android:layout_marginHorizontal="@dimen/standard_margin"
     android:layout_marginVertical="@dimen/standard_margin"
     app:cardBackgroundColor="@color/itemSelectBg"
     app:cardCornerRadius="24dp"
@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="6dp">
 
         <!-- 1. ШАПКА: ИКОНКА И НАЗВАНИЕ КАТЕГОРИИ -->
         <LinearLayout
@@ -27,23 +27,23 @@
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingStart="8dp"
-            android:paddingBottom="12dp">
+            >
 
             <!-- Иконка категории -->
             <ImageView
                 android:id="@+id/iv_category_icon"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                tools:src="@drawable/ic_cat_face_small" />
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                tools:src="@drawable/wildberries" />
 
             <TextView
                 android:id="@+id/tv_category_name"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/cardView_margin"
-                android:layout_weight="1"
+                android:layout_marginStart="@dimen/standard_margin"
+                android:maxLines="1"
                 android:textColor="@color/color_sheet_text_name"
-                android:textSize="@dimen/title_Text_size"
+                android:textSize="@dimen/title_Total_spend"
                 android:textStyle="bold"
                 tools:text="OSTIN" />
         </LinearLayout>
@@ -73,13 +73,7 @@
                     android:textStyle="bold"
                     tools:text="1 900 BYN" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Всего потратили"
-                    android:textColor="#888888"
-                    android:textSize="16sp" />
+
 
                 <!-- РАЗДЕЛИТЕЛЬ -->
                 <View
@@ -101,21 +95,21 @@
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:src="@drawable/boy_1"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_my_name"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.0" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/tv_my_name"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
+                        android:layout_marginStart="@dimen/standard_margin"
                         android:text="Ты"
                         android:textColor="#333333"
-                        android:textSize="18sp"
+                        android:textSize="@dimen/item_text_size"
                         android:maxLines="1"
                         android:ellipsize="end"
+                        app:layout_constraintEnd_toStartOf="@+id/tv_my_amount"
                         app:layout_constraintBottom_toTopOf="@+id/pb_my_share"
                         app:layout_constraintStart_toEndOf="@id/iv_my_avatar"
                         app:layout_constraintTop_toTopOf="@id/iv_my_avatar" />
@@ -136,12 +130,11 @@
                         android:id="@+id/pb_my_share"
                         android:layout_width="0dp"
                         android:layout_height="8dp"
-                        android:layout_marginTop="8dp"
                         app:trackThickness="@dimen/standard_margin"
+                        android:layout_marginTop="@dimen/standard_margin"
                         app:indicatorColor="@color/colorPrimaryDark"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@id/tv_my_name"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_my_name"
                         app:trackColor="#D8EFE0"
                         app:trackCornerRadius="4dp"
@@ -161,22 +154,22 @@
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:src="@drawable/girl_1"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_friend_name"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.0" />
+                        app:layout_constraintTop_toTopOf="parent" />
                     <!-- Замени иконку друга на нужную -->
 
                     <TextView
                         android:id="@+id/tv_friend_name"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
+                        android:layout_marginStart="@dimen/standard_margin"
                         android:maxLines="1"
                         android:ellipsize="end"
                         android:text="Друг"
                         android:textColor="#333333"
-                        android:textSize="18sp"
+                        android:textSize="@dimen/item_text_size"
+                        app:layout_constraintEnd_toStartOf="@+id/tv_friend_amount"
                         app:layout_constraintBottom_toTopOf="@+id/pb_friend_share"
                         app:layout_constraintStart_toEndOf="@id/iv_friend_avatar"
                         app:layout_constraintTop_toTopOf="@id/iv_friend_avatar" />
@@ -197,12 +190,11 @@
                         android:id="@+id/pb_friend_share"
                         android:layout_width="0dp"
                         android:layout_height="8dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="@dimen/standard_margin"
                         app:indicatorColor="#75BBB9"
                         app:trackThickness="@dimen/standard_margin"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@id/tv_friend_name"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_friend_name"
                         app:trackColor="#D0E6E5"
                         app:trackCornerRadius="4dp"

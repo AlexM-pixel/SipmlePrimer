@@ -1,5 +1,6 @@
 package com.example.mysympleapplication.hw9.newDesign.ui.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,6 +53,7 @@ class PairStatisticsRvAdapter : RecyclerView.Adapter<PairStatisticsRvAdapter.Pai
         private val pbFriendShare: com.google.android.material.progressindicator.LinearProgressIndicator =
             itemView.findViewById(R.id.pb_friend_share)
 
+        @SuppressLint("SetTextI18n")
         fun bind(item: PairSpends) {
             // 1. НАЗВАНИЕ И ИКОНКА
             tvCategoryName.text = item.nameSpend
@@ -81,7 +83,7 @@ class PairStatisticsRvAdapter : RecyclerView.Adapter<PairStatisticsRvAdapter.Pai
             val total = mySpent + friendSpent
 
             // Форматируем без копеек, если они равны нулю (как на скрине 1900 вместо 1900.00)
-            tvTotalAmount.text = formatMoney(total)
+            tvTotalAmount.text ="${formatMoney(total)} BYN"
             tvMyAmount.text = formatMoney(mySpent)
             tvFriendAmount.text = formatMoney(friendSpent)
 
@@ -102,9 +104,9 @@ class PairStatisticsRvAdapter : RecyclerView.Adapter<PairStatisticsRvAdapter.Pai
         // Вспомогательная функция для красивого вывода денег
         private fun formatMoney(amount: Float): String {
             return if (amount % 1.0 == 0.0) {
-                String.format(java.util.Locale.US, "%.0f BYN", amount) // 1900 BYN
+                String.format(java.util.Locale.US, "%.0f", amount) // 1900
             } else {
-                String.format(java.util.Locale.US, "%.2f BYN", amount) // 1085.50 BYN
+                String.format(java.util.Locale.US, "%.2f", amount) // 1085.50
             }
         }
     }

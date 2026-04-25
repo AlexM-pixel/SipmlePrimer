@@ -68,7 +68,7 @@ class StatisticFragment : BaseFragment() {
         viewModelStatistic.getFriendBalance()
         viewModelStatistic.getBalance()
         viewModelStatistic.userBalanceLiveData.observe(viewLifecycleOwner) {
-            userBalance?.text = it?.balance
+            userBalance?.text = "${it?.balance} BYN"
         }
         viewModelStatistic.userSpendsLiveData.observe(viewLifecycleOwner) {
             // ИСПРАВЛЕНО: не делаем +=, просто сохраняем текущее значение
@@ -86,7 +86,7 @@ class StatisticFragment : BaseFragment() {
             updatePieChart() // Перерисовываем график
         }
         viewModelStatistic.friendsBalanceLiveData.observe(viewLifecycleOwner) { it ->
-            friendBalance?.text = it?.balance
+            friendBalance?.text = "${it?.balance} BYN"
         }
         viewModelStatistic.stateLiveData.observe(viewLifecycleOwner) { state ->
             when (state) {
@@ -117,7 +117,7 @@ class StatisticFragment : BaseFragment() {
         val rvAdapter: RecyclerView = view.findViewById(R.id.rv_pair_statistic)
         myAdapter = PairStatisticsRvAdapter()
         rvAdapter.apply {
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
             adapter = myAdapter
         }
     }
