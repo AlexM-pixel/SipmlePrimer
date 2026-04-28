@@ -19,6 +19,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.CompositePageTransformer
+import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.example.mysympleapplication.R
 import com.example.mysympleapplication.hw9.newDesign.base.BaseFragment
@@ -33,6 +35,7 @@ import com.example.mysympleapplication.hw9.newDesign.utils.MainPrefs
 import com.example.mysympleapplication.hw9.newDesign.viewmodels.HomeFragmentViewModel
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
 import javax.inject.Inject
+import kotlin.math.abs
 
 class HomeFragment : BaseFragment() {
     private lateinit var dotsIndicator: WormDotsIndicator
@@ -42,6 +45,7 @@ class HomeFragment : BaseFragment() {
     lateinit var viewModelFactory: ViewModelFactory
     val viewModel: HomeFragmentViewModel by viewModels { viewModelFactory }
     private lateinit var myAdapter: SumMonthSpendsRvAdapter
+
     // Инициализируем адаптер с лямбдой
     private val cardsAdapter = CardsAdapter(
         onCardLongClick = { card ->
@@ -58,7 +62,10 @@ class HomeFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
 
         // Слушаем результат от шторки выбора карты
-        childFragmentManager.setFragmentResultListener(CardSelectorBottomSheet.REQUEST_KEY, this) { _, bundle ->
+        childFragmentManager.setFragmentResultListener(
+            CardSelectorBottomSheet.REQUEST_KEY,
+            this
+        ) { _, bundle ->
             val cardId = bundle.getString(CardSelectorBottomSheet.RESULT_ID) ?: "-1"
             val balance = bundle.getFloat(CardSelectorBottomSheet.RESULT_BALANCE, 0f)
 
@@ -67,7 +74,10 @@ class HomeFragment : BaseFragment() {
         }
 
         // Слушаем результат от LimitFragment
-        childFragmentManager.setFragmentResultListener(LimitFragment.REQUEST_KEY_LIMIT, this) { _, bundle ->
+        childFragmentManager.setFragmentResultListener(
+            LimitFragment.REQUEST_KEY_LIMIT,
+            this
+        ) { _, bundle ->
             val isUpdated = bundle.getBoolean(LimitFragment.BUNDLE_KEY_UPDATED)
             if (isUpdated) {
                 // Если лимит изменился, просто просим адаптер перерисовать список.
@@ -87,7 +97,7 @@ class HomeFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView(view)
-            // Log.e("onViewCreatedByStFr","userMail: ${MainPrefs.mailUser}, friendMail: ${MainPrefs.mailFriend}")
+        // Log.e("onViewCreatedByStFr","userMail: ${MainPrefs.mailUser}, friendMail: ${MainPrefs.mailFriend}")
         setupCardsViewPager(view) // Настройка верхней карусели
         setViewPager(view)
         if (!isPermissionGranted) {
@@ -98,7 +108,8 @@ class HomeFragment : BaseFragment() {
         observeData()
 
     }
-  // Срабатывает, когда мы переключаемся между вкладками (Home <-> Settings)
+
+    // Срабатывает, когда мы переключаемся между вкладками (Home <-> Settings)
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
         if (!hidden) {
@@ -116,7 +127,7 @@ class HomeFragment : BaseFragment() {
 
 
     private fun observeData() {
-        viewModel.uiState.observe(viewLifecycleOwner) {list ->
+        viewModel.uiState.observe(viewLifecycleOwner) { list ->
             myAdapter.setMonthList(list)
         }
 
@@ -135,8 +146,8 @@ class HomeFragment : BaseFragment() {
 
     // Настройка карусели карт
     private fun setupCardsViewPager(view: View) {
-       vpCards = view.findViewById<ViewPager2>(R.id.vp_cards)
-       dotsIndicator =view.findViewById<WormDotsIndicator>(R.id.dots_indicator)
+        vpCards = view.findViewById<ViewPager2>(R.id.vp_cards)
+        dotsIndicator = view.findViewById<WormDotsIndicator>(R.id.dots_indicator)
         vpCards.adapter = cardsAdapter
 
         // Анимация (Scale effect) для карт
@@ -162,6 +173,7 @@ class HomeFragment : BaseFragment() {
             }
             .show()
     }
+
     // Метод для создания новой карты вручную
     private fun showAddCardDialog() {
         val layout = LinearLayout(requireContext()).apply {
@@ -179,7 +191,8 @@ class HomeFragment : BaseFragment() {
         }
         val inputBalance = EditText(requireContext()).apply {
             hint = "Текущий баланс"
-            inputType = android.text.InputType.TYPE_CLASS_NUMBER or android.text.InputType.TYPE_NUMBER_FLAG_DECIMAL
+            inputType =
+                android.text.InputType.TYPE_CLASS_NUMBER or android.text.InputType.TYPE_NUMBER_FLAG_DECIMAL
         }
 
         layout.addView(inputName)
@@ -191,7 +204,8 @@ class HomeFragment : BaseFragment() {
             .setView(layout)
             .setPositiveButton("Создать") { _, _ ->
                 val name = inputName.text.toString().ifEmpty { "Новая карта" }
-                val digits = inputDigits.text.toString().ifEmpty { "Main" } // "Main" или просто рандом, если наличка
+                val digits = inputDigits.text.toString()
+                    .ifEmpty { "Main" } // "Main" или просто рандом, если наличка
                 val balance = inputBalance.text.toString().ifEmpty { "0.0" }
 
                 // Создаем объект BankCard
@@ -212,31 +226,59 @@ class HomeFragment : BaseFragment() {
 
 
     private fun setViewPager(view: View) {
-        val viewPager2 = view.findViewById<ViewPager2>(R.id.viewPager_home)
+        val viewPager = view.findViewById<ViewPager2>(R.id.viewPager_home)
         val mainButtonsAdapter = MainButtonsAdapter()
-        viewPager2.adapter = mainButtonsAdapter
-        val transformerSideMargin =
-            pixelToDp(requireActivity(), resources.getDimension(R.dimen.cardView_margin) * 2)
-        viewPager2.setShowSideItems(transformerSideMargin, transformerSideMargin)
-        viewPager2.setCurrentItem(1, false)
+        viewPager.adapter = mainButtonsAdapter
+
+        // Настройка кликов (оставляем твою логику)
         mainButtonsAdapter.onButtonClick = { position ->
             when (position) {
-                0 -> { findNavController().navigate(R.id.action_homeFragment_to_limitFragment)}
+                0 -> findNavController().navigate(R.id.action_homeFragment_to_limitFragment)
                 1 -> startAddingManualFragment()
-                2 -> { findNavController().navigate(R.id.action_bottomNavFragment_to_statisticSoloFragment) }
-
-                3 -> {
-                    Toast.makeText(
-                        requireContext(),
-                        "Воспользуйтесь нашим калькулятором с удобным конвертором",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-                else -> Toast.makeText(requireContext(), "Error item position", Toast.LENGTH_SHORT)
-                    .show()
+                2 -> findNavController().navigate(R.id.action_bottomNavFragment_to_statisticSoloFragment)
+                else -> Toast.makeText(requireContext(), "Error item position", Toast.LENGTH_SHORT).show()
             }
         }
+
+        // --- НАСТРОЙКА ВИЗУАЛА (ЧТОБЫ КАРТОЧКИ ВЫГЛЯДЫВАЛИ) ---
+
+        // 1. Устанавливаем отступы по бокам ViewPager2.
+        // Чем больше значение, тем сильнее выглядывают соседние карточки.
+        val paddingPx = 100.dpToPx(requireContext())
+        viewPager.setPadding(paddingPx, 0, paddingPx, 0)
+        // 2. Разрешаем рисовать элементы в зоне padding
+
+        // 3. Сколько карточек держать в памяти (минимум 3, чтобы левая и правая были видны)
+        viewPager.offscreenPageLimit = 3
+
+        val compositePageTransformer = CompositePageTransformer()
+        compositePageTransformer.addTransformer(MarginPageTransformer(10.dpToPx(requireContext())))
+        // ГЛАВНАЯ МАГИЯ ЗДЕСЬ
+        compositePageTransformer.addTransformer { page, position ->
+            val absPosition = Math.abs(position)
+
+            // 1. Стандартное масштабирование и прозрачность (внешний вид)
+            page.scaleY = 0.85f + (1 - absPosition) * 0.15f
+            page.alpha = 0.6f + (1 - absPosition) * 0.4f
+
+            // 2. Смещение внутреннего контента
+            // Находим наш внутренний LinearLayout по ID
+            val innerContainer = page.findViewById<View>(R.id.container_inner)
+
+            if (innerContainer != null) {
+                // Если position = 1 (карточка справа), мы двигаем контент ВЛЕВО
+                // Если position = -1 (карточка слева), мы двигаем контент ВПРАВО
+                // Множитель (0.3f или 0.5f) определяет, насколько сильно будет "выглядывать" текст
+                val translationX = -position * (paddingPx / 2f)
+                innerContainer.translationX = translationX
+            }
+        }
+        viewPager.setCurrentItem(1, false)
+        viewPager.setPageTransformer(compositePageTransformer)
+        
     }
+
+
 
     private fun initView(view: View) {
         val rv = view.findViewById<RecyclerView>(R.id.rv_home_spends)
@@ -302,6 +344,9 @@ class HomeFragment : BaseFragment() {
         val scale: Float = context.resources.displayMetrics.density
         return (pixelValue / scale + 0.5f).toInt()
     }
+    fun Int.dpToPx(context: Context): Int {
+        return (this * context.resources.displayMetrics.density).toInt()
+    }
 
     private fun startAddingManualFragment() {
         val vpCards = view?.findViewById<ViewPager2>(R.id.vp_cards) ?: return
@@ -321,7 +366,11 @@ class HomeFragment : BaseFragment() {
         if (isTotalCardSelected || isAddCardSelected) {
             // Если у пользователя вообще нет реальных карт
             if (cardsList.isEmpty()) {
-                Toast.makeText(requireContext(), "Сначала добавьте банковскую карту", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Сначала добавьте банковскую карту",
+                    Toast.LENGTH_SHORT
+                ).show()
                 return
             }
 
@@ -404,7 +453,11 @@ class HomeFragment : BaseFragment() {
                     )
                     viewModel.editCard(updatedCard)
                 } else {
-                    Toast.makeText(requireContext(), "Введите корректные данные", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Введите корректные данные",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
             .setNegativeButton("Отмена", null)
@@ -419,6 +472,7 @@ class HomeFragment : BaseFragment() {
         }
         findNavController().navigate(R.id.action_global_addManualSpendFragment, bundle)
     }
+
     private fun refreshAdapterSafely() {
         if (!::vpCards.isInitialized) return
 
