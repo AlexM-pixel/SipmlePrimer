@@ -45,7 +45,7 @@
         android:layout_height="320dp"
         android:layout_marginEnd="@dimen/margin_title"
         android:adjustViewBounds="true"
-        android:src="@drawable/login_image"
+        android:src="@drawable/login_image_cat"
         app:layout_constraintBottom_toBottomOf="@+id/edit_mail"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

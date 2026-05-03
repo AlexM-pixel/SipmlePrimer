@@ -41,14 +41,20 @@ class FirebaseAuthUserSource @Inject constructor(
     suspend fun sendPasswordResetEmail(email: String):
             Result<Exception, Unit> = Result.build { auth.sendPasswordResetEmail(email).await() }
 
-    suspend fun creatingNewUserFirestore(name: String, email: String):
+    suspend fun creatingNewUserFirestore(name: String, email: String, avatar: String):
             Result<Exception, Void> =
         try {
-           firestore.collection(email)
+            firestore.collection(email)
                 .document(UserDocuments.USERNAME.name)
-                .set(hashMapOf("name" to name))
+                .set(hashMapOf(
+                        "name" to name,
+                        "avatarName" to avatar
+                    ))
                 .await()
-            Log.e("createUser", "creatingNewUserFirestore nameThread: ${Thread.currentThread().name}")
+            Log.e(
+                "createUser",
+                "creatingNewUserFirestore nameThread: ${Thread.currentThread().name}"
+            )
             createCollectionFriends(email)
         } catch (e: Exception) {
             Result.build { throw e }
@@ -63,7 +69,10 @@ class FirebaseAuthUserSource @Inject constructor(
                 .document("first_init")
                 .set(friend)
                 .await()
-            Log.e("createUser", "createCollectionFriends nameThread: ${Thread.currentThread().name}")
+            Log.e(
+                "createUser",
+                "createCollectionFriends nameThread: ${Thread.currentThread().name}"
+            )
             Result.build { res }
         } catch (e: Exception) {
             return Result.build { throw e }

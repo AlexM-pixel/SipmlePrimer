@@ -7,7 +7,7 @@
             <solid android:color="#FFFFFF"/>
             <stroke
                 android:width="3dp"
-                android:color="#2E7D32"/> <!-- зеленая рамка -->
+                android:color="@color/stroke_nd_edit"/> <!-- зеленая рамка -->
             <corners android:radius="16dp"/>
             <padding
                 android:left="16dp"
@@ -23,7 +23,7 @@
             <solid android:color="#ECFEF8"/>
             <stroke
                 android:width="2dp"
-                android:color="#2E7D32"/>
+                android:color="@color/stroke_nd_edit"/>
             <corners android:radius="16dp"/>
             <padding
                 android:left="16dp"

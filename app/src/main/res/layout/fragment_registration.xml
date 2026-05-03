@@ -37,24 +37,37 @@
         app:layout_constraintEnd_toEndOf="@id/cycle_oneLogin"
         app:layout_constraintStart_toStartOf="@+id/cycle_oneLogin"
         app:layout_constraintTop_toTopOf="@+id/cycle_oneLogin" />
-
-    <EditText
-        android:id="@+id/edit_username_registration"
+    <!-- Блок выбора аватарки -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="28dp"
-        android:background="@drawable/background_nd_edit"
-        android:drawableStart="@drawable/ic_person_24"
-        android:drawablePadding="12dp"
-        android:elevation="18dp"
-        android:hint="write username"
-        android:padding="12dp"
-        android:textColor="@color/text_colorND"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/edit_mail_registration"
+        android:gravity="center"
+        android:layout_marginBottom="@dimen/standard_margin"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/edit_username_registration"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/standard_margin"
+            android:text="Выберите аватар"
+            android:textColor="@color/onBoardingNDColor"
+            android:textSize="@dimen/title_Text_size"
+            android:textStyle="bold" />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/vp_avatar_carousel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            tools:listitem="@layout/item_avatar_carousel"
+            android:paddingHorizontal="130dp" /> <!-- Оставляем место по бокам -->
+
+    </LinearLayout>
+
 
     <EditText
         android:id="@+id/edit_mail_registration"
@@ -77,17 +90,31 @@
 
     <ImageView
         android:id="@+id/iv_image"
-        android:layout_width="match_parent"
-        android:layout_height="320dp"
-        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="220dp"
+        android:layout_marginTop="@dimen/item_text_size"
         android:adjustViewBounds="true"
-        android:layout_marginEnd="@dimen/margin_title"
-
-        android:src="@drawable/login_image"
-        app:layout_constraintBottom_toBottomOf="@+id/edit_username_registration"
+        android:src="@drawable/cat_privet_desk"
+        app:layout_constraintBottom_toTopOf="@+id/textView_query_alreadyRegistration"
         app:layout_constraintStart_toStartOf="parent"
+        />
+    <EditText
+        android:id="@+id/edit_username_registration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="28dp"
+        android:background="@drawable/background_nd_edit"
+        android:drawableStart="@drawable/ic_person_24"
+        android:drawablePadding="12dp"
+        android:elevation="18dp"
+        android:hint="write username"
+        android:padding="12dp"
+        android:textColor="@color/text_colorND"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/edit_mail_registration"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/edit_username_registration" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 
     <EditText
@@ -116,6 +143,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/next"
+        android:elevation="20dp"
         android:textColor="@color/white"
         android:textSize="24sp"
         android:textStyle="bold"

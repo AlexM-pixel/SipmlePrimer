@@ -25,37 +25,38 @@ class CreateUserByEmailViewModel @Inject constructor(
     private val _liveDataResult = MutableLiveData<String>()
     val liveDataResult: LiveData<String> get() = _liveDataResult
 
-    fun createUserByEmail(userName: String, mail: String, pass: String) {
+    fun createUserByEmail(userName: String, mail: String, pass: String, avatarName: String) {
         if (!validateForm(userName, mail, pass)) {
             return
         }
         viewModelScope.launch {
             _stateLiveData.value = State.LOADING
-            when (val result = useCaseCreateByEmail(email = mail, password = pass)) {
-                is Result.Value -> {
-                    createNewUserInFireStore(userName = userName, mail = mail)
-                    MainPrefs.mailUser = mail
-                }
-                is Result.Error -> {
-                    _stateLiveData.value = State.ERROR
-                    _liveDataResult.value =
-                        CheckErrorAuthFirebase().checkCreateUserByEmailError(result.error)
-                }
-            }
-        }
-    }
 
-    private fun createNewUserInFireStore(userName: String, mail: String) {
-        viewModelScope.launch {
-            when (val result = useCaseCreateUserFirestore(userName, mail)) {
+            // Шаг 1: Создаем учетную запись в Auth
+            when (val result = useCaseCreateByEmail(email = mail, password = pass)) {
+
                 is Result.Value -> {
-                    _stateLiveData.value = State.SUCCESS
+                    // Шаг 2: Сразу же в этой же корутине создаем пользователя в Firestore
+                    // Передаем и имя, и почту, и аватарку
+                    when (val firestoreResult = useCaseCreateUserFirestore(userName, mail, avatarName)) {
+                        is Result.Value -> {
+                            MainPrefs.mailUser = mail
+                            _stateLiveData.value = State.SUCCESS // Только ТЕПЕРЬ успех!
+                        }
+                        is Result.Error -> {
+                            _stateLiveData.value = State.ERROR
+                            _liveDataResult.value = firestoreResult.error.message
+                        }
+                        else -> { Log.e("createUserByEmail", "Firestore error_else") }
+                    }
                 }
+
                 is Result.Error -> {
-                    //если ошибка по созданю юзера в базе, то надо удалить и  почту так как она уже создалась и заново пользователь не сможет зарегиться с этим емэйлом
                     _stateLiveData.value = State.ERROR
-                    _liveDataResult.value = result.error.message
+                    _liveDataResult.value = CheckErrorAuthFirebase().checkCreateUserByEmailError(result.error)
                 }
+
+                else -> { Log.e("createUserByEmail", "Auth error_else") }
             }
         }
     }

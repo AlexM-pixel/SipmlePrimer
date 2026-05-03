@@ -29,6 +29,7 @@ object MainPrefs : KotprefModel() {
         return@stringSetPref TreeSet<String>()
     }
     var monthlyLimit: Float by floatPref(default = 0.0f)
+    var userAvatarName: String by stringPref(default = "boy_1")
     var stile: Int by intPref(default = R.style.AppTheme)
 }
 

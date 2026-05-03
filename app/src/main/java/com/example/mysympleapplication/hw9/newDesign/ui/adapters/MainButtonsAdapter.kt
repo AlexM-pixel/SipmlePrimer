@@ -16,34 +16,42 @@ class MainButtonsAdapter : RecyclerView.Adapter<MainButtonsAdapter.ActionHolder>
     // Внутренняя модель данных для карточек
     data class ActionCardModel(
         val title: String,
+        val titleShort: String,
         val description: String,
         val iconResId: Int,
         val iconArrow: Int,
-        val isMainAction: Boolean // true = рисуем большую кнопку, false = рисуем стрелочку
+        val colorHex: String,
+        val buttonText: String
     )
 
     // Зашиваем твои 3 карточки (Лимит, Добавить, Статистика)
     private val items = listOf(
         ActionCardModel(
             title = "Лимит",
+            titleShort = "Лимит",
             description = "Установи лимит\nна месяц",
             iconResId = R.drawable.ic_wallet, // ЗАМЕНИ НА СВОЮ ИКОНКУ ЛИМИТА
-            iconArrow = R.drawable.ic_arrow_left,
-            isMainAction = false
+            iconArrow = R.drawable.ic_left_arrow_svg,
+            colorHex = "#9c76c6",
+            buttonText = "Задать лимит"
         ),
         ActionCardModel(
             title = "Добавить покупку",
-            description = "Покупка не сохранилась — добавь вручную",
+            titleShort = "Добавить",
+            description = "Покупка затерялась — добавь вручную",
             iconResId = R.drawable.ic_shop_add, // ЗАМЕНИ НА СВОЮ ИКОНКУ ДОБАВЛЕНИЯ
-            iconArrow = R.drawable.baseline_account_balance_wallet_24,
-            isMainAction = true
+            iconArrow = R.drawable.ic_polosa_add,
+            colorHex = "#68C67A",
+            buttonText = "+ Добавить"
         ),
         ActionCardModel(
             title = "Статистика",
+            titleShort = "Статистика",
             description = "Посмотри детальную\nстатистику",
             iconResId = R.drawable.ic_statistic, // ЗАМЕНИ НА СВОЮ ИКОНКУ СТАТИСТИКИ
-            iconArrow = R.drawable.ic_arrow_right,
-            isMainAction = false
+            iconArrow = R.drawable.ic_arrow_right_svg,
+            colorHex = "#378de3",
+            buttonText = "Посмотреть"
         )
     )
 
@@ -65,31 +73,21 @@ class MainButtonsAdapter : RecyclerView.Adapter<MainButtonsAdapter.ActionHolder>
         private val tvTitle: TextView = itemView.findViewById(R.id.tv_action_title)
         private val tvDesc: TextView = itemView.findViewById(R.id.tv_action_desc)
         private val btnMain: Button = itemView.findViewById(R.id.btn_action_main)
-        private val ivArrow: ImageView = itemView.findViewById(R.id.iv_action_arrow)
+        private val morphButton: ImageView = itemView.findViewById(R.id.morphButton)
+        private val tvTitleShort : TextView=itemView.findViewById(R.id.tv_action_title_short)
 
         fun bind(item: ActionCardModel, position: Int) {
             // 1. Устанавливаем тексты и иконки (БЕЗ перекраски, как ты и просил)
             tvTitle.text = item.title
+            tvTitleShort.text= item.titleShort
             tvDesc.text = item.description
             ivIcon.setImageResource(item.iconResId)
-            ivArrow.setImageResource(item.iconArrow)
-
-            // 2. Управляем видимостью (Кнопка vs Стрелка)
-            if (item.isMainAction) {
-                // Это карточка "Добавить покупку"
-                btnMain.visibility = View.VISIBLE
-                ivArrow.visibility = View.GONE
-
-                // Клик вешаем на саму кнопку
-                btnMain.setOnClickListener { onButtonClick.invoke(position) }
-            } else {
-                // Это боковые карточки ("Лимит" и "Статистика")
-                btnMain.visibility = View.GONE
-                ivArrow.visibility = View.VISIBLE
-
-                // Клик вешаем на всю карточку целиком
-                itemView.setOnClickListener { onButtonClick.invoke(position) }
-            }
+            morphButton.setImageResource(item.iconArrow)
+            btnMain.setOnClickListener { onButtonClick.invoke(position) }
+            btnMain.text = item.buttonText
+            val mainColor = android.graphics.Color.parseColor(item.colorHex)
+            // 1. Красим фон кнопки
+            btnMain.backgroundTintList = android.content.res.ColorStateList.valueOf(mainColor)
         }
     }
 }

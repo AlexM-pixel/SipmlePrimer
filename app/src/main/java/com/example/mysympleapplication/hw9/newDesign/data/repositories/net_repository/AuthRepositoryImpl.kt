@@ -28,14 +28,13 @@ class AuthRepositoryImpl @Inject constructor(private val authSource: FirebaseAut
         return authSource.sendPasswordResetEmail(email = email)
     }
 
-
-    override suspend fun createNewUserFirestore(
+   override suspend fun createNewUserFirestore(
         userName: String,
-        email: String
+        email: String,
+        avatarName: String
     ): Result<Exception, Void> {
-        return authSource.creatingNewUserFirestore(userName, email)
+        return authSource.creatingNewUserFirestore(userName, email, avatarName)
     }
-
 
 
 

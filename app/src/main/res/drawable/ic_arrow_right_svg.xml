@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+
+    <!-- Стрелка вправо (отзеркаленная) -->
+    <path
+        android:name="arrow_path_right"
+        android:pathData="M 30,100 L 170,100 M 120,50 L 170,100 L 120,150"
+        android:strokeColor="#378de3"
+        android:strokeWidth="18"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:fillColor="#00000000" />
+</vector>

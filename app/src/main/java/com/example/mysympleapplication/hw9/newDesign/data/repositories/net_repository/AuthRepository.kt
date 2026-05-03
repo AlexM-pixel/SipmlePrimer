@@ -14,5 +14,5 @@ interface AuthRepository {
 
      fun signOutCurrentUser(): Result<Exception, Unit>
     suspend fun sendPasswordResetEmail(email: String): Result<Exception, Unit>
-    suspend fun createNewUserFirestore(userName:String,email:String): Result<Exception, Void>
+    suspend fun createNewUserFirestore(userName:String,email:String,avatarName: String ): Result<Exception, Void>
 }

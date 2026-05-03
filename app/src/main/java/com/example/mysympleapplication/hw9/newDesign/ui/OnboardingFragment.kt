@@ -39,7 +39,7 @@ class OnboardingFragment : BaseFragment() {
         val slides = listOf(
             OnboardingSlide(
                 title = "Привет! \n Я кот Моник",
-                imageRes = R.drawable.onboarding_welcome, // Замени на своего кота
+                imageRes = R.drawable.onboarding_welcome_cat, // Замени на своего кота
                 subtitle = "Я слежу за твоими расходами \n и показываю, куда уходят \n деньги"
             ),
             OnboardingSlide(

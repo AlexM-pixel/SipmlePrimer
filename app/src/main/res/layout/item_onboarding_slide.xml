@@ -28,7 +28,7 @@
             android:layout_height="320dp"
             android:layout_gravity="center"
             android:adjustViewBounds="true"
-            android:src="@drawable/onboarding_welcome" />
+            android:src="@drawable/onboarding_welcome_cat" />
 
         <TextView
             android:id="@+id/tv_subtitle"

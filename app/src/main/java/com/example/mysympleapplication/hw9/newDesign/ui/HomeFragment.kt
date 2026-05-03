@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.view.ViewCompat
@@ -236,7 +237,8 @@ class HomeFragment : BaseFragment() {
                 0 -> findNavController().navigate(R.id.action_homeFragment_to_limitFragment)
                 1 -> startAddingManualFragment()
                 2 -> findNavController().navigate(R.id.action_bottomNavFragment_to_statisticSoloFragment)
-                else -> Toast.makeText(requireContext(), "Error item position", Toast.LENGTH_SHORT).show()
+                else -> Toast.makeText(requireContext(), "Error item position", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
 
@@ -256,10 +258,11 @@ class HomeFragment : BaseFragment() {
         // ГЛАВНАЯ МАГИЯ ЗДЕСЬ
         compositePageTransformer.addTransformer { page, position ->
             val absPosition = Math.abs(position)
+            val r = 1 - absPosition // r = 1 (когда карточка в центре), r = 0 (когда карточка сбоку)
 
             // 1. Стандартное масштабирование и прозрачность (внешний вид)
             page.scaleY = 0.85f + (1 - absPosition) * 0.15f
-            page.alpha = 0.6f + (1 - absPosition) * 0.4f
+            page.alpha = 0.9f + r * 0.4f
 
             // 2. Смещение внутреннего контента
             // Находим наш внутренний LinearLayout по ID
@@ -269,15 +272,36 @@ class HomeFragment : BaseFragment() {
                 // Если position = 1 (карточка справа), мы двигаем контент ВЛЕВО
                 // Если position = -1 (карточка слева), мы двигаем контент ВПРАВО
                 // Множитель (0.3f или 0.5f) определяет, насколько сильно будет "выглядывать" текст
-                val translationX = -position * (paddingPx / 2f)
+                val translationX = -position * (paddingPx / 2.1f)
                 innerContainer.translationX = translationX
+            }
+            val btnMain = page.findViewById<View>(R.id.btn_action_main)
+            val ivArrow = page.findViewById<View>(R.id.morphButton) // Укажи ID твоей стрелки
+            val title = page.findViewById<TextView>(R.id.tv_action_title)
+            val titleShort = page.findViewById<TextView>(R.id.tv_action_title_short)
+            val description = page.findViewById<TextView>(R.id.tv_action_desc)
+
+            if (btnMain != null && ivArrow != null) {
+                // Если карточка в ЦЕНТРЕ (r = 1): кнопка полностью видна (1f), стрелка прозрачна (0f)
+                // Если карточка СБОКУ (r = 0): кнопка прозрачна (0f), стрелка полностью видна (1f)
+                btnMain.alpha = r
+                ivArrow.alpha = absPosition
+                title.alpha = r // обычный заголовок показыв на центре
+                titleShort.alpha = absPosition // сделал для кнопки добавить, два слова не влазят, когда краточка сбоку
+
+                description.scaleY = 0.55f + r * 0.5f
+                description.scaleX = 0.55f + r * 0.5f
+                titleShort.scaleY = 0.85f + r * 0.15f
+                titleShort.scaleX = 0.75f + r * 0.15f
+                // Чтобы пользователь не мог случайно нажать прозрачную кнопку сбоку
+                // Активируем кнопку только когда она почти доехала до центра (r > 0.8)
+                btnMain.isEnabled = r > 0.8f
             }
         }
         viewPager.setCurrentItem(1, false)
         viewPager.setPageTransformer(compositePageTransformer)
-        
-    }
 
+    }
 
 
     private fun initView(view: View) {
@@ -344,6 +368,7 @@ class HomeFragment : BaseFragment() {
         val scale: Float = context.resources.displayMetrics.density
         return (pixelValue / scale + 0.5f).toInt()
     }
+
     fun Int.dpToPx(context: Context): Int {
         return (this * context.resources.displayMetrics.density).toInt()
     }

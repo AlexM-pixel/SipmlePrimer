@@ -13,5 +13,6 @@
     <dimen name="height_progressBar">4dp</dimen>
     <dimen name="title_Text_size">26sp</dimen>
     <dimen name="layout_header_size">80dp</dimen>
+    <dimen name="avatr_image_size">106dp</dimen>
 
 </resources>

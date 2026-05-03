@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- 2. НАША КРУГЛАЯ КАРТОЧКА (Центрируется внутри) -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_avatar_item"
+        android:layout_width="@dimen/avatr_image_size"
+        android:layout_height="@dimen/avatr_image_size"
+        android:layout_gravity="center"
+        app:cardBackgroundColor="#F4F6F8"
+        app:cardCornerRadius="48dp"
+        app:cardElevation="6dp"
+        android:layout_marginVertical="@dimen/standard_margin"
+        app:strokeColor="@color/stroke_nd_edit"
+        app:strokeWidth="0dp"> <!-- По умолчанию рамки нет -->
+
+        <ImageView
+            android:id="@+id/iv_avatar_img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/standard_margin"
+            android:src="@drawable/boy_1"
+            android:scaleType="fitCenter" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+</FrameLayout>
