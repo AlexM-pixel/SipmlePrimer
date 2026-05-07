@@ -91,5 +91,9 @@
     <string name="text_write_name">пиши название платежа</string>
     <string name="question_save_spend">Сохранить платеж ?</string>
     <string name="insert_all_members">insert all members</string>
+    <string name="write_username">Введите имя</string>
+    <string name="write_mail">Введите email</string>
+    <string name="write_password">Введите пароль</string>
+    <string name="text_reg_to_login">Уже зарегистрированы?</string>
 
 </resources>

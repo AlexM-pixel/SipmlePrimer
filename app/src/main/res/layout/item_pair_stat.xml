@@ -153,7 +153,7 @@
                         android:id="@+id/iv_friend_avatar"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
-                        android:src="@drawable/girl_1"
+                        android:src="@drawable/place_holder_av"
                         app:layout_constraintBottom_toBottomOf="@+id/tv_friend_name"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />

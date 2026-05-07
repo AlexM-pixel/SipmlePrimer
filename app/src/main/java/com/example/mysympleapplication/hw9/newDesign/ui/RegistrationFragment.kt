@@ -9,6 +9,7 @@ import android.widget.EditText
 import android.widget.ProgressBar
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.mysympleapplication.R
 import com.example.mysympleapplication.hw9.newDesign.base.BaseFragment
@@ -74,7 +75,8 @@ class RegistrationFragment : BaseFragment() {
     private fun initListeners() {
         buttonNext.setOnClickListener {
             // 1. Узнаем, какая аватарка сейчас по центру карусели
-            val selectedAvatarName = avatarList[vpAvatarCarousel.currentItem]
+            val realPosition = vpAvatarCarousel.currentItem % avatarList.size
+            val selectedAvatarName = avatarList[realPosition]
             // 2. Сохраняем локально (для настроек и быстрого доступа)
             MainPrefs.userAvatarName = selectedAvatarName
             // 3. Отправляем в Firebase!
@@ -107,28 +109,76 @@ class RegistrationFragment : BaseFragment() {
     }
 
     private fun setupAvatarCarousel() {
-        val adapter = AvatarCarouselAdapter(avatarList)
+        // 1. ПЕРЕДАЕМ КЛИК В АДАПТЕР
+        val adapter = AvatarCarouselAdapter(avatarList) { clickedPosition ->
+            // При клике на боковую картинку плавно крутим к ней!
+            vpAvatarCarousel.setCurrentItem(clickedPosition, true)
+        }
         vpAvatarCarousel.adapter = adapter
+        vpAvatarCarousel.clipChildren = false
+        vpAvatarCarousel.offscreenPageLimit = 3
 
-        // Настройка красивого эффекта увеличения центрального элемента
-        vpAvatarCarousel.offscreenPageLimit = 5
+        // Расстояние между аватарками (настрой эту цифру, чтобы сдвинуть их ближе/дальше)
+        val itemSpacingPx = (70f * resources.displayMetrics.density).toInt()
+
         vpAvatarCarousel.setPageTransformer { page, position ->
             val absPosition = Math.abs(position)
-            val scale = 0.7f + (1 - absPosition) * 0.3f // Сбоку 70%, по центру 100%
+
+            // Масштабируем: Центр 100%, Бока 70%
+            val scale = 0.7f + (1 - absPosition).coerceAtLeast(0f) * 0.3f
             page.scaleX = scale
             page.scaleY = scale
+
+            // ГЛАВНАЯ МАГИЯ ЗДЕСЬ:
+            // Так как ViewPager2 теперь на весь экран, страницы находятся очень далеко друг от друга.
+            // Мы вычисляем расстояние до края экрана и "тянем" соседние карточки в центр.
+            val pageWidth = if (page.width == 0) resources.displayMetrics.widthPixels else page.width
+            val offsetToCenter = pageWidth - itemSpacingPx
+
+            // Двигаем элементы
+            page.translationX = -position * offsetToCenter
+
+            // Z-индекс (центральная поверх остальных)
+            page.translationZ = 1f - absPosition
+
+            // Прозрачность
+            page.alpha = 0.5f + (1 - absPosition).coerceAtLeast(0f) * 0.6f
         }
 
-        // Включаем зеленую рамку для элемента в центре
+        // --- ЛОГИКА АНИМАЦИИ И ВИБРАЦИИ (ДВА УРОВНЯ) ---
         vpAvatarCarousel.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+
+            // Срабатывает каждый раз, когда карусель "перескакивает" на новый элемент
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 adapter.setSelected(position)
+
+                // ТИКАНИЕ (Легкая вибрация, как у рулетки)
+                vpAvatarCarousel.performHapticFeedback(
+                    android.view.HapticFeedbackConstants.CLOCK_TICK,
+                    android.view.HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING
+                )
+            }
+
+            // Срабатывает, когда состояние скролла меняется (крутится / тормозит / остановился)
+            override fun onPageScrollStateChanged(state: Int) {
+                super.onPageScrollStateChanged(state)
+
+                // Если карусель полностью ОСТАНОВИЛАСЬ
+                if (state == ViewPager2.SCROLL_STATE_IDLE) {
+                    // ЩЕЛЧОК ФИКСАЦИИ (Более сильная вибрация)
+                    vpAvatarCarousel.performHapticFeedback(
+                        android.view.HapticFeedbackConstants.KEYBOARD_TAP,
+                        android.view.HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING
+                    )
+                }
             }
         })
 
-        // Ставим по умолчанию 2-й элемент (чтобы слева и справа выглядывали другие)
-        vpAvatarCarousel.setCurrentItem(1, false)
+        // --- СТАРТОВАЯ ПОЗИЦИЯ ---
+        val middle = Int.MAX_VALUE / 2
+        val startPosition = middle - (middle % avatarList.size)
+        vpAvatarCarousel.setCurrentItem(startPosition, false)
     }
 
 }

@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.viewModels
@@ -19,6 +20,7 @@ import com.example.mysympleapplication.hw9.newDesign.base.BaseFragment
 import com.example.mysympleapplication.hw9.newDesign.di.builder.ViewModelFactory
 import com.example.mysympleapplication.hw9.newDesign.domain.model.State
 import com.example.mysympleapplication.hw9.newDesign.ui.adapters.PairStatisticsRvAdapter
+import com.example.mysympleapplication.hw9.newDesign.utils.MainPrefs
 import com.example.mysympleapplication.hw9.newDesign.viewmodels.StatisticViewModel
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.PieChart
@@ -35,16 +37,21 @@ import javax.inject.Inject
 class StatisticFragment : BaseFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
-    val viewModelStatistic: StatisticViewModel by viewModels { viewModelFactory }
-    var userExpenses: TextView? = null
-    var friendExpenses: TextView? = null
-    var friendBalance: TextView? = null
-    var userBalance: TextView? = null
-    var progressBar: ProgressBar? = null
+    private val viewModelStatistic: StatisticViewModel by viewModels { viewModelFactory }
+    private var userExpenses: TextView? = null
+    private var friendExpenses: TextView? = null
+    private var friendBalance: TextView? = null
+    private var userBalance: TextView? = null
+    private var progressBar: ProgressBar? = null
+    private var ivFriendAvatar: ImageView? = null
+    private var tvFriendNameB: TextView? = null
+    private var tvFriendNameS: TextView? = null
     private lateinit var myAdapter: PairStatisticsRvAdapter
     private var nameMonth: TextView? = null
     private var currentUserSpends: Float = 0f
     private var currentFriendSpends: Float = 0f
+    private var currentFriendName = "Пользователь"
+    private var currentFriendAvatar = "place_holder_av"
 
     private var pieChart: PieChart? = null
     private var tfRegular: Typeface? = null
@@ -78,6 +85,21 @@ class StatisticFragment : BaseFragment() {
 
             updatePieChart() // Перерисовываем график
         }
+        viewModelStatistic.uiSpendsListLiveData.observe(viewLifecycleOwner) { uiList ->
+            myAdapter.setList(uiList)
+        }
+
+        // 1. ИМЯ ДРУГА (В шапку и график)
+        viewModelStatistic.friendNameLiveData.observe(viewLifecycleOwner) { realName ->
+            tvFriendNameB?.text = realName // Имя в карточке баланса
+            tvFriendNameS?.text = "Расходы $realName:" // Имя под графиком
+        }
+
+        // 2. АВАТАРКА ДРУГА (В шапку)
+        viewModelStatistic.friendAvatarLiveData.observe(viewLifecycleOwner) { avatarName ->
+            ivFriendAvatar?.let { setAvatarImage(avatarName, it) }
+        }
+
         viewModelStatistic.friendSpendsLiveData.observe(viewLifecycleOwner) {
             // ИСПРАВЛЕНО: не делаем +=
             currentFriendSpends = it?.valueSpends?.toString()?.toFloatOrNull() ?: 0f
@@ -99,13 +121,14 @@ class StatisticFragment : BaseFragment() {
                 else -> State.ERROR
             }
         }
-        viewModelStatistic.pairSpendsLiveData.observe(viewLifecycleOwner) {
-            myAdapter.setList(it)
-        }
 
     }
 
     private fun init(view: View) {
+
+        ivFriendAvatar = view.findViewById(R.id.iv_friend_avatar)
+        tvFriendNameB = view.findViewById(R.id.nameFriendUserB) // На карточке
+        tvFriendNameS = view.findViewById(R.id.nameFriendUser)  // Под графиком
         userExpenses = view.findViewById(R.id.val_expenses_user)
         friendExpenses = view.findViewById(R.id.val_expenses_friends)
         friendBalance = view.findViewById(R.id.val_balance_friends)
@@ -117,9 +140,17 @@ class StatisticFragment : BaseFragment() {
         val rvAdapter: RecyclerView = view.findViewById(R.id.rv_pair_statistic)
         myAdapter = PairStatisticsRvAdapter()
         rvAdapter.apply {
-            layoutManager = StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
+            layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
             adapter = myAdapter
         }
+        val ivMyAvatar = view.findViewById<ImageView>(R.id.iv_my_avatar)
+        setAvatarImage(MainPrefs.userAvatarName, ivMyAvatar)
+        val username = view.findViewById<TextView>(R.id.nameCurrentUserB)
+        val userMail = view.findViewById<TextView>(R.id.tv_my_email)
+        val friendMail = view.findViewById<TextView>(R.id.tv_friend_email)
+        username.text = MainPrefs.userName
+        userMail.text = MainPrefs.mailUser
+        friendMail.text = MainPrefs.mailFriend
     }
 
     private fun preparePieData(userData: Float?, frData: Float?, expenses: Float) {
@@ -218,10 +249,23 @@ class StatisticFragment : BaseFragment() {
         pieChart!!.highlightValues(null)
         pieChart!!.invalidate()
     }
+
     private fun updatePieChart() {
         val totalExpenses = currentUserSpends + currentFriendSpends
         if (totalExpenses >= 0f) { // График рисуется даже если 0 (чтобы не было багов с пустым экраном)
             preparePieData(currentUserSpends, currentFriendSpends, totalExpenses)
+        }
+    }
+
+    private fun setAvatarImage(imageName: String, imageView: ImageView) {
+        if (imageName.isEmpty()) return
+        val resId = requireContext().resources.getIdentifier(
+            imageName,
+            "drawable",
+            requireContext().packageName
+        )
+        if (resId != 0) {
+            imageView.setImageResource(resId)
         }
     }
 

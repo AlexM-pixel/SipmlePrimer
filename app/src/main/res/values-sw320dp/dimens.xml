@@ -9,6 +9,7 @@
     <dimen name="button_horizontal_margin">6dp</dimen>
     <dimen name="bankCard_Size">190dp</dimen>
     <dimen name="margin_topRvSpends">28dp</dimen>
+    <dimen name="size_text_button_login">28sp</dimen>
     <dimen name="margin_title">26dp</dimen>
     <dimen name="height_progressBar">5dp</dimen>
     <dimen name="frame_image_size">80dp</dimen>

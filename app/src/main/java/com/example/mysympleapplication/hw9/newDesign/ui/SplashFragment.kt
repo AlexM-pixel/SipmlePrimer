@@ -45,7 +45,7 @@ class SplashFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //  корутины для безопасной задержки
-        MainPrefs.firstStart = true // Отмечаем, что онбординг пройден
+        MainPrefs.firstStart = false // Отмечаем, что онбординг пройден
 
         val logo = view.findViewById<ImageView>(R.id.iv_splash_logo)
         val title = view.findViewById<TextView>(R.id.text_splash_title)

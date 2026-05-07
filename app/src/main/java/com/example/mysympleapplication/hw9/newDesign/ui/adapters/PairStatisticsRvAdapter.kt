@@ -11,15 +11,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mysympleapplication.R
 import com.example.mysympleapplication.hw9.newDesign.domain.ext.setImageByDrawable
 import com.example.mysympleapplication.hw9.newDesign.domain.model.Images
+import com.example.mysympleapplication.hw9.newDesign.domain.model.PairSpendUiModel
 import com.example.mysympleapplication.hw9.newDesign.domain.model.PairSpends
 import com.example.mysympleapplication.hw9.newDesign.utils.MainPrefs
 import java.util.Locale
 
 class PairStatisticsRvAdapter : RecyclerView.Adapter<PairStatisticsRvAdapter.PairHolder>() {
 
-    private var listSpends: List<PairSpends> = emptyList()
+    // Список UI-моделей
+    private var listSpends: List<PairSpendUiModel> = emptyList()
 
-    fun setList(list: List<PairSpends>) {
+    fun setList(list: List<PairSpendUiModel>) {
         this.listSpends = list
         notifyDataSetChanged()
     }
@@ -42,56 +44,43 @@ class PairStatisticsRvAdapter : RecyclerView.Adapter<PairStatisticsRvAdapter.Pai
         private val tvTotalAmount: TextView = itemView.findViewById(R.id.tv_total_amount)
 
         // Ты
+        private val ivMyAvatar: ImageView = itemView.findViewById(R.id.iv_my_avatar)
         private val tvMyName: TextView = itemView.findViewById(R.id.tv_my_name)
         private val tvMyAmount: TextView = itemView.findViewById(R.id.tv_my_amount)
         private val pbMyShare: com.google.android.material.progressindicator.LinearProgressIndicator =
             itemView.findViewById(R.id.pb_my_share)
 
         // Друг
+        private val ivFriendAvatar: ImageView = itemView.findViewById(R.id.iv_friend_avatar)
         private val tvFriendName: TextView = itemView.findViewById(R.id.tv_friend_name)
         private val tvFriendAmount: TextView = itemView.findViewById(R.id.tv_friend_amount)
         private val pbFriendShare: com.google.android.material.progressindicator.LinearProgressIndicator =
             itemView.findViewById(R.id.pb_friend_share)
 
         @SuppressLint("SetTextI18n")
-        fun bind(item: PairSpends) {
+        fun bind(item: PairSpendUiModel) {
             // 1. НАЗВАНИЕ И ИКОНКА
-            tvCategoryName.text = item.nameSpend
+            tvCategoryName.text = item.categoryName
+            setDrawableToView(item.categoryIconUrl, ivCategoryIcon)
 
-            val imageName = item.url ?: "produkti"
-            val context = itemView.context
-            val resId = context.resources.getIdentifier(imageName, "drawable", context.packageName)
-            if (resId != 0) {
-                // Если у тебя есть extension-метод для Glide, используй его:
-                // ivCategoryIcon.setImageByDrawable(resId)
-                ivCategoryIcon.setImageResource(resId) // Временная замена, если Glide тут нет
-            } else {
-                ivCategoryIcon.setImageResource(R.drawable.ic_cat_face_small)
-            }
+            // 2. ДАННЫЕ ЮЗЕРА
+            tvMyName.text = item.myName
+            tvMyAmount.text = formatMoney(item.myAmount)
+            setDrawableToView(item.myAvatar, ivMyAvatar)
 
-            // 2. ИМЕНА
-            val friendEmail = MainPrefs.mailFriend
-            val friendName = if (friendEmail.isNotEmpty()) friendEmail.split("@")[0] else "Друг"
+            // 3. ДАННЫЕ ДРУГА
+            tvFriendName.text = item.friendName
+            tvFriendAmount.text = formatMoney(item.friendAmount)
+            setDrawableToView(item.friendAvatar, ivFriendAvatar)
 
-            // Если есть имя пользователя в профиле, можно тоже достать, пока пишем "Ты"
-            tvMyName.text = "Ты"
-            tvFriendName.text = friendName
-
-            // 3. СУММЫ
-            val mySpent = item.valueUser
-            val friendSpent = item.valueFriend
-            val total = mySpent + friendSpent
-
-            // Форматируем без копеек, если они равны нулю (как на скрине 1900 вместо 1900.00)
-            tvTotalAmount.text ="${formatMoney(total)} BYN"
-            tvMyAmount.text = formatMoney(mySpent)
-            tvFriendAmount.text = formatMoney(friendSpent)
+            // 4. ОБЩАЯ СУММА
+            tvTotalAmount.text = String.format(Locale.US, "%.2f BYN", item.totalAmount)
 
             // 4. ПРОГРЕСС-БАРЫ
-            if (total > 0) {
+            if (item.totalAmount > 0) {
                 // Считаем долю каждого от общей суммы
-                val myPercent = ((mySpent / total) * 100).toInt()
-                val friendPercent = ((friendSpent / total) * 100).toInt()
+                val myPercent = ((item.myAmount / item.totalAmount) * 100).toInt()
+                val friendPercent = ((item.friendAmount / item.totalAmount) * 100).toInt()
 
                 pbMyShare.progress = myPercent
                 pbFriendShare.progress = friendPercent
@@ -107,6 +96,17 @@ class PairStatisticsRvAdapter : RecyclerView.Adapter<PairStatisticsRvAdapter.Pai
                 String.format(java.util.Locale.US, "%.0f", amount) // 1900
             } else {
                 String.format(java.util.Locale.US, "%.2f", amount) // 1085.50
+            }
+        }
+
+        // Единственная вспомогательная функция, которая должна тут быть (поиск ресурса по имени)
+        private fun setDrawableToView(imageName: String, imageView: ImageView) {
+            val context = itemView.context
+            val resId = context.resources.getIdentifier(imageName, "drawable", context.packageName)
+            if (resId != 0) {
+                imageView.setImageResource(resId)
+            } else {
+                imageView.setImageResource(R.drawable.ic_cat_face_small) // дефолт
             }
         }
     }

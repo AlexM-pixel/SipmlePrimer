@@ -14,6 +14,8 @@
     <dimen name="bankCard_Size">190dp</dimen>
     <dimen name="margin_topRvSpends">30dp</dimen>
     <dimen name="vp_buttons_margin">24dp</dimen>
+    <dimen name="size_text_button_login">26sp</dimen>
+
 
 
 </resources>

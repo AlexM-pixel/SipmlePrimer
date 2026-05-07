@@ -165,6 +165,8 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="Саша"
+                                        android:maxLines="1"
+                                        android:ellipsize="end"
                                         android:textColor="#1F4D36"
                                         android:textSize="18sp"
                                         android:textStyle="bold" />
@@ -239,6 +241,8 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="Alex"
+                                        android:ellipsize="end"
+                                        android:maxLines="1"
                                         android:textColor="#1F4D36"
                                         android:textSize="18sp"
                                         android:textStyle="bold" />

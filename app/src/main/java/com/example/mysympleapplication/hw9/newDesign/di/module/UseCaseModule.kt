@@ -73,5 +73,9 @@ class UseCaseModule {
     fun provideGetFriendExpensesUseCase(repo: FriendsDataRepository) =
         GetFriendExpensesUseCase(repo)
 
+ @Provides
+    fun provideGetFriendProfileUseCase(repo: FriendsDataRepository) =
+     GetFriendProfileUseCase(repo)
+
 
 }

@@ -30,6 +30,7 @@ object MainPrefs : KotprefModel() {
     }
     var monthlyLimit: Float by floatPref(default = 0.0f)
     var userAvatarName: String by stringPref(default = "boy_1")
+    var userName: String by stringPref(default = "Я")
     var stile: Int by intPref(default = R.style.AppTheme)
 }
 

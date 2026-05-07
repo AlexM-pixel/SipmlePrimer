@@ -64,6 +64,25 @@ class FriendsDataRepositoryImpl @Inject constructor(
 
         return Result.build { spendMapper.fromEntityList(res) }
     }
+
+    override suspend fun getFriendProfile(mail: String): Result<Exception, Pair<String, String>> {
+        return Result.build {
+            // Запрашиваем документ
+            val snapshot = fr
+                .collection(mail)
+                .document(UserDocuments.USERNAME.name)
+                .get()
+                .await() // await() замораживает корутину до получения результата
+
+            // Парсим данные с защитой от null (старые аккаунты)
+            val avatarName = snapshot.getString("avatarName") ?: "ic_baseline_person_24"
+            val name = snapshot.getString("name") ?: mail.substringBefore("@")
+
+            // Возвращаем Pair (Пару значений: Имя и Аватарка)
+            Pair(name, avatarName)
+        }
+    }
+
 }
 
 private fun <T> Iterable<T>.sumOf(selector: (T) -> Float): Float {

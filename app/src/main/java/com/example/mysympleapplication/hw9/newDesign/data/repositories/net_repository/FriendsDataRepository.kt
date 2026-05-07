@@ -9,4 +9,5 @@ interface FriendsDataRepository {
     suspend fun getFriendsBalance(mail:String): Balance?
     suspend fun getFriendsExpensesByMonth(date: String): SumSpendsOfMonth
     suspend fun getTestFriendsExpensesByMonth(date: String,  mail: String): Result<Exception,List<Spend>>
+    suspend fun getFriendProfile(mail: String): Result<Exception, Pair<String, String>>
 }

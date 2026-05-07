@@ -41,6 +41,7 @@ class CreateUserByEmailViewModel @Inject constructor(
                     when (val firestoreResult = useCaseCreateUserFirestore(userName, mail, avatarName)) {
                         is Result.Value -> {
                             MainPrefs.mailUser = mail
+                            MainPrefs.userName = userName
                             _stateLiveData.value = State.SUCCESS // Только ТЕПЕРЬ успех!
                         }
                         is Result.Error -> {
