@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingBottom="24dp">
+
+    <!-- Ручка шторки -->
+    <com.google.android.material.bottomsheet.BottomSheetDragHandleView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tint="#D0D0D0" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:text="Выбери новый аватар"
+        android:textColor="#333333"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <!-- ТА САМАЯ КАРУСЕЛЬ -->
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/vp_avatar_carousel_sheet"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/item_avatar_carousel" />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_save_avatar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/vp_buttons_margin"
+        android:backgroundTint="@color/GreenNDColor"
+        android:padding="@dimen/standard_margin"
+        android:text="Выбрать"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/title_Total_spend"
+        android:textStyle="bold"
+        app:cornerRadius="16dp" />
+
+</LinearLayout>

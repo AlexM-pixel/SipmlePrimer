@@ -41,4 +41,5 @@
     <color name="orange_cycle">#3DFF9800</color>
     <color name="bright_foreground_light">#ffff</color>
     <color name="stroke_nd_edit">#2E7D32</color>
+    <color name="friend_color">#75BBB9</color>
 </resources>

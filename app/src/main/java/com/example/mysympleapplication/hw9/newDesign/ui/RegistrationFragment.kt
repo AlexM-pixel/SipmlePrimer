@@ -119,7 +119,7 @@ class RegistrationFragment : BaseFragment() {
         vpAvatarCarousel.offscreenPageLimit = 3
 
         // Расстояние между аватарками (настрой эту цифру, чтобы сдвинуть их ближе/дальше)
-        val itemSpacingPx = (70f * resources.displayMetrics.density).toInt()
+             val itemSpacingPx = (70f * resources.displayMetrics.density).toInt()
 
         vpAvatarCarousel.setPageTransformer { page, position ->
             val absPosition = Math.abs(position)

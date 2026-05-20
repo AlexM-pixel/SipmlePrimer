@@ -46,6 +46,7 @@ class StatisticFragment : BaseFragment() {
     private var ivFriendAvatar: ImageView? = null
     private var tvFriendNameB: TextView? = null
     private var tvFriendNameS: TextView? = null
+    private var nameFriend: String = "User! "
     private lateinit var myAdapter: PairStatisticsRvAdapter
     private var nameMonth: TextView? = null
     private var currentUserSpends: Float = 0f
@@ -93,6 +94,7 @@ class StatisticFragment : BaseFragment() {
         viewModelStatistic.friendNameLiveData.observe(viewLifecycleOwner) { realName ->
             tvFriendNameB?.text = realName // Имя в карточке баланса
             tvFriendNameS?.text = "Расходы $realName:" // Имя под графиком
+            nameFriend = realName // имя друга для пончика
         }
 
         // 2. АВАТАРКА ДРУГА (В шапку)
@@ -207,7 +209,7 @@ class StatisticFragment : BaseFragment() {
             entries.add(
                 PieEntry(
                     userData ?: 0f,     // тут мои данные
-                    "Я"
+                    MainPrefs.userName
                 )
             )
         } catch (e: Exception) {
@@ -217,7 +219,7 @@ class StatisticFragment : BaseFragment() {
             entries.add(
                 PieEntry(
                     frData ?: 0f,  //тут оппонента данные
-                    "Марина"
+                    nameFriend
                 )
             )
         } catch (e: Exception) {
@@ -232,8 +234,8 @@ class StatisticFragment : BaseFragment() {
         // add colors
         val colors: ArrayList<Int> = ArrayList()
 
-        colors.add(ColorTemplate.rgb(getString(R.color.GreenNDColor)))
-        colors.add(ColorTemplate.rgb(getString(R.color.colorPrimaryDarkND)))
+        colors.add(ColorTemplate.rgb(getString(R.color.colorAccent)))
+        colors.add(ColorTemplate.rgb(getString(R.color.friend_color)))
 
         colors.add(ColorTemplate.getHoloBlue())
         dataSet.colors = colors

@@ -63,7 +63,8 @@
             app:cardBackgroundColor="@android:color/white"
             app:cardCornerRadius="20dp"
             app:cardElevation="2dp"
-            app:layout_constraintTop_toBottomOf="@id/iv_cat_top">
+            app:layout_constraintTop_toBottomOf="@id/iv_cat_top"
+            app:strokeWidth="0dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -71,31 +72,102 @@
                 android:orientation="vertical">
 
                 <!-- СЕКЦИЯ ПРОФИЛЯ -->
-                <LinearLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/background_base_button"
-                    android:orientation="vertical">
+                    android:background="@drawable/background_base_button">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/card_avatar_item"
+                        android:layout_width="@dimen/frame_image_size"
+                        android:layout_height="@dimen/frame_image_size"
+                        android:layout_margin="@dimen/standard_margin"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="18dp"
+                        app:cardElevation="6dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:strokeColor="@color/stroke_nd_edit"
+                        app:strokeWidth="1dp">
+
+                        <ImageView
+                            android:id="@+id/iv_avatar_settings"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="@dimen/height_progressBar"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/boy_1" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <FrameLayout
+                        android:id="@+id/fl_check_badge"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:background="@drawable/bg_circle_shape"
+                        android:backgroundTint="@android:color/white"
+                        android:elevation="8dp"
+                        android:padding="3dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/card_avatar_item"
+                        app:layout_constraintEnd_toEndOf="@+id/card_avatar_item"
+                        app:layout_constraintTop_toBottomOf="@+id/card_avatar_item">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/bg_circle_shape"
+                            android:backgroundTint="#6FCF97"
+                            android:padding="4dp"
+                            android:src="@drawable/edit_24"
+                            app:tint="@android:color/white" />
+                        <!-- Замени ic_check на любую галочку из Vector Assets (например, ic_baseline_check_24) -->
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/tv_user_name_settings"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/cardView_margin"
+                        android:layout_marginTop="@dimen/cardView_margin"
+                        android:text="Привет,"
+                        android:textColor="#3A6A51"
+                        android:textSize="@dimen/title_Total_spend"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_greeting"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/tv_greeting"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/cardView_margin"
+                        android:layout_marginStart="@dimen/standard_margin"
                         android:layout_marginTop="@dimen/cardView_margin"
-                        android:text="Привет, Саня"
-                        android:textColor="#3A6A51"
-                        android:textSize="22sp"
-                        android:textStyle="bold" />
+                        android:background="@drawable/background_rv_nd"
+                        android:backgroundTint="#6FCF97"
+                        android:drawableEnd="@drawable/edit_24"
+                        android:elevation="@dimen/standard_margin"
+                        android:paddingHorizontal="@dimen/standard_margin"
+                        android:paddingVertical="@dimen/height_progressBar"
+                        android:text="Саня  "
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/title_Total_spend"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@+id/tv_user_name_settings"
+                        app:layout_constraintTop_toTopOf="parent" />
+
 
                     <TextView
+                        android:id="@+id/tv_sleghka"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/cardView_margin"
                         android:layout_marginTop="@dimen/standard_margin"
                         android:text="Я слежу за твоими расходами"
                         android:textColor="@color/onBoardingNDColor"
-                        android:textSize="15sp" />
+                        android:textSize="15sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_greeting" />
 
                     <!-- Плашка с почтой -->
                     <TextView
@@ -108,14 +180,17 @@
                         android:background="@drawable/bg_email_pill"
                         android:drawableStart="@drawable/ic_baseline_person_24"
                         android:drawablePadding="8dp"
-                        android:drawableTint="#888888"
-                        android:elevation="6dp"
+                        android:drawableTint="@color/color_PaletteND"
+                        android:elevation="2dp"
                         android:paddingHorizontal="16dp"
                         android:paddingVertical="6dp"
                         android:textColor="#555555"
                         android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_sleghka"
                         tools:text="sasha@mail.ru" />
-                </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <View
                     android:layout_width="match_parent"
@@ -164,53 +239,53 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/standard_margin"
-                        android:scrollbars="none" >
+                        android:scrollbars="none">
 
-                    <com.google.android.material.chip.ChipGroup
-                        android:id="@+id/chipGroup_banks"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/standard_margin"
-                       >
-
-
-                        <!-- Пример добавленных банков (в коде они будут добавляться динамически) -->
-                        <com.google.android.material.chip.Chip
-                            style="@style/Widget.MaterialComponents.Chip.Action"
-                            android:layout_width="wrap_content"
+                        <com.google.android.material.chip.ChipGroup
+                            android:id="@+id/chipGroup_banks"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="SBERBANK"
-                            android:textColor="@android:color/white"
-                            app:chipBackgroundColor="@color/colorPrimaryDarkND"
-                            app:chipCornerRadius="8dp" />
+                            android:layout_marginTop="@dimen/standard_margin">
 
-                        <com.google.android.material.chip.Chip
-                            style="@style/Widget.MaterialComponents.Chip.Action"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="ALFABANK"
-                            android:textColor="@android:color/white"
-                            app:chipBackgroundColor="@color/colorPrimaryDarkND"
-                            app:chipCornerRadius="8dp" />
 
-                        <com.google.android.material.chip.Chip
-                            style="@style/Widget.MaterialComponents.Chip.Action"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="ALFABANK"
-                            android:textColor="@android:color/white"
-                            app:chipBackgroundColor="@color/colorPrimaryDarkND"
-                            app:chipCornerRadius="8dp" />
-                        <com.google.android.material.chip.Chip
-                            style="@style/Widget.MaterialComponents.Chip.Action"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="ALFABANK"
-                            android:textColor="@android:color/white"
-                            app:chipBackgroundColor="@color/colorPrimaryDarkND"
-                            app:chipCornerRadius="8dp" />
+                            <!-- Пример добавленных банков (в коде они будут добавляться динамически) -->
+                            <com.google.android.material.chip.Chip
+                                style="@style/Widget.MaterialComponents.Chip.Action"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="SBERBANK"
+                                android:textColor="@android:color/white"
+                                app:chipBackgroundColor="@color/colorPrimaryDarkND"
+                                app:chipCornerRadius="8dp" />
 
-                    </com.google.android.material.chip.ChipGroup>
+                            <com.google.android.material.chip.Chip
+                                style="@style/Widget.MaterialComponents.Chip.Action"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="ALFABANK"
+                                android:textColor="@android:color/white"
+                                app:chipBackgroundColor="@color/colorPrimaryDarkND"
+                                app:chipCornerRadius="8dp" />
+
+                            <com.google.android.material.chip.Chip
+                                style="@style/Widget.MaterialComponents.Chip.Action"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="ALFABANK"
+                                android:textColor="@android:color/white"
+                                app:chipBackgroundColor="@color/colorPrimaryDarkND"
+                                app:chipCornerRadius="8dp" />
+
+                            <com.google.android.material.chip.Chip
+                                style="@style/Widget.MaterialComponents.Chip.Action"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="ALFABANK"
+                                android:textColor="@android:color/white"
+                                app:chipBackgroundColor="@color/colorPrimaryDarkND"
+                                app:chipCornerRadius="8dp" />
+
+                        </com.google.android.material.chip.ChipGroup>
                     </HorizontalScrollView>
 
                     <androidx.appcompat.widget.AppCompatButton
@@ -230,6 +305,9 @@
         <!-- ========================================== -->
         <!-- КАРТОЧКА 2: ОБЩИЙ БЮДЖЕТ                   -->
         <!-- ========================================== -->
+        <!-- ========================================== -->
+        <!-- КАРТОЧКА 2: ОБЩИЙ БЮДЖЕТ                   -->
+        <!-- ========================================== -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_budget"
             android:layout_width="match_parent"
@@ -239,7 +317,8 @@
             app:cardBackgroundColor="@android:color/white"
             app:cardCornerRadius="20dp"
             app:cardElevation="2dp"
-            app:layout_constraintTop_toBottomOf="@id/card_main">
+            app:layout_constraintTop_toBottomOf="@id/card_main"
+            app:strokeWidth="0dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -247,6 +326,7 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
+                <!-- Заголовок -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -276,37 +356,72 @@
                     android:textColor="@color/onBoardingNDColor"
                     android:textSize="14sp" />
 
-                <!-- Поле ввода и кнопка в один ряд -->
+                <!-- НОВЫЙ БЛОК: Интерактивная панель друга -->
                 <LinearLayout
+                    android:id="@+id/btn_manage_friend"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:orientation="horizontal">
+                    android:background="@drawable/toggle_button_def"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="12dp">
 
-                    <EditText
-                        android:id="@+id/et_friend_email"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_margin="@dimen/standard_margin"
-                        android:layout_weight="1"
-                        android:background="@drawable/bg_edittext_outline"
-                        android:hint="email друга"
-                        android:paddingHorizontal="16dp"
-                        android:textColorHint="#999999"
-                        android:textSize="14sp" />
+                    <!-- Аватарка -->
+                    <ImageView
+                        android:id="@+id/iv_friend_avatar_settings"
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:background="@drawable/bg_circle_shape"
+                        android:padding="4dp"
+                        android:backgroundTint="@color/green_cycle"
+                        android:src="@drawable/ic_baseline_person_24"
+                         />
 
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btn_invite_friend"
+                    <!-- Информация -->
+                    <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/standard_margin"
+                        android:layout_marginStart="12dp"
                         android:layout_weight="1"
-                        android:background="@drawable/background_btn_nd"
-                        android:text="Пригласить"
-                        android:textAllCaps="false"
-                        android:textColor="@android:color/white"
-                        android:textSize="16sp" />
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_friend_name_settings"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Нет партнера"
+                            android:textColor="#333333"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_friend_email_settings"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="Нажмите, чтобы пригласить"
+                            android:textColor="@color/onBoardingNDColor"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+                    <!-- Иконка действия (Плюс или Крестик) -->
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:background="@drawable/background_rv_nd"
+                        android:padding="@dimen/height_progressBar"
+                        android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/iv_friend_action_icon"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/ic_add_24"
+                        app:tint="@color/colorPrimaryDarkND" />
+                    </FrameLayout>
                 </LinearLayout>
+
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -509,8 +624,8 @@
                     android:gravity="center"
                     android:text="Написать в поддержку"
                     android:textColor="@color/onBoardingNDColor"
-                    android:textStyle="bold"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -519,49 +634,48 @@
             android:layout_width="520dp"
             android:layout_height="520dp"
             android:background="@drawable/cycle"
-            app:layout_constraintEnd_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            />
+            app:layout_constraintTop_toBottomOf="parent" />
+
         <View
             android:id="@+id/cycle_botM"
             android:layout_width="360dp"
             android:layout_height="360dp"
             android:background="@drawable/cycle"
-            app:layout_constraintEnd_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            />
+            app:layout_constraintTop_toBottomOf="parent" />
+
         <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/card_support">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/card_support">
 
             <Button
-            android:id="@+id/btn_logout"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+                android:id="@+id/btn_logout"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_margin="@dimen/standard_margin"
-            android:text="Выйти из аккаунта"
-            android:textColor="#FF5252"
-            android:textStyle="bold" />
-
+                android:text="Выйти из аккаунта"
+                android:textColor="#FF5252"
+                android:textStyle="bold" />
 
 
             <TextView
-            android:id="@+id/version_tx"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Версия 1.0.0"
-            android:textColor="@color/onBoardingNDColor"
-            android:textSize="12sp" />
+                android:id="@+id/version_tx"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Версия 1.0.0"
+                android:textColor="@color/onBoardingNDColor"
+                android:textSize="12sp" />
         </LinearLayout>
 
 

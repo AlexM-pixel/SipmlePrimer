@@ -75,7 +75,7 @@ class FriendsDataRepositoryImpl @Inject constructor(
                 .await() // await() замораживает корутину до получения результата
 
             // Парсим данные с защитой от null (старые аккаунты)
-            val avatarName = snapshot.getString("avatarName") ?: "ic_baseline_person_24"
+            val avatarName = snapshot.getString("avatarName") ?: "place_holder_av"
             val name = snapshot.getString("name") ?: mail.substringBefore("@")
 
             // Возвращаем Pair (Пару значений: Имя и Аватарка)
