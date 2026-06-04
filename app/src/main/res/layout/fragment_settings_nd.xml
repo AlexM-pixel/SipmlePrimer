@@ -302,11 +302,12 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
+
         <!-- ========================================== -->
         <!-- КАРТОЧКА 2: ОБЩИЙ БЮДЖЕТ                   -->
         <!-- ========================================== -->
         <!-- ========================================== -->
-        <!-- КАРТОЧКА 2: ОБЩИЙ БЮДЖЕТ                   -->
+        <!-- КАРТОЧКА 2: ОБЩИЙ БЮДЖЕТ (С ИНВАЙТАМИ)     -->
         <!-- ========================================== -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_budget"
@@ -326,7 +327,7 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <!-- Заголовок -->
+                <!-- Заголовок карточки -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -352,35 +353,32 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Добавь друга и делите расходы"
+                    android:text="Делите расходы и следите за бюджетом вместе"
                     android:textColor="@color/onBoardingNDColor"
                     android:textSize="14sp" />
 
-                <!-- НОВЫЙ БЛОК: Интерактивная панель друга -->
+                <!-- ГЛАВНАЯ ПАНЕЛЬ ПАРТНЕРА (Кликабельная) -->
                 <LinearLayout
-                    android:id="@+id/btn_manage_friend"
+                    android:id="@+id/layout_partner_info"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:background="@drawable/toggle_button_def"
+                    android:background="@drawable/bg_edittext_outline"
                     android:clickable="true"
                     android:focusable="true"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:padding="12dp">
 
-                    <!-- Аватарка -->
                     <ImageView
                         android:id="@+id/iv_friend_avatar_settings"
                         android:layout_width="52dp"
                         android:layout_height="52dp"
                         android:background="@drawable/bg_circle_shape"
-                        android:padding="4dp"
                         android:backgroundTint="@color/green_cycle"
-                        android:src="@drawable/ic_baseline_person_24"
-                         />
+                        android:padding="4dp"
+                        android:src="@drawable/ic_baseline_person_24" />
 
-                    <!-- Информация -->
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -392,36 +390,61 @@
                             android:id="@+id/tv_friend_name_settings"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Нет партнера"
+                            tools:text="Нет партнера"
                             android:textColor="#333333"
                             android:textSize="16sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            />
 
                         <TextView
                             android:id="@+id/tv_friend_email_settings"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
-                            android:text="Нажмите, чтобы пригласить"
                             android:textColor="@color/onBoardingNDColor"
-                            android:textSize="13sp" />
+                            android:textSize="13sp"
+                            tools:text="Нажмите, чтобы пригласить" />
                     </LinearLayout>
 
-                    <!-- Иконка действия (Плюс или Крестик) -->
-                    <FrameLayout
-                        android:layout_width="wrap_content"
-                        android:background="@drawable/background_rv_nd"
-                        android:padding="@dimen/height_progressBar"
-                        android:layout_height="wrap_content">
+                    <!-- Иконка действия справа (+ или Крестик) -->
                     <ImageView
                         android:id="@+id/iv_friend_action_icon"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         android:src="@drawable/ic_add_24"
                         app:tint="@color/colorPrimaryDarkND" />
-                    </FrameLayout>
                 </LinearLayout>
 
+                <!-- БЛОК ДИНАМИЧЕСКИХ КНОПОК (Ожидание, Принять, Отклонить) -->
+                <LinearLayout
+                    android:id="@+id/layout_partner_actions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <Button
+                        android:id="@+id/btn_partner_negative"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
+                        android:text="Отклонить"
+                        android:textColor="#FF5252" />
+
+                    <Button
+                        android:id="@+id/btn_partner_positive"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="#6FCF97"
+                        android:text="Принять"
+                        app:cornerRadius="12dp" />
+                </LinearLayout>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 

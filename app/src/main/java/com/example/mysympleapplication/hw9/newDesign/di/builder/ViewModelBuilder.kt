@@ -3,7 +3,6 @@ package com.example.mysympleapplication.hw9.newDesign.di.builder
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.mysympleapplication.hw9.newDesign.di.qualifaer.ViewModelKey
-import com.example.mysympleapplication.hw9.newDesign.ui.AddManualSpendFragment
 import com.example.mysympleapplication.hw9.newDesign.viewmodels.*
 import dagger.Binds
 import dagger.Module
@@ -28,8 +27,12 @@ abstract class ViewModelBuilder {
 
     @Binds
     @IntoMap
-    @ViewModelKey(SettingsFragmentViewModel::class)
-    abstract fun bindSettingsViewModel(viewModel: SettingsFragmentViewModel): ViewModel
+    @ViewModelKey(SettingsViewModel::class)
+    abstract fun bindSettingsViewModel(viewModel: SettingsViewModel): ViewModel
+    @Binds
+    @IntoMap
+    @ViewModelKey(BottomNavViewModel::class)
+    abstract fun bindBottomNavViewModel(viewModel: BottomNavViewModel): ViewModel
 
     @Binds
     @IntoMap

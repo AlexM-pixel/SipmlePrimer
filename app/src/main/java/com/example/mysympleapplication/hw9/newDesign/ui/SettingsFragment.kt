@@ -14,33 +14,50 @@ import android.widget.*
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.mysympleapplication.R
+import androidx.fragment.app.viewModels
 import com.example.mysympleapplication.hw9.newDesign.base.BaseFragment
+import com.example.mysympleapplication.hw9.newDesign.di.builder.ViewModelFactory
+import com.example.mysympleapplication.hw9.newDesign.domain.model.PartnerState
 import com.example.mysympleapplication.hw9.newDesign.ui.dialogues.AddFriendBottomSheet
 import com.example.mysympleapplication.hw9.newDesign.ui.dialogues.AvatarSelectorBottomSheet
 import com.example.mysympleapplication.hw9.newDesign.utils.Config
 import com.example.mysympleapplication.hw9.newDesign.utils.MainPrefs
+import com.example.mysympleapplication.hw9.newDesign.utils.MainPrefs.isHasAccess
+import com.example.mysympleapplication.hw9.newDesign.viewmodels.SettingsViewModel
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
+import javax.inject.Inject
 
-class SettingsFragment : Fragment() {
+class SettingsFragment : BaseFragment() {
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+    private val settingsViewModel: SettingsViewModel by viewModels { viewModelFactory }
 
-    // --- ВЬЮШКИ ---
-    private lateinit var chipGroupBanks: ChipGroup
+    // --- ВЬЮШКИ ПРОФИЛЯ ---
     private lateinit var tvEmail: TextView
     private lateinit var tvName: TextView
     private lateinit var ivAvatar: ImageView
 
-    // Блок партнера
-    private lateinit var btnManageFriend: LinearLayout
+    // --- ВЬЮШКИ ПАРТНЕРА ---
+    private lateinit var layoutPartnerInfo: LinearLayout
+    private lateinit var layoutPartnerActions: LinearLayout
+    private lateinit var btnPartnerPositive: Button
+    private lateinit var btnPartnerNegative: Button
     private lateinit var ivFriendAvatar: ImageView
     private lateinit var tvFriendName: TextView
     private lateinit var tvFriendEmail: TextView
     private lateinit var ivFriendAction: ImageView
+
+    // --- ПРОЧИЕ ВЬЮШКИ ---
+    private lateinit var chipGroupBanks: ChipGroup
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,38 +69,32 @@ class SettingsFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initViews(view)
         setupMyProfile()
         setupListeners()
-        updateFriendUI() // Отрисовываем блок с другом при старте
+        observeViewModel()
 
         // --- СЛУШАТЕЛИ BOTTOM SHEETS ---
 
         // 1. Возврат из шторки Аватарок
-        childFragmentManager.setFragmentResultListener(
-            AvatarSelectorBottomSheet.REQUEST_KEY,
-            viewLifecycleOwner
-        ) { _, bundle ->
+        childFragmentManager.setFragmentResultListener(AvatarSelectorBottomSheet.REQUEST_KEY, viewLifecycleOwner) { _, bundle ->
             val newAvatarName = bundle.getString(AvatarSelectorBottomSheet.RESULT_AVATAR_NAME)
 
             if (newAvatarName != null && newAvatarName != MainPrefs.userAvatarName) {
+                // Сохраняем локально и меняем картинку
                 MainPrefs.userAvatarName = newAvatarName
                 setAvatarToImageView(newAvatarName, ivAvatar)
-                updateProfileInFirebase(avatarName = newAvatarName)
+                // Делегируем отправку в облако ViewModel
+                settingsViewModel.updateMyProfile(newAvatarName = newAvatarName)
             }
         }
 
         // 2. Возврат из шторки добавления Друга
-        childFragmentManager.setFragmentResultListener(
-            AddFriendBottomSheet.REQUEST_KEY,
-            viewLifecycleOwner
-        ) { _, bundle ->
+        childFragmentManager.setFragmentResultListener(AddFriendBottomSheet.REQUEST_KEY, viewLifecycleOwner) { _, bundle ->
             val email = bundle.getString(AddFriendBottomSheet.RESULT_EMAIL)
-            if (!email.isNullOrEmpty()) {
-                MainPrefs.mailFriend = email
-                updateFriendUI() // Перерисовываем UI после добавления
-                Toast.makeText(requireContext(), "Партнер добавлен!", Toast.LENGTH_SHORT).show()
+            if (!email.isNullOrEmpty() && email != MainPrefs.mailUser) {
+                settingsViewModel.sendInvite(email) // Отправляем заявку в облако!
+                Toast.makeText(requireContext(), "Приглашение отправлено!", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -98,11 +109,15 @@ class SettingsFragment : Fragment() {
         ivAvatar = view.findViewById(R.id.iv_avatar_settings)
         chipGroupBanks = view.findViewById(R.id.chipGroup_banks)
 
-        btnManageFriend = view.findViewById(R.id.btn_manage_friend)
         ivFriendAvatar = view.findViewById(R.id.iv_friend_avatar_settings)
         tvFriendName = view.findViewById(R.id.tv_friend_name_settings)
         tvFriendEmail = view.findViewById(R.id.tv_friend_email_settings)
         ivFriendAction = view.findViewById(R.id.iv_friend_action_icon)
+        //new
+         layoutPartnerInfo = view.findViewById(R.id.layout_partner_info)
+         layoutPartnerActions = view.findViewById(R.id.layout_partner_actions)
+         btnPartnerPositive = view.findViewById(R.id.btn_partner_positive)
+         btnPartnerNegative = view.findViewById(R.id.btn_partner_negative)
     }
 
     @SuppressLint("SetTextI18n")
@@ -192,59 +207,129 @@ class SettingsFragment : Fragment() {
         }
     }
 
-    // ==========================================
-    // ЛОГИКА ДРУГА
-    // ==========================================
-
-    private fun updateFriendUI() {
-        val friendEmail = MainPrefs.mailFriend
-        val greenColor = ContextCompat.getColor(requireContext(), R.color.colorPrimaryDarkND)
-        if (friendEmail.isEmpty()) {
-            // СОСТОЯНИЕ 1: ДРУГА НЕТ
-            tvFriendName.text = "Нет партнера"
-            tvFriendEmail.text = "Нажмите, чтобы пригласить"
-            ivFriendAvatar.setImageResource(R.drawable.ic_baseline_person_24)
-
-            ivFriendAction.setImageResource(R.drawable.ic_add_24)
-            ivFriendAction.setColorFilter(greenColor)
-
-            btnManageFriend.setOnClickListener {
-                AddFriendBottomSheet().show(childFragmentManager, "AddFriend")
-            }
-        } else {
-            // СОСТОЯНИЕ 2: ДРУГ ЕСТЬ
-            tvFriendEmail.text = friendEmail
-            tvFriendName.text = "Загрузка..."
-
-            ivFriendAction.setImageResource(R.drawable.baseline_check_24)
-            ivFriendAction.setColorFilter(greenColor)
-
-            btnManageFriend.setOnClickListener {
-                AlertDialog.Builder(requireContext())
-                    .setTitle("Отключить партнера?")
-                    .setMessage("Вы больше не будете видеть общую статистику с $friendEmail.")
-                    .setPositiveButton("Отключить") { _, _ ->
-                        MainPrefs.mailFriend = ""
-                        updateFriendUI()
-                    }
-                    .setNegativeButton("Отмена", null)
-                    .show()
-            }
-
-            // Грузим профиль из Firebase
-            FirebaseFirestore.getInstance().collection(friendEmail).document("USERNAME").get()
-                .addOnSuccessListener { doc ->
-                    if (doc != null && doc.exists()) {
-                        val name = doc.getString("name") ?: friendEmail.substringBefore("@")
-                        val avatar = doc.getString("avatarName") ?: "place_holder_av"
-
-                        tvFriendName.text = name
-                        setAvatarToImageView(avatar, ivFriendAvatar)
-                    } else {
-                        tvFriendName.text = friendEmail.substringBefore("@")
-                    }
-                }
+    private fun observeViewModel() {
+        settingsViewModel.partnerState.observe(viewLifecycleOwner) { state ->
+            renderPartnerState(state)
         }
+    }
+
+    // ==========================================
+    // ОТРИСОВКА СОСТОЯНИЙ ПАРТНЕРА
+    // ==========================================
+
+    private fun renderPartnerState(state: PartnerState) {
+        when (state) {
+            is PartnerState.None -> {
+                isHasAccess = false // выключил фрагмент общей статистики
+                tvFriendName.text = "Нет партнера"
+                tvFriendEmail.text = "Нажмите, чтобы пригласить"
+                ivFriendAvatar.setImageResource(R.drawable.ic_baseline_person_24)
+
+                ivFriendAction.visibility = View.VISIBLE
+                ivFriendAction.setImageResource(R.drawable.ic_add_24)
+                ivFriendAction.setColorFilter(Color.parseColor("#6FCF97"))
+
+                layoutPartnerActions.visibility = View.GONE
+
+                layoutPartnerInfo.setOnClickListener {
+                    AddFriendBottomSheet().show(childFragmentManager, "AddFriend")
+                }
+            }
+
+            is PartnerState.Sent -> {
+                tvFriendName.text = "Ожидание ответа..."
+                tvFriendEmail.text = "Приглашен: ${state.email}"
+                ivFriendAvatar.setImageResource(R.drawable.ic_baseline_person_24)
+
+                ivFriendAction.visibility = View.GONE
+                layoutPartnerInfo.setOnClickListener(null)
+
+                layoutPartnerActions.visibility = View.VISIBLE
+                btnPartnerPositive.visibility = View.GONE
+
+                btnPartnerNegative.visibility = View.VISIBLE
+                btnPartnerNegative.text = "Отменить заявку"
+                btnPartnerNegative.setOnClickListener {
+                    settingsViewModel.respondToInvite(state.email, false)
+                }
+            }
+
+            is PartnerState.Received -> {
+                tvFriendName.text = "Новая заявка!"
+                tvFriendEmail.text = "${state.email} хочет вести общий бюджет"
+                ivFriendAvatar.setImageResource(R.drawable.ic_baseline_person_24)
+
+                ivFriendAction.visibility = View.GONE
+                layoutPartnerInfo.setOnClickListener(null)
+
+                layoutPartnerActions.visibility = View.VISIBLE
+                btnPartnerPositive.visibility = View.VISIBLE
+                btnPartnerNegative.visibility = View.VISIBLE
+
+                btnPartnerPositive.text = "Принять"
+                btnPartnerNegative.text = "Отклонить"
+
+                btnPartnerPositive.setOnClickListener {
+                    settingsViewModel.respondToInvite(state.email, true)
+                }
+                btnPartnerNegative.setOnClickListener {
+                    settingsViewModel.respondToInvite(state.email, false)
+                }
+            }
+
+            is PartnerState.Accepted -> {
+                isHasAccess = true  // включил фрагмент общей статистики
+                tvFriendName.text = state.name
+                tvFriendEmail.text = state.email
+                setAvatarToImageView(state.avatarUrl, ivFriendAvatar)
+
+                ivFriendAction.visibility = View.VISIBLE
+                ivFriendAction.setImageResource(R.drawable.baseline_check_24)
+
+                layoutPartnerActions.visibility = View.GONE
+                layoutPartnerInfo.setOnClickListener { showDisconnectDialog(state.email) }
+                layoutPartnerInfo.setBackgroundResource(R.drawable.toggle_button_def)
+
+
+                ivFriendAction.setOnClickListener(null)
+            }
+        }
+    }
+
+    private fun showDisconnectDialog(friendEmail: String) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Отключить партнера?")
+            .setMessage("Вы больше не будете видеть общую статистику с $friendEmail.")
+            .setPositiveButton("Отключить") { _, _ ->
+                settingsViewModel.respondToInvite(friendEmail, false) // Отправляем команду во ViewModel
+            }
+            .setNegativeButton("Отмена", null)
+            .show()
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun showEditNameDialog() {
+        val input = EditText(requireContext()).apply {
+            val currentName = MainPrefs.userName.ifEmpty { MainPrefs.mailUser.substringBefore("@") }
+            setText(currentName)
+            setSelection(text.length)
+            setPadding(50, 40, 50, 40)
+            hint = "Введите ваше имя"
+        }
+
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Изменить имя")
+            .setView(input)
+            .setPositiveButton("Сохранить") { _, _ ->
+                val newName = input.text.toString().trim()
+                if (newName.isNotEmpty() && newName != MainPrefs.userName) {
+                    MainPrefs.userName = newName
+                    tvName.text = "$newName  "
+                    settingsViewModel.updateMyProfile(newName = newName)
+                }
+            }
+            .setNegativeButton("Отмена", null)
+            .show()
     }
 
     // ==========================================
@@ -277,10 +362,10 @@ class SettingsFragment : Fragment() {
     private fun showAddBankDialog() {
         val input = EditText(requireContext()).apply {
             hint = "Например: Priorbank"
-            setPadding(50, 40, 50, 40)
+                setPadding(50, 40, 50, 40)
         }
 
-        AlertDialog.Builder(requireContext())
+        MaterialAlertDialogBuilder(requireContext())
             .setTitle("Добавить банк")
             .setMessage("Укажите имя отправителя СМС, которое мы должны отслеживать.")
             .setView(input)
@@ -296,52 +381,7 @@ class SettingsFragment : Fragment() {
             .show()
     }
 
-    @SuppressLint("SetTextI18n")
-    private fun showEditNameDialog() {
-        val input = EditText(requireContext()).apply {
-            val currentName = MainPrefs.userName.ifEmpty { MainPrefs.mailUser.substringBefore("@") }
-            setText(currentName)
-            setSelection(text.length)
-            setPadding(50, 40, 50, 40)
-            hint = "Введите ваше имя"
-        }
 
-        AlertDialog.Builder(requireContext())
-            .setTitle("Изменить имя")
-            .setView(input)
-            .setPositiveButton("Сохранить") { _, _ ->
-                val newName = input.text.toString().trim()
-                if (newName.isNotEmpty() && newName != MainPrefs.userName) {
-                    MainPrefs.userName = newName
-                    tvName.text = "$newName  "
-                    updateProfileInFirebase(name = newName)
-                }
-            }
-            .setNegativeButton("Отмена", null)
-            .show()
-    }
-
-    private fun updateProfileInFirebase(name: String? = null, avatarName: String? = null) {
-        val email = MainPrefs.mailUser
-        if (email.isEmpty()) return
-
-        val updates = hashMapOf<String, Any>()
-        if (name != null) updates["name"] = name
-        if (avatarName != null) updates["avatarName"] = avatarName
-
-        if (updates.isEmpty()) return
-
-        FirebaseFirestore.getInstance()
-            .collection(email)
-            .document("USERNAME")
-            .set(updates, SetOptions.merge())
-            .addOnSuccessListener {
-                Toast.makeText(requireContext(), "Профиль обновлен ☁️", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener {
-                Toast.makeText(requireContext(), "Ошибка синхронизации", Toast.LENGTH_SHORT).show()
-            }
-    }
 
     private fun setAvatarToImageView(imageName: String, imageView: ImageView) {
         if (imageName.isEmpty()) return

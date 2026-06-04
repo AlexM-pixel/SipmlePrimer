@@ -23,7 +23,7 @@ object MainPrefs : KotprefModel() {
     var mailUser: String by stringPref()
     var mailFriend: String by stringPref(default = "marinamanego@gmail.com")
     var firstStart: Boolean by booleanPref(default = true)
-    var isHasAccess: Boolean by booleanPref(default = true)
+    var isHasAccess: Boolean by booleanPref(default = false)
     var isShowTotalCard: Boolean by booleanPref(default = true)
     val setBankNames by stringSetPref {
         return@stringSetPref TreeSet<String>()

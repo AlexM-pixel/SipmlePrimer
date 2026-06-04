@@ -1,20 +1,34 @@
 package com.example.mysympleapplication.hw9.newDesign.ui
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.example.mysympleapplication.R
 import com.example.mysympleapplication.hw9.newDesign.base.BaseFragment
+import com.example.mysympleapplication.hw9.newDesign.di.builder.ViewModelFactory
+import com.example.mysympleapplication.hw9.newDesign.domain.model.PartnerState
+import com.example.mysympleapplication.hw9.newDesign.utils.MainPrefs
 import com.example.mysympleapplication.hw9.newDesign.utils.MainPrefs.isHasAccess
+import com.example.mysympleapplication.hw9.newDesign.utils.MainPrefs.mailFriend
+import com.example.mysympleapplication.hw9.newDesign.viewmodels.BottomNavViewModel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import me.ibrahimsn.lib.SmoothBottomBar
+import javax.inject.Inject
 
 private const val ARG_LAST_TAB = "ARG_LAST_TAB"
 
 class BottomNavFragment : BaseFragment() {
     private lateinit var bottomNavigationView: SmoothBottomBar
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+    private val viewModel: BottomNavViewModel by viewModels { viewModelFactory }
 
     // Переменная для хранения текущего активного фрагмента
     private var activeFragment: Fragment? = null
@@ -25,8 +39,7 @@ class BottomNavFragment : BaseFragment() {
     private val TAG_SETTINGS = "settings"
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_bottom_nav, container, false)
     }
@@ -54,6 +67,63 @@ class BottomNavFragment : BaseFragment() {
         }
 
         setBottomNav()
+
+        // --- НОВАЯ ГЛОБАЛЬНАЯ ЛОГИКА ---
+        observeGlobalState()
+    }
+    private fun observeGlobalState() {
+        viewModel.partnerState.observe(viewLifecycleOwner) { state ->
+            val hasAccessNow = state is PartnerState.Accepted
+
+            // 1. Обновляем настройки и показываем диалоги
+            handleStateSideEffects(state)
+
+            // 2. Проверяем, нужно ли перерисовать экран статистики
+            verifyAndRecreateStatisticTab(hasAccessNow)
+        }
+    }
+
+    /**
+     * Отвечает только за сохранение данных и показ уведомлений
+     */
+    private fun handleStateSideEffects(state: PartnerState) {
+        MainPrefs.isHasAccess = state is PartnerState.Accepted
+        when (state) {
+            is PartnerState.Accepted -> MainPrefs.mailFriend = state.email
+            is PartnerState.Received -> {
+              mailFriend = ""
+                showNewInviteDialog(state.email)
+            }
+            else -> mailFriend = ""
+        }
+    }
+
+    /**
+     * Отвечает только за подмену фрагментов в памяти
+     */
+    private fun verifyAndRecreateStatisticTab(hasAccessNow: Boolean) {
+        // Ищем фрагмент. Если его нет в памяти — выходим (перерисовывать нечего)
+        val cachedFragment = childFragmentManager.findFragmentByTag(TAG_STAT) ?: return
+
+        // Логика несовпадений: Доступ есть, но фрагмент одиночный ИЛИ доступа нет, но фрагмент общий
+        val needsRecreation = (hasAccessNow && cachedFragment is StatisticSoloFragment) ||
+                (!hasAccessNow && cachedFragment is StatisticFragment)
+
+        if (needsRecreation) {
+            // Удаляем неправильный фрагмент
+            childFragmentManager.beginTransaction()
+                .remove(cachedFragment)
+                .commitNowAllowingStateLoss()
+
+            if (activeFragment == cachedFragment) {
+                activeFragment = null
+            }
+
+            // Перезагружаем вкладку, только если юзер смотрит на неё прямо сейчас
+            if (bottomNavigationView.itemActiveIndex == 1) {
+                loadFragmentByIndex(1)
+            }
+        }
     }
 
     private fun setBottomNav() {
@@ -116,5 +186,28 @@ class BottomNavFragment : BaseFragment() {
             2 -> TAG_SETTINGS
             else -> TAG_HOME
         }
+    }
+
+    private fun showNewInviteDialog(email: String) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Новая заявка! 🎉")
+            .setMessage("$email приглашает вас вести общий бюджет.")
+            .setPositiveButton("Принять") { _, _ ->
+
+                // 1. Отправляем согласие в базу!
+                viewModel.respondToInvite(email, true)
+                Toast.makeText(requireContext(), "Бюджет объединен!", Toast.LENGTH_SHORT).show()
+
+                // 2. Сразу перебрасываем пользователя на вкладку Статистики (Индекс 1)
+                bottomNavigationView.itemActiveIndex = 1
+                loadFragmentByIndex(1)
+            }
+            .setNegativeButton("Отклонить") { _, _ ->
+
+                // Отклоняем заявку, удаляем из базы
+                viewModel.respondToInvite(email, false)
+                Toast.makeText(requireContext(), "Заявка отклонена", Toast.LENGTH_SHORT).show()
+            }
+            .show()
     }
 }
