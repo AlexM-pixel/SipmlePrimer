@@ -40,12 +40,16 @@ class AddManualSpendFragment : BaseFragment() {
     private var idCard: String? = null
     private var getBalanceFromEdit: String? = null
     private var dateN: String? = null
+    private var prefilledName: String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let { oldBalance = it.getFloat(ARG_BALANCE) }
-        arguments?.let { idCard = it.getString(ARG_ID_CARD)?: "-1" }
+        arguments?.let {
+            oldBalance = it.getFloat(ARG_BALANCE)
+            idCard = it.getString(ARG_ID_CARD) ?: "-1"
+            prefilledName = it.getString(ARG_NAME_DETAIL)
+        }
     }
 
     override fun onCreateView(
@@ -59,6 +63,10 @@ class AddManualSpendFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init(view)
+        if (!prefilledName.isNullOrEmpty()) {
+            // Передаем false, чтобы не открывался выпадающий список при автозаполнении
+            namesSpend?.setText(prefilledName, false)
+        }
         balanceTitle?.text = oldBalance.toString()
         viewModel.getAllNamesSpendForAutoComplete()
         viewModel.namesCategorySpendLiveData.observe(viewLifecycleOwner) { list -> // список ruName from NameSpends
@@ -156,12 +164,15 @@ class AddManualSpendFragment : BaseFragment() {
                 nameImage = null
             ) // ПОСЛЕ  СОХРАНЕНИЯ ТРАТЫ -> ОБНОВЛЯЕМ БАЛАНС КАРТЫ
             if (newBalance != oldBalance && isEmptyBalanceEditView()) {  // если баланс изменился, сохраняю новое значение и isEmptyBalanceEditView возвращает true
-                viewModel.saveNewBalance(idCard?:"",newBalance.toString() )
+                viewModel.saveNewBalance(idCard ?: "", newBalance.toString())
             } else if (!isEmptyBalanceEditView()) { // если пользователь сам ввел баланс
                 newBalance = getBalanceFromEdit?.toFloat()
-                viewModel.saveNewBalance(idCard?:"",getBalanceFromEdit?:"0") // если пользователь вручную ввел баланс
+                viewModel.saveNewBalance(
+                    idCard ?: "",
+                    getBalanceFromEdit ?: "0"
+                ) // если пользователь вручную ввел баланс
             } else {
-                viewModel.saveNewBalance(idCard?:"",oldBalance.toString())
+                viewModel.saveNewBalance(idCard ?: "", oldBalance.toString())
             }
         } else Toast.makeText(
             requireContext(),

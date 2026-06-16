@@ -5,11 +5,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.mysympleapplication.hw9.newDesign.domain.model.BankCard
 import com.example.mysympleapplication.hw9.newDesign.domain.model.DetailsSpend
 import com.example.mysympleapplication.hw9.newDesign.domain.model.NameSpend
 import com.example.mysympleapplication.hw9.newDesign.domain.model.Spend
 import com.example.mysympleapplication.hw9.newDesign.domain.model.State
 import com.example.mysympleapplication.hw9.newDesign.domain.usecase.DeleteSpendUseCase
+import com.example.mysympleapplication.hw9.newDesign.domain.usecase.GetBankCardsUseCase
 import com.example.mysympleapplication.hw9.newDesign.domain.usecase.GetCategoriesUseCase
 import com.example.mysympleapplication.hw9.newDesign.domain.usecase.GetDetailsUseCase
 import com.example.mysympleapplication.hw9.newDesign.domain.usecase.GetSpendsByNameUseCase
@@ -19,6 +21,7 @@ import com.example.mysympleapplication.hw9.newDesign.utils.Resource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -28,6 +31,7 @@ class DetailMonthlyViewModel @Inject constructor(
     private val spendsByNameUseCase: GetSpendsByNameUseCase,
     private val deleteSpendUseCase: DeleteSpendUseCase,
     private val getDetailsUseCase: GetDetailsUseCase,
+    private val getBankCardsUseCase: GetBankCardsUseCase,
     private val getCategoryUseCase: GetCategoriesUseCase
 ) :
     ViewModel() {
@@ -39,6 +43,27 @@ class DetailMonthlyViewModel @Inject constructor(
     val detailLiveData: MutableLiveData<List<DetailsSpend>> get() = _detailsLiveData
     val imageNameLiveData = MutableLiveData<String>()
 
+    private val _showCardSelectorEvent = MutableLiveData<List<BankCard>?>()
+    val showCardSelectorEvent: LiveData<List<BankCard>?> get() = _showCardSelectorEvent
+
+    // 2. Метод, который фрагмент вызывает по клику на FAB
+    fun loadCardsForNewSpend() {
+        viewModelScope.launch(Dispatchers.IO) {
+            // Магия .first() : мы ждем первую эмиссию из Flow, которая НЕ является Loading.
+            // Как только получаем данные (Success или Error), отписываемся от базы!
+            val resource = getBankCardsUseCase.invoke().first { it !is Resource.Loading }
+
+            if (resource is Resource.Success) {
+                // Отправляем список во фрагмент, чтобы он открыл шторку
+                _showCardSelectorEvent.postValue(resource.data ?: emptyList())
+            }
+        }
+    }
+
+    // 3. Метод для сброса события (чтобы шторка не открылась дважды)
+    fun onCardSelectorShown() {
+        _showCardSelectorEvent.value = null
+    }
 
     fun getMonthlySpends(name: String, month: String) {
         viewModelScope.launch {

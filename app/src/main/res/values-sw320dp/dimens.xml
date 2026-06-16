@@ -10,6 +10,7 @@
     <dimen name="bankCard_Size">190dp</dimen>
     <dimen name="margin_topRvSpends">28dp</dimen>
     <dimen name="size_text_button_login">28sp</dimen>
+    <dimen name="cardView_padding">12dp</dimen>
     <dimen name="margin_title">26dp</dimen>
     <dimen name="height_progressBar">5dp</dimen>
     <dimen name="frame_image_size">72dp</dimen>
@@ -20,6 +21,8 @@
     <dimen name="item_text_size">12sp</dimen>
     <dimen name="standard_margin">6dp</dimen>
     <dimen name="vp_buttons_margin">22dp</dimen>
+    <dimen name="logo_image_size">52dp</dimen>
+
 
 
 
