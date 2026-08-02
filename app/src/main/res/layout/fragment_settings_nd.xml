@@ -75,7 +75,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/background_base_button">
+                    android:background="?attr/header_background">
 
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/card_avatar_item"

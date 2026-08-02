@@ -120,25 +120,50 @@ class DetailMonthlyFragment : BaseFragment() {
         // Слушаем ответ от ViewModel после клика на FAB
         viewModel.showCardSelectorEvent.observe(viewLifecycleOwner) { cards ->
             if (cards != null) {
-                // Данные пришли! Сбрасываем триггер, чтобы шторка не открылась дважды
+                // Сбрасываем триггер
                 viewModel.onCardSelectorShown()
 
                 // Откидываем техническую карту "Main"
                 val realCards = cards.filter { it.lastFourDigits != "Main" }
 
-                if (realCards.isEmpty()) {
-                    Toast.makeText(requireContext(), "Нет доступных банковских карт", Toast.LENGTH_SHORT).show()
-                    return@observe
+                when (realCards.size) {
+                    0 -> {
+                        Toast.makeText(
+                            requireContext(),
+                            "Нет доступных банковских карт",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+                    1 -> {
+                        // === УМНЫЙ ОБХОД: Карта всего одна! Сразу переходим! ===
+                        val singleCard = realCards[0]
+                        val cardId = singleCard.id.toString()
+                        val balance = singleCard.balance.toFloatOrNull() ?: 0f
+
+                        val navBundle = Bundle().apply {
+                            putFloat(ARG_BALANCE, balance)
+                            putString(ARG_ID_CARD, cardId)
+                            putString(ARG_NAME_DETAIL, name)
+                        }
+                        findNavController().navigate(
+                            R.id.action_global_addManualSpendFragment,
+                            navBundle
+                        )
+                    }
+
+                    else -> {
+                        // === Карт несколько: Открываем шторку ===
+                        val names = realCards.map { it.cardName }.toTypedArray()
+                        val ids = realCards.map { it.id.toString() }.toTypedArray()
+                        val balances =
+                            realCards.map { it.balance.toFloatOrNull() ?: 0f }.toFloatArray()
+
+                        val bottomSheet =
+                            CardSelectorBottomSheet.newInstance(names, ids, balances, null)
+                        bottomSheet.show(childFragmentManager, "SelectCardSheet")
+                    }
                 }
-
-                // Готовим массивы для шторки
-                val names = realCards.map { it.cardName }.toTypedArray()
-                val ids = realCards.map { it.id.toString() }.toTypedArray()
-                val balances = realCards.map { it.balance.toFloatOrNull() ?: 0f }.toFloatArray()
-
-                // === ИСПРАВЛЕННАЯ СТРОЧКА (Твоё правильное имя класса!) ===
-                val bottomSheet = CardSelectorBottomSheet.newInstance(names, ids, balances, null)
-                bottomSheet.show(childFragmentManager, "SelectCardSheet")
             }
         }
     }
@@ -219,10 +244,23 @@ class DetailMonthlyFragment : BaseFragment() {
                 return
             }
         } catch (e: Exception) {
-            // Игнорируем и идем ко второй попытке
+            // Попытка 2: Если дата пришла в полном формате "2026-04-24"
+            try {
+                val sdfInFull = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+                val sdfOut = SimpleDateFormat("LLLL yyyy", Locale("ru"))
+
+                val dateFull = sdfInFull.parse(rawDate)
+                if (dateFull != null) {
+                    tvMonthTitle.text = sdfOut.format(dateFull).replaceFirstChar { it.uppercase() }
+                }
+            } catch (ex: Exception) {
+                // Если вообще ни один формат не подошел, просто пишем "сырую" строку как есть
+                tvMonthTitle.text = rawDate
+            }
         }
 
     }
+
 
     private fun initRecycler(list: List<DetailsSpend>) {
         myAdapter = MonthlyByNameSpendsRvAdapter(list)

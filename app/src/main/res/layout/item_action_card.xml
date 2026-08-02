@@ -91,7 +91,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="@dimen/standard_margin"
-                android:backgroundTint="@color/GreenNDColor"
+                android:backgroundTint="?attr/titleColor"
                 android:text="+ Добавить"
                 android:textColor="@android:color/white"
                 app:cornerRadius="12dp" />

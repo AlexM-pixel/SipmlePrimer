@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="И"
-                android:textColor="@color/backgroundGreenNDColor"
+                android:textColor="?attr/titleColor"
                 android:textSize="40sp"
                 android:textStyle="bold" />
         </FrameLayout>
@@ -96,7 +96,7 @@
             android:layout_margin="@dimen/standard_margin"
             android:text="1353.96"
             android:textStyle="bold"
-            android:textColor="@color/backgroundGreenNDColor"
+            android:textColor="?attr/titleColor"
             android:textSize="@dimen/month_text_size_rv"
             app:layout_constraintBottom_toTopOf="@+id/byn_nd"
             app:layout_constraintEnd_toStartOf="@+id/strelka"
@@ -108,7 +108,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="BYN"
-            android:textColor="@color/backgroundGreenNDColor"
+            android:textColor="?attr/titleColor"
             android:textSize="@dimen/item_text_size"
             app:layout_constraintEnd_toEndOf="@+id/home_value_spends_nd"
             app:layout_constraintTop_toBottomOf="@+id/home_value_spends_nd" />

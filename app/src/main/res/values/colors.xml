@@ -33,8 +33,15 @@
     <color name="onBoardingBg">#B9E3CF</color>
     <color name="onBoardingSplashBg">#95CEAB</color>
     <color name="itemUncheckBg">#EAECE9</color>
+    <color name="itemUncheckBgPink">#F4EBF2</color>
+    <color name="itemUncheckBgOrange">#F4EEEB</color>
+    <color name="itemUncheckBgBlue">#EBF1F4</color>
     <color name="itemStroke">#6FCF97</color>
+    <color name="sheet_text">#1B5E20</color>
     <color name="itemSelectBg">#E8F5E9</color>
+    <color name="itemSelectBgPink">#F5E8F1</color>
+    <color name="itemSelectBgOrange">#F4E8E1</color>
+    <color name="itemSelectBgBlue">#E8F4F5</color>
     <color name="green_cycle">#3D5FB670</color>
     <color name="pink_cycle">#3DE91E63</color>
     <color name="blue_cycle">#3D03A9F4</color>

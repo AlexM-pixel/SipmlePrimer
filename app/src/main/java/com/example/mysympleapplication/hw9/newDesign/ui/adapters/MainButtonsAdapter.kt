@@ -58,7 +58,6 @@ class MainButtonsAdapter : RecyclerView.Adapter<MainButtonsAdapter.ActionHolder>
     override fun getItemCount(): Int = items.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActionHolder {
-        // Обязательно убедись, что макет называется item_action_card (или переименуй тут в свой)
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_action_card, parent, false)
         return ActionHolder(view)
     }
@@ -68,7 +67,6 @@ class MainButtonsAdapter : RecyclerView.Adapter<MainButtonsAdapter.ActionHolder>
     }
 
     inner class ActionHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        // Ищем элементы из нового макета
         private val ivIcon: ImageView = itemView.findViewById(R.id.iv_action_icon)
         private val tvTitle: TextView = itemView.findViewById(R.id.tv_action_title)
         private val tvDesc: TextView = itemView.findViewById(R.id.tv_action_desc)
@@ -77,7 +75,6 @@ class MainButtonsAdapter : RecyclerView.Adapter<MainButtonsAdapter.ActionHolder>
         private val tvTitleShort : TextView=itemView.findViewById(R.id.tv_action_title_short)
 
         fun bind(item: ActionCardModel, position: Int) {
-            // 1. Устанавливаем тексты и иконки (БЕЗ перекраски, как ты и просил)
             tvTitle.text = item.title
             tvTitleShort.text= item.titleShort
             tvDesc.text = item.description
@@ -87,7 +84,7 @@ class MainButtonsAdapter : RecyclerView.Adapter<MainButtonsAdapter.ActionHolder>
             btnMain.text = item.buttonText
             val mainColor = android.graphics.Color.parseColor(item.colorHex)
             // 1. Красим фон кнопки
-            btnMain.backgroundTintList = android.content.res.ColorStateList.valueOf(mainColor)
+           // btnMain.backgroundTintList = android.content.res.ColorStateList.valueOf(mainColor)
         }
     }
 }

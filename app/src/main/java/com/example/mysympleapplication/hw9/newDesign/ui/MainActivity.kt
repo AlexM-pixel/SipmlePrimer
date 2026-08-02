@@ -10,8 +10,8 @@ import kotlin.math.log
 
 class MainActivity : DaggerAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(MainPrefs.stile)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
-        setTheme(MainPrefs.stile)
     }
 }

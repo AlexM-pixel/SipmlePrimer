@@ -6,15 +6,12 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="220dp"
+        android:layout_height="match_parent"
         android:layout_gravity="top"
         android:layout_marginHorizontal="16dp"
         android:layout_marginVertical="8dp"
-        app:cardBackgroundColor="#F0F4F8"
         app:cardCornerRadius="15dp"
-        app:cardElevation="0dp"
-        app:strokeColor="#6FCF97"
-        app:strokeWidth="2dp">
+        >
         <!-- strokeWidth создаст эффект рамки, если версия библиотеки позволяет,
              иначе можно использовать background drawable с рамкой -->
 
@@ -29,14 +26,14 @@
                 android:layout_height="68dp"
                 android:background="@drawable/background_rv_nd"
                 android:src="@android:drawable/ic_input_add"
-                app:tint="#6FCF97" />
+                app:tint="?attr/cardBgColor" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="Добавить карту"
-                android:textColor="#6FCF97"
+                android:textColor="?attr/cardBgColor"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 

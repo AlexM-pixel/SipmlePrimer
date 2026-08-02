@@ -1,74 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Base application theme. -->
+    <!-- ========================================== -->
+    <!-- 1. БАЗОВАЯ ТЕМА (Зеленая / Мятная)         -->
+    <!-- ========================================== -->
     <style name="AppTheme" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your theme here. -->
+        <!-- Системные цвета -->
         <item name="colorPrimary">@color/colorAccent</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">#A7AAAA</item>
         <item name="colorSurface">@color/backgroundGreenNDColor</item>
+
+        <!-- Твои кастомные атрибуты (attrs.xml) -->
         <item name="cycle_color">@color/green_cycle</item>
-        <item name="splashGradient">@drawable/splash_bg_dark</item>
+        <item name="splashGradient">@color/onBoardingSplashBg</item>
         <item name="toggle_text_byn">@color/colorPaletteDef</item>
         <item name="BottomSheet_stroke_color">@color/itemStroke</item>
+        <item name="itemUncheckBg_color">@color/itemUncheckBg</item>
+        <item name="itemSelectedBg_color">@color/itemSelectBg</item>
         <item name="toggle_button">@drawable/toggle_button_def</item>
-        <!--        <item name="android:colorBackground">#FCE3F6F8</item>-->
-        <item name="materialAlertDialogTheme">@style/MyCustomDialogTheme</item>
+        <item name="header_background">@drawable/background_base_button</item>
+        <item name="bottomNavBgColor">@color/backgroundGreenNDColor</item>
+        <item name="cardBgColor">#6fcf97</item>
+        <item name="titleColor">@color/backgroundGreenNDColor</item>
+        <item name="rvND_color">#77D0F4DF</item>
+        <item name="dots_color">@color/text_colorND</item>
+        <item name="color_tint_icon">@color/colorPrimaryDark</item>
+        <item name="color_sheet_text">@color/sheet_text</item>
 
+
+        <!-- ДОБАВЛЕНЫ НЕДОСТАЮЩИЕ АТРИБУТЫ -->
+        <item name="text_input_check">@color/backgroundGreenNDColor</item>
+        <item name="toggle_button_bg_orange">@drawable/toggle_button_orange</item>
+
+        <!-- Диалоги -->
+        <item name="materialAlertDialogTheme">@style/MyCustomDialogTheme</item>
     </style>
 
+    <!-- ========================================== -->
+    <!-- 2. ТЕМА PINK (Розовая)                     -->
+    <!-- ========================================== -->
+    <!-- ========================================== -->
+    <!-- 2. ТЕМА PINK (В стиле INSTAGRAM)           -->
+    <!-- ========================================== -->
+    <style name="AppThemePink" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Главный цвет (Яркий Magenta) -->
+        <item name="colorPrimary">#E1306C</item>
+        <!-- Темный цвет (Фиолетовый) -->
+        <item name="colorPrimaryDark">#833AB4</item>
+        <!-- Акцентный цвет (Оранжевый) -->
+        <item name="colorAccent">#F56040</item>
 
-    <style name="AppThemePink" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">#E91E63</item>
-        <item name="colorPrimaryDark">#B3194D</item>
-        <item name="cycle_color">@color/pink_cycle</item>
-        <item name="colorAccent">#FD6B9D</item>
-        <item name="BottomSheet_stroke_color">@color/pink_cycle</item>
-        <item name="splashGradient">@drawable/splash_bg_pink</item>
+        <!-- Цвет поверхности диалогов (оставляем белый с легким розоватым оттенком) -->
+        <item name="colorSurface">#FFF0F5</item>
+
+        <!-- Твои кастомные атрибуты -->
+        <!-- Для кругов на фоне делаем полупрозрачный розовый (~24% opacity) -->
+        <item name="cycle_color">#3DE1306C</item>
+        <item name="bottomNavBgColor">#E1306C</item>
+        <item name="cardBgColor">#F83E7D</item>
+        <item name="titleColor">#F83E7D</item>
+        <item name="rvND_color">#77F4D0E0</item>
+        <item name="dots_color">#833AB4</item>
+        <item name="itemUncheckBg_color">@color/itemUncheckBgPink</item>
+        <item name="itemSelectedBg_color">@color/itemSelectBgPink</item>
+        <item name="color_tint_icon">#E1306C</item>
+        <item name="color_sheet_text">#D3228D</item>
+
+
+        <!-- ВОТ ОН! Ставим инста-градиент на сплэш-скрин -->
+        <item name="splashGradient">@drawable/bg_instagram_gradient</item>
+        <item name="header_background">@drawable/splash_bg_pink</item>
+        <item name="toggle_text_byn">#E1306C</item>
+        <item name="BottomSheet_stroke_color">#E1306C</item>
         <item name="toggle_button">@drawable/toggle_pink</item>
-        <item name="toggle_text_byn">@color/splash_start_pink</item>
-        <!--        <item name="android:colorBackground">#F6E2EC</item>-->
-        <item name="colorSurface">#F3F3F1</item>
-
+        <!-- Для кнопок и переключателей -->
+        <item name="text_input_check">#E1306C</item>
+        <item name="toggle_button_bg_orange">@drawable/toggle_button_orange</item>
+        <!-- Диалоги -->
         <item name="materialAlertDialogTheme">@style/MyCustomDialogTheme</item>
     </style>
 
+
+    <!-- ========================================== -->
+    <!-- 3. ТЕМА ORANGE (Оранжевая)                 -->
+    <!-- ========================================== -->
     <style name="AppThemeOrange" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your theme here. -->
+        <!-- Системные цвета -->
         <item name="colorPrimary">#FF9800</item>
-        <item name="cycle_color">@color/orange_cycle</item>
         <item name="colorPrimaryDark">#FF5722</item>
         <item name="colorAccent">#FFFF5722</item>
-        <item name="BottomSheet_stroke_color">@color/orange_cycle</item>
-
         <item name="colorSurface">#F3F3F1</item>
 
-        <item name="toggle_text_byn">@color/colorPaletteOrange</item>
+        <!-- Твои кастомные атрибуты -->
+        <item name="cycle_color">@color/orange_cycle</item>
         <item name="splashGradient">@drawable/splash_bg_orange</item>
-        <!--        <item name="android:colorBackground">#FAEEDD</item>-->
+        <item name="header_background">@drawable/gradient_bg_orange</item>
+        <item name="toggle_text_byn">@color/colorPaletteOrange</item>
+        <item name="BottomSheet_stroke_color">@color/orange_cycle</item>
         <item name="toggle_button">@drawable/toggle_button_orange</item>
+        <item name="bottomNavBgColor">@color/colorPaletteOrange</item>
+        <item name="cardBgColor">@color/colorPaletteOrange</item>
+        <item name="titleColor">@color/colorPaletteOrange</item>
+        <item name="rvND_color">#77F4E7D0</item>
+        <item name="dots_color">@color/orange_cycle</item>
+        <item name="itemUncheckBg_color">@color/itemUncheckBgOrange</item>
+        <item name="itemSelectedBg_color">@color/itemSelectBgOrange</item>
+        <item name="color_tint_icon">#FFFF5722</item>
+        <item name="color_sheet_text">#FFFF5722</item>
 
+        <!-- ДОБАВЛЕНЫ НЕДОСТАЮЩИЕ АТРИБУТЫ -->
+        <item name="text_input_check">#FF9800</item>
+        <item name="toggle_button_bg_orange">@drawable/toggle_button_orange</item>
+        <!-- Диалоги -->
         <item name="materialAlertDialogTheme">@style/MyCustomDialogTheme</item>
     </style>
 
-    <style name="AppThemeBlue" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Customize your theme here. -->
+
+    <!-- ========================================== -->
+    <!-- 4. ТЕМА BLUE (Синяя / Origin)              -->
+    <!-- ========================================== -->
+    <style name="AppThemeBlue" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Системные цвета -->
         <item name="colorPrimary">#03A9F4</item>
         <item name="colorPrimaryDark">#065593</item>
-        <item name="cycle_color">@color/blue_cycle</item>
         <item name="colorAccent">#03A9F4</item>
-        <item name="BottomSheet_stroke_color">@color/blue_cycle</item>
-
         <item name="colorSurface">#F3F3F1</item>
 
-        <item name="toggle_text_byn">@color/colorPaletteBlue</item>
-        <!--        <item name="android:colorBackground">#CEEFFD</item>-->
+        <!-- Твои кастомные атрибуты -->
+        <item name="cycle_color">@color/blue_cycle</item>
         <item name="splashGradient">@drawable/splash_bg_blue</item>
+        <item name="header_background">@drawable/gradient_bg_blue</item>
+        <item name="toggle_text_byn">@color/colorPaletteBlue</item>
+        <item name="BottomSheet_stroke_color">@color/blue_cycle</item>
         <item name="toggle_button">@drawable/toggle_button_blue</item>
+        <item name="bottomNavBgColor">@color/colorPaletteBlue</item>
+        <item name="cardBgColor">@color/colorPaletteBlue</item>
+        <item name="titleColor">@color/colorPaletteBlue</item>
+        <item name="rvND_color">#77D0F4F4</item>
+        <item name="dots_color">@color/colorGrafik_fon</item>
+        <item name="itemUncheckBg_color">@color/itemUncheckBgBlue</item>
+        <item name="itemSelectedBg_color">@color/itemSelectBgBlue</item>
+        <item name="color_tint_icon">#05A0E6</item>
+        <item name="color_sheet_text">#086DBC</item>
 
+        <!-- ДОБАВЛЕНЫ НЕДОСТАЮЩИЕ АТРИБУТЫ -->
+        <item name="text_input_check">#03A9F4</item>
+        <item name="toggle_button_bg_orange">@drawable/toggle_button_orange</item>
+
+        <!-- Диалоги -->
         <item name="materialAlertDialogTheme">@style/MyCustomDialogTheme</item>
     </style>
+
+
+    <!-- ========================================== -->
+    <!-- ДОПОЛНИТЕЛЬНЫЕ СТИЛИ (Кнопки, тексты и т.д.)-->
+    <!-- ========================================== -->
 
     <style name="MyButtons">
         <item name="colorButtonNormal">@color/colorPaletteBlue</item>
@@ -129,60 +216,49 @@
         <item name="android:padding">2dp</item>
     </style>
 
-
     <style name="MaterialCalendarTheme" parent="ThemeOverlay.MaterialComponents.MaterialCalendar">
-        <!--       <item name="colorOnPrimary">@color/backgroundYellowNDColor</item> //цвет техта вверху-->
         <item name="colorPrimary">#A65FB670</item>
         <item name="colorSurface">#E4FFFFFF</item>
-
-        <!-- Buttons -->
         <item name="buttonBarPositiveButtonStyle">@style/TextButton.Dialog1</item>
         <item name="buttonBarNegativeButtonStyle">@style/TextButton.Dialog1</item>
-
     </style>
-
 
     <style name="TextButton.Dialog1" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
         <item name="android:textColor">@color/black_white_color_selector</item>
     </style>
 
+    <!-- ========================================== -->
+    <!-- НАСТРОЙКИ КРУГЛЫХ ДИАЛОГОВ (Material 3)    -->
+    <!-- ========================================== -->
 
-    <!-- 1. Главная тема диалога -->
     <style name="MyCustomDialogTheme" parent="ThemeOverlay.Material3.MaterialAlertDialog">
         <!-- БАЗОВЫЙ ФОН: Белый -->
         <item name="colorSurface">@android:color/white</item>
+        <!-- Отключаем фиолетовую примесь -->
+        <item name="elevationOverlayEnabled">false</item>
 
-
-        <!-- Меняем углы -->
         <item name="shapeAppearance">@style/ShapeAppearance.MyApp.Dialog</item>
-        <!-- Меняем стиль Positive Button (Сохранить/Да) -->
         <item name="buttonBarPositiveButtonStyle">@style/MyDialogButton.Positive</item>
-        <!-- Меняем стиль Negative Button (Отмена/Нет) -->
         <item name="buttonBarNegativeButtonStyle">@style/MyDialogButton.Negative</item>
     </style>
 
-    <!-- 2. Настройка радиуса закругления -->
     <style name="ShapeAppearance.MyApp.Dialog" parent="ShapeAppearance.Material3.Corner.ExtraLarge">
         <item name="cornerFamily">rounded</item>
-        <!-- СТАВИМ ИДЕАЛЬНЫЕ УГЛЫ (Вместо стандартных 28dp) -->
-        <item name="cornerSize">@dimen/cardView_margin</item>
+        <!-- Углы диалога -->
+        <item name="cornerSize">16dp</item>
     </style>
 
-    <!-- 3. Настройка Главной кнопки (Positive) -->
     <style name="MyDialogButton.Positive" parent="Widget.Material3.Button.TextButton.Dialog">
-        <!-- Твой фирменный зеленый цвет для главной кнопки -->
-        <item name="android:textColor">@color/colorPrimaryDark</item>
-        <item name="android:textSize">18sp</item>
-        <item name="android:textStyle">normal</item>
-        <!-- Если хочешь, чтобы буквы были нормальными, а не ВСЕ БОЛЬШИЕ -->
+        <!-- Кнопка "ДА" будет краситься в цвет текущей темы! -->
+        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
         <item name="textAllCaps">false</item>
     </style>
 
-    <!-- 4. Настройка Кнопки Отмены (Negative) -->
     <style name="MyDialogButton.Negative" parent="Widget.Material3.Button.TextButton.Dialog">
-        <!-- Делаем серым или красным -->
         <item name="android:textColor">@color/text_colorND</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:textStyle">normal</item>
         <item name="textAllCaps">false</item>
     </style>

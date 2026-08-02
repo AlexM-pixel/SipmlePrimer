@@ -1,11 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Здесь оставляем только reference, так как это картинки (drawable) -->
     <attr name="splashGradient" format="reference" />
     <attr name="toggle_button" format="reference" />
     <attr name="toggle_button_bg_orange" format="reference" />
-    <attr name="text_input_check" format="reference" />
-    <attr name="toggle_text_byn" format="reference" />
-    <attr name="cycle_color" format="reference" />
-    <attr name="BottomSheet_stroke_color" format="reference" />
+
+
+    <!-- А ЗДЕСЬ добавляем "|color", чтобы система принимала HEX-коды (например #03A9F4) -->
+    <attr name="text_input_check" format="reference|color" />
+    <attr name="toggle_text_byn" format="reference|color" />
+    <attr name="cycle_color" format="reference|color" />
+    <attr name="BottomSheet_stroke_color" format="reference|color" />
+    <attr name="itemUncheckBg_color" format="reference|color" />
+    <attr name="itemSelectedBg_color" format="reference|color" />
+    <attr name="header_background" format="reference|color" />
+    <attr name="color_tint_icon" format="reference|color" />
+    <attr name="color_sheet_text" format="reference|color" />
+    <!-- Цвет фона нижней панели -->
+    <attr name="bottomNavBgColor" format="reference|color" />
+    <!-- Цвет заглавного текста -->
+    <attr name="titleColor" format="reference|color" />
+    <attr name="cardBgColor" format="reference|color" />
+    <attr name="rvND_color" format="reference|color" />
+    <attr name="dots_color" format="reference|color" />
 
 </resources>
